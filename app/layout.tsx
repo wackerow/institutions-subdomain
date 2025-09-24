@@ -1,7 +1,14 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import "./globals.css"
+import Image from "next/image"
+
+import Menu from "@/components/svg/menu"
+
 import { cn } from "@/lib/utils"
+
+import "./globals.css"
+
+import logo from "@/public/logo.svg"
 
 const satoshi = localFont({
   src: [
@@ -53,11 +60,24 @@ export default function RootLayout({
       <body
         className={cn(
           satoshi.className,
-          "grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-sans sm:p-20",
+          "grid min-h-screen grid-rows-[auto_1fr_auto] items-center justify-items-center gap-16 font-sans",
           "antialiased"
         )}
       >
-        <header className="flex">Header</header>
+        <header className="bg-primary w-screen">
+          <div className="mx-auto flex max-w-[1400px] justify-between p-10">
+            <Image src={logo} alt="Ethereum Foundation Enterprise logo" />
+            <nav className="text-primary-foreground flex list-none gap-4 max-lg:hidden">
+              <li>Digital assets</li>
+              <li>Why ethereum</li>
+              <li>Case studies</li>
+              <li>Live data</li>
+              <li>Regional providers</li>
+              <li>Events</li>
+            </nav>
+            <Menu className="lg:hidden" />
+          </div>
+        </header>
         {children}
         <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
           Footer
