@@ -9,6 +9,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { Textarea } from "@/components/ui/textarea"
 
 import { cn } from "@/lib/utils"
+import { sanitizeInput } from "@/lib/utils/sanitize"
 
 import {
   ENTERPRISE_EMAIL,
@@ -16,8 +17,6 @@ import {
   MAX_INPUT_LENGTH,
   MAX_MESSAGE_LENGTH,
 } from "@/lib/constants"
-
-import { sanitizeInput } from "@/lib/sanitize"
 
 type FormState = {
   name: string
@@ -301,7 +300,7 @@ const EnterpriseContactForm = () => {
         size="lg"
         variant="link"
         disabled={submissionState === "submitting"}
-        className="flex items-center justify-center gap-2 max-sm:w-full text-primary-foreground"
+        className="text-primary-foreground flex items-center justify-center gap-2 max-sm:w-full"
       >
         {submissionState === "submitting" ? (
           <>
