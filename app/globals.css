@@ -79,8 +79,8 @@
   /* TODO: Not yet fully defined */
   --popover: oklch(0.982 0 0); /* #F9F9F9 off-white bg */
   --popover-foreground: oklch(0.25 0 0); /* #222222 near-black text */
-  --destructive: oklch(0.577 0.245 27.325);
-  --input: oklch(0.922 0 0);
+  --destructive: oklch(0.75 0.25 27);
+  --input: oklch(0.922 0 0); /* #E5E5E5 */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
