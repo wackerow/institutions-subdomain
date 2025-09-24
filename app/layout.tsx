@@ -2,7 +2,15 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import Image from "next/image"
 
+import BlueSky from "@/components/svg/blue-sky"
+import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
+import Farcaster from "@/components/svg/farcaster"
+import LinkedIn from "@/components/svg/linked-in"
 import Menu from "@/components/svg/menu"
+import Threads from "@/components/svg/threads"
+import TikTok from "@/components/svg/tik-tok"
+import Twitter from "@/components/svg/twitter"
+import YouTube from "@/components/svg/you-tube"
 
 import { cn } from "@/lib/utils"
 
@@ -65,7 +73,7 @@ export default function RootLayout({
         )}
       >
         <header className="bg-primary w-screen">
-          <div className="mx-auto flex max-w-[1400px] justify-between p-10">
+          <div className="max-w-8xl mx-auto flex justify-between p-10">
             <Image src={logo} alt="Ethereum Foundation Enterprise logo" />
             <nav className="text-primary-foreground flex list-none gap-4 max-lg:hidden">
               <li>Digital assets</li>
@@ -75,12 +83,146 @@ export default function RootLayout({
               <li>Regional providers</li>
               <li>Events</li>
             </nav>
-            <Menu className="lg:hidden" />
+            <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
           </div>
         </header>
         {children}
-        <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-          Footer
+        <footer className="row-start-3">
+          <div className="bg-primary text-primary-foreground w-screen px-4 py-20 sm:px-10">
+            <div className="mx-auto flex max-w-3xl flex-col items-center">
+              <h2 className="text-h3">Our team</h2>
+              <p className="mb-8 max-w-xl text-center">
+                We will answer your questions, help identify potential paths
+                forward, provide technical support and connect you with relevant
+                industry leaders.
+              </p>
+              <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
+                <div className="space-y-2">
+                  <div className="size-28 border border-dashed border-white/50 p-4">
+                    <div className="TODO-picture size-full bg-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl/[1.4] font-bold">David Walsh</p>
+                    <p className="text-sm tracking-[0.0175rem]">
+                      Decentralized Finance
+                    </p>
+                  </div>
+                  <div data-label="socials" className="flex gap-4">
+                    <LinkedIn className="text-[#5676E1]" />
+                    <Twitter className="text-[#5676E1]" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="size-28 border border-dashed border-white/50 p-4">
+                    <div className="TODO-picture size-full bg-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl/[1.4] font-bold">Ash Morgan</p>
+                    <p className="text-sm tracking-[0.0175rem]">
+                      RWA & Stablecoins
+                    </p>
+                  </div>
+                  <div data-label="socials" className="flex gap-4">
+                    <LinkedIn className="text-[#5676E1]" />
+                    <Twitter className="text-[#5676E1]" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="size-28 border border-dashed border-white/50 p-4">
+                    <div className="TODO-picture size-full bg-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl/[1.4] font-bold">Matthew Dawson</p>
+                    <p className="text-sm tracking-[0.0175rem]">L2 ecosystem</p>
+                  </div>
+                  <div data-label="socials" className="flex gap-4">
+                    <LinkedIn className="text-[#5676E1]" />
+                    <Twitter className="text-[#5676E1]" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="size-28 border border-dashed border-white/50 p-4">
+                    <div className="TODO-picture size-full bg-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl/[1.4] font-bold">Mo Jalil</p>
+                    <p className="text-sm tracking-[0.0175rem]">
+                      Privacy & Compliance
+                    </p>
+                  </div>
+                  <div data-label="socials" className="flex gap-4">
+                    <LinkedIn className="text-[#5676E1]" />
+                    <Twitter className="text-[#5676E1]" />
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+                <div className="space-y-4">
+                  <h3 className="text-h4">Get In Touch</h3>
+                  <p>
+                    We will answer your questions, help identify potential paths
+                    forward, provide technical support and connect you with
+                    relevant industry leaders.
+                  </p>
+                </div>
+                <div>FORM</div>
+              </div>
+            </div>
+          </div>
+          <div className="max-w-8xl space-y-28 px-12 py-10">
+            <div className="flex justify-between gap-4">
+              <div className="space-y-7">
+                <EnterpriseAcceleration />
+                <div className="flex items-center gap-6">
+                  <LinkedIn />
+                  <YouTube />
+                  <TikTok />
+                  <Twitter />
+                  <Threads />
+                  <Farcaster />
+                  <BlueSky />
+                </div>
+              </div>
+              <nav className="text-muted-foreground ms-auto flex gap-x-6 gap-y-1.5 text-end text-nowrap max-xl:flex-col">
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Digital assets
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Why ethereum
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Case studies
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Articles
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Events
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Regional providers
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Data hub
+                </a>
+                <a href="#" className="block text-sm tracking-[0.0175rem]">
+                  Contact
+                </a>
+              </nav>
+            </div>
+            <div className="text-muted-foreground space-y-3">
+              <div className="mx-auto flex justify-center gap-4">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">ethereum foundation</a>
+                <a href="#">ethereum.org</a>
+              </div>
+              <div className="text-center">
+                © 2025 Ethereum Foundation. All rights reserved.
+              </div>
+            </div>
+          </div>
         </footer>
       </body>
     </html>
