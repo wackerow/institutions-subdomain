@@ -159,6 +159,9 @@ const EnterpriseContactForm = () => {
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {}
 
+    const nameError = validateName(formData.name)
+    if (nameError) newErrors.name = nameError
+
     const emailError = validateEmail(formData.email)
     if (emailError) newErrors.email = emailError
 
@@ -205,6 +208,12 @@ const EnterpriseContactForm = () => {
       })
     }
   }
+
+  const isDisabled =
+    submissionState === "submitting" ||
+    !formData.email ||
+    !formData.name ||
+    !formData.message
 
   if (submissionState === "success")
     return (
@@ -299,7 +308,7 @@ const EnterpriseContactForm = () => {
         onClick={handleSubmit}
         size="lg"
         variant="link"
-        disabled={submissionState === "submitting"}
+        disabled={isDisabled}
         className="text-primary-foreground flex items-center justify-center gap-2 max-sm:w-full"
       >
         {submissionState === "submitting" ? (
