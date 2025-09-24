@@ -44,14 +44,14 @@
   /* Card: near-black on white */
   --card: oklch(1 0 0); /* #FFFFFF white bg */
   --card-foreground: oklch(0.25 0 0); /* #222222 near-black text */
-  
+
   /* Primary section colors: white text on dark blue */
   --primary: oklch(19.778% 0.11254 267.418); /* #040847 dark blue background */
   --primary-foreground: oklch(1 0 0); /* #FFFFFF white text*/
 
   /* Bright blue on standard background */
   --secondary: oklch(0.982 0 0); /* #F9F9F9 */
-  --secondary-foreground:  oklch(42.53% 0.24154 263.919); /* #0030CF */
+  --secondary-foreground: oklch(42.53% 0.24154 263.919); /* #0030CF */
 
   /* Disabled background and light text */
   --muted: oklch(0.86 0 0); /* #D1D1D1 */
@@ -59,7 +59,9 @@
 
   /* Accented text on standard background */
   --accent: oklch(0.982 0 0); /* #F9F9F9 */
-  --accent-foreground: oklch(71.364% 0.14352 74.116); /* #D7931E Yellow accent text */
+  --accent-foreground: oklch(
+    71.364% 0.14352 74.116
+  ); /* #D7931E Yellow accent text */
 
   --border: oklch(0.963 0.011 286); /* #F2F2FA */
   --ring: var(--accent-foreground);
