@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import Image from "next/image"
 
+import EnterpriseContactForm from "@/components/ContactForm"
 import BlueSky from "@/components/svg/blue-sky"
 import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
 import Farcaster from "@/components/svg/farcaster"
@@ -75,13 +76,13 @@ export default function RootLayout({
         <header className="bg-primary w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-10">
             <Image src={logo} alt="Ethereum Foundation Enterprise logo" />
-            <nav className="text-primary-foreground flex list-none gap-4 max-lg:hidden">
-              <li>Digital assets</li>
-              <li>Why ethereum</li>
-              <li>Case studies</li>
-              <li>Live data</li>
-              <li>Regional providers</li>
-              <li>Events</li>
+            <nav className="text-primary-foreground flex gap-4 max-lg:hidden">
+              <a href="#">Digital assets</a>
+              <a href="#">Why ethereum</a>
+              <a href="#">Case studies</a>
+              <a href="#">Live data</a>
+              <a href="#">Regional providers</a>
+              <a href="#">Events</a>
             </nav>
             <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
           </div>
@@ -165,11 +166,11 @@ export default function RootLayout({
                     relevant industry leaders.
                   </p>
                 </div>
-                <div>FORM</div>
+                <EnterpriseContactForm />
               </div>
             </div>
           </div>
-          <div className="max-w-8xl space-y-28 px-12 py-10">
+          <div className="max-w-8xl mx-auto space-y-28 px-12 py-10">
             <div className="flex justify-between gap-4">
               <div className="space-y-7">
                 <EnterpriseAcceleration />
@@ -211,13 +212,13 @@ export default function RootLayout({
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3">
-              <div className="mx-auto flex justify-center gap-4">
+              <nav className="mx-auto flex justify-center gap-4">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>
                 <a href="#">Cookie Policy</a>
                 <a href="#">ethereum foundation</a>
                 <a href="#">ethereum.org</a>
-              </div>
+              </nav>
               <div className="text-center">
                 © 2025 Ethereum Foundation. All rights reserved.
               </div>
