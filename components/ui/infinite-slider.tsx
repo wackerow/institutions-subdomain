@@ -1,9 +1,10 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { useMotionValue, animate, motion } from "motion/react"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
+import { animate, motion, useMotionValue } from "motion/react"
 import useMeasure from "react-use-measure"
+
+import { cn } from "@/lib/utils"
 
 export type InfiniteSliderProps = {
   children: React.ReactNode
@@ -92,7 +93,7 @@ export function InfiniteSlider({
     : {}
 
   return (
-    <div className={cn("overflow-hidden", className)}>
+    <div className={cn("max-w-screen overflow-hidden", className)}>
       <motion.div
         className="flex w-max"
         style={{
