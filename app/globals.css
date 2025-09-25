@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -51,27 +53,31 @@
   --background: oklch(0.982 0 0); /* #F9F9F9 off-white bg */
   --foreground: oklch(0.25 0 0); /* #222222 near-black text */
 
-  /* Card: near-black on white */
-  --card: oklch(1 0 0); /* #FFFFFF white bg */
-  --card-foreground: oklch(0.25 0 0); /* #222222 near-black text */
-
   /* Primary section colors: white text on dark blue */
   --primary: oklch(19.778% 0.11254 267.418); /* #040847 dark blue background */
   --primary-foreground: oklch(1 0 0); /* #FFFFFF white text*/
 
+  /* Card: near-black on white */
+  --card: oklch(1 0 0); /* #FFFFFF white bg */
+  --card-foreground: oklch(0.25 0 0); /* #222222 near-black text */
+
+  /* Section: black on gray */
+  --section: oklch(0.943 0 0); /* #ECECEC gray */
+  --section-foreground: oklch(0 0 0); /* #000000 black */
+
   /* Bright blue on standard background */
   --secondary: oklch(0.982 0 0); /* #F9F9F9 */
   --secondary-foreground: oklch(42.53% 0.24154 263.919); /* #0030CF */
-
-  /* Disabled background and light text */
-  --muted: oklch(0.86 0 0); /* #D1D1D1 */
-  --muted-foreground: oklch(0.556 0 0); /* #737373 gray */
 
   /* Accented text on standard background */
   --accent: oklch(0.982 0 0); /* #F9F9F9 */
   --accent-foreground: oklch(
     71.364% 0.14352 74.116
   ); /* #D7931E Yellow accent text */
+
+  /* Disabled background and light text */
+  --muted: oklch(0.86 0 0); /* #D1D1D1 */
+  --muted-foreground: oklch(0.556 0 0); /* #737373 gray */
 
   --border: oklch(0.963 0.011 286); /* #F2F2FA */
   --ring: var(--accent-foreground);
@@ -95,25 +101,30 @@
   body {
     @apply bg-background text-foreground;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply leading-normal font-bold;
+  }
   h1 {
-    @apply text-h1/normal tracking-[0.07rem];
+    @apply text-h1 tracking-[0.07rem];
   }
   h2 {
-    @apply text-h2/normal tracking-[0.06rem];
+    @apply text-h2 tracking-[0.06rem];
   }
   h3 {
-    @apply text-h3/normal tracking-[0.055rem];
+    @apply text-h3 tracking-[0.055rem];
   }
   h4 {
-    @apply text-h4/normal tracking-[0.04rem];
+    @apply text-h4 tracking-[0.04rem];
   }
   h5 {
-    @apply text-h5/normal tracking-[0.03rem];
+    @apply text-h5 tracking-[0.03rem];
   }
   h6 {
     @apply text-h6/[1.4];
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
   }
 }

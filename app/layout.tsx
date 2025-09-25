@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
-import Image from "next/image"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import BlueSky from "@/components/svg/blue-sky"
@@ -8,6 +7,7 @@ import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
 import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
 import Menu from "@/components/svg/menu"
+import SiteLogo from "@/components/svg/site-logo"
 import Threads from "@/components/svg/threads"
 import TikTok from "@/components/svg/tik-tok"
 import Twitter from "@/components/svg/twitter"
@@ -16,8 +16,6 @@ import YouTube from "@/components/svg/you-tube"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
-
-import logo from "@/public/logo.svg"
 
 const satoshi = localFont({
   src: [
@@ -69,13 +67,16 @@ export default function RootLayout({
       <body
         className={cn(
           satoshi.className,
-          "grid min-h-screen grid-rows-[auto_1fr_auto] items-center justify-items-center gap-16 font-sans",
+          "grid min-h-screen grid-rows-[auto_1fr_auto] items-center justify-items-center",
           "antialiased"
         )}
       >
         <header className="bg-primary w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-10">
-            <Image src={logo} alt="Ethereum Foundation Enterprise logo" />
+            <SiteLogo
+              aria-label="Ethereum Foundation Enterprise logo"
+              className="text-primary-foreground"
+            />
             <nav className="text-primary-foreground flex gap-4 max-lg:hidden">
               <a href="#">Digital assets</a>
               <a href="#">Why ethereum</a>
