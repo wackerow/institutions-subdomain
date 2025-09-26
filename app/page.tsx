@@ -3,13 +3,6 @@ import Image, { StaticImageData } from "next/image"
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import EthGlyph from "@/components/svg/eth-glyph"
-import {
-  Carousel,
-  CarouselContent,
-  CarouselIndicator,
-  CarouselItem,
-  CarouselNavigation,
-} from "@/components/ui/carousel"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
@@ -359,58 +352,36 @@ export default function Home() {
               </h2>
             </div>
             <div className="relative w-full">
-              <Carousel>
-                <CarouselContent className="">
-                  <CarouselItem>
-                    <div className="space-y-6">
-                      <div className="space-y-8 text-neutral-700 italic">
-                        <p>
-                          Saying Ethereum is the wrong blockchain because it has
-                          high gas fees is like saying Amazon shouldn&apos;t use
-                          the internet because dial-up was slow in 1995.
-                        </p>
-                        <p>
-                          Banks aren&apos;t building on 2015 Ethereum,
-                          they&apos;re using today&apos;s Ethereum stack with
-                          tomorrows upgrades
-                        </p>
-                      </div>
-                      <div className="flex gap-4">
-                        <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
-                        <p>
-                          <strong className="block">Tom Zschach</strong>
-                          CIO @ SWIFT
-                        </p>
-                      </div>
-                    </div>
-                  </CarouselItem>
-                  <CarouselItem>
-                    <div className="space-y-6">
-                      <div className="space-y-8 text-neutral-700 italic">
-                        <p>
-                          Saying Ethereum is the wrong blockchain because it has
-                          high gas fees is like saying Amazon shouldn&apos;t use
-                          the internet because dial-up was slow in 1995.
-                        </p>
-                        <p>
-                          Banks aren&apos;t building on 2015 Ethereum,
-                          they&apos;re using today&apos;s Ethereum stack with
-                          tomorrows upgrades
-                        </p>
-                      </div>
-                      <div className="flex gap-4">
-                        <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
-                        <p>
-                          <strong className="block">Tom Zschach</strong>
-                          CIO @ SWIFT
-                        </p>
-                      </div>
-                    </div>
-                  </CarouselItem>
+              <div className="space-y-12">
+                <div className="space-y-8 text-xl text-neutral-700 italic">
+                  <p>
+                    Saying Ethereum is the wrong blockchain because it has high
+                    gas fees is like saying Amazon shouldn&apos;t use the
+                    internet because dial-up was slow in 1995.
+                  </p>
+                  <p>
+                    Banks aren&apos;t building on 2015 Ethereum, they&apos;re
+                    using today&apos;s Ethereum stack with tomorrows upgrades
+                  </p>
+                </div>
+                <div className="flex gap-4">
+                  <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
+                  <div>
+                    <p className="font-bold">Tom Zschach</p>
+                    <p className="font-medium">CIO @ SWIFT</p>
+                  </div>
+                </div>
+              </div>
+              {/* // TODO: Debug carousel sizing */}
+              {/* <Carousel>
+                <CarouselContent>
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <CarouselItem key={i}></CarouselItem>
+                  ))}
                 </CarouselContent>
-                <CarouselNavigation alwaysShow />
                 <CarouselIndicator />
-              </Carousel>
+                <CarouselNavigation alwaysShow />
+              </Carousel> */}
             </div>
           </section>
         </div>

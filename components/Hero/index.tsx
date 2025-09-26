@@ -13,11 +13,12 @@ type HeroProps = {
 const Hero = ({ heading, shape: Shape, className, children }: HeroProps) => (
   <div className={cn("bg-primary text-primary-foreground", className)}>
     <div className="max-w-8xl mx-auto grid grid-cols-1 px-10 md:grid-cols-2">
-      <h1 className="place-self-center">{heading}</h1>
-      <div className="relative">
-        <HeroBg className="place-self-center" />
+      <h1 className="place-self-center max-md:text-center">{heading}</h1>
+      <div className="relative h-[420px]">
+        {/* // TODO: Debug hero bg sizing */}
+        <HeroBg className="max-w-full place-self-center" />
         {Shape && (
-          <Shape className="fill-primary absolute inset-0 place-self-center" />
+          <Shape className="fill-primary-foreground absolute inset-0 place-self-center" />
         )}
       </div>
     </div>
