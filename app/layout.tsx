@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import Image from "next/image"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import BlueSky from "@/components/svg/blue-sky"
@@ -16,6 +17,11 @@ import YouTube from "@/components/svg/you-tube"
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
+
+import ash from "@/public/images/team/ash-morgan.png"
+import david from "@/public/images/team/david-walsh.png"
+import matthew from "@/public/images/team/matthew-dawson.png"
+import mo from "@/public/images/team/mo-jalil.png"
 
 const satoshi = localFont({
   src: [
@@ -113,7 +119,13 @@ export default function RootLayout({
               <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
                 <div className="space-y-2">
                   <div className="size-28 border border-dashed border-white/50 p-4">
-                    <div className="TODO-picture size-full bg-white" />
+                    <Image
+                      src={david}
+                      className="size-full grayscale"
+                      alt="David Walsh"
+                      placeholder="blur"
+                      sizes="80px"
+                    />
                   </div>
                   <div>
                     <p className="text-xl/[1.4] font-bold">David Walsh</p>
@@ -128,7 +140,13 @@ export default function RootLayout({
                 </div>
                 <div className="space-y-2">
                   <div className="size-28 border border-dashed border-white/50 p-4">
-                    <div className="TODO-picture size-full bg-white" />
+                    <Image
+                      src={ash}
+                      className="size-full grayscale"
+                      alt="Ash Morgan"
+                      placeholder="blur"
+                      sizes="80px"
+                    />
                   </div>
                   <div>
                     <p className="text-xl/[1.4] font-bold">Ash Morgan</p>
@@ -143,7 +161,13 @@ export default function RootLayout({
                 </div>
                 <div className="space-y-2">
                   <div className="size-28 border border-dashed border-white/50 p-4">
-                    <div className="TODO-picture size-full bg-white" />
+                    <Image
+                      src={matthew}
+                      className="size-full grayscale"
+                      alt="Matthew Dawson"
+                      placeholder="blur"
+                      sizes="80px"
+                    />
                   </div>
                   <div>
                     <p className="text-xl/[1.4] font-bold">Matthew Dawson</p>
@@ -156,7 +180,13 @@ export default function RootLayout({
                 </div>
                 <div className="space-y-2">
                   <div className="size-28 border border-dashed border-white/50 p-4">
-                    <div className="TODO-picture size-full bg-white" />
+                    <Image
+                      src={mo}
+                      className="size-full grayscale"
+                      alt="Mo Jalil"
+                      placeholder="blur"
+                      sizes="80px"
+                    />
                   </div>
                   <div>
                     <p className="text-xl/[1.4] font-bold">Mo Jalil</p>
