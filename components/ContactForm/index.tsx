@@ -220,8 +220,7 @@ const EnterpriseContactForm = () => {
       <div className="border-accent-a/20 bg-background flex w-full max-w-prose flex-col items-center gap-y-6 rounded-2xl border p-6 text-center">
         <div className="mb-2 flex items-center gap-4">
           <HeartHandshake className="text-primary size-8" />
-          {/* // TODO: Confirm h3 level */}
-          <h3 className="text-2xl font-semibold">Thanks for reaching out!</h3>
+          <h4 className="text-2xl font-semibold">Thanks for reaching out!</h4>
         </div>
         <p className="text-body-medium">
           We&apos;ve received your message and someone from our enterprise team
@@ -234,6 +233,7 @@ const EnterpriseContactForm = () => {
     <div className="w-full max-w-[440px] space-y-6">
       <div className="space-y-2">
         <Input
+          name="name"
           type="text"
           className="w-full"
           placeholder="Your name"
@@ -249,6 +249,7 @@ const EnterpriseContactForm = () => {
           </p>
         )}
         <Input
+          name="email"
           type="email"
           className="w-full"
           placeholder="Your e-mail"
@@ -268,6 +269,7 @@ const EnterpriseContactForm = () => {
       <div className="space-y-2">
         <div className="relative">
           <Textarea
+            name="message"
             placeholder="Message"
             value={formData.message}
             onChange={handleInputChange("message")}
@@ -309,7 +311,7 @@ const EnterpriseContactForm = () => {
         size="lg"
         variant="link"
         disabled={isDisabled}
-        className="text-primary-foreground flex items-center justify-center gap-2 max-sm:w-full"
+        className="text-primary-foreground hover:text-primary-foreground/70 flex items-center justify-center gap-2"
       >
         {submissionState === "submitting" ? (
           <>
