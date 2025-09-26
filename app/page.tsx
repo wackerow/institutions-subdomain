@@ -3,10 +3,12 @@ import Image, { StaticImageData } from "next/image"
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import EthGlyph from "@/components/svg/eth-glyph"
+import EthGlyphColor from "@/components/svg/eth-glyph-color"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
 
+import eventPlaceholder from "@/public/images/event-placeholder.png"
 import antGroupSvg from "@/public/logos/ant-group.svg"
 import blackRock from "@/public/logos/black-rock.png"
 import blackRockSvg from "@/public/logos/black-rock.svg"
@@ -385,6 +387,52 @@ export default function Home() {
             </div>
           </section>
         </div>
+
+        <section id="events" className="flex max-lg:flex-col">
+          <Image
+            src={eventPlaceholder}
+            alt="event placeholder"
+            className="w-full shrink-0 object-cover grayscale max-lg:h-80 lg:w-md lg:max-w-md"
+          />
+          <div className="border-secondary-foreground border p-10 max-lg:mx-10 lg:my-10">
+            <p className="text-accent-foreground font-bold tracking-[0.02rem]">
+              Premier
+            </p>
+            <h2 className="text-h3 mb-6 tracking-[0.055rem]">
+              Institutional events
+            </h2>
+            <p className="mb-12 font-medium">
+              <span className="font-bold">
+                Step inside the room where decisions are made.
+              </span>{" "}
+              Our events bring together a handpicked circle of industry
+              trailblazers and rising power players. Each gathering features
+              insider perspectives from world-class experts followed by high
+              value networking designed to spark business opportunities.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 p-4">
+              <div className="bg-primary grid size-22 place-items-center rounded-sm">
+                <EthGlyphColor />
+              </div>
+              <div className="flex-1 shrink-0 space-y-1">
+                <h3 className="text-h6 text-nowrap">
+                  Ethereum Foundation:
+                  <br />
+                  Institution dinner
+                </h3>
+                <p className="text-muted-foreground font-bold tracking-[0.02rem]">
+                  Buenos Aires
+                </p>
+                <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
+                  17.11.2025
+                </p>
+              </div>
+              <a href="#" className="forward-arrow secondary mx-auto">
+                Apply here
+              </a>
+            </div>
+          </div>
+        </section>
       </article>
     </main>
   )
