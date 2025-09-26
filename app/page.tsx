@@ -79,7 +79,7 @@ export default function Home() {
         </InfiniteSlider>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
-        <section className="flex gap-20 max-lg:flex-col">
+        <section id="numbers" className="flex gap-20 max-lg:flex-col">
           <div className="flex flex-col gap-y-10 max-lg:items-center">
             <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
@@ -96,6 +96,108 @@ export default function Home() {
             ))}
           </div>
           <div className="sm:hidden">TODO: Mobile slider</div>
+        </section>
+
+        <section id="digital-assets" className="w-full space-y-7">
+          <div className="space-y-2 text-center">
+            <h2>Understand Digital Assets</h2>
+            <p className="text-muted-foreground text-xl tracking-[0.025rem]">
+              From tokens to technology, simplified for you.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
+            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-3 md:h-64 md:py-12">
+              <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
+                <div className="bg-muted size-full" />
+              </div>
+              <div className="flex flex-col justify-between md:h-full">
+                <div className="space-y-2">
+                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                    Real World Assets (RWA)
+                  </h3>
+                  <div className="text-muted-foreground">
+                    Bringing physical assets like real estate, commodities, or
+                    bonds onto the blockchain.
+                  </div>
+                </div>
+                <a href="#" className="!mt-auto max-md:!mt-16">
+                  RWA details
+                </a>
+              </div>
+            </div>
+            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-3 md:h-64 md:py-12">
+              <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
+                <div className="bg-muted size-full" />
+              </div>
+              <div className="flex flex-col justify-between md:h-full">
+                <div className="space-y-2">
+                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                    Stablecoins
+                  </h3>
+                  <div className="text-muted-foreground">
+                    Digital currencies designed to maintain a steady value,
+                    often pegged to the US dollar or other assets.
+                  </div>
+                </div>
+                <a href="#" className="!mt-auto max-md:!mt-16">
+                  Stablecoin details
+                </a>
+              </div>
+            </div>
+            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+              <div className="space-y-2">
+                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
+                  <div className="bg-muted size-full" />
+                </div>
+                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                  Decentralized Finance (DeFi)
+                </h3>
+                <div className="text-muted-foreground">
+                  Open financial systems built on smart contracts instead of
+                  banks. DeFi lets anyone lend, borrow, trade, and earn yield
+                  directly from their wallet.{" "}
+                </div>
+              </div>
+              <a href="#" className="max-md:mt-6">
+                More on DeFi
+              </a>
+            </div>
+            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+              <div className="space-y-2">
+                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
+                  <div className="bg-muted size-full" />
+                </div>
+                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                  Privacy & Compliance
+                </h3>
+                <div className="text-muted-foreground">
+                  Deploy on Ethereum&apos;s public Mainnet for global
+                  transparency or use enterprise-grade privacy solutions for
+                  confidentiality and control.
+                </div>
+              </div>
+              <a href="#" className="max-md:mt-6">
+                More on Privacy
+              </a>
+            </div>
+            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+              <div className="space-y-2">
+                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
+                  <div className="bg-muted size-full" />
+                </div>
+                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                  L2 Ecosystem
+                </h3>
+                <div className="text-muted-foreground">
+                  Layer 2 networks scale Ethereum by processing transactions
+                  faster and cheaper.
+                </div>
+              </div>
+              <a href="#" className="max-md:mt-6">
+                More on L2s
+              </a>
+            </div>
+          </div>
         </section>
       </article>
     </main>
