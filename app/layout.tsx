@@ -78,12 +78,24 @@ export default function RootLayout({
               className="text-primary-foreground"
             />
             <nav className="text-primary-foreground flex gap-4 max-lg:hidden">
-              <a href="#">Digital assets</a>
-              <a href="#">Why ethereum</a>
-              <a href="#">Case studies</a>
-              <a href="#">Live data</a>
-              <a href="#">Regional providers</a>
-              <a href="#">Events</a>
+              <a href="#" className="primary">
+                Digital assets
+              </a>
+              <a href="#" className="primary">
+                Why ethereum
+              </a>
+              <a href="#" className="primary">
+                Case studies
+              </a>
+              <a href="#" className="primary">
+                Live data
+              </a>
+              <a href="#" className="primary">
+                Regional providers
+              </a>
+              <a href="#" className="primary">
+                Events
+              </a>
             </nav>
             <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
           </div>

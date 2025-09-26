@@ -88,7 +88,7 @@ export default function Home() {
             <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
-            <a href="#" className="primary w-fit text-lg">
+            <a href="#" className="forward-arrow secondary w-fit text-lg">
               Live Data
             </a>
           </div>
@@ -124,7 +124,7 @@ export default function Home() {
                     bonds onto the blockchain.
                   </div>
                 </div>
-                <a href="#" className="!mt-auto max-md:!mt-16">
+                <a href="#" className="forward-arrow !mt-auto max-md:!mt-16">
                   RWA details
                 </a>
               </div>
@@ -143,7 +143,7 @@ export default function Home() {
                     often pegged to the US dollar or other assets.
                   </div>
                 </div>
-                <a href="#" className="!mt-auto max-md:!mt-16">
+                <a href="#" className="forward-arrow !mt-auto max-md:!mt-16">
                   Stablecoin details
                 </a>
               </div>
@@ -162,7 +162,7 @@ export default function Home() {
                   directly from their wallet.{" "}
                 </div>
               </div>
-              <a href="#" className="max-md:mt-6">
+              <a href="#" className="forward-arrow max-md:mt-6">
                 More on DeFi
               </a>
             </div>
@@ -180,7 +180,7 @@ export default function Home() {
                   confidentiality and control.
                 </div>
               </div>
-              <a href="#" className="max-md:mt-6">
+              <a href="#" className="forward-arrow max-md:mt-6">
                 More on Privacy
               </a>
             </div>
@@ -197,7 +197,7 @@ export default function Home() {
                   faster and cheaper.
                 </div>
               </div>
-              <a href="#" className="max-md:mt-6">
+              <a href="#" className="forward-arrow max-md:mt-6">
                 More on L2s
               </a>
             </div>
@@ -210,7 +210,7 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Why Ethereum?
               </h2>
-              <a href="#" className="primary w-fit text-lg">
+              <a href="#" className="forward-arrow secondary w-fit text-lg">
                 Learn more
               </a>
             </div>
@@ -288,7 +288,7 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Who builds on Ethereum?
               </h2>
-              <a href="#" className="primary w-fit text-lg">
+              <a href="#" className="forward-arrow secondary w-fit text-lg">
                 See Case Studies
               </a>
             </div>

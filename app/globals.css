@@ -132,12 +132,16 @@
     @apply text-h6/[1.4];
   }
   a {
-    @apply text-section-foreground hover:text-section-foreground/70 font-medium after:ms-[1ch] after:content-["→"];
+    @apply text-section-foreground hover:text-section-foreground/70 font-medium;
   }
   a.primary {
+    @apply text-primary-foreground hover:text-primary-foreground/70;
+  }
+  a.secondary {
     @apply text-secondary-foreground hover:text-secondary-foreground/70;
   }
-  a.hide-arrow {
-    @apply after:ms-0 after:content-none;
+
+  .forward-arrow {
+    @apply after:content-["\00A0→"];
   }
 }
