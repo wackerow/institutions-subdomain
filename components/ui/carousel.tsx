@@ -9,10 +9,12 @@ import {
   useRef,
   useState,
 } from "react"
-import { ArrowLeft, ArrowRight } from "lucide-react"
 import { motion, Transition, useMotionValue } from "motion/react"
 
 import { cn } from "@/lib/utils/index"
+
+import ArrowLeftSharp from "../svg/arrow-left-sharp"
+import ArrowRightSharp from "../svg/arrow-right-sharp"
 
 export type CarouselContextType = {
   index: number
@@ -128,26 +130,25 @@ function CarouselNavigation({
 }: CarouselNavigationProps) {
   const { index, setIndex, itemsCount } = useCarousel()
 
+  const classes = cn(
+    "pointer-events-auto size-fit transition-[opacity,colors] duration-300",
+    !alwaysShow && "opacity-0 group-hover/hover:opacity-100",
+    alwaysShow
+      ? "disabled:*:text-muted"
+      : "group-hover/hover:disabled:*:text-muted",
+    classNameButton
+  )
   return (
     <div
       className={cn(
-        "pointer-events-none absolute top-1/2 left-[-12.5%] flex w-[125%] -translate-y-1/2 justify-between px-2",
+        "pointer-events-none mt-10 flex w-fit gap-x-4 max-sm:justify-center sm:mt-14",
         className
       )}
     >
       <button
         type="button"
         aria-label="Previous slide"
-        className={cn(
-          "pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300",
-          alwaysShow
-            ? "opacity-100"
-            : "opacity-0 group-hover/hover:opacity-100",
-          alwaysShow
-            ? "disabled:opacity-40"
-            : "group-hover/hover:disabled:opacity-40",
-          classNameButton
-        )}
+        className={classes}
         disabled={index === 0}
         onClick={() => {
           if (index > 0) {
@@ -155,21 +156,12 @@ function CarouselNavigation({
           }
         }}
       >
-        <ArrowLeft className="stroke-zinc-600" size={16} />
+        <ArrowLeftSharp className="text-secondary-foreground" />
       </button>
       <button
         type="button"
-        className={cn(
-          "pointer-events-auto h-fit w-fit rounded-full bg-zinc-50 p-2 transition-opacity duration-300",
-          alwaysShow
-            ? "opacity-100"
-            : "opacity-0 group-hover/hover:opacity-100",
-          alwaysShow
-            ? "disabled:opacity-40"
-            : "group-hover/hover:disabled:opacity-40",
-          classNameButton
-        )}
         aria-label="Next slide"
+        className={classes}
         disabled={index + 1 === itemsCount}
         onClick={() => {
           if (index < itemsCount - 1) {
@@ -177,7 +169,7 @@ function CarouselNavigation({
           }
         }}
       >
-        <ArrowRight className="stroke-zinc-600" size={16} />
+        <ArrowRightSharp className="text-secondary-foreground" />
       </button>
     </div>
   )
@@ -195,13 +187,8 @@ function CarouselIndicator({
   const { index, itemsCount, setIndex } = useCarousel()
 
   return (
-    <div
-      className={cn(
-        "absolute bottom-0 z-10 flex w-full items-center justify-center",
-        className
-      )}
-    >
-      <div className="flex space-x-2">
+    <div className={cn("mt-14 w-fit", className)}>
+      <div className="flex space-x-1.5">
         {Array.from({ length: itemsCount }, (_, i) => (
           <button
             key={i}
@@ -209,8 +196,8 @@ function CarouselIndicator({
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => setIndex(i)}
             className={cn(
-              "h-2 w-2 rounded-full transition-opacity duration-300",
-              index === i ? "bg-zinc-950" : "bg-zinc-900/50",
+              "size-[9px] shrink-0 rounded-full transition-opacity duration-300",
+              index === i ? "bg-secondary-foreground" : "bg-muted",
               classNameButton
             )}
           />
@@ -306,7 +293,7 @@ function CarouselContent({
         }
       }
       className={cn(
-        "flex items-center",
+        "flex w-full items-center",
         !disableDrag && "cursor-grab active:cursor-grabbing",
         className
       )}
