@@ -8,6 +8,8 @@ import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
 
+import articlePlaceholder1 from "@/public/images/article-1-placeholder.png"
+import articlePlaceholder2 from "@/public/images/article-2-placeholder.png"
 import eventPlaceholder from "@/public/images/event-placeholder.png"
 import antGroupSvg from "@/public/logos/ant-group.svg"
 import blackRock from "@/public/logos/black-rock.png"
@@ -392,6 +394,7 @@ export default function Home() {
           <Image
             src={eventPlaceholder}
             alt="event placeholder"
+            placeholder="blur"
             className="w-full shrink-0 object-cover grayscale max-lg:h-80 lg:w-md lg:max-w-md"
           />
           <div className="border-secondary-foreground border p-10 max-lg:mx-10 lg:my-10">
@@ -430,6 +433,46 @@ export default function Home() {
               <a href="#" className="forward-arrow secondary mx-auto">
                 Apply here
               </a>
+            </div>
+          </div>
+        </section>
+
+        <section id="articles" className="space-y-12">
+          <div className="flex flex-col items-center">
+            <h2>Articles</h2>
+            <p className="text-muted-foreground text-xl tracking-[0.025rem]">
+              Latest updates relevant for institutions
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-[6.5rem]">
+            <div className="space-y-4">
+              <Image
+                src={articlePlaceholder1}
+                alt="Article 1 placeholder"
+                className="h-52 object-cover"
+                placeholder="blur"
+              />
+              <h3 className="text-h5 tracking-[0.03rem]">
+                The stable door opens: How tokenized cash enables next-gen
+                payments
+              </h3>
+              <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
+                17.11.2025
+              </p>
+            </div>
+            <div className="space-y-4">
+              <Image
+                src={articlePlaceholder2}
+                alt="Article 2 placeholder"
+                className="h-52 object-cover"
+                placeholder="blur"
+              />
+              <h3 className="text-h5 tracking-[0.03rem]">
+                A primer on Web3 adoption for enterprise
+              </h3>
+              <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
+                17.11.2025
+              </p>
             </div>
           </div>
         </section>
