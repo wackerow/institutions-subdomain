@@ -199,6 +199,86 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <div>
+          <section id="why" className="flex gap-10 max-lg:flex-col md:gap-20">
+            <div className="flex flex-col gap-y-10 max-lg:items-center">
+              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+                Why Ethereum?
+              </h2>
+              <a href="#" className="primary w-fit text-lg">
+                Learn more
+              </a>
+            </div>
+            <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Resilience
+                </h3>
+                <div className="text-muted-foreground">
+                  Ethereum has maintained{" "}
+                  <strong>10 years of uninterrupted uptime</strong> and liveness
+                  since its launch in 2015
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Liquidity Layer
+                </h3>
+                <div className="text-muted-foreground">
+                  $170B+ in monthly volume on DEXes. Ethereum has the{" "}
+                  <strong>deepest liquidity in any onchain environment</strong>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Credible Neutrality
+                </h3>
+                <div className="text-muted-foreground">
+                  <strong>No single point of failure</strong>, no central
+                  coordinator, and no pause button. Open source with{" "}
+                  <strong>no vendor lock in</strong>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Decentralization
+                </h3>
+                <div className="text-muted-foreground">
+                  Secured by <strong>1.1M+ validators worldwide</strong> with
+                  various client implementations, minimizing multiple risks
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Adoption
+                </h3>
+                <div className="text-muted-foreground">
+                  Over{" "}
+                  <strong>
+                    $140B in stablecoin TVL, $65B in DeFi TVL and 90% of all
+                    onchain RWAs
+                  </strong>{" "}
+                  live on Ethereum and its L2s
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Economic Security
+                </h3>
+                <div className="text-muted-foreground">
+                  Over $130B ETH is currently staked onchain, making Ethereum
+                  the{" "}
+                  <strong>
+                    most expensive smart contract platform to attack
+                  </strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr className="border-muted m-10 md:my-20" />
+        </div>
       </article>
     </main>
   )
