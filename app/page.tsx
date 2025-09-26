@@ -3,6 +3,13 @@ import Image, { StaticImageData } from "next/image"
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import EthGlyph from "@/components/svg/eth-glyph"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselIndicator,
+  CarouselItem,
+  CarouselNavigation,
+} from "@/components/ui/carousel"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
@@ -341,6 +348,71 @@ export default function Home() {
           </section>
 
           <hr className="border-muted m-10 md:my-20" />
+
+          <section
+            id="quotes"
+            className="relative flex gap-10 max-lg:flex-col md:gap-20"
+          >
+            <div className="flex flex-col gap-y-10 max-lg:items-center">
+              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+                What industry leaders say
+              </h2>
+            </div>
+            <div className="relative w-full">
+              <Carousel>
+                <CarouselContent className="">
+                  <CarouselItem>
+                    <div className="space-y-6">
+                      <div className="space-y-8 text-neutral-700 italic">
+                        <p>
+                          Saying Ethereum is the wrong blockchain because it has
+                          high gas fees is like saying Amazon shouldn&apos;t use
+                          the internet because dial-up was slow in 1995.
+                        </p>
+                        <p>
+                          Banks aren&apos;t building on 2015 Ethereum,
+                          they&apos;re using today&apos;s Ethereum stack with
+                          tomorrows upgrades
+                        </p>
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
+                        <p>
+                          <strong className="block">Tom Zschach</strong>
+                          CIO @ SWIFT
+                        </p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                  <CarouselItem>
+                    <div className="space-y-6">
+                      <div className="space-y-8 text-neutral-700 italic">
+                        <p>
+                          Saying Ethereum is the wrong blockchain because it has
+                          high gas fees is like saying Amazon shouldn&apos;t use
+                          the internet because dial-up was slow in 1995.
+                        </p>
+                        <p>
+                          Banks aren&apos;t building on 2015 Ethereum,
+                          they&apos;re using today&apos;s Ethereum stack with
+                          tomorrows upgrades
+                        </p>
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
+                        <p>
+                          <strong className="block">Tom Zschach</strong>
+                          CIO @ SWIFT
+                        </p>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                </CarouselContent>
+                <CarouselNavigation alwaysShow />
+                <CarouselIndicator />
+              </Carousel>
+            </div>
+          </section>
         </div>
       </article>
     </main>
