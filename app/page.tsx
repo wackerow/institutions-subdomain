@@ -7,10 +7,14 @@ import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
 
+import antGroupSvg from "@/public/logos/ant-group.svg"
 import blackRock from "@/public/logos/black-rock.png"
+import blackRockSvg from "@/public/logos/black-rock.svg"
 import citi from "@/public/logos/citi.png"
 import coinbase from "@/public/logos/coinbase.png"
+import coinbaseSvg from "@/public/logos/coinbase.svg"
 import etoro from "@/public/logos/etoro.png"
+import etoroSvg from "@/public/logos/etoro.svg"
 import fidelity from "@/public/logos/fidelity.png"
 import jpMorgan from "@/public/logos/jp-morgan.png"
 import mastercard from "@/public/logos/mastercard.png"
@@ -272,6 +276,65 @@ export default function Home() {
                   <strong>
                     most expensive smart contract platform to attack
                   </strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <hr className="border-muted m-10 md:my-20" />
+
+          <section id="who" className="flex gap-10 max-lg:flex-col md:gap-20">
+            <div className="flex flex-col gap-y-10 max-lg:items-center">
+              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+                Who builds on Ethereum?
+              </h2>
+              <a href="#" className="primary w-fit text-lg">
+                See Case Studies
+              </a>
+            </div>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
+                  Coinbase
+                </h3>
+                <Image src={coinbaseSvg} alt="Coinbase logo" className="h-10" />
+                <div className="text-muted-foreground">
+                  Onchain Tokenization on Ethereum via Securitize
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
+                  BlackRock
+                </h3>
+                <Image
+                  src={blackRockSvg}
+                  alt="BlackRock logo"
+                  className="h-10"
+                />
+                <div className="text-muted-foreground">
+                  Onchain Tokenization on Ethereum via Securitize
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
+                  eToro
+                </h3>
+                <Image src={etoroSvg} alt="eToro logo" className="h-10" />
+                <div className="text-muted-foreground">
+                  Onchain Tokenization on Ethereum via Securitize
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
+                  Ant Group
+                </h3>
+                <Image
+                  src={antGroupSvg}
+                  alt="Ant Group logo"
+                  className="h-10"
+                />
+                <div className="text-muted-foreground">
+                  Onchain Tokenization on Ethereum via Securitize
                 </div>
               </div>
             </div>
