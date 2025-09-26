@@ -183,11 +183,11 @@ export default function RootLayout({
               </div>
             </div>
           </div>
-          <div className="max-w-8xl mx-auto space-y-28 px-12 py-10">
-            <div className="flex justify-between gap-4">
-              <div className="space-y-7">
+          <div className="max-w-8xl mx-auto space-y-14 px-12 py-10 sm:space-y-9 xl:space-y-28">
+            <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
+              <div className="flex flex-col gap-y-7 max-sm:justify-center">
                 <EnterpriseAcceleration />
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-4 sm:gap-6">
                   <LinkedIn />
                   <YouTube />
                   <TikTok />
@@ -197,35 +197,19 @@ export default function RootLayout({
                   <BlueSky />
                 </div>
               </div>
-              <nav className="text-muted-foreground ms-auto flex gap-x-6 gap-y-1.5 text-end text-nowrap max-xl:flex-col">
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Digital assets
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Why ethereum
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Case studies
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Articles
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Events
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Regional providers
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Data hub
-                </a>
-                <a href="#" className="block text-sm tracking-[0.0175rem]">
-                  Contact
-                </a>
+              <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
+                <a href="#">Digital assets</a>
+                <a href="#">Why ethereum</a>
+                <a href="#">Case studies</a>
+                <a href="#">Articles</a>
+                <a href="#">Events</a>
+                <a href="#">Regional providers</a>
+                <a href="#">Data hub</a>
+                <a href="#">Contact</a>
               </nav>
             </div>
-            <div className="text-muted-foreground space-y-3">
-              <nav className="mx-auto flex justify-center gap-4">
+            <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
+              <nav className="*:text-muted-foreground *:hover:text-foreground mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
                 <a href="#">Privacy Policy</a>
                 <a href="#">Terms of Use</a>
                 <a href="#">Cookie Policy</a>
