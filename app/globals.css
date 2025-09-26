@@ -18,6 +18,8 @@
   --color-card: var(--card);
   --color-ring: var(--ring);
   --color-border: var(--border);
+  --color-section: var(--section);
+  --color-section-foreground: var(--section-foreground);
 
   --text-h1: 3.5rem;
   --text-h2: var(--text-5xl); /* 3rem */
@@ -77,7 +79,7 @@
 
   /* Disabled background and light text */
   --muted: oklch(0.86 0 0); /* #D1D1D1 */
-  --muted-foreground: oklch(0.556 0 0); /* #737373 gray */
+  --muted-foreground: oklch(0.542 0 0); /* #6F6F6F gray */
 
   --destructive: oklch(0.75 0.25 27);
 
@@ -128,5 +130,14 @@
   }
   h6 {
     @apply text-h6/[1.4];
+  }
+  a {
+    @apply text-section-foreground hover:text-section-foreground/70 font-medium after:ms-[1ch] after:content-["→"];
+  }
+  a.primary {
+    @apply text-secondary-foreground hover:text-secondary-foreground/70;
+  }
+  a.hide-arrow {
+    @apply after:ms-0 after:content-none;
   }
 }
