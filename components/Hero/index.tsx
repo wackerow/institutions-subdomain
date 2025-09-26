@@ -18,7 +18,7 @@ const Hero = ({ heading, shape: Shape, className, children }: HeroProps) => (
         {/* // TODO: Debug hero bg sizing */}
         <HeroBg className="max-w-full place-self-center" />
         {Shape && (
-          <Shape className="fill-primary-foreground absolute inset-0 place-self-center" />
+          <Shape className="fill-primary absolute inset-0 place-self-center" />
         )}
       </div>
     </div>
