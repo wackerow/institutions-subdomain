@@ -25,18 +25,18 @@ import swift from "@/public/logos/swift.png"
 import ubs from "@/public/logos/ubs.png"
 
 const logos: { src: StaticImageData; alt: string; className?: string }[] = [
-  { src: blackRock, alt: "blackRock logo" },
-  { src: citi, alt: "citi logo" },
-  { src: coinbase, alt: "coinbase logo" },
-  { src: etoro, alt: "etoro logo" },
-  { src: fidelity, alt: "fidelity logo" },
-  { src: jpMorgan, alt: "jpMorgan logo" },
-  { src: mastercard, alt: "mastercard logo" },
-  { src: robinhood, alt: "robinhood logo" },
-  { src: sony, alt: "sony logo" },
-  { src: standardChartered, alt: "standardChartered logo" },
-  { src: swift, alt: "swift logo" },
-  { src: ubs, alt: "ubs logo" },
+  { src: blackRock, alt: "BlackRock logo" },
+  { src: citi, alt: "Citi logo" },
+  { src: coinbase, alt: "Coinbase logo" },
+  { src: etoro, alt: "eToro logo" },
+  { src: fidelity, alt: "Fidelity logo" },
+  { src: jpMorgan, alt: "JPMorgan logo" },
+  { src: mastercard, alt: "Mastercard logo" },
+  { src: robinhood, alt: "Robinhood logo" },
+  { src: sony, alt: "Sony logo" },
+  { src: standardChartered, alt: "Standard Chartered logo" },
+  { src: swift, alt: "Swift logo" },
+  { src: ubs, alt: "UBS logo" },
 ]
 
 // TODO: Fetch live data
