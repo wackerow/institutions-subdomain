@@ -18,7 +18,12 @@ const Hero = ({
   className,
   children,
 }: HeroProps) => (
-  <div className={cn("bg-primary text-primary-foreground", className)}>
+  <div
+    className={cn(
+      "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground",
+      className
+    )}
+  >
     <div className="max-w-8xl mx-auto grid grid-cols-1 px-10 md:grid-cols-2">
       <div className="place-self-center">
         <h1 className="max-md:text-center">{heading}</h1>
@@ -28,7 +33,7 @@ const Hero = ({
         {/* // TODO: Debug hero bg sizing */}
         <HeroBg className="max-w-full place-self-center" />
         {Shape && (
-          <Shape className="fill-primary absolute inset-0 place-self-center" />
+          <Shape className="group-has-[.css-primary-invert]/body:fill-primary fill-background absolute inset-0 place-self-center" />
         )}
       </div>
     </div>

@@ -76,10 +76,12 @@ export default function Home() {
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero
+        data-label="hero"
         heading="The Institutional Liquidity Layer"
         shape={EthGlyph}
+        className="css-primary-invert"
         beneath={
-          <InfiniteSlider speedOnHover={32} gap={56} /* className="py-10" */>
+          <InfiniteSlider speedOnHover={32} gap={56}>
             {logos.map(({ src, alt, className }) => (
               <Image
                 key={alt}
@@ -97,7 +99,10 @@ export default function Home() {
             <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
-            <Link href="#" className="forward-arrow secondary w-fit text-lg">
+            <Link
+              href="#"
+              className="css-forward-arrow css-secondary w-fit text-lg"
+            >
               Live Data
             </Link>
           </div>
@@ -133,7 +138,10 @@ export default function Home() {
                     bonds onto the blockchain.
                   </div>
                 </div>
-                <Link href="#" className="forward-arrow !mt-auto max-md:!mt-16">
+                <Link
+                  href="#"
+                  className="css-forward-arrow !mt-auto max-md:!mt-16"
+                >
                   RWA details
                 </Link>
               </div>
@@ -152,7 +160,10 @@ export default function Home() {
                     often pegged to the US dollar or other assets.
                   </div>
                 </div>
-                <Link href="#" className="forward-arrow !mt-auto max-md:!mt-16">
+                <Link
+                  href="#"
+                  className="css-forward-arrow !mt-auto max-md:!mt-16"
+                >
                   Stablecoin details
                 </Link>
               </div>
@@ -171,7 +182,7 @@ export default function Home() {
                   directly from their wallet.{" "}
                 </div>
               </div>
-              <Link href="#" className="forward-arrow max-md:mt-6">
+              <Link href="#" className="css-forward-arrow max-md:mt-6">
                 More on DeFi
               </Link>
             </div>
@@ -189,7 +200,7 @@ export default function Home() {
                   confidentiality and control.
                 </div>
               </div>
-              <Link href="/privacy" className="forward-arrow max-md:mt-6">
+              <Link href="/privacy" className="css-forward-arrow max-md:mt-6">
                 More on Privacy
               </Link>
             </div>
@@ -206,7 +217,7 @@ export default function Home() {
                   faster and cheaper.
                 </div>
               </div>
-              <Link href="#" className="forward-arrow max-md:mt-6">
+              <Link href="#" className="css-forward-arrow max-md:mt-6">
                 More on L2s
               </Link>
             </div>
@@ -219,7 +230,10 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Why Ethereum?
               </h2>
-              <Link href="#" className="forward-arrow secondary w-fit text-lg">
+              <Link
+                href="#"
+                className="css-forward-arrow css-secondary w-fit text-lg"
+              >
                 Learn more
               </Link>
             </div>
@@ -297,7 +311,10 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Who builds on Ethereum?
               </h2>
-              <Link href="#" className="forward-arrow secondary w-fit text-lg">
+              <Link
+                href="#"
+                className="css-forward-arrow css-secondary w-fit text-lg"
+              >
                 See Case Studies
               </Link>
             </div>
@@ -435,7 +452,10 @@ export default function Home() {
                   17.11.2025
                 </p>
               </div>
-              <Link href="#" className="forward-arrow secondary mx-auto">
+              <Link
+                href="#"
+                className="css-forward-arrow css-secondary mx-auto"
+              >
                 Apply here
               </Link>
             </div>

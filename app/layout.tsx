@@ -75,34 +75,34 @@ export default function RootLayout({
         className={cn(
           satoshi.className,
           "grid min-h-screen grid-rows-[auto_1fr_auto] items-center justify-items-center",
-          "antialiased"
+          "group/body antialiased"
         )}
       >
-        <header className="bg-primary w-screen">
+        <header className="group-has-[.css-primary-invert]/body:bg-primary w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-10">
             <Link href="/">
               <SiteLogo
                 aria-label="Ethereum Foundation Enterprise logo"
-                className="text-primary-foreground"
+                className="group-has-[.css-primary-invert]/body:text-primary-foreground"
               />
             </Link>
-            <nav className="text-primary-foreground flex gap-4 max-lg:hidden">
-              <Link href="#" className="primary">
+            <nav className="flex gap-4 max-lg:hidden">
+              <Link href="#" className="css-primary-conditional">
                 Digital assets
               </Link>
-              <Link href="#" className="primary">
+              <Link href="#" className="css-primary-conditional">
                 Why ethereum
               </Link>
-              <Link href="#" className="primary">
+              <Link href="#" className="css-primary-conditional">
                 Case studies
               </Link>
-              <Link href="#" className="primary">
+              <Link href="#" className="css-primary-conditional">
                 Live data
               </Link>
-              <Link href="#" className="primary">
+              <Link href="#" className="css-primary-conditional">
                 Regional providers
               </Link>
-              <Link href="#" className="primary">
+              <Link href="#" className="css-primary-conditional">
                 Events
               </Link>
             </nav>

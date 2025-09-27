@@ -105,6 +105,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  
   h1,
   h2,
   h3,
@@ -131,17 +132,21 @@
   h6 {
     @apply text-h6/[1.4];
   }
+
   a {
     @apply text-section-foreground hover:text-section-foreground/70 font-medium;
   }
-  a.primary {
+  a.css-primary {
     @apply text-primary-foreground hover:text-primary-foreground/70;
   }
-  a.secondary {
+  a.css-primary-conditional {
+    @apply group-has-[.css-primary-invert]/body:text-primary-foreground group-has-[.css-primary-invert]/body:hover:text-primary-foreground/70;
+  }
+  a.css-secondary {
     @apply text-secondary-foreground hover:text-secondary-foreground/70;
   }
-
-  .forward-arrow {
+  
+  .css-forward-arrow {
     @apply after:content-["\00A0→"];
   }
 }
