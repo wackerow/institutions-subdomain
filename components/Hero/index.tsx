@@ -8,12 +8,22 @@ type HeroProps = {
   heading: string
   children?: ReactNode
   shape?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
+  beneath?: ReactNode
   className?: string
 }
-const Hero = ({ heading, shape: Shape, className, children }: HeroProps) => (
+const Hero = ({
+  heading,
+  beneath,
+  shape: Shape,
+  className,
+  children,
+}: HeroProps) => (
   <div className={cn("bg-primary text-primary-foreground", className)}>
     <div className="max-w-8xl mx-auto grid grid-cols-1 px-10 md:grid-cols-2">
-      <h1 className="place-self-center max-md:text-center">{heading}</h1>
+      <div className="place-self-center">
+        <h1 className="max-md:text-center">{heading}</h1>
+        {children}
+      </div>
       <div className="relative h-[420px]">
         {/* // TODO: Debug hero bg sizing */}
         <HeroBg className="max-w-full place-self-center" />
@@ -22,7 +32,7 @@ const Hero = ({ heading, shape: Shape, className, children }: HeroProps) => (
         )}
       </div>
     </div>
-    {children}
+    <div className="w-screen py-10">{beneath && beneath}</div>
   </div>
 )
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import Image from "next/image"
+import Link from "next/link"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import BlueSky from "@/components/svg/blue-sky"
@@ -79,29 +80,31 @@ export default function RootLayout({
       >
         <header className="bg-primary w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-10">
-            <SiteLogo
-              aria-label="Ethereum Foundation Enterprise logo"
-              className="text-primary-foreground"
-            />
+            <Link href="/">
+              <SiteLogo
+                aria-label="Ethereum Foundation Enterprise logo"
+                className="text-primary-foreground"
+              />
+            </Link>
             <nav className="text-primary-foreground flex gap-4 max-lg:hidden">
-              <a href="#" className="primary">
+              <Link href="#" className="primary">
                 Digital assets
-              </a>
-              <a href="#" className="primary">
+              </Link>
+              <Link href="#" className="primary">
                 Why ethereum
-              </a>
-              <a href="#" className="primary">
+              </Link>
+              <Link href="#" className="primary">
                 Case studies
-              </a>
-              <a href="#" className="primary">
+              </Link>
+              <Link href="#" className="primary">
                 Live data
-              </a>
-              <a href="#" className="primary">
+              </Link>
+              <Link href="#" className="primary">
                 Regional providers
-              </a>
-              <a href="#" className="primary">
+              </Link>
+              <Link href="#" className="primary">
                 Events
-              </a>
+              </Link>
             </nav>
             <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
           </div>
@@ -228,23 +231,23 @@ export default function RootLayout({
                 </div>
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
-                <a href="#">Digital assets</a>
-                <a href="#">Why ethereum</a>
-                <a href="#">Case studies</a>
-                <a href="#">Articles</a>
-                <a href="#">Events</a>
-                <a href="#">Regional providers</a>
-                <a href="#">Data hub</a>
-                <a href="#">Contact</a>
+                <Link href="#">Digital assets</Link>
+                <Link href="#">Why ethereum</Link>
+                <Link href="#">Case studies</Link>
+                <Link href="#">Articles</Link>
+                <Link href="#">Events</Link>
+                <Link href="#">Regional providers</Link>
+                <Link href="#">Data hub</Link>
+                <Link href="#">Contact</Link>
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
               <nav className="*:text-muted-foreground *:hover:text-foreground mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Use</a>
-                <a href="#">Cookie Policy</a>
-                <a href="#">ethereum foundation</a>
-                <a href="#">ethereum.org</a>
+                <Link href="#">Privacy Policy</Link>
+                <Link href="#">Terms of Use</Link>
+                <Link href="#">Cookie Policy</Link>
+                <Link href="#">ethereum foundation</Link>
+                <Link href="#">ethereum.org</Link>
               </nav>
               <div className="text-center">
                 © 2025 Ethereum Foundation. All rights reserved.

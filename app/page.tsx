@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from "next/image"
+import Link from "next/link"
 
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
@@ -74,27 +75,31 @@ const bigNumbers: { value: string; label: string }[] = [
 export default function Home() {
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="The Institutional Liquidity Layer" shape={EthGlyph}>
-        <InfiniteSlider speedOnHover={32} gap={56} className="py-10">
-          {logos.map(({ src, alt, className }) => (
-            <Image
-              key={alt}
-              src={src}
-              alt={alt}
-              className={cn("h-8 w-auto grayscale", className)}
-            />
-          ))}
-        </InfiniteSlider>
-      </Hero>
+      <Hero
+        heading="The Institutional Liquidity Layer"
+        shape={EthGlyph}
+        beneath={
+          <InfiniteSlider speedOnHover={32} gap={56} /* className="py-10" */>
+            {logos.map(({ src, alt, className }) => (
+              <Image
+                key={alt}
+                src={src}
+                alt={alt}
+                className={cn("h-8 w-auto grayscale", className)}
+              />
+            ))}
+          </InfiniteSlider>
+        }
+      />
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section id="numbers" className="flex gap-20 max-lg:flex-col">
           <div className="flex flex-col gap-y-10 max-lg:items-center">
             <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
-            <a href="#" className="forward-arrow secondary w-fit text-lg">
+            <Link href="#" className="forward-arrow secondary w-fit text-lg">
               Live Data
-            </a>
+            </Link>
           </div>
           <div className="grid grid-cols-[auto_auto] gap-14 max-sm:hidden">
             {bigNumbers.map(({ value, label }, idx) => (
@@ -128,9 +133,9 @@ export default function Home() {
                     bonds onto the blockchain.
                   </div>
                 </div>
-                <a href="#" className="forward-arrow !mt-auto max-md:!mt-16">
+                <Link href="#" className="forward-arrow !mt-auto max-md:!mt-16">
                   RWA details
-                </a>
+                </Link>
               </div>
             </div>
             <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-3 md:h-64 md:py-12">
@@ -147,9 +152,9 @@ export default function Home() {
                     often pegged to the US dollar or other assets.
                   </div>
                 </div>
-                <a href="#" className="forward-arrow !mt-auto max-md:!mt-16">
+                <Link href="#" className="forward-arrow !mt-auto max-md:!mt-16">
                   Stablecoin details
-                </a>
+                </Link>
               </div>
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
@@ -166,9 +171,9 @@ export default function Home() {
                   directly from their wallet.{" "}
                 </div>
               </div>
-              <a href="#" className="forward-arrow max-md:mt-6">
+              <Link href="#" className="forward-arrow max-md:mt-6">
                 More on DeFi
-              </a>
+              </Link>
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
               <div className="space-y-2">
@@ -184,9 +189,9 @@ export default function Home() {
                   confidentiality and control.
                 </div>
               </div>
-              <a href="#" className="forward-arrow max-md:mt-6">
+              <Link href="/privacy" className="forward-arrow max-md:mt-6">
                 More on Privacy
-              </a>
+              </Link>
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
               <div className="space-y-2">
@@ -201,9 +206,9 @@ export default function Home() {
                   faster and cheaper.
                 </div>
               </div>
-              <a href="#" className="forward-arrow max-md:mt-6">
+              <Link href="#" className="forward-arrow max-md:mt-6">
                 More on L2s
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -214,9 +219,9 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Why Ethereum?
               </h2>
-              <a href="#" className="forward-arrow secondary w-fit text-lg">
+              <Link href="#" className="forward-arrow secondary w-fit text-lg">
                 Learn more
-              </a>
+              </Link>
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
               <div className="space-y-2">
@@ -292,9 +297,9 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Who builds on Ethereum?
               </h2>
-              <a href="#" className="forward-arrow secondary w-fit text-lg">
+              <Link href="#" className="forward-arrow secondary w-fit text-lg">
                 See Case Studies
-              </a>
+              </Link>
             </div>
             <div className="grid grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               <div className="space-y-2">
@@ -430,9 +435,9 @@ export default function Home() {
                   17.11.2025
                 </p>
               </div>
-              <a href="#" className="forward-arrow secondary mx-auto">
+              <Link href="#" className="forward-arrow secondary mx-auto">
                 Apply here
-              </a>
+              </Link>
             </div>
           </div>
         </section>
