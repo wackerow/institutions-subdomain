@@ -217,7 +217,10 @@ export default function RootLayout({
                         >
                           <LinkedIn />
                         </a>
-                        <a href={"https://x.com/" + twitter}>
+                        <a
+                          href={"https://x.com/" + twitter}
+                          {...externalLinkProps}
+                        >
                           <Twitter />
                         </a>
                       </div>
@@ -266,6 +269,7 @@ export default function RootLayout({
                     key={href}
                     href={href}
                     className="text-muted-foreground hover:text-foreground group block"
+                    {...externalLinkProps}
                   >
                     {children}&nbsp;
                     <ExternalLink className="text-muted group-hover:text-muted-foreground !mb-[0.125em] inline size-[1em] shrink-0" />
