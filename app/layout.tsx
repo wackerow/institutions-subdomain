@@ -1,5 +1,7 @@
+import { ComponentProps } from "react"
+import { ExternalLink } from "lucide-react"
 import localFont from "next/font/local"
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
 
@@ -59,6 +61,78 @@ const satoshi = localFont({
   ],
 })
 
+const members: {
+  name: string
+  expertise: string
+  imgSrc: StaticImageData
+  twitter?: string
+  linkedIn?: string
+}[] = [
+  {
+    name: "David Walsh",
+    expertise: "Decentralized Finance",
+    imgSrc: david,
+    twitter: "davwals",
+    linkedIn: "davwals",
+  },
+  {
+    name: "Ash Morgan",
+    expertise: "RWA & Stablecoins",
+    imgSrc: ash,
+    twitter: "_ashmorgan_",
+    linkedIn: "ash-morgan-ef",
+  },
+  {
+    name: "Matthew Dawson",
+    expertise: "L2 Ecosystem",
+    imgSrc: matthew,
+    twitter: "ismimatthew",
+    linkedIn: "matthewdawsy",
+  },
+  {
+    name: "Mo Jalil",
+    expertise: "Privacy & Compliance",
+    imgSrc: mo,
+    twitter: "motypes",
+    linkedIn: "motypes",
+  },
+]
+
+const socialLinks: ComponentProps<"a">[] = [
+  { href: "#", children: <LinkedIn /> },
+  { href: "#", children: <YouTube /> },
+  { href: "#", children: <TikTok /> },
+  { href: "#", children: <Twitter /> },
+  { href: "#", children: <Threads /> },
+  { href: "#", children: <Farcaster /> },
+  { href: "#", children: <BlueSky /> },
+]
+const externalLinks: ComponentProps<"a">[] = [
+  {
+    href: "https://ethereum.org/privacy-policy/",
+    children: "Privacy Policy",
+  },
+  {
+    href: "https://ethereum.org/terms-of-use/",
+    children: "Terms of Use",
+  },
+  {
+    href: "https://ethereum.org/cookie-policy/",
+    children: "Cookie Policy",
+  },
+  {
+    href: "https://ethereum.foundation/",
+    children: "Ethereum Foundation",
+  },
+  {
+    href: "https://ethereum.org/",
+    children: "ethereum.org",
+  },
+]
+
+// TODO: Confirm rel options
+const externalLinkProps = { target: "_blank", rel: "noopener noreferrer" }
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -115,88 +189,41 @@ export default function RootLayout({
                 industry leaders.
               </p>
               <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
-                <div className="space-y-2">
-                  <div className="size-28 border border-dashed border-white/50 p-4">
-                    <Image
-                      src={david}
-                      className="size-full grayscale"
-                      alt="David Walsh"
-                      placeholder="blur"
-                      sizes="80px"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xl/[1.4] font-bold">David Walsh</p>
-                    <p className="text-sm tracking-[0.0175rem]">
-                      Decentralized Finance
-                    </p>
-                  </div>
-                  <div data-label="socials" className="flex gap-4">
-                    <LinkedIn className="text-[#5676E1]" />
-                    <Twitter className="text-[#5676E1]" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="size-28 border border-dashed border-white/50 p-4">
-                    <Image
-                      src={ash}
-                      className="size-full grayscale"
-                      alt="Ash Morgan"
-                      placeholder="blur"
-                      sizes="80px"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xl/[1.4] font-bold">Ash Morgan</p>
-                    <p className="text-sm tracking-[0.0175rem]">
-                      RWA & Stablecoins
-                    </p>
-                  </div>
-                  <div data-label="socials" className="flex gap-4">
-                    <LinkedIn className="text-[#5676E1]" />
-                    <Twitter className="text-[#5676E1]" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="size-28 border border-dashed border-white/50 p-4">
-                    <Image
-                      src={matthew}
-                      className="size-full grayscale"
-                      alt="Matthew Dawson"
-                      placeholder="blur"
-                      sizes="80px"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xl/[1.4] font-bold">Matthew Dawson</p>
-                    <p className="text-sm tracking-[0.0175rem]">L2 ecosystem</p>
-                  </div>
-                  <div data-label="socials" className="flex gap-4">
-                    <LinkedIn className="text-[#5676E1]" />
-                    <Twitter className="text-[#5676E1]" />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="size-28 border border-dashed border-white/50 p-4">
-                    <Image
-                      src={mo}
-                      className="size-full grayscale"
-                      alt="Mo Jalil"
-                      placeholder="blur"
-                      sizes="80px"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xl/[1.4] font-bold">Mo Jalil</p>
-                    <p className="text-sm tracking-[0.0175rem]">
-                      Privacy & Compliance
-                    </p>
-                  </div>
-                  <div data-label="socials" className="flex gap-4">
-                    <LinkedIn className="text-[#5676E1]" />
-                    <Twitter className="text-[#5676E1]" />
-                  </div>
-                </div>
+                {members.map(
+                  ({ name, expertise, imgSrc, twitter, linkedIn }) => (
+                    <div key={name} className="space-y-2">
+                      <div className="size-28 border border-dashed border-white/50 p-4">
+                        <Image
+                          src={imgSrc}
+                          className="size-full grayscale"
+                          alt={name + "profile picture"}
+                          placeholder="blur"
+                          sizes="80px"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-xl/[1.4] font-bold">{name}</p>
+                        <p className="text-sm tracking-[0.0175rem]">
+                          {expertise}
+                        </p>
+                      </div>
+                      <div
+                        data-label="socials"
+                        className="flex gap-4 *:!text-[hsl(226,70%,61%)] *:hover:!text-[hsl(226,70%,71%)]"
+                      >
+                        <a
+                          href={"https://www.linkedin.com/in/" + linkedIn}
+                          {...externalLinkProps}
+                        >
+                          <LinkedIn />
+                        </a>
+                        <a href={"https://x.com/" + twitter}>
+                          <Twitter />
+                        </a>
+                      </div>
+                    </div>
+                  )
+                )}
               </div>
               <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
                 <div className="space-y-4">
@@ -216,13 +243,9 @@ export default function RootLayout({
               <div className="flex flex-col gap-y-7 max-sm:justify-center">
                 <EnterpriseAcceleration />
                 <div className="flex items-center gap-4 sm:gap-6">
-                  <LinkedIn />
-                  <YouTube />
-                  <TikTok />
-                  <Twitter />
-                  <Threads />
-                  <Farcaster />
-                  <BlueSky />
+                  {socialLinks.map((props, idx) => (
+                    <a key={idx} {...externalLinkProps} {...props} />
+                  ))}
                 </div>
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
@@ -237,12 +260,17 @@ export default function RootLayout({
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
-              <nav className="*:text-muted-foreground *:hover:text-foreground mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
-                <Link href="#">Privacy Policy</Link>
-                <Link href="#">Terms of Use</Link>
-                <Link href="#">Cookie Policy</Link>
-                <Link href="#">ethereum foundation</Link>
-                <Link href="#">ethereum.org</Link>
+              <nav className="mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
+                {externalLinks.map(({ href, children }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="text-muted-foreground hover:text-foreground group block"
+                  >
+                    {children}&nbsp;
+                    <ExternalLink className="text-muted group-hover:text-muted-foreground !mb-[0.125em] inline size-[1em] shrink-0" />
+                  </a>
+                ))}
               </nav>
               <div className="text-center">
                 © 2025 Ethereum Foundation. All rights reserved.
