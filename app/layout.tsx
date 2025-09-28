@@ -5,7 +5,10 @@ import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
 
+import type { LinkProps } from "@/lib/types"
+
 import EnterpriseContactForm from "@/components/ContactForm"
+import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
 import BlueSky from "@/components/svg/blue-sky"
 import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
 import Farcaster from "@/components/svg/farcaster"
@@ -98,6 +101,13 @@ const members: {
   },
 ]
 
+const navItemLinks: LinkProps[] = [
+  { children: "Why Ethereum", href: "/why-ethereum" },
+  { children: "Case studies", href: "/case-studies" },
+  { children: "Live data", href: "/data-hub" },
+  { children: "Solution providers", href: "/providers" },
+]
+
 const socialLinks: ComponentProps<"a">[] = [
   { href: "#", children: <LinkedIn /> },
   { href: "#", children: <YouTube /> },
@@ -107,6 +117,7 @@ const socialLinks: ComponentProps<"a">[] = [
   { href: "#", children: <Farcaster /> },
   { href: "#", children: <BlueSky /> },
 ]
+
 const externalLinks: ComponentProps<"a">[] = [
   {
     href: "https://ethereum.org/privacy-policy/",
@@ -155,25 +166,16 @@ export default function RootLayout({
                 className="group-has-[.css-primary-invert]/body:text-primary-foreground"
               />
             </Link>
-            <nav className="flex gap-4 max-lg:hidden">
-              <Link href="#" className="css-primary-conditional">
-                Digital assets
-              </Link>
-              <Link href="#" className="css-primary-conditional">
-                Why ethereum
-              </Link>
-              <Link href="#" className="css-primary-conditional">
-                Case studies
-              </Link>
-              <Link href="#" className="css-primary-conditional">
-                Live data
-              </Link>
-              <Link href="#" className="css-primary-conditional">
-                Regional providers
-              </Link>
-              <Link href="#" className="css-primary-conditional">
-                Events
-              </Link>
+            <nav className="flex items-center gap-4 max-lg:hidden">
+              <DigitalAssetsDropdown />
+
+              {navItemLinks.map((props) => (
+                <Link
+                  key={props.children}
+                  className="css-primary-conditional"
+                  {...props}
+                />
+              ))}
             </nav>
             <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
           </div>
@@ -256,10 +258,8 @@ export default function RootLayout({
                 <Link href="#">Why ethereum</Link>
                 <Link href="#">Case studies</Link>
                 <Link href="#">Articles</Link>
-                <Link href="#">Events</Link>
-                <Link href="#">Regional providers</Link>
+                <Link href="#">Solution providers</Link>
                 <Link href="#">Data hub</Link>
-                <Link href="#">Contact</Link>
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">

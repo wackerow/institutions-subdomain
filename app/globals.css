@@ -139,7 +139,7 @@
   a.css-primary {
     @apply text-primary-foreground hover:text-primary-foreground/70;
   }
-  a.css-primary-conditional {
+  .css-primary-conditional {
     @apply group-has-[.css-primary-invert]/body:text-primary-foreground group-has-[.css-primary-invert]/body:hover:text-primary-foreground/70;
   }
   a.css-secondary {
