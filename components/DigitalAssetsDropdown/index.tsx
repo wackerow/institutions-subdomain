@@ -28,7 +28,7 @@ export const digitalAssetsLinks: LinkProps[] = [
   },
   {
     children: "Layer 2 (L2) Ecosystem",
-    href: "/l2",
+    href: "/layer-2",
   },
 ]
 
