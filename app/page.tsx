@@ -124,8 +124,8 @@ export default function Home() {
               From tokens to technology, simplified for you.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
-            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-3 md:h-64 md:py-12">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-full md:h-64 md:py-12">
               <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
                 <div className="bg-muted size-full" />
               </div>
@@ -147,29 +147,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-3 md:h-64 md:py-12">
-              <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
-                <div className="bg-muted size-full" />
-              </div>
-              <div className="flex flex-col justify-between md:h-full">
-                <div className="space-y-2">
-                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                    Stablecoins
-                  </h3>
-                  <div className="text-muted-foreground">
-                    Digital currencies designed to maintain a steady value,
-                    often pegged to the US dollar or other assets.
-                  </div>
-                </div>
-                <Link
-                  href="#"
-                  className="css-forward-arrow !mt-auto max-md:!mt-16"
-                >
-                  Stablecoin details
-                </Link>
-              </div>
-            </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
                 <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
                   <div className="bg-muted size-full" />
@@ -187,7 +165,7 @@ export default function Home() {
                 More on DeFi
               </Link>
             </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
                 <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
                   <div className="bg-muted size-full" />
@@ -205,7 +183,7 @@ export default function Home() {
                 More on Privacy
               </Link>
             </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:col-span-2 md:h-[26rem]">
+            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
                 <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
                   <div className="bg-muted size-full" />
