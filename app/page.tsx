@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils"
 import articlePlaceholder1 from "@/public/images/article-1-placeholder.png"
 import articlePlaceholder2 from "@/public/images/article-2-placeholder.png"
 import eventPlaceholder from "@/public/images/event-placeholder.png"
+import tomZschach from "@/public/images/tom-zschach.png"
 import antGroupSvg from "@/public/logos/ant-group.svg"
 import blackRock from "@/public/logos/black-rock.png"
 import blackRockSvg from "@/public/logos/black-rock.svg"
@@ -29,7 +30,6 @@ import sony from "@/public/logos/sony.png"
 import standardChartered from "@/public/logos/standard-chartered.png"
 import swift from "@/public/logos/swift.png"
 import ubs from "@/public/logos/ubs.png"
-
 const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: blackRock, alt: "BlackRock logo" },
   { src: citi, alt: "Citi logo" },
@@ -366,11 +366,17 @@ export default function Home() {
                   </p>
                   <p>
                     Banks aren&apos;t building on 2015 Ethereum, they&apos;re
-                    using today&apos;s Ethereum stack with tomorrows upgrades
+                    using today&apos;s Ethereum stack with tomorrows upgrades.
                   </p>
                 </div>
                 <div className="flex gap-4">
-                  <div className="bg-muted TODO-AVATAR size-12 shrink-0 rounded-full" />
+                  <Image
+                    src={tomZschach}
+                    className="size-12 shrink-0 rounded-full grayscale"
+                    alt="Tom Zschach profile picture"
+                    placeholder="blur"
+                    sizes="48px"
+                  />
                   <div>
                     <p className="font-bold">Tom Zschach</p>
                     <p className="font-medium">CIO @ SWIFT</p>
