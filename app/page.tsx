@@ -1,5 +1,6 @@
-import Image, { StaticImageData } from "next/image"
+import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
+import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
@@ -504,4 +505,9 @@ export default function Home() {
       </article>
     </main>
   )
+}
+
+export const metadata: Metadata = {
+  title: "Ethereum for Institutions",
+  description: "Ethereum: The Institutional Liquidity Layer",
 }

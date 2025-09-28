@@ -1,4 +1,5 @@
 import Image from "next/image"
+import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
 import Lock from "@/components/svg/lock"
@@ -238,4 +239,9 @@ export default function Page() {
       </article>
     </main>
   )
+}
+
+export const metadata: Metadata = {
+  title: "Privacy on Ethereum",
+  description: "Compliant Privacy on Ethereum for Institutions",
 }
