@@ -195,7 +195,7 @@ export default function RootLayout({
                       <div className="size-28 border border-dashed border-white/50 p-4">
                         <Image
                           src={imgSrc}
-                          className="size-full grayscale"
+                          className="from-background to-muted size-full bg-gradient-to-br grayscale"
                           alt={name + "profile picture"}
                           placeholder="blur"
                           sizes="80px"
