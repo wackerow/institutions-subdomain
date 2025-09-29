@@ -101,9 +101,10 @@ const members: {
   },
 ]
 
-const navItemLinks: LinkProps[] = [
+const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
   { children: "Why Ethereum", href: "/why-ethereum" },
   { children: "Case studies", href: "/case-studies" },
+  { children: "Articles", href: "/articles", footerOnly: true },
   { children: "Live data", href: "/data-hub" },
   { children: "Solution providers", href: "/providers" },
 ]
@@ -169,10 +170,13 @@ export default function RootLayout({
             <nav className="flex items-center gap-4 max-lg:hidden">
               <DigitalAssetsDropdown />
 
-              {navItemLinks.map((props) => (
+              {navItemLinks.map(({ footerOnly, ...props }) => (
                 <Link
                   key={props.children}
-                  className="css-primary-conditional"
+                  className={cn(
+                    "css-primary-conditional",
+                    footerOnly && "hidden"
+                  )}
                   {...props}
                 />
               ))}
@@ -194,7 +198,10 @@ export default function RootLayout({
                 {members.map(
                   ({ name, expertise, imgSrc, twitter, linkedIn }) => (
                     <div key={name} className="space-y-2">
-                      <div className="size-28 border border-dashed border-white/50 p-4">
+                      <div
+                        data-label="avatar"
+                        className="size-28 border border-dashed border-white/50 p-4"
+                      >
                         <Image
                           src={imgSrc}
                           className="from-background to-muted size-full bg-gradient-to-br grayscale"
@@ -254,12 +261,10 @@ export default function RootLayout({
                 </div>
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
-                <Link href="#">Digital assets</Link>
-                <Link href="#">Why ethereum</Link>
-                <Link href="#">Case studies</Link>
-                <Link href="#">Articles</Link>
-                <Link href="#">Solution providers</Link>
-                <Link href="#">Data hub</Link>
+                <Link href="#TODO">Digital assets</Link>
+                {navItemLinks.map((props) => (
+                  <Link key={props.children} {...props} />
+                ))}
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
