@@ -30,6 +30,7 @@ import sony from "@/public/logos/sony.png"
 import standardChartered from "@/public/logos/standard-chartered.png"
 import swift from "@/public/logos/swift.png"
 import ubs from "@/public/logos/ubs.png"
+
 const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: blackRock, alt: "BlackRock logo" },
   { src: citi, alt: "Citi logo" },
@@ -132,7 +133,7 @@ export default function Home() {
               <div className="flex flex-col justify-between md:h-full">
                 <div className="space-y-2">
                   <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                    Real World Assets (RWA)
+                    Real-World Assets (RWAs)
                   </h3>
                   <div className="text-muted-foreground">
                     Bringing physical assets like real estate, commodities, or
@@ -189,7 +190,7 @@ export default function Home() {
                   <div className="bg-muted size-full" />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                  L2 Ecosystem
+                  Layer 2 (L2) Ecosystem
                 </h3>
                 <div className="text-muted-foreground">
                   Layer 2 networks scale Ethereum by processing transactions

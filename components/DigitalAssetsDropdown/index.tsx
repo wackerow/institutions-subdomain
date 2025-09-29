@@ -15,7 +15,7 @@ import {
 
 export const digitalAssetsLinks: LinkProps[] = [
   {
-    children: "Real World Assets (RWAs)",
+    children: "Real-World Assets (RWAs)",
     href: "/rwa",
   },
   {
