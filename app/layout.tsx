@@ -262,8 +262,10 @@ export default function RootLayout({
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
                 <Link href="#TODO">Digital assets</Link>
-                {navItemLinks.map((props) => (
-                  <Link key={props.children} {...props} />
+                {navItemLinks.map(({ href, children }) => (
+                  <Link key={children} href={href}>
+                    {children}
+                  </Link>
                 ))}
               </nav>
             </div>
