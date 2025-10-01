@@ -2,6 +2,7 @@ import type { Metadata } from "next/types"
 
 import DeFiTotalValueLocked from "@/components/data/defi-tvl"
 import Layer2Data from "@/components/data/layer-2"
+import UltrasoundMoney from "@/components/data/ultrasound-money"
 import ValidatorCount from "@/components/data/validator-count"
 import Hero from "@/components/Hero"
 import EthGlyph from "@/components/svg/eth-glyph"
@@ -21,6 +22,7 @@ export default async function Page() {
             <ValidatorCount />
             <DeFiTotalValueLocked />
             <Layer2Data />
+            <UltrasoundMoney />
           </div>
         </section>
       </article>
