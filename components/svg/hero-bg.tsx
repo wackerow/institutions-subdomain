@@ -1,3 +1,7 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
 const HeroBg = ({
   width = 670, // pixels
   strokeWidth = 2, // pixels
@@ -8,6 +12,10 @@ const HeroBg = ({
   gap?: number
   lineCount?: number
 }) => {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
   const minLength = 0.4 * +width
   const maxLength = 0.9 * +width
   const xRange = +width - minLength
