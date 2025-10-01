@@ -180,11 +180,12 @@ const EnterpriseContactForm = () => {
 
     try {
       const sanitizedData = {
+        name: sanitizeInput(formData.name),
         email: sanitizeInput(formData.email),
         message: sanitizeInput(formData.message),
       }
 
-      const response = await fetch("/api/enterprise-contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

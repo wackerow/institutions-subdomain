@@ -10,6 +10,7 @@
     "format": "prettier \"**/*.{js,jsx,ts,tsx}\" --write"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.899.0",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-label": "^2.1.7",
