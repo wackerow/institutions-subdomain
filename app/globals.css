@@ -105,7 +105,7 @@
   body {
     @apply bg-background text-foreground;
   }
-  
+
   h1,
   h2,
   h3,
@@ -145,8 +145,14 @@
   a.css-secondary {
     @apply text-secondary-foreground hover:text-secondary-foreground/70;
   }
-  
+
   .css-forward-arrow {
     @apply after:content-["\00A0→"];
+  }
+
+  @keyframes heroBgSlide {
+    to {
+      transform: translateX(var(--x-travel));
+    }
   }
 }
