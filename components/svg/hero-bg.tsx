@@ -77,6 +77,13 @@ const HeroBg = ({
 }: HeroBgProps) => {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
+  // Fade-in after first mount to avoid hydration issues and then animate opacity
+  const [fadeIn, setFadeIn] = useState(false)
+  useEffect(() => {
+    if (!mounted) return
+    const id = requestAnimationFrame(() => setFadeIn(true))
+    return () => cancelAnimationFrame(id)
+  }, [mounted])
 
   const minLength = 0.4 * +width // Minimum 40% box width
   const maxLength = 0.9 * +width // Maximum 90% box width
@@ -117,6 +124,9 @@ const HeroBg = ({
   const ripplesRef = useRef<Ripple[]>([])
   const rafRef = useRef<number | null>(null)
   const [, setNow] = useState(0) // used to trigger re-renders during ripple animation
+  // Track animation timeline start and paused timestamp to sync with CSS slide
+  const animationStartRef = useRef<number>(performance.now())
+  const pausedAtRef = useRef<number | null>(null)
 
   // Track pointer globally so hover effect persists slightly outside the SVG bbox
   useEffect(() => {
@@ -156,6 +166,7 @@ const HeroBg = ({
       } else {
         if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
         rafRef.current = null
+        pausedAtRef.current = null // resume slide timeline reference
       }
     }
     rafRef.current = requestAnimationFrame(tick)
@@ -182,6 +193,10 @@ const HeroBg = ({
         spread: rippleSpread,
       }
       ripplesRef.current = [...ripplesRef.current, ripple]
+      // Capture the time we pause slide animation to keep offsets stable
+      if (pauseWhileRippling && ripplesRef.current.length === 1) {
+        pausedAtRef.current = ripple.start
+      }
       ensureAnimating()
     },
     [
@@ -191,6 +206,7 @@ const HeroBg = ({
       rippleSpeed,
       rippleDecay,
       rippleSpread,
+      pauseWhileRippling,
     ]
   )
 
@@ -243,6 +259,22 @@ const HeroBg = ({
     []
   )
 
+  // Current horizontal offset for a line's CSS slide at a given timestamp
+  const getLineOffsetX = useCallback(
+    (line: LineData, now: number) => {
+      const t0 = animationStartRef.current + line.delay * 1000
+      if (now <= t0) return 0
+      const period = line.duration * 1000
+      if (period <= 0) return 0
+      const cycle = 2 * period
+      const elapsed = (now - t0) % cycle
+      const phase = elapsed / period // 0..2
+      const f = phase <= 1 ? phase : 2 - phase // 0..1..0
+      return line.travel * f
+    },
+    []
+  )
+
   // Produce distorted path for a line (hover thickness/opacity applied elsewhere)
   const generatePath = useCallback(
     (line: LineData): string => {
@@ -274,15 +306,31 @@ const HeroBg = ({
 
       const points: { x: number; y: number }[] = []
       const now = performance.now()
+      const ripplesActive = ripples.length > 0
+      // Use a frozen time for slide offset while paused, but let ripples keep animating
+      const offsetNow =
+        pauseWhileRippling && ripplesActive && pausedAtRef.current != null
+          ? pausedAtRef.current
+          : now
+      const offsetX = getLineOffsetX(line, offsetNow)
       for (let i = 0; i < pxs.length; i++) {
         const px = pxs[i]
-        const py = y + rippleOffsetAt(px, y, ripples, now)
+        // Compare distances in visible coordinates by adding current slide offset
+        const visiblePx = px + offsetX
+        const py = y + rippleOffsetAt(visiblePx, y, ripples, now)
         points.push({ x: px, y: py })
       }
       // Smooth with Catmull–Rom -> Bezier using configured tension
       return toBezierPath(points, splineTension)
     },
-    [rippleOffsetAt, splineTension, rippleSampleCount, toBezierPath]
+    [
+      rippleOffsetAt,
+      splineTension,
+      rippleSampleCount,
+      toBezierPath,
+      getLineOffsetX,
+      pauseWhileRippling,
+    ]
   )
 
   if (!mounted) return null
@@ -298,7 +346,11 @@ const HeroBg = ({
       xmlns="http://www.w3.org/2000/svg"
       overflow="visible"
       onPointerDown={handlePointerDown}
-      style={{ touchAction: "none" }}
+      style={{
+        touchAction: "none",
+        opacity: fadeIn ? 1 : 0,
+        transition: "opacity 250ms ease",
+      }}
       {...props}
     >
       {lines.map((line) => {
