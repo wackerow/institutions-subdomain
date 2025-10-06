@@ -51,6 +51,7 @@ type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   pauseWhileRippling?: boolean
   initialDrawMs?: number
   initialDrawStaggerMs?: number
+  reducedMotionFadeMs?: number
 }
 
 const HeroBg = ({
@@ -77,6 +78,7 @@ const HeroBg = ({
   pauseWhileRippling = true,
   initialDrawMs = 300,
   initialDrawStaggerMs = 12,
+  reducedMotionFadeMs = 250,
   ...props
 }: HeroBgProps) => {
   const [mounted, setMounted] = useState(false)
@@ -132,6 +134,28 @@ const HeroBg = ({
   const animationStartRef = useRef<number>(performance.now())
   const pausedAtRef = useRef<number | null>(null)
 
+  // Prefers-reduced-motion handling
+  const [reduceMotion, setReduceMotion] = useState(false)
+  useEffect(() => {
+    if (typeof window === "undefined" || !("matchMedia" in window)) return
+    const mql = window.matchMedia("(prefers-reduced-motion: reduce)")
+    const onChange = () => setReduceMotion(mql.matches)
+    onChange()
+    if (typeof mql.addEventListener === "function") {
+      mql.addEventListener("change", onChange)
+      return () => mql.removeEventListener("change", onChange)
+    }
+  }, [])
+
+  // If reduced motion toggles on, clear ripples and stop RAF
+  useEffect(() => {
+    if (!reduceMotion) return
+    ripplesRef.current = []
+    if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
+    rafRef.current = null
+    pausedAtRef.current = null
+  }, [reduceMotion])
+
   // Track pointer globally so hover effect persists slightly outside the SVG bbox
   useEffect(() => {
     const onMove = (e: PointerEvent) => {
@@ -180,6 +204,7 @@ const HeroBg = ({
     React.PointerEventHandler<SVGSVGElement>
   >(
     (e) => {
+      if (reduceMotion) return
       const svg = e.currentTarget
       const rect = svg.getBoundingClientRect()
       const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top }
@@ -204,6 +229,7 @@ const HeroBg = ({
       ensureAnimating()
     },
     [
+      reduceMotion,
       ensureAnimating,
       rippleAmplitude,
       rippleWavelength,
@@ -350,7 +376,14 @@ const HeroBg = ({
       xmlns="http://www.w3.org/2000/svg"
       overflow="visible"
       onPointerDown={handlePointerDown}
-      style={{ touchAction: "none" }}
+      style={{
+        touchAction: "none",
+        // For reduced motion, do a simple opacity fade-in instead of dash draw
+        opacity: reduceMotion ? (drawReady ? 1 : 0) : 1,
+        transition: reduceMotion
+          ? `opacity ${reducedMotionFadeMs}ms ease`
+          : undefined,
+      }}
       {...props}
     >
       {lines.map((line, idx) => {
@@ -399,11 +432,21 @@ const HeroBg = ({
             pathLength={1}
             style={{
               ...style,
-              // Center-out reveal: when not ready, zero-length dash centered at 0.5
-              strokeDasharray: drawReady ? "1 0" : "0 1",
-              strokeDashoffset: drawReady ? 0 : 0.5,
-              transition: `stroke-dasharray ${initialDrawMs}ms ease-out, stroke-dashoffset ${initialDrawMs}ms ease-out`,
-              transitionDelay: `${idx * initialDrawStaggerMs}ms`,
+              // Reduced motion: no dash draw; use full stroke and fade SVG opacity instead
+              ...(reduceMotion
+                ? {
+                    strokeDasharray: undefined,
+                    strokeDashoffset: undefined,
+                    transition: undefined,
+                    transitionDelay: undefined,
+                  }
+                : {
+                    // Center-out reveal: when not ready, zero-length dash centered at 0.5
+                    strokeDasharray: drawReady ? "1 0" : "0 1",
+                    strokeDashoffset: drawReady ? 0 : 0.5,
+                    transition: `stroke-dasharray ${initialDrawMs}ms ease-out, stroke-dashoffset ${initialDrawMs}ms ease-out`,
+                    transitionDelay: `${idx * initialDrawStaggerMs}ms`,
+                  }),
             }}
             data-hero-bg-line
             className="motion-reduce:!animate-none"
