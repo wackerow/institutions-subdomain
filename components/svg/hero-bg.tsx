@@ -75,7 +75,7 @@ const HeroBg = ({
   rippleLifetimeMs = 6000,
   rippleSampleCount = 21,
   splineTension = 1,
-  pauseWhileRippling = true,
+  pauseWhileRippling = false,
   initialDrawMs = 300,
   initialDrawStaggerMs = 12,
   reducedMotionFadeMs = 250,
@@ -124,6 +124,8 @@ const HeroBg = ({
 
   // Pointer hover state (for opacity/weight emphasis only)
   const [pointer, setPointer] = useState<XYCoord | null>(null)
+  // Keep a ref for the latest pointer to avoid rescheduling timers on movement
+  const pointerRef = useRef<XYCoord | null>(null)
   const svgRef = useRef<SVGSVGElement | null>(null)
 
   // Ripple animation state
@@ -133,6 +135,30 @@ const HeroBg = ({
   // Track animation timeline start and paused timestamp to sync with CSS slide
   const animationStartRef = useRef<number>(performance.now())
   const pausedAtRef = useRef<number | null>(null)
+  // Auto-hint ripple timers and last-trigger tracking
+  const hintTimeoutRef = useRef<number | null>(null)
+  const lastRippleAtRef = useRef<number | null>(null)
+
+  const clearHintTimeout = useCallback(() => {
+    if (hintTimeoutRef.current != null) {
+      clearTimeout(hintTimeoutRef.current)
+      hintTimeoutRef.current = null
+    }
+  }, [])
+
+  const randBetween = useCallback((minMs: number, maxMs: number) => {
+    return Math.floor(minMs + Math.random() * (maxMs - minMs))
+  }, [])
+
+  const isPointInsideSvg = useCallback(
+    (p: XYCoord | null) =>
+      !!p && p.x >= 0 && p.x <= +width && p.y >= 0 && p.y <= height,
+    [width, height]
+  )
+
+  const randomPointInSvg = useCallback((): XYCoord => {
+    return { x: Math.random() * +width, y: Math.random() * height }
+  }, [width, height])
 
   // Prefers-reduced-motion handling
   const [reduceMotion, setReduceMotion] = useState(false)
@@ -171,8 +197,10 @@ const HeroBg = ({
         pos.y <= rect.height + margin
       ) {
         setPointer(pos)
+        pointerRef.current = pos
       } else {
         setPointer(null)
+        pointerRef.current = null
       }
     }
     window.addEventListener("pointermove", onMove, { passive: true })
@@ -200,51 +228,7 @@ const HeroBg = ({
     rafRef.current = requestAnimationFrame(tick)
   }, [rippleLifetimeMs])
 
-  const handlePointerDown = useCallback<
-    React.PointerEventHandler<SVGSVGElement>
-  >(
-    (e) => {
-      if (reduceMotion) return
-      const svg = e.currentTarget
-      const rect = svg.getBoundingClientRect()
-      const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top }
-
-      // Create a new ripple centered at the click/tap
-      const ripple: Ripple = {
-        id: Math.floor(Math.random() * 1e9),
-        x: pos.x,
-        y: pos.y,
-        start: performance.now(),
-        amplitude: rippleAmplitude,
-        wavelength: rippleWavelength,
-        speed: rippleSpeed,
-        decay: rippleDecay,
-        spread: rippleSpread,
-      }
-      ripplesRef.current = [...ripplesRef.current, ripple]
-      // Capture the time we pause slide animation to keep offsets stable
-      if (pauseWhileRippling && ripplesRef.current.length === 1) {
-        pausedAtRef.current = ripple.start
-      }
-      ensureAnimating()
-    },
-    [
-      reduceMotion,
-      ensureAnimating,
-      rippleAmplitude,
-      rippleWavelength,
-      rippleSpeed,
-      rippleDecay,
-      rippleSpread,
-      pauseWhileRippling,
-    ]
-  )
-
-  useEffect(() => {
-    return () => {
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
+  // (handlePointerDown is defined after helper declarations)
 
   // Compute ripple vertical offset at a given x,y position
   const rippleOffsetAt = useCallback(
@@ -266,6 +250,120 @@ const HeroBg = ({
     },
     []
   )
+
+  // Helper to create a ripple at a specific position and reset hint timer
+  const createRippleAt = useCallback(
+    (x: number, y: number): boolean => {
+      if (reduceMotion) return false
+      const start = performance.now()
+      const ripple: Ripple = {
+        id: Math.floor(Math.random() * 1e9),
+        x,
+        y,
+        start,
+        amplitude: rippleAmplitude,
+        wavelength: rippleWavelength,
+        speed: rippleSpeed,
+        decay: rippleDecay,
+        spread: rippleSpread,
+      }
+      ripplesRef.current = [...ripplesRef.current, ripple]
+      lastRippleAtRef.current = start
+      if (pauseWhileRippling && ripplesRef.current.length === 1) {
+        pausedAtRef.current = start
+      }
+      ensureAnimating()
+      return true
+    },
+    [
+      reduceMotion,
+      rippleAmplitude,
+      rippleWavelength,
+      rippleSpeed,
+      rippleDecay,
+      rippleSpread,
+      pauseWhileRippling,
+      ensureAnimating,
+    ]
+  )
+
+  // Schedule the next hint ripple with random delay (8–16s), unless reduced motion
+  const scheduleNextHint = useCallback(() => {
+    clearHintTimeout()
+    if (reduceMotion) return
+    const delay = randBetween(8000, 16000)
+    hintTimeoutRef.current = window.setTimeout(() => {
+      // Only hint if no ripple is currently active
+      if (ripplesRef.current.length === 0 && !reduceMotion) {
+        const pt = randomPointInSvg()
+        createRippleAt(pt.x, pt.y)
+      }
+      // Schedule next hint regardless
+      scheduleNextHint()
+    }, delay)
+  }, [
+    clearHintTimeout,
+    reduceMotion,
+    randBetween,
+    randomPointInSvg,
+    createRippleAt,
+  ])
+
+  // Initial hint timer (4–8s) on mount or when reduced motion toggles off
+  useEffect(() => {
+    if (!mounted || reduceMotion) return
+    // If user already interacted (unlikely during initial seconds), skip immediate hint and schedule normal cadence
+    const initialDelay = randBetween(4000, 8000)
+    clearHintTimeout()
+    hintTimeoutRef.current = window.setTimeout(() => {
+      if (
+        ripplesRef.current.length === 0 &&
+        lastRippleAtRef.current == null &&
+        !reduceMotion
+      ) {
+        // Bias to cursor if inside bounding box; otherwise center of the SVG
+        const currentPointer = pointerRef.current
+        const pt = isPointInsideSvg(currentPointer)
+          ? (currentPointer as XYCoord)
+          : { x: +width / 2, y: height / 2 }
+        createRippleAt(pt.x, pt.y)
+      }
+      scheduleNextHint()
+    }, initialDelay)
+    return clearHintTimeout
+  }, [
+    mounted,
+    reduceMotion,
+    randBetween,
+    clearHintTimeout,
+    scheduleNextHint,
+    isPointInsideSvg,
+    width,
+    height,
+    createRippleAt,
+  ])
+
+  // Clean up on unmount
+  useEffect(() => () => clearHintTimeout(), [clearHintTimeout])
+
+  const handlePointerDown = useCallback<
+    React.PointerEventHandler<SVGSVGElement>
+  >(
+    (e) => {
+      if (reduceMotion) return
+      const svg = e.currentTarget
+      const rect = svg.getBoundingClientRect()
+      const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+      if (createRippleAt(pos.x, pos.y)) scheduleNextHint()
+    },
+    [reduceMotion, createRippleAt, scheduleNextHint]
+  )
+
+  useEffect(() => {
+    return () => {
+      if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
+    }
+  }, [])
 
   // Convert polyline points to a smooth Catmull–Rom Bezier path
   const toBezierPath = useCallback(
@@ -290,20 +388,17 @@ const HeroBg = ({
   )
 
   // Current horizontal offset for a line's CSS slide at a given timestamp
-  const getLineOffsetX = useCallback(
-    (line: LineData, now: number) => {
-      const t0 = animationStartRef.current + line.delay * 1000
-      if (now <= t0) return 0
-      const period = line.duration * 1000
-      if (period <= 0) return 0
-      const cycle = 2 * period
-      const elapsed = (now - t0) % cycle
-      const phase = elapsed / period // 0..2
-      const f = phase <= 1 ? phase : 2 - phase // 0..1..0
-      return line.travel * f
-    },
-    []
-  )
+  const getLineOffsetX = useCallback((line: LineData, now: number) => {
+    const t0 = animationStartRef.current + line.delay * 1000
+    if (now <= t0) return 0
+    const period = line.duration * 1000
+    if (period <= 0) return 0
+    const cycle = 2 * period
+    const elapsed = (now - t0) % cycle
+    const phase = elapsed / period // 0..2
+    const f = phase <= 1 ? phase : 2 - phase // 0..1..0
+    return line.travel * f
+  }, [])
 
   // Produce distorted path for a line (hover thickness/opacity applied elsewhere)
   const generatePath = useCallback(
