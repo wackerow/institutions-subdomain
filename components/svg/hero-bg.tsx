@@ -49,6 +49,8 @@ type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   rippleSampleCount?: number
   splineTension?: number
   pauseWhileRippling?: boolean
+  initialDrawMs?: number
+  initialDrawStaggerMs?: number
 }
 
 const HeroBg = ({
@@ -73,15 +75,17 @@ const HeroBg = ({
   rippleSampleCount = 21,
   splineTension = 1,
   pauseWhileRippling = true,
+  initialDrawMs = 300,
+  initialDrawStaggerMs = 12,
   ...props
 }: HeroBgProps) => {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
-  // Fade-in after first mount to avoid hydration issues and then animate opacity
-  const [fadeIn, setFadeIn] = useState(false)
+  // Trigger a one-time stroke draw animation on initial mount
+  const [drawReady, setDrawReady] = useState(false)
   useEffect(() => {
     if (!mounted) return
-    const id = requestAnimationFrame(() => setFadeIn(true))
+    const id = requestAnimationFrame(() => setDrawReady(true))
     return () => cancelAnimationFrame(id)
   }, [mounted])
 
@@ -346,14 +350,10 @@ const HeroBg = ({
       xmlns="http://www.w3.org/2000/svg"
       overflow="visible"
       onPointerDown={handlePointerDown}
-      style={{
-        touchAction: "none",
-        opacity: fadeIn ? 1 : 0,
-        transition: "opacity 250ms ease",
-      }}
+      style={{ touchAction: "none" }}
       {...props}
     >
-      {lines.map((line) => {
+      {lines.map((line, idx) => {
         const d = generatePath(line)
         const ripplesActive = ripplesRef.current.length > 0
         // Hover emphasis: adjust stroke width and opacity based on proximity to pointer
@@ -395,7 +395,16 @@ const HeroBg = ({
             strokeWidth={perPathStrokeWidth}
             vectorEffect="non-scaling-stroke"
             fill="none"
-            style={style}
+            // Normalize path length so dash values use 0..1 and animate drawing from 0 to full
+            pathLength={1}
+            style={{
+              ...style,
+              // Center-out reveal: when not ready, zero-length dash centered at 0.5
+              strokeDasharray: drawReady ? "1 0" : "0 1",
+              strokeDashoffset: drawReady ? 0 : 0.5,
+              transition: `stroke-dasharray ${initialDrawMs}ms ease-out, stroke-dashoffset ${initialDrawMs}ms ease-out`,
+              transitionDelay: `${idx * initialDrawStaggerMs}ms`,
+            }}
             data-hero-bg-line
             className="motion-reduce:!animate-none"
           />
