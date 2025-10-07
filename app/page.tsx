@@ -1,9 +1,11 @@
+import { Lock } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
+import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
 import EthGlyphColor from "@/components/svg/eth-glyph-color"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
@@ -127,8 +129,8 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="bg-card flex flex-col gap-6 p-6 md:col-span-full md:items-center">
-              <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
-                <div className="bg-muted size-full" />
+              <div className="size-24 shrink-0 overflow-hidden rounded-full max-md:p-2.5 md:size-24">
+                <MaskedParallelsIcon />
               </div>
               <div className="flex flex-col justify-between gap-10">
                 <div className="space-y-2 md:mx-auto md:max-w-xl md:text-center">
@@ -151,8 +153,8 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
-                  <div className="bg-muted size-full" />
+                <div className="size-24 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                  <MaskedParallelsIcon strokeWidth={1.5} gap={8} />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                   Decentralized Finance (DeFi)
@@ -172,8 +174,17 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
-                  <div className="bg-muted size-full" />
+                <div className="size-24 shrink-0 p-2.5">
+                  <MaskedParallelsIcon
+                    strokeWidth={1.5}
+                    gap={8}
+                    maskShape={
+                      <Lock
+                        size={128}
+                        className="size-32 text-white [&_rect]:fill-white"
+                      />
+                    }
+                  />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                   Privacy & Compliance
@@ -193,8 +204,8 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="TODO-IMAGE size-16 shrink-0 border border-dashed p-2.5">
-                  <div className="bg-muted size-full" />
+                <div className="size-24 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                  <MaskedParallelsIcon strokeWidth={1.5} gap={8} />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                   L2 Ecosystem
