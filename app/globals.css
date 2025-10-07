@@ -191,7 +191,7 @@
     @apply after:content-["\00A0→"];
   }
 
-  @keyframes heroBgSlide {
+  @keyframes hero-bg-slide {
     to {
       transform: translateX(var(--x-travel));
     }

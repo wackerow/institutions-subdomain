@@ -546,7 +546,7 @@ const HeroBg = ({
         )
         const style: CSSProperties & { "--x-travel"?: string } = {
           "--x-travel": `${line.travel}px`,
-          animation: `heroBgSlide ${line.duration}s linear ${line.delay}s infinite alternate`,
+          animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
           animationPlayState:
             ripplesActive && pauseWhileRippling ? "paused" : "running",
           willChange: "transform",
