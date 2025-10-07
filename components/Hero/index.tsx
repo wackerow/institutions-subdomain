@@ -1,23 +1,35 @@
-import type { JSX, ReactNode } from "react"
+import {
+  BadgeDollarSign,
+  ChartNoAxesCombined,
+  Layers2,
+  Lock,
+} from "lucide-react"
+import type { ReactNode } from "react"
+
+import EthGlyph from "@/components/svg/eth-glyph"
 
 import { cn } from "@/lib/utils"
 
 import HeroBg from "../svg/hero-bg"
 
+const heroShapes = {
+  "badge-dollar-sign": <BadgeDollarSign />,
+  "eth-glyph": <EthGlyph />,
+  "chart-no-axes-combined": <ChartNoAxesCombined />,
+  "layers-2": <Layers2 />,
+  lock: <Lock className="[&_rect]:fill-current" />,
+} as const satisfies Record<string, ReactNode>
+
+type HeroShape = keyof typeof heroShapes
+
 type HeroProps = {
   heading: string
   children?: ReactNode
-  shape?: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
+  shape?: HeroShape
   beneath?: ReactNode
   className?: string
 }
-const Hero = ({
-  heading,
-  beneath,
-  shape: Shape,
-  className,
-  children,
-}: HeroProps) => (
+const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
   <div
     className={cn(
       "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground overflow-x-hidden",
@@ -25,10 +37,13 @@ const Hero = ({
     )}
   >
     <div className="max-w-8xl relative mx-auto grid w-screen grid-cols-1 md:h-[420px] md:grid-cols-2">
-      <div className="pointer-events-none z-10 place-self-center px-10">
-        <h1 className="group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-35% to-transparent max-md:text-center md:to-70%">
-          {heading}
-        </h1>
+      <div
+        className={cn(
+          "pointer-events-none z-10 place-self-center px-10",
+          "group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-50% to-transparent md:to-70%"
+        )}
+      >
+        <h1 className="max-md:text-center">{heading}</h1>
         {children}
       </div>
       <div
@@ -43,8 +58,15 @@ const Hero = ({
             "max-[25rem]:scale-y-150 min-[25rem]:max-[32rem]:scale-y-130 min-[32rem]:max-sm:scale-y-120 sm:max-md:scale-y-110"
           )}
         />
-        {Shape && (
-          <Shape className="group-has-[.css-primary-invert]/body:fill-primary fill-background pointer-events-none absolute inset-0 place-self-center" />
+        {shape && (
+          <div
+            className={cn(
+              "pointer-events-none absolute inset-0 place-self-center [&_svg]:size-72",
+              "group-has-[.css-primary-invert]/body:text-primary text-background"
+            )}
+          >
+            {heroShapes[shape]}
+          </div>
         )}
       </div>
     </div>

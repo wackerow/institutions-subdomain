@@ -2,14 +2,13 @@ import Image from "next/image"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
-import Lock from "@/components/svg/lock"
 
 import blurWalkingPlaceholder from "@/public/images/blur-walking-placeholder.png"
 
 export default function Page() {
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="Compliant Privacy for Institutions" shape={Lock}>
+      <Hero heading="Compliant Privacy for Institutions" shape="lock">
         On Ethereum you can keep counterparties, amounts, and business logic
         confidential while settling against the deepest on-chain liquidity.
         Privacy isn&apos;t a sidechain or a silo, it&apos;s a set of open

@@ -6,7 +6,6 @@ import RealWorldAssets from "@/components/data/rwa"
 import UltrasoundMoney from "@/components/data/ultrasound-money"
 import ValidatorCount from "@/components/data/validator-count"
 import Hero from "@/components/Hero"
-import EthGlyph from "@/components/svg/eth-glyph"
 
 import fetchRWAStablecoins from "../api/rwaStablecoins/fetch"
 
@@ -15,7 +14,7 @@ export default async function Page() {
 
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="Data hub" shape={EthGlyph}>
+      <Hero heading="Data hub" shape="chart-no-axes-combined">
         Hero subtext
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">

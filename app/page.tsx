@@ -4,7 +4,6 @@ import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
-import EthGlyph from "@/components/svg/eth-glyph"
 import EthGlyphColor from "@/components/svg/eth-glyph-color"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
@@ -80,7 +79,7 @@ export default function Home() {
       <Hero
         data-label="hero"
         heading="The Institutional Liquidity Layer"
-        shape={EthGlyph}
+        shape="eth-glyph"
         className="css-primary-invert"
         beneath={
           <InfiniteSlider speedOnHover={32} gap={56}>
