@@ -46,6 +46,47 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  /* Animations */
+  --animate-quick-trace: quick-trace 2s ease-in-out infinite;
+  --animate-write-on-off: write-on-off 2s ease-in-out infinite;
+  --animate-fade-in-pause-out: fade-in-pause-out 5s linear infinite;
+
+  @keyframes quick-trace {
+    0% {
+      stroke-dasharray: 10% 200%;
+      stroke-dashoffset: -50%;
+    }
+
+    100% {
+      stroke-dasharray: 10% 200%;
+      stroke-dashoffset: 50%;
+    }
+  }
+
+  @keyframes write-on-off {
+    0% {
+      stroke-dasharray: 100% 100%;
+      stroke-dashoffset: -100%;
+    }
+
+    100% {
+      stroke-dasharray: 100% 100%;
+      stroke-dashoffset: 100%;
+    }
+  }
+
+  @keyframes fade-in-pause-out {
+    0%,
+    75% {
+      opacity: 0;
+    }
+
+    10%,
+    50% {
+      opacity: 0.3;
+    }
+  }
 }
 
 :root {
