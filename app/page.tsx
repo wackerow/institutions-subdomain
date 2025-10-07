@@ -405,7 +405,7 @@ export default function Home() {
             placeholder="blur"
             className="w-full shrink-0 object-cover grayscale max-lg:h-80 lg:w-md lg:max-w-md"
           />
-          <div className="border-secondary-foreground border p-10 max-lg:mx-10 lg:my-10">
+          <div className="border-secondary-foreground border p-4 max-sm:mx-6 sm:p-10 sm:max-lg:mx-10 lg:my-10">
             <p className="text-accent-foreground font-bold tracking-[0.02rem]">
               Premier
             </p>
@@ -421,12 +421,12 @@ export default function Home() {
               insider perspectives from world-class experts followed by high
               value networking designed to spark business opportunities.
             </p>
-            <div className="flex flex-wrap items-center gap-4 p-4">
+            <div className="flex flex-wrap gap-4 max-sm:flex-col max-sm:py-4 sm:items-center sm:p-4">
               <div className="bg-primary grid size-22 place-items-center rounded-sm">
                 <EthGlyphColor />
               </div>
               <div className="flex-1 shrink-0 space-y-1">
-                <h3 className="text-h6 text-nowrap">
+                <h3 className="text-h6 sm:text-nowrap">
                   Ethereum Foundation:
                   <br />
                   Institution dinner
@@ -440,7 +440,7 @@ export default function Home() {
               </div>
               <Link
                 href="#"
-                className="css-forward-arrow css-secondary mx-auto"
+                className="css-forward-arrow css-secondary sm:mx-auto"
               >
                 Apply here
               </Link>

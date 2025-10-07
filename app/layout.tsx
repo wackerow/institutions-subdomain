@@ -159,7 +159,7 @@ export default function RootLayout({
           "group/body antialiased"
         )}
       >
-        <header className="group-has-[.css-primary-invert]/body:bg-primary w-screen">
+        <header className="group-has-[.css-primary-invert]/body:bg-primary w-full max-w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-10">
             <Link href="/">
               <SiteLogo
@@ -186,7 +186,7 @@ export default function RootLayout({
         </header>
         {children}
         <footer className="row-start-3">
-          <div className="bg-primary text-primary-foreground w-screen px-4 py-20 sm:px-10">
+          <div className="bg-primary text-primary-foreground w-full px-4 py-20 sm:px-10">
             <div className="mx-auto flex max-w-3xl flex-col items-center">
               <h2 className="text-h3">Our team</h2>
               <p className="mb-8 max-w-xl text-center">
