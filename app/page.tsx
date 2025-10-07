@@ -119,31 +119,33 @@ export default function Home() {
 
         <section id="digital-assets" className="w-full space-y-7">
           <div className="space-y-2 text-center">
-            <h2>Understand Digital Assets</h2>
+            <h2>Institutional Use Cases</h2>
             <p className="text-muted-foreground text-xl tracking-[0.025rem]">
-              From tokens to technology, simplified for you.
+              Explore Ethereum&apos;s digital asset landscape, from tokens to
+              technologies.
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="bg-card flex h-fit gap-6 p-6 max-md:flex-col md:col-span-full md:h-64 md:py-12">
+            <div className="bg-card flex flex-col gap-6 p-6 md:col-span-full md:items-center">
               <div className="TODO-IMAGE size-16 shrink-0 border border-dashed max-md:p-2.5 md:size-24">
                 <div className="bg-muted size-full" />
               </div>
-              <div className="flex flex-col justify-between md:h-full">
-                <div className="space-y-2">
+              <div className="flex flex-col justify-between gap-10">
+                <div className="space-y-2 md:mx-auto md:max-w-xl md:text-center">
                   <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                    Real-World Assets (RWAs)
+                    RWAs & Stablecoins
                   </h3>
                   <div className="text-muted-foreground">
-                    Bringing physical assets like real estate, commodities, or
-                    bonds onto the blockchain.
+                    Real-world assets tokenize offchain assets, like real
+                    estate, commodities, or bonds, while stablecoins design for
+                    steady value, often pegged to assets like USD.
                   </div>
                 </div>
                 <Link
                   href="#"
-                  className="css-forward-arrow !mt-auto max-md:!mt-16"
+                  className="css-forward-arrow css-secondary md:mx-auto"
                 >
-                  RWA details
+                  More on RWAs
                 </Link>
               </div>
             </div>
@@ -158,10 +160,13 @@ export default function Home() {
                 <div className="text-muted-foreground">
                   Open financial systems built on smart contracts instead of
                   banks. DeFi lets anyone lend, borrow, trade, and earn yield
-                  directly from their wallet.{" "}
+                  directly from their wallet.
                 </div>
               </div>
-              <Link href="#" className="css-forward-arrow max-md:mt-6">
+              <Link
+                href="#"
+                className="css-forward-arrow css-secondary max-md:mt-6"
+              >
                 More on DeFi
               </Link>
             </div>
@@ -175,11 +180,14 @@ export default function Home() {
                 </h3>
                 <div className="text-muted-foreground">
                   Deploy on Ethereum&apos;s public Mainnet for global
-                  transparency or use enterprise-grade privacy solutions for
+                  transparency, or use enterprise-grade privacy solutions for
                   confidentiality and control.
                 </div>
               </div>
-              <Link href="/privacy" className="css-forward-arrow max-md:mt-6">
+              <Link
+                href="/privacy"
+                className="css-forward-arrow css-secondary max-md:mt-6"
+              >
                 More on Privacy
               </Link>
             </div>
@@ -189,14 +197,17 @@ export default function Home() {
                   <div className="bg-muted size-full" />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                  Layer 2 (L2) Ecosystem
+                  L2 Ecosystem
                 </h3>
                 <div className="text-muted-foreground">
                   Layer 2 networks scale Ethereum by processing transactions
                   faster and cheaper.
                 </div>
               </div>
-              <Link href="#" className="css-forward-arrow max-md:mt-6">
+              <Link
+                href="#"
+                className="css-forward-arrow css-secondary max-md:mt-6"
+              >
                 More on L2s
               </Link>
             </div>
