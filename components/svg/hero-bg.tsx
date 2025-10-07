@@ -8,6 +8,8 @@ import {
   useState,
 } from "react"
 
+type XYCoord = { x: number; y: number }
+
 type LineData = {
   id: string
   x: number
@@ -18,8 +20,6 @@ type LineData = {
   duration: number
   delay: number
 }
-
-type XYCoord = { x: number; y: number }
 
 type Ripple = {
   id: number
@@ -160,6 +160,27 @@ const HeroBg = ({
     return { x: Math.random() * +width, y: Math.random() * height }
   }, [width, height])
 
+  // Helper: convert client coordinates to SVG internal coordinates using getScreenCTM
+  const svgPointFromClient = useCallback(
+    (svg: SVGSVGElement, clientX: number, clientY: number) => {
+      // Prefer exact mapping via getScreenCTM; fall back to rect scaling
+      const pt = svg.createSVGPoint()
+      pt.x = clientX
+      pt.y = clientY
+      const ctm = svg.getScreenCTM()
+      if (ctm) {
+        const inv = ctm.inverse()
+        const mapped = pt.matrixTransform(inv)
+        return { x: mapped.x, y: mapped.y }
+      }
+      const rect = svg.getBoundingClientRect()
+      const sx = +width / rect.width
+      const sy = height / rect.height
+      return { x: (clientX - rect.left) * sx, y: (clientY - rect.top) * sy }
+    },
+    [width, height]
+  )
+
   // Prefers-reduced-motion handling
   const [reduceMotion, setReduceMotion] = useState(false)
   useEffect(() => {
@@ -184,17 +205,31 @@ const HeroBg = ({
 
   // Track pointer globally so hover effect persists slightly outside the SVG bbox
   useEffect(() => {
+    // Detect coarse (touch) pointers so we can adjust touch-action and overflow behavior
+    if (typeof window !== "undefined") {
+      const mql = window.matchMedia("(pointer: coarse)")
+      const onMatch = () => {}
+      // noop; we don't need the value here but keep the media query to ensure compatibility
+      if (typeof mql.addEventListener === "function") {
+        mql.addEventListener("change", onMatch)
+      }
+    }
+
     const onMove = (e: PointerEvent) => {
       const svg = svgRef.current
       if (!svg) return
-      const rect = svg.getBoundingClientRect()
-      const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+      // Map client coordinates into the SVG's internal coordinate system so ripples align under touch
+      const pt = svgPointFromClient(svg, e.clientX, e.clientY)
+      if (!pt) return
+      const pos = { x: pt.x, y: pt.y }
       const margin = pointerMargin
+      const rect = svg.getBoundingClientRect()
+      // Use visible rect for margin checks but compare against svg internal coords for pointer storage
       if (
-        pos.x >= -margin &&
-        pos.x <= rect.width + margin &&
-        pos.y >= -margin &&
-        pos.y <= rect.height + margin
+        e.clientX >= rect.left - margin &&
+        e.clientX <= rect.right + margin &&
+        e.clientY >= rect.top - margin &&
+        e.clientY <= rect.bottom + margin
       ) {
         setPointer(pos)
         pointerRef.current = pos
@@ -205,7 +240,7 @@ const HeroBg = ({
     }
     window.addEventListener("pointermove", onMove, { passive: true })
     return () => window.removeEventListener("pointermove", onMove)
-  }, [pointerMargin])
+  }, [pointerMargin, svgPointFromClient])
 
   // Start/stop the ripple RAF loop depending on active ripples
   const ensureAnimating = useCallback(() => {
@@ -352,11 +387,12 @@ const HeroBg = ({
     (e) => {
       if (reduceMotion) return
       const svg = e.currentTarget
-      const rect = svg.getBoundingClientRect()
-      const pos = { x: e.clientX - rect.left, y: e.clientY - rect.top }
-      if (createRippleAt(pos.x, pos.y)) scheduleNextHint()
+      // Map the client coords into SVG coords so ripple starts exactly at touch point
+      const pt = svgPointFromClient(svg, e.clientX, e.clientY)
+      if (!pt) return
+      if (createRippleAt(pt.x, pt.y)) scheduleNextHint()
     },
-    [reduceMotion, createRippleAt, scheduleNextHint]
+    [reduceMotion, createRippleAt, scheduleNextHint, svgPointFromClient]
   )
 
   useEffect(() => {
@@ -472,8 +508,9 @@ const HeroBg = ({
       overflow="visible"
       onPointerDown={handlePointerDown}
       style={{
-        touchAction: "none",
-        // For reduced motion, do a simple opacity fade-in instead of dash draw
+        touchAction: "pan-y",
+        display: "block",
+        // keep reduced-motion fade, remove the responsive height/maxWidth changes
         opacity: reduceMotion ? (drawReady ? 1 : 0) : 1,
         transition: reduceMotion
           ? `opacity ${reducedMotionFadeMs}ms ease`
