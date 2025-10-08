@@ -97,7 +97,7 @@ export function ScalingPanel() {
   ]
 
   return (
-    <div className="flex min-h-90 gap-10 border p-8 max-lg:max-w-[calc(100vw-96px)] max-lg:flex-col">
+    <div className="flex min-h-90 gap-10 border p-8 max-lg:flex-col max-sm:max-w-[calc(100vw-48px)] sm:max-lg:max-w-[calc(100vw-96px)]">
       <div className="flex gap-8 max-lg:overflow-x-auto max-lg:pb-4 lg:flex-col">
         {items.map(({ title }, index) => (
           <button
