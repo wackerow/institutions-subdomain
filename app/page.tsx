@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { InfoIcon } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
@@ -8,18 +9,15 @@ import Hero from "@/components/Hero"
 import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
 import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-invert"
 import CircleRing from "@/components/svg/circle-ring"
-import EthGlyphColor from "@/components/svg/eth-glyph-color"
 import Layers2Fill from "@/components/svg/layers-2-fill"
 import LockFill from "@/components/svg/lock-fill"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
 
-import articlePlaceholder1 from "@/public/images/article-1-placeholder.png"
-import articlePlaceholder2 from "@/public/images/article-2-placeholder.png"
-import eventPlaceholder from "@/public/images/event-placeholder.png"
+import libraryCiti from "@/public/images/library/citi-1.png"
+import libraryEthtokyo from "@/public/images/library/ethtokyo-1.png"
 import tomZschach from "@/public/images/tom-zschach.png"
-import antGroupSvg from "@/public/logos/ant-group.svg"
 import blackRock from "@/public/logos/black-rock.png"
 import blackRockSvg from "@/public/logos/black-rock.svg"
 import citi from "@/public/logos/citi.png"
@@ -35,6 +33,7 @@ import sony from "@/public/logos/sony.png"
 import standardChartered from "@/public/logos/standard-chartered.png"
 import swift from "@/public/logos/swift.png"
 import ubs from "@/public/logos/ubs.png"
+import visaSvg from "@/public/logos/visa.svg"
 
 const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: blackRock, alt: "BlackRock logo" },
@@ -87,6 +86,57 @@ const bigNumbers: { value: string; label: ReactNode }[] = [
         2025 ecosystem average
       </>
     ),
+  },
+]
+
+// TODO: Live metrics and info tooltips
+const platforms: {
+  name: string
+  imgSrc: StaticImageData
+  description: ReactNode
+  metric: ReactNode
+  className?: string
+}[] = [
+  {
+    name: "BlackRock",
+    imgSrc: blackRockSvg,
+    description: "Onchain Tokenization via Securitize",
+    metric: "$2.1B+ AUM",
+  },
+  {
+    name: "Coinbase",
+    imgSrc: coinbaseSvg,
+    description: "Base Layer-2 Ecosystem",
+    metric: "$4.77B+ TVL",
+  },
+  {
+    name: "Visa",
+    imgSrc: visaSvg,
+    description: "Stablecoin Payment Settlement",
+    metric: "$2.67T Volume 2025",
+  },
+  {
+    name: "eToro",
+    imgSrc: etoroSvg,
+    description: "Stock Tokenization Platform",
+    metric: "100 Stocks Trade 24/5",
+  },
+]
+
+const library: {
+  title: string
+  imgSrc: StaticImageData
+  date: string
+}[] = [
+  {
+    title: "Citi - Stablecoins 2030 Web3 to Wall Street",
+    imgSrc: libraryCiti,
+    date: "September 25 2025",
+  },
+  {
+    title: "ETHTokyo - Ethereum: From tech to real",
+    imgSrc: libraryEthtokyo,
+    date: "September 16 2025",
   },
 ]
 
@@ -246,10 +296,13 @@ export default function Home() {
         </section>
 
         <div>
-          <section id="why" className="flex gap-10 max-lg:flex-col md:gap-20">
+          <section
+            id="leader"
+            className="flex gap-10 max-lg:flex-col md:gap-20"
+          >
             <div className="flex flex-col gap-y-10 max-lg:items-center">
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
-                Why Ethereum?
+                Ethereum Leads Where It Matters
               </h2>
               <Link
                 href="#"
@@ -263,63 +316,68 @@ export default function Home() {
                 <h3 className="text-h5 text-foreground tracking-[0.03rem]">
                   Resilience
                 </h3>
-                <div className="text-muted-foreground">
+                <div className="text-muted-foreground font-medium">
                   Ethereum has maintained{" "}
-                  <strong>10 years of uninterrupted uptime</strong> and liveness
-                  since its launch in 2015
+                  <strong>10 years of uninterrupted uptime and liveness</strong>{" "}
+                  since its launch. Zero downtime through 15+ successful network
+                  upgrades.
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Liquidity Layer
+                  Flexibility{" "}
                 </h3>
-                <div className="text-muted-foreground">
-                  $170B+ in monthly volume on DEXes. Ethereum has the{" "}
-                  <strong>deepest liquidity in any onchain environment</strong>
+                <div className="text-muted-foreground font-medium">
+                  Open source, with{" "}
+                  <strong>
+                    complete freedom from lock-in to any single vendor
+                  </strong>
+                  , stack, or architecture. Institutions retain full optionality
+                  for their onchain products as business requirements change.
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-h5 text-foreground tracking-[0.03rem]">
                   Credible Neutrality
                 </h3>
-                <div className="text-muted-foreground">
-                  <strong>No single point of failure</strong>, no central
-                  coordinator, and no pause button. Open source with{" "}
-                  <strong>no vendor lock in</strong>
+                <div className="text-muted-foreground font-medium">
+                  No single point of failure, no central coordinator, no pause
+                  button, <strong>no counterparty risk</strong>. Resilient to
+                  geopolitical, regulatory, and infrastructure-level risks.
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-h5 text-foreground tracking-[0.03rem]">
                   Decentralization
                 </h3>
-                <div className="text-muted-foreground">
-                  Secured by <strong>1.1M+ validators worldwide</strong> with
-                  various client implementations, minimizing multiple risks
+                <div className="text-muted-foreground font-medium">
+                  Secured by 1.1M+ validators distributed across geographies and
+                  client implementations.{" "}
+                  <strong>$130B+ in economic security</strong> makes Ethereum
+                  the most expensive smart contract platform to attack.
                 </div>
               </div>
               <div className="space-y-2">
                 <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Adoption
+                  Deep Liquidity
                 </h3>
-                <div className="text-muted-foreground">
-                  Over{" "}
+                <div className="text-muted-foreground font-medium">
+                  $12B+ in daily DEX volume,{" "}
                   <strong>
-                    $140B in stablecoin TVL, $65B in DeFi TVL and 90% of all
-                    onchain RWAs
-                  </strong>{" "}
-                  live on Ethereum and its L2s
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Economic Security
-                </h3>
-                <div className="text-muted-foreground">
-                  Over $130B ETH is currently staked onchain, making Ethereum
-                  the{" "}
-                  <strong>
-                    most expensive smart contract platform to attack
+                    the deepest liquidity of any onchain environment
                   </strong>
+                  . Ethereum is the chosen liquidity layer for institutions to
+                  build leading next-gen products.
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
+                  Tokenization
+                </h3>
+                <div className="text-muted-foreground font-medium">
+                  The leading platform for asset tokenization, with{" "}
+                  <strong>90% of all onchain RWAs deployed on Ethereum</strong>{" "}
+                  and its L2s, and $140B+ in stablecoin TVL.
                 </div>
               </div>
             </div>
@@ -339,51 +397,22 @@ export default function Home() {
                 See Case Studies
               </Link>
             </div>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
-                  Coinbase
-                </h3>
-                <Image src={coinbaseSvg} alt="Coinbase logo" className="h-10" />
-                <div className="text-muted-foreground">
-                  Onchain Tokenization on Ethereum via Securitize
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
-                  BlackRock
-                </h3>
-                <Image
-                  src={blackRockSvg}
-                  alt="BlackRock logo"
-                  className="h-10"
-                />
-                <div className="text-muted-foreground">
-                  Onchain Tokenization on Ethereum via Securitize
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
-                  eToro
-                </h3>
-                <Image src={etoroSvg} alt="eToro logo" className="h-10" />
-                <div className="text-muted-foreground">
-                  Onchain Tokenization on Ethereum via Securitize
-                </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
-                  Ant Group
-                </h3>
-                <Image
-                  src={antGroupSvg}
-                  alt="Ant Group logo"
-                  className="h-10"
-                />
-                <div className="text-muted-foreground">
-                  Onchain Tokenization on Ethereum via Securitize
-                </div>
-              </div>
+            <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
+              {platforms.map(
+                ({ name, imgSrc, description, metric, className }) => (
+                  <div key={name} className={cn("space-y-2", className)}>
+                    <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
+                      {name}
+                    </h3>
+                    <Image src={imgSrc} alt={`${name} logo`} className="h-10" />
+                    <p className="text-muted-foreground">{description}</p>
+                    <div className="inline-flex items-center font-bold">
+                      {metric}&nbsp;
+                      <InfoIcon className="size-4" />
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </section>
 
@@ -439,7 +468,7 @@ export default function Home() {
           </section>
         </div>
 
-        <section id="events" className="flex max-lg:flex-col">
+        {/* <section id="events" className="flex max-lg:flex-col">
           <Image
             src={eventPlaceholder}
             alt="event placeholder"
@@ -487,46 +516,38 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section id="articles" className="space-y-12">
           <div className="flex flex-col items-center">
-            <h2>Articles</h2>
+            <h2>Library</h2>
             <p className="text-muted-foreground text-xl tracking-[0.025rem]">
               Latest updates relevant for institutions
             </p>
           </div>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-[6.5rem]">
-            <div className="space-y-4">
-              <Image
-                src={articlePlaceholder1}
-                alt="Article 1 placeholder"
-                className="h-52 object-cover"
-                placeholder="blur"
-              />
-              <h3 className="text-h5 tracking-[0.03rem]">
-                The stable door opens: How tokenized cash enables next-gen
-                payments
-              </h3>
-              <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
-                17.11.2025
-              </p>
-            </div>
-            <div className="space-y-4">
-              <Image
-                src={articlePlaceholder2}
-                alt="Article 2 placeholder"
-                className="h-52 object-cover"
-                placeholder="blur"
-              />
-              <h3 className="text-h5 tracking-[0.03rem]">
-                A primer on Web3 adoption for enterprise
-              </h3>
-              <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
-                17.11.2025
-              </p>
-            </div>
+            {library.map(({ title, imgSrc, date }) => (
+              <div className="space-y-4" key={title}>
+                <Image
+                  src={imgSrc}
+                  alt=""
+                  className="h-52 object-cover"
+                  placeholder="blur"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1400px) 44vw, 608px"
+                />
+                <h3 className="text-h5 tracking-[0.03rem]">{title}</h3>
+                <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
+                  {date}
+                </p>
+              </div>
+            ))}
           </div>
+          <Link
+            href="#TODO-library-page"
+            className="css-forward-arrow css-secondary mx-auto block w-fit text-lg"
+          >
+            View All Resources
+          </Link>
         </section>
       </article>
     </main>
