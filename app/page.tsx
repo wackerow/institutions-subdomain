@@ -1,4 +1,3 @@
-import { Lock } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
@@ -6,7 +5,11 @@ import type { Metadata } from "next/types"
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
+import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-invert"
+import CircleRing from "@/components/svg/circle-ring"
 import EthGlyphColor from "@/components/svg/eth-glyph-color"
+import Layers2Fill from "@/components/svg/layers-2-fill"
+import LockFill from "@/components/svg/lock-fill"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 
 import { cn } from "@/lib/utils"
@@ -129,8 +132,12 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="bg-card flex flex-col gap-6 p-6 md:col-span-full md:items-center">
-              <div className="size-24 shrink-0 overflow-hidden rounded-full max-md:p-2.5 md:size-24">
-                <MaskedParallelsIcon />
+              <div className="size-37 shrink-0 max-md:p-2.5 md:size-24">
+                <MaskedParallelsIcon
+                  maskShape={
+                    <BadgeDollarSignFillInvert className="size-37 text-white" />
+                  }
+                />
               </div>
               <div className="flex flex-col justify-between gap-10">
                 <div className="space-y-2 md:mx-auto md:max-w-xl md:text-center">
@@ -153,8 +160,10 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="size-24 shrink-0 overflow-hidden rounded-4xl p-2.5">
-                  <MaskedParallelsIcon strokeWidth={1.5} gap={8} />
+                <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                  <MaskedParallelsIcon
+                    maskShape={<CircleRing className="size-37 text-white" />}
+                  />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                   Decentralized Finance (DeFi)
@@ -174,16 +183,9 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="size-24 shrink-0 p-2.5">
+                <div className="size-37 shrink-0 p-2.5">
                   <MaskedParallelsIcon
-                    strokeWidth={1.5}
-                    gap={8}
-                    maskShape={
-                      <Lock
-                        size={128}
-                        className="size-32 text-white [&_rect]:fill-white"
-                      />
-                    }
+                    maskShape={<LockFill className="size-37 text-white" />}
                   />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
@@ -204,8 +206,10 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="size-24 shrink-0 overflow-hidden rounded-4xl p-2.5">
-                  <MaskedParallelsIcon strokeWidth={1.5} gap={8} />
+                <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                  <MaskedParallelsIcon
+                    maskShape={<Layers2Fill className="size-37 text-white" />}
+                  />
                 </div>
                 <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                   L2 Ecosystem
