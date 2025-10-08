@@ -9,16 +9,11 @@ import type { LinkProps } from "@/lib/types"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
-import BlueSky from "@/components/svg/blue-sky"
 import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
-import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
 import Menu from "@/components/svg/menu"
 import SiteLogo from "@/components/svg/site-logo"
-import Threads from "@/components/svg/threads"
-import TikTok from "@/components/svg/tik-tok"
 import Twitter from "@/components/svg/twitter"
-import YouTube from "@/components/svg/you-tube"
 
 import { cn } from "@/lib/utils"
 
@@ -109,15 +104,16 @@ const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
   { children: "Solution providers", href: "/providers" },
 ]
 
-const socialLinks: ComponentProps<"a">[] = [
-  { href: "#", children: <LinkedIn /> },
-  { href: "#", children: <YouTube /> },
-  { href: "#", children: <TikTok /> },
-  { href: "#", children: <Twitter /> },
-  { href: "#", children: <Threads /> },
-  { href: "#", children: <Farcaster /> },
-  { href: "#", children: <BlueSky /> },
-]
+// TODO: Update or delete
+// const socialLinks: ComponentProps<"a">[] = [
+//   { href: "#", children: <LinkedIn /> },
+//   { href: "#", children: <YouTube /> },
+//   { href: "#", children: <TikTok /> },
+//   { href: "#", children: <Twitter /> },
+//   { href: "#", children: <Threads /> },
+//   { href: "#", children: <Farcaster /> },
+//   { href: "#", children: <BlueSky /> },
+// ]
 
 const externalLinks: ComponentProps<"a">[] = [
   {
@@ -254,11 +250,12 @@ export default function RootLayout({
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
               <div className="flex flex-col gap-y-7 max-sm:justify-center">
                 <EnterpriseAcceleration />
-                <div className="flex items-center gap-4 sm:gap-6">
+                {/* // TODO: Update links or remove */}
+                {/* <div className="flex items-center gap-4 sm:gap-6">
                   {socialLinks.map((props, idx) => (
                     <a key={idx} {...externalLinkProps} {...props} />
                   ))}
-                </div>
+                </div> */}
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
                 <Link href="#TODO">Digital assets</Link>
