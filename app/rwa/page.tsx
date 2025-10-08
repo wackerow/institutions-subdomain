@@ -1,3 +1,4 @@
+import { Check } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
@@ -269,7 +270,7 @@ export default function Page() {
                 {/* // TODO: Live data */}
                 $5.49B
               </p>
-              <p className="text-muted text-medium">sector on Ethereum + L2s</p>
+              <p className="text-muted font-medium">sector on Ethereum + L2s</p>
             </div>
 
             {cashEquivalents.map(
@@ -322,7 +323,7 @@ export default function Page() {
                 {/* // TODO: Live data */}
                 $3.84B
               </p>
-              <p className="text-muted text-medium">sector on Ethereum + L2s</p>
+              <p className="text-muted font-medium">sector on Ethereum + L2s</p>
             </div>
 
             {creditPlatforms.map(
@@ -366,6 +367,104 @@ export default function Page() {
                 </div>
               )
             )}
+          </div>
+        </section>
+
+        <section id="why-ethereum" className="space-y-16">
+          <div className="flex flex-col items-center gap-y-8 text-center">
+            <h2 className="text-h3 max-w-3xl leading-tight">
+              Why Ethereum for Financial Market Infrastructure
+            </h2>
+            <p className="text-muted-foreground max-w-4xl font-medium">
+              <strong>Credible settlement, global reach.</strong> Ethereum pairs
+              a maximally-neutral L1 settlement layer with L2 execution
+              environments that deliver scale and cost efficiency, so
+              institutions can move cash-like value and short-duration assets
+              with auditability and programmatic controls.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            <div className="bg-card p-10">
+              <h3 className="text-h4">
+                Ethereum L1: The settlement & liquidity layer
+              </h3>
+
+              <hr className="my-6" />
+
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Finality & Credible Neutrality</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  High-value settlement, state roots for rollups, and durable
+                  records institutions can audit and attest against.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Security</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Assets can be stored in an environment that is built to
+                  withstand major catastrophes and geopolitical tensions.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Risk gating</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Keep complex or experimental logic off L1; use it for final
+                  settlement, collateral custody, and proofs.
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card p-10">
+              <h3 className="text-h4">
+                Ethereum&apos;s L2s: The execution & scale layer
+              </h3>
+
+              <hr className="my-6" />
+
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Throughput & UX</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Rollups process transactions off-chain, inherit L1 security,
+                  and deliver low fees suitable for payments, market-making, and
+                  high-frequency flows.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Configurable</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  L2s can add compliance features, like allowlisting or
+                  KYC&apos;d pools, while remaining non-custodial and settling
+                  to L1.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Specialization</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Multiple L2s let institutions segregate workloads, such as
+                  retail payments vs. treasury ops, without fragmenting trust,
+                  because settlement reconciles on L1.
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </article>
