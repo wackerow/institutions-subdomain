@@ -182,7 +182,7 @@ export default function Page() {
             alt=""
             placeholder="blur"
             className="object-cover object-center max-lg:max-h-80 lg:shrink-1"
-            // sizes=
+            sizes="(max-width: 1024px) 100vw, 536px"
           />
         </section>
 

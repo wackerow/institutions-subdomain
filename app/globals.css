@@ -124,7 +124,7 @@
 
   --destructive: oklch(0.75 0.25 27);
 
-  --border: oklch(0.963 0.011 286); /* #F2F2FA */
+  --border: var(--color-neutral-300); /* #D4D4D4 */
   --ring: var(--accent-foreground);
 
   --chart-1: oklch(0.4253 0.2415 263.919); /* #0030CF */
