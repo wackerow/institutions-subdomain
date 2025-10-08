@@ -70,6 +70,68 @@ export default function Page() {
       href: "https://securitize.io/blackrock/buidl",
     },
   ]
+
+  type AssetDetails = {
+    header: string
+    valuation: string
+    description: string
+    issuer?: string
+    metricHref: string
+    visitHref: string
+  }
+
+  const cashEquivalents: AssetDetails[] = [
+    {
+      header: "BUIDL",
+      valuation: "$1.86B", // TODO: Live data
+      description: "BlackRock USD Institutional Digital Liquidity Fund",
+      issuer: "BlackRock & Securitize",
+      metricHref: "https://app.rwa.xyz/assets/BUIDL",
+      visitHref: "https://securitize.io/blackrock/buidl",
+    },
+    {
+      header: "BENJI",
+      valuation: "$193.5B", // TODO: Live data
+      description: "Franklin OnChain U.S. Government Money Fund",
+      issuer: "Franklin Templeton Benji Investments",
+      metricHref: "https://app.rwa.xyz/assets/BENJI",
+      visitHref:
+        "https://www.franklintempleton.com/investments/options/money-market-funds/products/29386/SINGLCLASS/franklin-on-chain-u-s-government-money-fund/FOBXX",
+    },
+    {
+      header: "OUSG",
+      valuation: "$193.5B", // TODO: Live data
+      description: "Ondo Short-Term US Government Bond Fund",
+      issuer: "Ondo",
+      metricHref: "https://app.rwa.xyz/assets/OUSG",
+      visitHref: "https://ondo.finance/ousg",
+    },
+  ]
+
+  const creditPlatforms: AssetDetails[] = [
+    {
+      header: "Centrifuge",
+      valuation: "$1.86B", // TODO: Live data
+      description: "Active loans on Ethereum + L2s",
+      metricHref: "https://app.rwa.xyz/platforms/centrifuge",
+      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+    },
+    {
+      header: "Maple Finance",
+      valuation: "$1.37B", // TODO: Live data
+      description: "Active loans on Ethereum + L2s",
+      metricHref:
+        "https://defillama.com/protocol/maple?borrowed_tvl=true&tvl=false&events=false",
+      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+    },
+    {
+      header: "TrueFi",
+      valuation: "$7.7M", // TODO: Live data
+      description: "Active loans on Ethereum + L2s",
+      metricHref: "https://app.rwa.xyz/private-credit",
+      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+    },
+  ]
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero
@@ -166,9 +228,9 @@ export default function Page() {
           <div className="space-y-2">
             <h2>Stablecoins on Ethereum</h2>
             <p className="text-muted-foreground font-medium">
-              Total stablecoin market cap on Ethereum L1:{" "}
               {/* // TODO: Live data */}
-              <strong>$157.81B</strong>
+              Total stablecoin market cap on Ethereum L1:{" "}
+              <span className="text-foreground font-bold">$157.81B</span>
             </p>
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
@@ -185,6 +247,125 @@ export default function Page() {
                 </Link>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section id="stablecoins" className="space-y-8">
+          <div className="space-y-2">
+            <h2>Real-World Assets (RWAs) on Ethereum</h2>
+            <p className="text-muted-foreground font-medium">
+              {/* // TODO: Live data */}
+              Total RWA sector: on Ethereum L1:{" "}
+              <span className="text-foreground font-bold">$9.1B</span>
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="bg-secondary-foreground text-secondary space-y-2 p-8">
+              <h3 className="text-xl font-bold tracking-[0.025rem]">
+                Tokenized Treasuries & Cash-Equivalents
+              </h3>
+              <p className="text-big font-bold tracking-[0.055rem]">
+                {/* // TODO: Live data */}
+                $5.49B
+              </p>
+              <p className="text-muted text-medium">sector on Ethereum + L2s</p>
+            </div>
+
+            {cashEquivalents.map(
+              ({
+                header,
+                valuation,
+                description,
+                issuer,
+                metricHref,
+                visitHref,
+              }) => (
+                <div
+                  className="bg-card text-card-foreground flex flex-col justify-between gap-y-6 p-8"
+                  key={header}
+                >
+                  <div className="space-y-2">
+                    <h4 className="text-h5 font-bold tracking-[0.03rem]">
+                      {header}
+                    </h4>
+                    <Link
+                      href={metricHref}
+                      className="css-secondary block font-bold tracking-[0.055rem]"
+                    >
+                      {valuation}
+                    </Link>
+                    <p className="text-muted-foreground font-medium">
+                      {description}
+                    </p>
+                    {issuer && (
+                      <p className="text-muted-foreground mt-6 font-medium">
+                        By {issuer}
+                      </p>
+                    )}
+                  </div>
+                  <Link
+                    href={visitHref}
+                    className="css-forward-arrow css-secondary block"
+                  >
+                    Visit
+                  </Link>
+                </div>
+              )
+            )}
+
+            <div className="bg-secondary-foreground text-secondary space-y-2 p-8">
+              <h3 className="text-xl font-bold tracking-[0.025rem]">
+                Private Credit & Structured Credit
+              </h3>
+              <p className="text-big font-bold tracking-[0.055rem]">
+                {/* // TODO: Live data */}
+                $3.84B
+              </p>
+              <p className="text-muted text-medium">sector on Ethereum + L2s</p>
+            </div>
+
+            {creditPlatforms.map(
+              ({
+                header,
+                valuation,
+                description,
+                issuer,
+                metricHref,
+                visitHref,
+              }) => (
+                <div
+                  className="bg-card text-card-foreground flex flex-col justify-between gap-y-6 p-8"
+                  key={header}
+                >
+                  <div className="space-y-2">
+                    <h4 className="text-h5 font-bold tracking-[0.03rem]">
+                      {header}
+                    </h4>
+                    <Link
+                      href={metricHref}
+                      className="css-secondary block font-bold tracking-[0.055rem]"
+                    >
+                      {valuation}
+                    </Link>
+                    <p className="text-muted-foreground font-medium">
+                      {description}
+                    </p>
+                    {issuer && (
+                      <p className="text-muted-foreground mt-6 font-medium">
+                        By {issuer}
+                      </p>
+                    )}
+                  </div>
+                  <Link
+                    href={visitHref}
+                    className="css-forward-arrow css-secondary block"
+                  >
+                    Visit
+                  </Link>
+                </div>
+              )
+            )}
           </div>
         </section>
       </article>
