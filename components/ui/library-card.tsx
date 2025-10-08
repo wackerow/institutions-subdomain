@@ -1,6 +1,7 @@
 import * as React from "react"
 import Image, { type ImageProps } from "next/image"
 import Link, { LinkProps } from "next/link"
+import { Slot } from "@radix-ui/react-slot"
 
 import { isValidDate } from "@/lib/utils/date"
 import { cn } from "@/lib/utils/index"
@@ -44,18 +45,22 @@ function LibraryCardImage({ className, alt, ...props }: ImageProps) {
   )
 }
 
-function LibraryCardTitle({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+const LibraryCardTitle = React.forwardRef<
+  React.ComponentRef<"h3">,
+  React.ComponentProps<"header"> & { asChild?: boolean }
+>(({ className, asChild, ...props }, ref) => {
+  const Comp = asChild ? Slot : "h3"
+
   return (
-    <h3
+    <Comp
+      ref={ref}
       data-slot="card-title"
       className={cn("text-h5 tracking-[0.03rem]", className)}
       {...props}
     />
   )
-}
+})
+LibraryCardTitle.displayName = "LibraryCardTitle"
 
 function LibraryCardTitleLink({
   className,
