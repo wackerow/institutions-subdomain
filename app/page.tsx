@@ -5,6 +5,7 @@ import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
+import { libraryItems } from "@/components/data/library"
 import Hero from "@/components/Hero"
 import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
 import { ScalingPanel } from "@/components/ScalingPanel"
@@ -13,11 +14,18 @@ import CircleRing from "@/components/svg/circle-ring"
 import Layers2Fill from "@/components/svg/layers-2-fill"
 import LockFill from "@/components/svg/lock-fill"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
+import {
+  LibraryCard,
+  LibraryCardDate,
+  LibraryCardHeader,
+  LibraryCardImage,
+  LibraryCardTitle,
+  LibraryCardTitleLink,
+} from "@/components/ui/library-card"
 
 import { cn } from "@/lib/utils"
+import { isValidDate } from "@/lib/utils/date"
 
-import libraryCiti from "@/public/images/library/citi-1.png"
-import libraryEthtokyo from "@/public/images/library/ethtokyo-1.png"
 import tomZschach from "@/public/images/tom-zschach.png"
 import blackRock from "@/public/logos/black-rock.png"
 import blackRockSvg from "@/public/logos/black-rock.svg"
@@ -121,23 +129,6 @@ const platforms: {
     imgSrc: etoroSvg,
     description: "Stock Tokenization Platform",
     metric: "100 Stocks Trade 24/5",
-  },
-]
-
-const library: {
-  title: string
-  imgSrc: StaticImageData
-  date: string
-}[] = [
-  {
-    title: "Citi - Stablecoins 2030 Web3 to Wall Street",
-    imgSrc: libraryCiti,
-    date: "September 25 2025",
-  },
-  {
-    title: "ETHTokyo - Ethereum: From tech to real",
-    imgSrc: libraryEthtokyo,
-    date: "September 16 2025",
   },
 ]
 
@@ -540,24 +531,27 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-[6.5rem]">
-            {library.map(({ title, imgSrc, date }) => (
-              <div className="space-y-4" key={title}>
-                <Image
-                  src={imgSrc}
-                  alt=""
-                  className="h-52 object-cover"
-                  placeholder="blur"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1400px) 44vw, 608px"
-                />
-                <h3 className="text-h5 tracking-[0.03rem]">{title}</h3>
-                <p className="text-muted-foreground text-sm font-medium tracking-[0.0175rem]">
-                  {date}
-                </p>
-              </div>
-            ))}
+            {libraryItems
+              .sort((a, b) => {
+                if (!isValidDate(a.date)) return -1
+                if (!isValidDate(b.date)) return 1
+                return new Date(b.date).getTime() - new Date(a.date).getTime()
+              })
+              .slice(0, 2)
+              .map(({ title, imgSrc, date, href }) => (
+                <LibraryCard key={title}>
+                  <LibraryCardHeader>
+                    <LibraryCardImage src={imgSrc} alt="" />
+                  </LibraryCardHeader>
+                  <LibraryCardTitleLink href={href}>
+                    <LibraryCardTitle>{title}</LibraryCardTitle>
+                  </LibraryCardTitleLink>
+                  <LibraryCardDate>{date}</LibraryCardDate>
+                </LibraryCard>
+              ))}
           </div>
           <Link
-            href="#TODO-library-page"
+            href="/library"
             className="css-forward-arrow css-secondary mx-auto block w-fit text-lg"
           >
             View All Resources
