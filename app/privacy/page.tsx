@@ -11,17 +11,15 @@ export default function Page() {
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Compliant Privacy for Institutions" shape="lock">
-        <div className="mt-4 space-y-6">
-          <p>
-            On Ethereum, you can keep counterparties, data, and business logic
-            confidential while settling against the deepest onchain liquidity.
-          </p>
-          <p>
-            Privacy isn&apos;t a sidechain or a silo, it&apos;s a set of open
-            standards you compose on L1 or L2 to meet regulatory, risk, and
-            audit needs.
-          </p>
-        </div>
+        <p>
+          On Ethereum, you can keep counterparties, data, and business logic
+          confidential while settling against the deepest onchain liquidity.
+        </p>
+        <p>
+          Privacy isn&apos;t a sidechain or a silo, it&apos;s a set of open
+          standards you compose on L1 or L2 to meet regulatory, risk, and audit
+          needs.
+        </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section id="direct" className="flex gap-10 max-lg:flex-col md:gap-16">

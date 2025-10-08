@@ -32,19 +32,19 @@ type HeroProps = {
 const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
   <div
     className={cn(
-      "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground overflow-x-hidden",
+      "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground text-primary overflow-x-hidden",
       className
     )}
   >
     <div className="max-w-8xl relative mx-auto grid w-screen grid-cols-1 md:h-[420px] md:grid-cols-2">
       <div
         className={cn(
-          "pointer-events-none z-10 place-self-center px-10",
+          "pointer-events-none z-10 space-y-8 place-self-center px-10",
           "group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-50% to-transparent md:to-70%"
         )}
       >
-        <h1 className="max-md:text-center">{heading}</h1>
-        {children}
+        <h1 className="leading-tight max-md:text-center">{heading}</h1>
+        {children && <div className="space-y-6 font-medium">{children}</div>}
       </div>
       <div
         className={cn(
