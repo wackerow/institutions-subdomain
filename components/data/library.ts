@@ -1,0 +1,69 @@
+import type { LibraryItem } from "@/lib/types"
+
+import blockchainScotland from "@/public/images/library/blockchain-scotland-1.png"
+import citi from "@/public/images/library/citi-1.png"
+import consensys from "@/public/images/library/consensys-1.webp"
+import ethtokyo from "@/public/images/library/ethtokyo-1.png"
+import ey from "@/public/images/library/ey-1.png"
+import fidelity1 from "@/public/images/library/fidelity-1.jpg"
+import fidelity2 from "@/public/images/library/fidelity-2.png"
+import galaxy from "@/public/images/library/galaxy-1.png"
+import goldmanSachs from "@/public/images/library/glodman-sachs-1.png"
+
+export const libraryItems: LibraryItem[] = [
+  {
+    title: "Citi - Stablecoins 2030 Web3 to Wall Street",
+    imgSrc: citi,
+    date: "September 25, 2025",
+    href: "https://www.citigroup.com/rcs/citigpa/storage/public/GPS_Report_Stablecoins_2030.pdf",
+  },
+  {
+    title: "ETHTokyo - Ethereum: From tech to real",
+    imgSrc: ethtokyo,
+    date: "September 16, 2025",
+    href: "https://www.youtube.com/watch?v=4iWXnYFjbIM",
+  },
+  {
+    title:
+      "Blockchain Scotland - Ethereum: Enterprise adoption and financial services",
+    href: "https://www.youtube.com/watch?v=AETDWBu3sVU",
+    date: "September 5, 2024",
+    imgSrc: blockchainScotland,
+  },
+  {
+    title: "Fidelity - Coin report: Ethereum (ETH)",
+    href: "https://www.fidelitydigitalassets.com/research-and-insights/coin-report-ethereum-eth",
+    date: "August 21, 2025",
+    imgSrc: fidelity1,
+  },
+  {
+    title: "Goldman Sachs - Stablecoin summer",
+    href: "https://www.goldmansachs.com/pdfs/insights/goldman-sachs-research/stablecoin-summer/TopOfMind.pdf",
+    date: "August 19, 2025",
+    imgSrc: goldmanSachs,
+  },
+  {
+    title: "Consensys - The industrialization of trust report",
+    href: "https://consensys.io/ethereum/trust",
+    date: "August 4, 2025",
+    imgSrc: consensys,
+  },
+  {
+    title: "Fidelity - Blockchains as emerging economies",
+    href: "https://institutional.fidelity.com/app/proxy/content?literatureURL=/9919383.PDF",
+    date: "July 16, 2025",
+    imgSrc: fidelity2,
+  },
+  {
+    title: "Galaxy - Beyond Bitcoin: Ethereum as a corporate treasury asset",
+    href: "https://www.galaxy.com/insights/research/beyond-btc-ethereum-as-a-corporate-treasury-asset",
+    date: "July 15, 2025",
+    imgSrc: galaxy,
+  },
+  {
+    title: "EY -, 2025 Institutional investor digital assets survey",
+    href: "https://www.ey.com/content/dam/ey-unified-site/ey-com/en-us/insights/financial-services/documents/ey-growing-enthusiasm-propels-digital-assets-into-the-mainstream.pdf",
+    date: "March 18, 2025",
+    imgSrc: ey,
+  },
+]
