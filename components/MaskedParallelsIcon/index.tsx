@@ -73,6 +73,9 @@ const MaskedParallelsIcon = ({
     [providedMaskId]
   )
 
+  // simple rect clip to ensure nothing bleeds outside the SVG bbox
+  const rectClipId = useMemo(() => `${maskId}-rect-clip`, [maskId])
+
   // internal drawing size (fixed viewBox); actual rendered size comes from CSS
   const width = boxSize
   const height = boxSize
@@ -221,7 +224,7 @@ const MaskedParallelsIcon = ({
       stroke="currentColor"
       strokeWidth={strokeWidth}
       xmlns="http://www.w3.org/2000/svg"
-      overflow="visible"
+      overflow="hidden"
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       style={{
@@ -235,6 +238,11 @@ const MaskedParallelsIcon = ({
       {...props}
     >
       <defs>
+        {/* rect clip prevents any bleed outside the SVG bbox */}
+        <clipPath id={rectClipId} clipPathUnits="userSpaceOnUse">
+          <rect x={2} y={2} width={width - 4} height={height - 4} />
+        </clipPath>
+
         {maskShape ? (
           // render mask in user-space coords and force an opaque shape for the mask
           <mask
@@ -261,7 +269,10 @@ const MaskedParallelsIcon = ({
         ) : null}
       </defs>
 
-      <g mask={maskShape ? `url(#${maskId})` : undefined}>
+      <g
+        mask={maskShape ? `url(#${maskId})` : undefined}
+        clipPath={`url(#${rectClipId})`}
+      >
         {lines.map((line) => {
           // hover emphasis based on pointer proximity
           let hoverFactor = 0
