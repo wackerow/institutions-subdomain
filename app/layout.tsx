@@ -1,7 +1,6 @@
 import { ComponentProps } from "react"
 import { ExternalLink } from "lucide-react"
 import localFont from "next/font/local"
-import Image, { StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
 
@@ -10,19 +9,13 @@ import type { LinkProps } from "@/lib/types"
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
 import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
-import LinkedIn from "@/components/svg/linked-in"
 import Menu from "@/components/svg/menu"
 import SiteLogo from "@/components/svg/site-logo"
-import Twitter from "@/components/svg/twitter"
 
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
 
-import ash from "@/public/images/team/ash-morgan.png"
-import david from "@/public/images/team/david-walsh.png"
-import matthew from "@/public/images/team/matthew-dawson.png"
-import mo from "@/public/images/team/mo-jalil.png"
 
 const satoshi = localFont({
   src: [
@@ -59,42 +52,42 @@ const satoshi = localFont({
   ],
 })
 
-const members: {
-  name: string
-  expertise: string
-  imgSrc: StaticImageData
-  twitter?: string
-  linkedIn?: string
-}[] = [
-  {
-    name: "David Walsh",
-    expertise: "Decentralized Finance",
-    imgSrc: david,
-    twitter: "davwals",
-    linkedIn: "davwals",
-  },
-  {
-    name: "Ash Morgan",
-    expertise: "RWA & Stablecoins",
-    imgSrc: ash,
-    twitter: "_ashmorgan_",
-    linkedIn: "ash-morgan-ef",
-  },
-  {
-    name: "Matthew Dawson",
-    expertise: "L2 Ecosystem",
-    imgSrc: matthew,
-    twitter: "ismimatthew",
-    linkedIn: "matthewdawsy",
-  },
-  {
-    name: "Mo Jalil",
-    expertise: "Privacy & Compliance",
-    imgSrc: mo,
-    twitter: "motypes",
-    linkedIn: "motypes",
-  },
-]
+// const members: {
+//   name: string
+//   expertise: string
+//   imgSrc: StaticImageData
+//   twitter?: string
+//   linkedIn?: string
+// }[] = [
+//   {
+//     name: "David Walsh",
+//     expertise: "Decentralized Finance",
+//     imgSrc: david,
+//     twitter: "davwals",
+//     linkedIn: "davwals",
+//   },
+//   {
+//     name: "Ash Morgan",
+//     expertise: "RWA & Stablecoins",
+//     imgSrc: ash,
+//     twitter: "_ashmorgan_",
+//     linkedIn: "ash-morgan-ef",
+//   },
+//   {
+//     name: "Matthew Dawson",
+//     expertise: "L2 Ecosystem",
+//     imgSrc: matthew,
+//     twitter: "ismimatthew",
+//     linkedIn: "matthewdawsy",
+//   },
+//   {
+//     name: "Mo Jalil",
+//     expertise: "Privacy & Compliance",
+//     imgSrc: mo,
+//     twitter: "motypes",
+//     linkedIn: "motypes",
+//   },
+// ]
 
 const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
   { children: "Why Ethereum", href: "/why-ethereum" },
@@ -190,7 +183,7 @@ export default function RootLayout({
                 forward, provide technical support and connect you with relevant
                 industry leaders.
               </p>
-              <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
+              {/* <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
                 {members.map(
                   ({ name, expertise, imgSrc, twitter, linkedIn }) => (
                     <div key={name} className="space-y-2">
@@ -232,7 +225,7 @@ export default function RootLayout({
                     </div>
                   )
                 )}
-              </div>
+              </div> */}
               <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
                 <div className="space-y-4">
                   <h3 className="text-h4">Get In Touch</h3>
