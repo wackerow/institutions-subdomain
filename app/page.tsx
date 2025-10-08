@@ -7,6 +7,7 @@ import type { Metadata } from "next/types"
 import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
+import { ScalingPanel } from "@/components/ScalingPanel"
 import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-invert"
 import CircleRing from "@/components/svg/circle-ring"
 import Layers2Fill from "@/components/svg/layers-2-fill"
@@ -517,6 +518,19 @@ export default function Home() {
             </div>
           </div>
         </section> */}
+
+        <section id="scaling" className="space-y-12 md:space-y-20">
+          <div className="flex flex-col items-center gap-y-2 text-center">
+            <h2>Ethereum is Scaling</h2>
+            <div className="md:max-w-3xl">
+              Ethereum&apos;s performance isn&apos;t static. The network&apos;s
+              active R&D roadmap sets the stage for an infinitely-scalable
+              ecosystem, while Ethereum-based providers globally push throughput
+              boundaries today.
+            </div>
+          </div>
+          <ScalingPanel />
+        </section>
 
         <section id="articles" className="space-y-12">
           <div className="flex flex-col items-center">
