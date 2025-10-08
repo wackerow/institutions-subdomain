@@ -134,7 +134,7 @@ export function ScalingPanel() {
                   </div>
                   <Link
                     href="#TODO-Learn-more-hrefs"
-                    className="css-forward-arrow text-secondary text-normal block font-medium"
+                    className="css-forward-arrow text-secondary hover:text-secondary/80 text-normal block font-medium"
                   >
                     Learn more
                   </Link>

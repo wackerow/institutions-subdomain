@@ -407,7 +407,7 @@ export default function Home() {
                     </h3>
                     <Image src={imgSrc} alt={`${name} logo`} className="h-10" />
                     <p className="text-muted-foreground">{description}</p>
-                    <div className="inline-flex items-center font-bold">
+                    <div className="text-muted-foreground inline-flex items-center font-bold">
                       {metric}&nbsp;
                       <InfoIcon className="size-4" />
                     </div>
