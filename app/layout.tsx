@@ -8,14 +8,17 @@ import type { LinkProps } from "@/lib/types"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
-import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
+// TODO: Confirm removal—delete image if confirmed
+// import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
+import Farcaster from "@/components/svg/farcaster"
+import LinkedIn from "@/components/svg/linked-in"
 import Menu from "@/components/svg/menu"
 import SiteLogo from "@/components/svg/site-logo"
+import Twitter from "@/components/svg/twitter"
 
 import { cn } from "@/lib/utils"
 
 import "./globals.css"
-
 
 const satoshi = localFont({
   src: [
@@ -92,21 +95,23 @@ const satoshi = localFont({
 const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
   { children: "Why Ethereum", href: "/why-ethereum" },
   { children: "Case studies", href: "/case-studies" },
-  { children: "Articles", href: "/articles", footerOnly: true },
+  { children: "Library", href: "/library", footerOnly: true },
   { children: "Live data", href: "/data-hub" },
   { children: "Solution providers", href: "/providers" },
 ]
 
-// TODO: Update or delete
-// const socialLinks: ComponentProps<"a">[] = [
-//   { href: "#", children: <LinkedIn /> },
-//   { href: "#", children: <YouTube /> },
-//   { href: "#", children: <TikTok /> },
-//   { href: "#", children: <Twitter /> },
-//   { href: "#", children: <Threads /> },
-//   { href: "#", children: <Farcaster /> },
-//   { href: "#", children: <BlueSky /> },
-// ]
+const socialLinks: ComponentProps<"a">[] = [
+  {
+    href: "https://www.linkedin.com/company/ethereum/posts/",
+    children: <LinkedIn />,
+  },
+  // { href: "#", children: <YouTube /> },
+  // { href: "#", children: <TikTok /> },
+  { href: "https://x.com/ethdotorg", children: <Twitter /> },
+  // { href: "#", children: <Threads /> },
+  { href: "https://farcaster.xyz/ethdotorg", children: <Farcaster /> },
+  // { href: "#", children: <BlueSky /> },
+]
 
 const externalLinks: ComponentProps<"a">[] = [
   {
@@ -242,13 +247,12 @@ export default function RootLayout({
           <div className="max-w-8xl mx-auto space-y-14 px-12 py-10 sm:space-y-9 xl:space-y-28">
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
               <div className="flex flex-col gap-y-7 max-sm:justify-center">
-                <EnterpriseAcceleration />
-                {/* // TODO: Update links or remove */}
-                {/* <div className="flex items-center gap-4 sm:gap-6">
+                {/* <EnterpriseAcceleration /> */}
+                <div className="flex items-center gap-4 sm:gap-6">
                   {socialLinks.map((props, idx) => (
                     <a key={idx} {...externalLinkProps} {...props} />
                   ))}
-                </div> */}
+                </div>
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
                 <Link href="#TODO">Digital assets</Link>
