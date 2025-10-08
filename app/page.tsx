@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next/types"
@@ -51,30 +52,41 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
 ]
 
 // TODO: Fetch live data
-const bigNumbers: { value: string; label: string }[] = [
+const bigNumbers: { value: string; label: ReactNode }[] = [
   {
-    value: "+90%",
-    label: "+ RWA Marketshare: On Ethereum and its L2s",
+    value: "10 Yrs",
+    label: "Uninterrupted uptime and liveness",
   },
   {
-    value: "10Y",
-    label: "Years Uninterrupted uptime and liveness",
-  },
-  {
-    value: "1.1m",
-    label: "validators securing the network",
+    value: "1.1M+",
+    label: "Validators securing the network",
   },
   {
     value: "$140B+",
-    label: "RWA Marketshare: On Ethereum and its L2s",
+    label: "Stablecoin TVL 60%+ of all stablecoin supply",
+  },
+  {
+    value: "90%+",
+    label: "RWA marketshare on Ethereum and its L2s",
   },
   {
     value: "$87B+",
-    label: "DeFi TVL- 65%+ of all chains",
+    label: (
+      <>
+        DeFi TVL
+        <br /> 65%+ of all blockchains
+      </>
+    ),
   },
   {
     value: "$12B+",
-    label: "24 Hour DEX Volume - Ecosystem Average in 2025",
+    label: (
+      <>
+        24 Hour DEX Volume
+        <br />
+        2025 ecosystem average
+      </>
+    ),
   },
 ]
 
