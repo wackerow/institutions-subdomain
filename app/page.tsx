@@ -134,6 +134,7 @@ export default function Home() {
             <div className="bg-card flex flex-col gap-6 p-6 md:col-span-full md:items-center">
               <div className="size-37 shrink-0 max-md:p-2.5 md:size-24">
                 <MaskedParallelsIcon
+                  className="text-secondary-foreground"
                   maskShape={
                     <BadgeDollarSignFillInvert className="size-37 text-white" />
                   }
@@ -162,6 +163,7 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
                   <MaskedParallelsIcon
+                    className="text-secondary-foreground"
                     maskShape={<CircleRing className="size-37 text-white" />}
                   />
                 </div>
@@ -185,6 +187,7 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="size-37 shrink-0 p-2.5">
                   <MaskedParallelsIcon
+                    className="text-secondary-foreground"
                     maskShape={<LockFill className="size-37 text-white" />}
                   />
                 </div>
@@ -208,6 +211,7 @@ export default function Home() {
               <div className="space-y-2">
                 <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
                   <MaskedParallelsIcon
+                    className="text-secondary-foreground"
                     maskShape={<Layers2Fill className="size-37 text-white" />}
                   />
                 </div>
