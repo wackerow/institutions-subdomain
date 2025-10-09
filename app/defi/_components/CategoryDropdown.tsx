@@ -42,14 +42,17 @@ const CategoryDropdown = ({ categoryState }: CategoryDropdownProps) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <p className="font-bold" onClick={handleClick("all")}>
+          <p className="text-base font-bold" onClick={handleClick("all")}>
             All categories
           </p>
         </DropdownMenuItem>
 
         {defiCategories.map((category) => (
           <DropdownMenuItem key={category}>
-            <p className="font-medium" onClick={handleClick(category)}>
+            <p
+              className="text-base font-medium"
+              onClick={handleClick(category)}
+            >
               {defiEcosystem[category].heading}
             </p>
           </DropdownMenuItem>
