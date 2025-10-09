@@ -3,13 +3,13 @@
 import {
   Children,
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react"
 import { motion, Transition, useMotionValue } from "motion/react"
+import type { ComponentProps, ReactNode } from "react"
 
 import { cn } from "@/lib/utils/index"
 
@@ -322,9 +322,22 @@ function CarouselItem({ children, className }: CarouselItemProps) {
   )
 }
 
+function CarouselFooter({ className, ...props }: ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "mt-8 flex items-center justify-between [&>div]:!mt-0",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
 export {
   Carousel,
   CarouselContent,
+  CarouselFooter,
   CarouselIndicator,
   CarouselItem,
   CarouselNavigation,
