@@ -141,7 +141,7 @@ export default function Home() {
         shape="eth-glyph"
         className="css-primary-invert"
         beneath={
-          <InfiniteSlider speedOnHover={32} gap={56}>
+          <InfiniteSlider speedOnHover={16} gap={56}>
             {logos.map(({ src, alt, className }) => (
               <Image
                 key={alt}
