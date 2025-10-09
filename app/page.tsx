@@ -184,9 +184,9 @@ export default function Home() {
               technologies.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="bg-card flex flex-col gap-6 p-6 md:col-span-full md:items-center">
-              <div className="size-37 shrink-0 max-md:p-2.5 md:size-24">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
+              <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
                   maskShape={
@@ -215,7 +215,7 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={<CircleRing className="size-37 text-white" />}
@@ -263,7 +263,7 @@ export default function Home() {
             </div>
             <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
               <div className="space-y-2">
-                <div className="size-37 shrink-0 overflow-hidden rounded-4xl p-2.5">
+                <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={<Layers2Fill className="size-37 text-white" />}
@@ -416,7 +416,7 @@ export default function Home() {
           >
             <div className="flex flex-col gap-y-10 max-lg:items-center">
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
-                What industry leaders say
+                Industry Leaders Choose Ethereum
               </h2>
             </div>
             <div className="relative w-full">
