@@ -95,7 +95,7 @@ export default function Page() {
           id="primitives"
           className="flex gap-x-32 gap-y-14 max-lg:flex-col"
         >
-          <div className="flex-1 space-y-7 max-lg:*:mx-auto max-lg:*:text-center">
+          <div className="flex-1 space-y-7">
             <h2 className="text-h3 max-w-xl tracking-[0.055rem]">
               Ethereum is the Platform for DeFi Primitives
             </h2>
@@ -107,14 +107,14 @@ export default function Page() {
               global ecosystem where innovation and liquidity compound.
             </p>
             <ul className="max-w-prose space-y-4 font-medium">
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Open standards
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Ethereum’s shared EVM, token, and smart contract standards
                   provide interoperability across the entire DeFi ecosystem
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Deep liquidity
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Ethereum has the deepest DeFi liquidity of any blockchain,
@@ -122,7 +122,7 @@ export default function Page() {
                   assets
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Composable primitives
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Open-source building blocks and protocols act as &apos;money
@@ -130,14 +130,14 @@ export default function Page() {
                   products
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Permissionless innovation
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Anyone can build or access new DeFi instruments, unlocking a
                   dynamic landscape of innovation without gatekeepers
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Onchain yield
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Access familiar instruments, like T-bills and short-duration

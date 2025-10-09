@@ -170,8 +170,11 @@ export default function Page() {
           </div>
         </div>
 
-        <section id="infrastructure" className="flex gap-14 max-lg:flex-col">
-          <div className="w-full space-y-7 max-lg:*:mx-auto max-lg:*:text-center">
+        <section
+          id="infrastructure"
+          className="flex gap-x-32 gap-y-14 max-lg:flex-col"
+        >
+          <div className="flex-1 space-y-7">
             <h2 className="text-h3 max-w-lg tracking-[0.055rem]">
               Ethereum as Financial Market Infrastructure
             </h2>
@@ -181,33 +184,33 @@ export default function Page() {
               wallets, exchanges, and DeFi.
             </p>
             <ul className="max-w-prose space-y-4 font-medium">
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Depth
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Ethereum mainnet hosts the majority of all onchain stablecoins
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Scale
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Ethereum&apos;s Layer-2s add low-fee rails for retail and
                   high-frequency flows
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Cash-like settlement
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   24/7 dollar-denominated settlement at internet speed
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Compliance
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Programmable settlement for compliance, disclosures, and
                   auditability
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Onchain yield
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Access familiar instruments, like T-bills and short-duration

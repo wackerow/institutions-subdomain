@@ -170,13 +170,13 @@ export default function Page() {
           </div>
         </section>
 
-        <section id="why" className="flex gap-14 max-lg:flex-col">
-          <div className="w-full space-y-7 max-lg:*:mx-auto max-lg:*:text-center">
-            <h2 className="text-h3 max-w-lg tracking-[0.055rem]">
+        <section id="why" className="flex gap-x-32 gap-y-14 max-lg:flex-col">
+          <div className="flex-1 space-y-7">
+            <h2 className="text-h3 tracking-[0.055rem] lg:max-w-lg">
               Why Ethereum for Privacy
             </h2>
             <ul className="max-w-prose space-y-4">
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Credibly Neutral, Audit-Ready:
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Prove compliance without exposing raw data. Unlock
@@ -185,7 +185,7 @@ export default function Page() {
                   and auditors.
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Composability with Liquidity:
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Private flows can still plug into the liquidity on Ethereum
@@ -194,7 +194,7 @@ export default function Page() {
                   custody, and more.
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 No Vendor Lock In:
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Launch on Ethereum mainnet for maximum composability, or
@@ -203,7 +203,7 @@ export default function Page() {
                   standards.
                 </p>
               </li>
-              <li className="ms-6 text-xl font-bold tracking-[0.025rem] lg:list-disc">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Security at Scale:
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Privacy features inherit Ethereum&apos;s decentralization and
