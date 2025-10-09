@@ -76,10 +76,8 @@ export function ScalingPanel() {
             <>
               <span className="mb-6 block">2-5 year targets propose:</span>
               <ul className="ms-6 list-disc">
-                <li className="">
-                  1 gigagas/sec on L1: 10K TPS, ambitious vertical scale
-                </li>
-                <li className="">
+                <li>1 gigagas/sec on L1: 10K TPS, ambitious vertical scale</li>
+                <li>
                   1 teragas/sec on L2: 10M TPS, sprawling horizontal scale
                 </li>
               </ul>
@@ -104,7 +102,7 @@ export function ScalingPanel() {
             key={index}
             onClick={() => setActiveIndex(index)}
             className={cn(
-              "text-h5 text-muted-foreground text-start font-bold tracking-[0.03rem] text-nowrap",
+              "text-h5 text-muted-foreground hover:text-muted-foreground/80 text-start font-bold tracking-[0.03rem] text-nowrap",
               activeIndex === index && "text-foreground"
             )}
           >
