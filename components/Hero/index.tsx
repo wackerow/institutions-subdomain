@@ -1,6 +1,7 @@
 import {
   BadgeDollarSign,
   ChartNoAxesCombined,
+  Coins,
   Handshake,
   Layers2,
   Lock,
@@ -20,6 +21,7 @@ const heroShapes = {
   "layers-2": <Layers2 />,
   lock: <Lock className="[&_rect]:fill-current" />,
   handshake: <Handshake />,
+  coins: <Coins />,
 } as const satisfies Record<string, ReactNode>
 
 type HeroShape = keyof typeof heroShapes

@@ -67,7 +67,7 @@ export default function Page() {
 
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="The Home of Decentralized Finance" shape="eth-glyph">
+      <Hero heading="The Home of Decentralized Finance" shape="coins">
         <p>
           Ethereum introduced the world to decentralized finance (DeFi): open
           financial systems built on smart contracts.
