@@ -51,7 +51,8 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       <div
         className={cn(
           "relative inset-y-0 end-0 z-0 min-h-screen place-items-center max-md:grid md:absolute md:min-h-0",
-          "max-[25rem]:-my-32 min-[25rem]:max-[32rem]:-my-24 min-[32rem]:max-sm:-my-20 sm:max-md:-my-12"
+          "max-[25rem]:-my-32 min-[25rem]:max-[32rem]:-my-24 min-[32rem]:max-sm:-my-20 sm:max-md:-my-12",
+          "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
         <HeroBg
