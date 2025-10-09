@@ -146,13 +146,13 @@ export default function Page() {
               </li>
             </ul>
           </div>
-          <div className="relative flex-1">
+          <div className="relative min-h-80 flex-1">
             <Image
               src={buildings}
               alt=""
               fill
               placeholder="blur"
-              className="min-h-80 object-cover object-center"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 536px"
             />
           </div>

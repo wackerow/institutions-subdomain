@@ -214,13 +214,16 @@ export default function Page() {
               </li>
             </ul>
           </div>
-          <Image
-            src={blurWalking}
-            alt=""
-            placeholder="blur"
-            className="object-cover object-center max-lg:max-h-80 lg:shrink-1"
-            sizes="(max-width: 1024px) 100vw, 536px"
-          />
+          <div className="relative min-h-80 flex-1">
+            <Image
+              src={blurWalking}
+              alt=""
+              fill
+              placeholder="blur"
+              className="object-cover object-center"
+              sizes="(max-width: 1024px) 100vw, 536px"
+            />
+          </div>
         </section>
 
         <section id="solutions" className="space-y-8">
