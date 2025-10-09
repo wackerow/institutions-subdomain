@@ -75,49 +75,49 @@ export default function Page() {
           description:
             "A DEX aggregator that sources liquidity from across DEXs and networks to find the best possible swapping routes and rates.",
           imgSrc: oneInch,
-          href: "",
+          href: "https://1inch.com/",
         },
         {
           name: "Aerodrome",
           description:
             "A decentralized exchange on the Base L2 that combines an AMM with a governance and protocol reward model designed to align incentives.",
           imgSrc: aerodrome,
-          href: "",
+          href: "https://aerodrome.finance/",
         },
         {
           name: "Balancer",
           description:
             "A DeFi protocol that acts as an automated portfolio manager and liquidity provider, allowing users to create or invest in customizable liquidity pools.",
           imgSrc: balancer,
-          href: "",
+          href: "https://balancer.fi/",
         },
         {
           name: "CoWSwap",
           description:
             "A DEX aggregator built around frequent batch auctions to provide MEV protection, find optimal liquidity, and minimize fees, matching trades peer-to-peer and sending unfilled orders to underlying AMMs.",
           imgSrc: cowSwap,
-          href: "",
+          href: "https://swap.cow.fi/",
         },
         {
           name: "Curve",
           description:
             "A DEX and AMM focused on efficient trading for stablecoins and volatile tokens, using a unique AMM formula to minimize slippage for similarly-priced assets.",
           imgSrc: curve,
-          href: "",
+          href: "https://www.curve.finance/",
         },
         {
           name: "Fluid",
           description:
             "A DeFi protocol that offers lending, borrowing, and trading on top of a unified liquidity layer, allowing users to maximize yield and optimize capital efficiency through integrated debt and liquidity products.",
           imgSrc: fluid,
-          href: "",
+          href: "https://fluid.io/",
         },
         {
           name: "Uniswap",
           description:
             "A DEX protocol that enables permissionless peer-to-peer trading, through a smart contract-based AMM system that allows anyone to create custom pairs and supply liquidity.",
           imgSrc: uniswap,
-          href: "",
+          href: "https://app.uniswap.org/",
         },
       ],
     },
@@ -131,63 +131,63 @@ export default function Page() {
           description:
             "A non-custodial protocol where users can create liquidity markets and participate as suppliers or borrowers, earning interest on supplied digital assets and borrowing against them.",
           imgSrc: aave,
-          href: "",
+          href: "https://aave.com/",
         },
         {
           name: "Compound",
           description:
             "An algorithmic, autonomous interest rate protocol that allows users to earn interest by lending digital assets to borrowers, designed for developers to build DeFi applications on top of. ",
           imgSrc: compound,
-          href: "",
+          href: "https://compound.finance/",
         },
         {
           name: "Euler",
           description:
             "A permissionless protocol for lending, borrowing, and swapping digital assets, featuring asset tiers and reactive interest rates to manage risk, with a modular lending platform for developers to create and connect custom lending vaults.",
           imgSrc: euler,
-          href: "",
+          href: "https://www.euler.finance/",
         },
         {
           name: "Fluid",
           description:
             "A DeFi protocol that offers lending, borrowing, and trading on top of a unified liquidity layer, allowing users to maximize yield and optimize capital efficiency through integrated debt and liquidity products.",
           imgSrc: fluid,
-          href: "",
+          href: "https://fluid.io/",
         },
         {
           name: "Maple",
           description:
             "A decentralized credit market that provides undercollateralized loans to institutional borrowers, and allows lenders to earn yield by supplying liquidity to these curated loans.",
           imgSrc: maple,
-          href: "",
+          href: "https://maple.finance/",
         },
         {
           name: "Moonwell",
           description:
             "An open lending and borrowing protocol designed to simplify the onchain user experience, featuring single-sided liquidity pools and overcollateralized borrowing across markets.",
           imgSrc: moonwell,
-          href: "",
+          href: "https://moonwell.fi/",
         },
         {
           name: "Morpho",
           description:
             "A decentralized protocol for overcollateralized, vault-based lending and borrowing, aiming to improve the capital efficiency of lending pools through isolated markets, risk curators, and portfolio allocators.",
           imgSrc: morpho,
-          href: "",
+          href: "https://morpho.org/",
         },
         {
           name: "Sky",
           description:
             "A DeFi protocol (created by the MakerDAO community) that offers a suite of tools for trading, converting, staking, and earning yield from digital assets, including the USDS stablecoin. ",
           imgSrc: sky,
-          href: "",
+          href: "https://sky.money/",
         },
         {
           name: "Spark",
           description:
             "A DeFi protocol focused on earning savings on stablecoin holdings, providing liquidity across DeFi markets, and borrowing via a USDS-centric money market protocol. ",
           imgSrc: spark,
-          href: "",
+          href: "https://spark.fi/",
         },
       ],
     },
@@ -201,84 +201,84 @@ export default function Page() {
           description:
             "An asset-agnostic lending protocol that aims to make credit more accessible to businesses, allowing them to tokenize real-world assets and use them as onchain collateral.",
           imgSrc: centrifuge,
-          href: "",
+          href: "https://centrifuge.io/",
         },
         {
           name: "Circle",
           description:
             "A global financial technology firm that provides payments and financial infrastructure, tokenized money market funds, and more, best known for issuing the fully-regulated USD Coin (USDC) stablecoin. ",
           imgSrc: circle,
-          href: "",
+          href: "https://www.circle.com/",
         },
         {
           name: "Ethena",
           description:
             "A synthetic dollar protocol focused on providing a crypto-native solution for money, offering USDe, a stablecoin backed by crypto assets and corresponding short futures positions, and a dollar-denominated savings account.",
           imgSrc: ethena,
-          href: "",
+          href: "https://ethena.fi/",
         },
         {
           name: "Franklin Templeton BENJI",
           description:
             "A mobile app that allows investors to browse tokenized securities, digital assets, and invest in the Franklin OnChain U.S. Government Money Fund (BENJI), the first tokenized money fund natively issued on a blockchain.",
           imgSrc: ftBenji,
-          href: "",
+          href: "https://digitalassets.franklintempleton.com/benji/",
         },
         {
           name: "Frax",
           description:
             "A fractional-algorithmic stablecoin ecosystem that aims to provide scalable, decentralized, and algorithmic money in place of fixed-supply digital assets.",
           imgSrc: frax,
-          href: "",
+          href: "https://frax.com/",
         },
         {
           name: "Ondo",
           description:
             "A DeFi protocol focused on making institutional-grade financial products and services, like tokenized U.S. Treasuries, accessible onchain. ",
           imgSrc: ondo,
-          href: "",
+          href: "https://ondo.finance/",
         },
         {
           name: "Pendle",
           description:
             "A DeFi protocol for trading interest rate derivatives via the tokenization of future yield, allowing users to lock in future yield from yield-bearing tokens, speculate on yield movements, and provide liquidity for yield-bearing tokens. ",
           imgSrc: pendle,
-          href: "",
+          href: "https://www.pendle.finance/",
         },
         {
           name: "Securitize",
           description:
             "A platform for tokenizing real-world assets and  issuing and managing digital asset securities onchain, allowing businesses to raise capital and investors to trade tokenized shares in funds and private companies.",
           imgSrc: securitize,
-          href: "",
+          href: "https://securitize.io/",
         },
         {
           name: "Sky",
           description:
             "A DeFi protocol (created by the MakerDAO community) that offers a suite of tools for trading, converting, staking, and earning yield from digital assets, including the USDS stablecoin. ",
           imgSrc: sky,
-          href: "",
+          href: "https://sky.money/",
         },
         {
           name: "Tether",
           description:
             "Issuer of the the USDT stablecoin, a stablecoin pegged to the U.S. dollar that’s focused on using fiat currencies onchain.",
           imgSrc: tether,
-          href: "",
+          href: "https://tether.to/en/",
         },
         {
           name: "Veda",
           description:
             "A vault infrastructure platform for institutions to launch and manage custom onchain products at scale. ",
           imgSrc: veda,
-          href: "",
+          href: "https://veda.tech/",
         },
         {
           name: "WisdomTree",
           description:
             "A global asset manager that offers a range of exchange-traded products (ETPs), including physically-backed crypto ETPs.",
           imgSrc: wisdomTree,
-          href: "",
+          href: "https://www.wisdomtree.com/",
         },
       ],
     },
@@ -292,49 +292,49 @@ export default function Page() {
           description:
             "A restaking platform to earn additional rewards on stablecoins, liquid staking tokens, and other digital assets, with deposits represented by a liquid restaking token that can be used across DeFi, and automated strategy vaults.",
           imgSrc: etherFi,
-          href: "",
+          href: "https://www.ether.fi/",
         },
         {
           name: "EigenCloud",
           description:
             "A platform built on EigenLayer restaking that provides verifiable computing for AI and other complex applications, leveraging Ethereum's security through restaked ETH and restaked liquid staking tokens.",
           imgSrc: eigenCloud,
-          href: "",
+          href: "https://www.eigencloud.xyz/",
         },
         {
           name: "Lido",
           description:
             "A DAO-managed liquid staking network that allows users to stake their ETH and other PoS assets to earn staking rewards, with staked assets represented by stETH, a liquid staking token that can be used in DeFi and is issued to represent staking rewards. ",
           imgSrc: lido,
-          href: "",
+          href: "https://lido.fi/",
         },
         {
           name: "Liquid Collective",
           description:
             "A liquid staking network built to provide a secure, decentralized way to stake ETH across operators and platforms, with staked assets represented by LsETH, a liquid staking token that can be used in DeFi while accruing staking rewards that’s designed to meet institutional security and compliance requirements.",
           imgSrc: liquidCollective,
-          href: "",
+          href: "https://liquidcollective.io/",
         },
         {
           name: "Rocket Pool",
           description:
             "A liquid staking protocol focused on decentralization and censorship resistance, allowing users with as little as 0.01 ETH to participate in staking and receive a liquid staking token (rETH) that can be used in DeFi while it continues to accrue staking rewards. ",
           imgSrc: rocketPool,
-          href: "",
+          href: "https://rocketpool.net/",
         },
         {
           name: "Stakewise",
           description:
             "A liquid staking platform that offers both solo and pooled staking options, backed by a decentralized network of custom staking vaults, with a unified liquid staking token (osETH) that can be used in DeFi while it continues to accrue staking rewards.  ",
           imgSrc: stakewise,
-          href: "",
+          href: "https://www.stakewise.io/",
         },
         {
           name: "Symbiotic",
           description:
             "A restaking protocol that enables users to secure additional blockchain networks by restaking their existing staked assets and liquid staking tokens, with a flexible and modular system for networks to manage independent rewards and penalties.",
           imgSrc: symbiotic,
-          href: "",
+          href: "https://symbiotic.fi/",
         },
       ],
     },
@@ -348,14 +348,14 @@ export default function Page() {
           description:
             "A decentralized prediction market where users can bet on the outcomes of real-world events by buying and selling shares in different possible outcomes.",
           imgSrc: polymarket,
-          href: "",
+          href: "https://polymarket.com/",
         },
         {
           name: "Synthetix",
           description:
             "A liquidity protocol for creating synthetic digital assets that track the value of any asset, allowing users to gain exposure to a wide range of instruments without holding them directly.",
           imgSrc: synthetix,
-          href: "",
+          href: "https://www.synthetix.io/",
         },
       ],
     },
@@ -383,6 +383,8 @@ export default function Page() {
           </div>
 
           <hr className="border-muted" />
+
+
 
           {categories.map((category) => {
             const { heading, subtext, platforms } = ecosystem[category]
