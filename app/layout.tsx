@@ -93,8 +93,8 @@ const satoshi = localFont({
 // ]
 
 const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
-  { children: "Why Ethereum", href: "/why-ethereum" },
-  { children: "Case studies", href: "/case-studies" },
+  // { children: "Why Ethereum", href: "/why-ethereum" },
+  // { children: "Case studies", href: "/case-studies" },
   { children: "Library", href: "/library", footerOnly: true },
   { children: "Live data", href: "/data-hub" },
   { children: "Solution providers", href: "/providers" },

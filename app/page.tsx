@@ -296,12 +296,12 @@ export default function Home() {
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Ethereum Leads Where It Matters
               </h2>
-              <Link
-                href="#"
+              {/* <Link
+                href="/why-ethereum"
                 className="css-forward-arrow css-secondary w-fit text-lg"
               >
                 Learn more
-              </Link>
+              </Link> */}
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
               <div className="space-y-2">
@@ -380,14 +380,14 @@ export default function Home() {
           <section id="who" className="flex gap-10 max-lg:flex-col md:gap-20">
             <div className="flex flex-col gap-y-10 max-lg:items-center">
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
-                Who builds on Ethereum?
+                Market-Proven Platform
               </h2>
-              <Link
-                href="#"
+              {/* <Link
+                href="/case-studies"
                 className="css-forward-arrow css-secondary w-fit text-lg"
               >
                 See Case Studies
-              </Link>
+              </Link> */}
             </div>
             <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               {platforms.map(
