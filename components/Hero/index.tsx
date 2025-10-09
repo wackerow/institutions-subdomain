@@ -19,7 +19,7 @@ const heroShapes = {
   "chart-no-axes-combined": <ChartNoAxesCombined />,
   "layers-2": <Layers2 />,
   lock: <Lock className="[&_rect]:fill-current" />,
-  handshake: <Handshake />
+  handshake: <Handshake />,
 } as const satisfies Record<string, ReactNode>
 
 type HeroShape = keyof typeof heroShapes

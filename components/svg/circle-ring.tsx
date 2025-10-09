@@ -16,5 +16,4 @@ const CircleRing = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-
 export default CircleRing
