@@ -2,6 +2,11 @@ import Image from "next/image"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
+import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
+import BinaryLock from "@/components/svg/binary-lock"
+import CpuLock from "@/components/svg/cpu-lock"
+import LayersLock from "@/components/svg/layers-lock"
+import TargetCheck from "@/components/svg/target-check"
 
 import { cn } from "@/lib/utils"
 
@@ -84,7 +89,15 @@ export default function Page() {
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             <div className="bg-card space-y-2 p-6">
-              <div className="TODO-IMAGE bg-muted size-16 shrink-0" />
+              <div className="size-37 shrink-0 overflow-hidden p-2.5">
+                <MaskedParallelsIcon
+                  gap={3}
+                  strokeWidth={1.5}
+                  className="text-secondary-foreground"
+                  maskShape={<TargetCheck className="size-37 text-white" />}
+                />
+              </div>
+
               <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                 Zero-Knowledge Proofs (ZK)
               </h3>
@@ -96,7 +109,15 @@ export default function Page() {
               </p>
             </div>
             <div className="bg-card space-y-2 p-6">
-              <div className="TODO-IMAGE bg-muted size-16 shrink-0" />
+              <div className="size-37 shrink-0 overflow-hidden p-2.5">
+                <MaskedParallelsIcon
+                  gap={3}
+                  strokeWidth={1.5}
+                  className="text-secondary-foreground"
+                  maskShape={<BinaryLock className="size-37 text-white" />}
+                />
+              </div>
+
               <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                 Fully Homomorphic Encryption (FHE)
               </h3>
@@ -108,7 +129,15 @@ export default function Page() {
               </p>
             </div>
             <div className="bg-card space-y-2 p-6">
-              <div className="TODO-IMAGE bg-muted size-16 shrink-0" />
+              <div className="size-37 shrink-0 overflow-hidden p-2.5">
+                <MaskedParallelsIcon
+                  gap={3}
+                  strokeWidth={1.5}
+                  className="text-secondary-foreground"
+                  maskShape={<CpuLock className="size-37 text-white" />}
+                />
+              </div>
+
               <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                 Trusted Execution Environments (TEE)
               </h3>
@@ -119,7 +148,15 @@ export default function Page() {
               </p>
             </div>
             <div className="bg-card space-y-2 p-6">
-              <div className="TODO-IMAGE bg-muted size-16 shrink-0" />
+              <div className="size-37 shrink-0 overflow-hidden p-2.5">
+                <MaskedParallelsIcon
+                  gap={3}
+                  strokeWidth={1.5}
+                  className="text-secondary-foreground"
+                  maskShape={<LayersLock className="size-37 text-white" />}
+                />
+              </div>
+
               <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
                 Privacy-Focused L2s
               </h3>
