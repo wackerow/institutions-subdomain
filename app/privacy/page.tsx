@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
@@ -13,6 +14,37 @@ import { cn } from "@/lib/utils"
 import blurWalking from "@/public/images/blur-walking.png"
 
 export default function Page() {
+  const productionSolutions: {
+    heading: string
+    description: string
+    href: string
+  }[] = [
+    {
+      heading: "Chainlink Automated Compliance Engine (ACE)",
+      description:
+        "Policy enforcement and verifiable entity identity to automate KYC/AML and transfer rules directly in smart contracts.",
+      href: "https://chain.link/automated-compliance-engine",
+    },
+    {
+      heading: "Railgun",
+      description:
+        "On-chain ZK privacy system for private balances and private DeFi interactions on Ethereum and major L2s.",
+      href: "https://www.railgun.org/",
+    },
+    {
+      heading: "Aztec Network",
+      description:
+        "Privacy-first zkRollup with encrypted state and selective disclosure; building private smart contracts on Ethereum.",
+      href: "https://aztec.network/",
+    },
+    {
+      heading: "Zama",
+      description:
+        "Tools to build smart contracts that compute on encrypted data, so balances and logic stay confidential.",
+      href: "https://www.zama.ai/",
+    },
+  ]
+
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Compliant Privacy for Institutions" shape="lock">
@@ -236,42 +268,24 @@ export default function Page() {
               "*:bg-card *:space-y-2 *:p-6"
             )}
           >
-            <div>
-              <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                Chainlink Automated Compliance Engine (ACE)
-              </h3>
-              <p className="text-muted-foreground font-medium">
-                Policy enforcement and verifiable entity identity to automate
-                KYC/AML and transfer rules directly in smart contracts.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                Railgun
-              </h3>
-              <p className="text-muted-foreground font-medium">
-                On-chain ZK privacy system for private balances and private DeFi
-                interactions on Ethereum and major L2s.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                Aztec Network
-              </h3>
-              <p className="text-muted-foreground font-medium">
-                Privacy-first zkRollup with encrypted state and selective
-                disclosure; building private smart contracts on Ethereum.
-              </p>
-            </div>
-            <div>
-              <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                Zama
-              </h3>
-              <p className="text-muted-foreground font-medium">
-                Tools to build smart contracts that compute on encrypted data,
-                so balances and logic stay confidential.
-              </p>
-            </div>
+            {productionSolutions.map(({ heading, description, href }) => (
+              <div
+                key={heading}
+                className="flex flex-col justify-between gap-y-6"
+              >
+                <div className="space-y-2">
+                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                    {heading}
+                  </h3>
+                  <p className="text-muted-foreground font-medium">
+                    {description}
+                  </p>
+                </div>
+                <Link href={href} className="css-forward-arrow css-secondary">
+                  Visit
+                </Link>
+              </div>
+            ))}
           </div>
         </section>
       </article>
