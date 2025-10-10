@@ -64,7 +64,7 @@ const MobileMenu = () => {
             onClick={() => setOpen(false)}
             className="text-primary-foreground hover:text-primary-foreground/70 block text-2xl font-medium tracking-[0.03rem]"
           >
-            Privacy & Compliance
+            Compliant Privacy
           </Link>
           <hr />
           <Link

@@ -78,13 +78,6 @@ export const defiEcosystem = {
         href: "https://www.curve.finance/",
       },
       {
-        name: "Fluid",
-        description:
-          "A DeFi protocol that offers lending, borrowing, and trading on top of a unified liquidity layer, allowing users to maximize yield and optimize capital efficiency through integrated debt and liquidity products.",
-        imgSrc: fluid,
-        href: "https://fluid.io/",
-      },
-      {
         name: "Uniswap",
         description:
           "A DEX protocol that enables permissionless peer-to-peer trading, through a smart contract-based AMM system that allows anyone to create custom pairs and supply liquidity.",
