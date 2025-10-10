@@ -231,29 +231,27 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <Card className="flex flex-col justify-between md:h-[26rem]">
-              <div className="size-37 shrink-0 overflow-hidden p-2.5">
-                <MaskedParallelsIcon
-                  className="text-secondary-foreground"
-                  maskShape={
-                    <BadgeDollarSignFillInvert className="size-37 text-white" />
-                  }
-                />
-              </div>
-              <div className="flex flex-col justify-between gap-10">
-                <div className="space-y-2 md:mx-auto md:max-w-xl md:text-center">
-                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                    RWAs & Stablecoins
-                  </h3>
-                  <div className="text-muted-foreground">
-                    Real-world assets tokenize offchain assets, like real
-                    estate, commodities, or bonds, while stablecoins design for
-                    steady value, often pegged to assets like USD.
-                  </div>
+              <div className="space-y-2">
+                <div className="size-37 shrink-0 overflow-hidden p-2.5">
+                  <MaskedParallelsIcon
+                    className="text-secondary-foreground"
+                    maskShape={
+                      <BadgeDollarSignFillInvert className="size-37 text-white" />
+                    }
+                  />
                 </div>
-                <LinkWithArrow href="#" className="css-secondary md:mx-auto">
-                  More on RWAs
-                </LinkWithArrow>
+                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                  RWAs & Stablecoins
+                </h3>
+                <div className="text-muted-foreground">
+                  Real-world assets tokenize offchain assets, like real estate,
+                  commodities, or bonds, while stablecoins design for steady
+                  value, often pegged to assets like USD.
+                </div>
               </div>
+              <LinkWithArrow href="/rwa" className="css-secondary max-md:mt-6">
+                More on RWAs
+              </LinkWithArrow>
             </Card>
             <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
@@ -272,7 +270,7 @@ export default function Home() {
                   directly from their wallet.
                 </div>
               </div>
-              <LinkWithArrow href="#" className="css-secondary max-md:mt-6">
+              <LinkWithArrow href="/defi" className="css-secondary max-md:mt-6">
                 More on DeFi
               </LinkWithArrow>
             </Card>
@@ -316,7 +314,10 @@ export default function Home() {
                   faster and cheaper.
                 </div>
               </div>
-              <LinkWithArrow href="#" className="css-secondary max-md:mt-6">
+              <LinkWithArrow
+                href="/layer-2"
+                className="css-secondary max-md:mt-6"
+              >
                 More on L2s
               </LinkWithArrow>
             </Card>
@@ -332,12 +333,6 @@ export default function Home() {
               <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Ethereum Leads Where It Matters
               </h2>
-              {/* <LinkWithArrow
-                href="/why-ethereum"
-                className="css-secondary w-fit text-lg"
-              >
-                Learn more
-              </LinkWithArrow> */}
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
               <div className="space-y-2">
@@ -418,12 +413,6 @@ export default function Home() {
               <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Market-Proven Platform
               </h2>
-              {/* <LinkWithArrow
-                href="/case-studies"
-                className="css-secondary w-fit text-lg"
-              >
-                See Case Studies
-              </LinkWithArrow> */}
             </div>
             <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               {platforms.map(
