@@ -124,8 +124,6 @@ export default function Page() {
             <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
-                  gap={3}
-                  strokeWidth={1.5}
                   className="text-secondary-foreground"
                   maskShape={<TargetCheck className="size-37 text-white" />}
                 />
@@ -144,8 +142,6 @@ export default function Page() {
             <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
-                  gap={3}
-                  strokeWidth={1.5}
                   className="text-secondary-foreground"
                   maskShape={<BinaryLock className="size-37 text-white" />}
                 />
@@ -164,8 +160,6 @@ export default function Page() {
             <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
-                  gap={3}
-                  strokeWidth={1.5}
                   className="text-secondary-foreground"
                   maskShape={<CpuLock className="size-37 text-white" />}
                 />
@@ -183,8 +177,6 @@ export default function Page() {
             <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
-                  gap={3}
-                  strokeWidth={1.5}
                   className="text-secondary-foreground"
                   maskShape={<LayersLock className="size-37 text-white" />}
                 />

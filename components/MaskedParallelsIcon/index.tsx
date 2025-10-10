@@ -40,8 +40,8 @@ const randomId = (prefix = "id") =>
 
 const MaskedParallelsIcon = ({
   boxSize = 128,
-  strokeWidth = 2,
-  gap = 4,
+  strokeWidth = 1.5,
+  gap = 3,
   pointerMargin = 28,
   lineCount,
   hoverSigmaX = 48,
@@ -88,7 +88,7 @@ const MaskedParallelsIcon = ({
 
   // stable random lines per-mount
   const lines = useMemo<MaskedParallelsIconLine[]>(() => {
-    const minLength = 0.5 * width
+    const minLength = 0.6 * width
     const maxLength = 0.9 * width
     const xRange = Math.max(0, width - minLength)
     return Array.from({ length: computedLineCount }).map((_, idx) => {
