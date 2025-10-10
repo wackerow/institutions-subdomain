@@ -42,7 +42,7 @@ const MobileMenu = () => {
           </DrawerClose>
         </DrawerHeader>
         <div className="flex flex-col gap-y-6 p-10 [&_hr]:border-[#5676E1]">
-          <p className="text-[#5676E1]">Digital assets</p>
+          <p className="text-[#5676E1]">Digital Assets</p>
           <Link
             href="/rwa"
             onClick={() => setOpen(false)}
