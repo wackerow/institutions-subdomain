@@ -7,8 +7,8 @@ import * as url from "@/lib/utils/url"
 
 export type LinkProps = ComponentProps<"a"> &
   ComponentProps<typeof NextLink> & {
-    // Omit<ComponentProps<typeof NextLink>, "href"> & {
     showDecorator?: boolean
+    inline?: boolean
   }
 
 /**
@@ -24,7 +24,7 @@ export type LinkProps = ComponentProps<"a"> &
  * e.g. <Link href="/eth-whitepaper.pdf">
  */
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { href, children, className, showDecorator, ...props }: LinkProps,
+  { href, children, className, showDecorator, inline, ...props }: LinkProps,
   ref
 ) {
   const isExternal = url.isExternal(href)
@@ -34,7 +34,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   const commonProps = {
     ref,
     ...props,
-    className: cn("block w-fit no-underline", className),
+    className: cn("block w-fit no-underline", inline && "inline", className),
     href,
   }
 
@@ -82,12 +82,5 @@ export const LinkWithArrow = forwardRef<HTMLAnchorElement, LinkProps>(
   )
 )
 LinkWithArrow.displayName = "LinkWithArrow"
-
-export const InlineLink = forwardRef<HTMLAnchorElement, LinkProps>(
-  (props: LinkProps, ref) => {
-    return <Link className="inline" ref={ref} {...props} />
-  }
-)
-InlineLink.displayName = "InlineLink"
 
 export default Link
