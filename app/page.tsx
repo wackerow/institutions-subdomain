@@ -13,6 +13,14 @@ import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-i
 import CircleRing from "@/components/svg/circle-ring"
 import Layers2Fill from "@/components/svg/layers-2-fill"
 import LockFill from "@/components/svg/lock-fill"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselFooter,
+  CarouselIndicator,
+  CarouselItem,
+  CarouselNavigation,
+} from "@/components/ui/carousel"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
 import {
   LibraryCard,
@@ -26,7 +34,9 @@ import {
 import { cn } from "@/lib/utils"
 import { isValidDate } from "@/lib/utils/date"
 
+import robertMitchnick from "@/public/images/robert-mitchnick.png"
 import tomZschach from "@/public/images/tom-zschach.png"
+import vladTenev from "@/public/images/vlad-tenev.png"
 import blackRock from "@/public/logos/black-rock.png"
 import blackRockSvg from "@/public/logos/black-rock.svg"
 import citi from "@/public/logos/citi.png"
@@ -129,6 +139,40 @@ const platforms: {
     imgSrc: etoroSvg,
     description: "Stock Tokenization Platform",
     metric: "100 Stocks Trade 24/5",
+  },
+]
+
+const testimonials: {
+  name: string
+  role: string
+  content: string[]
+  imgSrc: StaticImageData
+}[] = [
+  {
+    name: "Tom Zschach",
+    role: "CIO @ SWIFT",
+    content: [
+      "Saying Ethereum is the wrong blockchain because it has high gas fees is like saying Amazon shouldn't use the internet because dial-up was slow in 1995.",
+      "Banks aren't building on 2015 Ethereum, they're using today's Ethereum stack with tomorrows upgrades.",
+    ],
+    imgSrc: tomZschach,
+  },
+  {
+    name: "Robert Mitchnick",
+    role: "Head of Digital Assets @ BlackRock",
+    content: [
+      "There was no question that the blockchain that we would start our tokenization on was on Ethereum.",
+    ],
+    imgSrc: robertMitchnick,
+  },
+  {
+    name: "Vlad Tenev",
+    role: "CEO @ Robinhood",
+    content: [
+      "I believe tokenization is the greatest capital markets innovation since the central limit order book.",
+      "The Robinhood Chain is the first Ethereum Layer 2 optimized for real-world assets.",
+    ],
+    imgSrc: vladTenev,
   },
 ]
 
@@ -420,42 +464,40 @@ export default function Home() {
               </h2>
             </div>
             <div className="relative w-full">
-              <div className="space-y-12">
-                <div className="space-y-8 text-xl text-neutral-700 italic">
-                  <p>
-                    Saying Ethereum is the wrong blockchain because it has high
-                    gas fees is like saying Amazon shouldn&apos;t use the
-                    internet because dial-up was slow in 1995.
-                  </p>
-                  <p>
-                    Banks aren&apos;t building on 2015 Ethereum, they&apos;re
-                    using today&apos;s Ethereum stack with tomorrows upgrades.
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <Image
-                    src={tomZschach}
-                    className="size-12 shrink-0 rounded-full grayscale"
-                    alt="Tom Zschach profile picture"
-                    placeholder="blur"
-                    sizes="48px"
-                  />
-                  <div>
-                    <p className="font-bold">Tom Zschach</p>
-                    <p className="font-medium">CIO @ SWIFT</p>
-                  </div>
-                </div>
-              </div>
-              {/* // TODO: Debug carousel sizing */}
-              {/* <Carousel>
+              <Carousel>
                 <CarouselContent>
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <CarouselItem key={i}></CarouselItem>
+                  {testimonials.map(({ name, role, imgSrc, content }) => (
+                    <CarouselItem key={name} className="space-y-12">
+                      <div className="text-muted-foreground space-y-8 text-xl italic">
+                        {content.map((children, idx) => (
+                          <p key={idx}>{children}</p>
+                        ))}
+                      </div>
+                      <div className="flex gap-4">
+                        <div className="relative size-12 shrink-0 overflow-hidden rounded-full">
+                          <Image
+                            src={imgSrc}
+                            alt={`${name} profile picture`}
+                            fill
+                            className="object-cover grayscale"
+                            placeholder="blur"
+                            sizes="48px"
+                            draggable={false}
+                          />
+                        </div>
+                        <div>
+                          <p className="font-bold">{name}</p>
+                          <p className="font-medium">{role}</p>
+                        </div>
+                      </div>
+                    </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselIndicator />
-                <CarouselNavigation alwaysShow />
-              </Carousel> */}
+                <CarouselFooter className="flex-col-reverse gap-12">
+                  <CarouselIndicator />
+                  <CarouselNavigation alwaysShow />
+                </CarouselFooter>
+              </Carousel>
             </div>
           </section>
         </div>
