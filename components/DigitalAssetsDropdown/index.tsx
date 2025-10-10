@@ -44,7 +44,11 @@ const DigitalAssetsDropdown = () => {
       <DropdownMenuContent>
         {digitalAssetsLinks.map((props) => (
           <DropdownMenuItem key={props.children}>
-            <Link {...props} onClick={() => setOpen(false)} />
+            <Link
+              {...props}
+              onClick={() => setOpen(false)}
+              className="text-base"
+            />
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

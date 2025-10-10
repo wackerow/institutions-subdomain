@@ -21,7 +21,7 @@ const MobileMenu = () => {
       <DrawerTrigger asChild>
         <Button
           variant="ghost"
-          className="group-has-[.css-primary-invert]/body:text-primary-foreground text-lg font-medium md:hidden"
+          className="group-has-[.css-primary-invert]/body:text-primary-foreground hover:group-has-[.css-primary-invert]/body:text-primary-foreground/70 text-lg font-medium md:hidden"
           onClick={() => setOpen(true)}
         >
           Menu
@@ -34,7 +34,7 @@ const MobileMenu = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="ms-auto mt-4 me-4"
+              className="ms-auto me-4 mt-4"
               onClick={() => setOpen(false)}
             >
               <X className="size-10" />

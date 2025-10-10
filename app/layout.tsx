@@ -154,7 +154,7 @@ export default function RootLayout({
         )}
       >
         <header className="group-has-[.css-primary-invert]/body:bg-primary w-full max-w-screen">
-          <div className="max-w-8xl mx-auto flex justify-between p-10">
+          <div className="max-w-8xl mx-auto flex justify-between p-4 pb-10 sm:p-10">
             <Link href="/">
               <SiteLogo
                 aria-label="Ethereum Foundation Enterprise logo"
