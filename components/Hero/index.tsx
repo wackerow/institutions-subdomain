@@ -36,7 +36,7 @@ type HeroProps = {
 const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
   <div
     className={cn(
-      "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground text-primary overflow-x-hidden",
+      "group-has-[.css-primary-invert]/body:bg-primary group-has-[.css-primary-invert]/body:text-primary-foreground text-primary overflow-hidden",
       className
     )}
   >
@@ -53,10 +53,8 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       </div>
       <div
         className={cn(
-          "relative inset-y-0 end-0 z-0 place-items-center max-md:grid md:absolute md:h-full",
-          "max-[25rem]:-my-32 min-[25rem]:max-[32rem]:-my-24 min-[32rem]:max-sm:-my-20 sm:max-md:-my-12",
-          "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground",
-          "max-md:!h-[clamp(--space-60,100vw,--space-80)]"
+          "relative end-0 z-0 place-items-center max-md:inset-y-0 max-md:grid md:absolute md:h-full",
+          "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
         <HeroBg

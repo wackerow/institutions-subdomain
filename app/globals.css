@@ -156,7 +156,7 @@
     @apply leading-normal font-bold;
   }
   h1 {
-    @apply text-h1 tracking-[0.07rem];
+    @apply text-h2 sm:text-h1 tracking-[0.07rem];
   }
   h2 {
     @apply text-h2 tracking-[0.06rem];
