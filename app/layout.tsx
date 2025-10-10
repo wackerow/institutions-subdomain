@@ -1,5 +1,3 @@
-import { ComponentProps } from "react"
-import { ExternalLink } from "lucide-react"
 import localFont from "next/font/local"
 import type { Metadata } from "next/types"
 
@@ -57,7 +55,7 @@ const navItemLinks: LinkProps[] = [
   { children: "Solution Providers", href: "/providers" },
 ]
 
-const socialLinks: ComponentProps<"a">[] = [
+const socialLinks: LinkProps[] = [
   {
     href: "https://www.linkedin.com/company/ethereum/posts/",
     children: <LinkedIn />,
@@ -66,7 +64,7 @@ const socialLinks: ComponentProps<"a">[] = [
   { href: "https://farcaster.xyz/ethdotorg", children: <Farcaster /> },
 ]
 
-const externalLinks: ComponentProps<"a">[] = [
+const externalLinks: LinkProps[] = [
   {
     href: "https://ethereum.org/privacy-policy/",
     children: "Privacy Policy",
@@ -88,9 +86,6 @@ const externalLinks: ComponentProps<"a">[] = [
     children: "ethereum.org",
   },
 ]
-
-// TODO: Confirm rel options
-const externalLinkProps = { target: "_blank", rel: "noopener noreferrer" }
 
 export default function RootLayout({
   children,
@@ -147,8 +142,8 @@ export default function RootLayout({
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
               <div className="flex flex-col gap-y-7 max-sm:justify-center">
                 <div className="flex items-center gap-4 sm:gap-6">
-                  {socialLinks.map((props, idx) => (
-                    <a key={idx} {...externalLinkProps} {...props} />
+                  {socialLinks.map((props) => (
+                    <Link key={props.href} {...props} />
                   ))}
                 </div>
               </div>
@@ -161,20 +156,18 @@ export default function RootLayout({
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
               <nav className="mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
-                {externalLinks.map(({ href, children }) => (
-                  <a
-                    key={href}
-                    href={href}
+                {externalLinks.map((props) => (
+                  <Link
+                    key={props.href}
                     className="text-muted-foreground hover:text-foreground group block"
-                    {...externalLinkProps}
-                  >
-                    {children}&nbsp;
-                    <ExternalLink className="text-muted group-hover:text-muted-foreground !mb-[0.125em] inline size-[1em] shrink-0" />
-                  </a>
+                    showDecorator
+                    {...props}
+                  />
                 ))}
               </nav>
               <div className="text-center">
-                © 2025 Ethereum Foundation. All rights reserved.
+                © {new Date().getFullYear()} Ethereum Foundation. All rights
+                reserved.
               </div>
             </div>
           </div>

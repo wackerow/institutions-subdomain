@@ -18,6 +18,8 @@ import {
   MAX_MESSAGE_LENGTH,
 } from "@/lib/constants"
 
+import Link from "../ui/link"
+
 type FormState = {
   name: string
   email: string
@@ -203,7 +205,10 @@ const EnterpriseContactForm = () => {
         general: (
           <>
             Unable to send your message. Please try again or contact us directly
-            at <a href={ENTERPRISE_MAILTO}>{ENTERPRISE_EMAIL}</a>
+            at{" "}
+            <Link href={ENTERPRISE_MAILTO} showDecorator>
+              {ENTERPRISE_EMAIL}
+            </Link>
           </>
         ),
       })

@@ -55,7 +55,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
           {isMailto ? " (opens email client)" : " (opens in a new tab)"}
         </span>
         {showDecorator && !isMailto && (
-          <ExternalLink className="text-muted group-hover:text-muted-foreground !mb-[0.125em] inline size-[1em] shrink-0" />
+          <ExternalLink className="text-muted group-hover:text-muted-foreground ms-1 !mb-[0.125em] inline size-[1em] shrink-0" />
         )}
       </a>
     )
