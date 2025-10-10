@@ -13,6 +13,7 @@ import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-i
 import CircleRing from "@/components/svg/circle-ring"
 import Layers2Fill from "@/components/svg/layers-2-fill"
 import LockFill from "@/components/svg/lock-fill"
+import { Card } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
@@ -232,7 +233,7 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
+            <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
@@ -259,8 +260,8 @@ export default function Home() {
                   More on RWAs
                 </Link>
               </div>
-            </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
+            </Card>
+            <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
@@ -283,8 +284,8 @@ export default function Home() {
               >
                 More on DeFi
               </Link>
-            </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
+            </Card>
+            <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
                 <div className="size-37 shrink-0 p-2.5">
                   <MaskedParallelsIcon
@@ -307,8 +308,8 @@ export default function Home() {
               >
                 More on Privacy
               </Link>
-            </div>
-            <div className="bg-card flex flex-col justify-between p-6 md:h-[26rem]">
+            </Card>
+            <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
@@ -330,7 +331,7 @@ export default function Home() {
               >
                 More on L2s
               </Link>
-            </div>
+            </Card>
           </div>
         </section>
 
@@ -496,7 +497,7 @@ export default function Home() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselFooter className="max-sm:flex-col-reverse gap-12">
+                <CarouselFooter className="gap-12 max-sm:flex-col-reverse">
                   <CarouselIndicator />
                   <CarouselNavigation alwaysShow />
                 </CarouselFooter>

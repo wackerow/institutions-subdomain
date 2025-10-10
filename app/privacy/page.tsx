@@ -8,6 +8,7 @@ import BinaryLock from "@/components/svg/binary-lock"
 import CpuLock from "@/components/svg/cpu-lock"
 import LayersLock from "@/components/svg/layers-lock"
 import TargetCheck from "@/components/svg/target-check"
+import { Card } from "@/components/ui/card"
 
 import { cn } from "@/lib/utils"
 
@@ -120,7 +121,7 @@ export default function Page() {
             Privacy Building Blocks on Ethereum
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <div className="bg-card space-y-2 p-6">
+            <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   gap={3}
@@ -139,8 +140,8 @@ export default function Page() {
                 counterparties while keeping transactions composable with
                 Ethereum liquidity.
               </p>
-            </div>
-            <div className="bg-card space-y-2 p-6">
+            </Card>
+            <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   gap={3}
@@ -159,8 +160,8 @@ export default function Page() {
                 highly-sensitivity analytics, where even intermediaries
                 shouldn&apos;t see plaintext.
               </p>
-            </div>
-            <div className="bg-card space-y-2 p-6">
+            </Card>
+            <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   gap={3}
@@ -178,8 +179,8 @@ export default function Page() {
                 (matching, auctions). TEEs keep code and data sealed, then emit
                 verifiable attestations suitable for audits and due diligence.
               </p>
-            </div>
-            <div className="bg-card space-y-2 p-6">
+            </Card>
+            <Card className="space-y-2">
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   gap={3}
@@ -198,7 +199,7 @@ export default function Page() {
                 Get L1 security, liquidity, and auditability, plus access to
                 selective disclosure.
               </p>
-            </div>
+            </Card>
           </div>
         </section>
 

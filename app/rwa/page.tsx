@@ -4,6 +4,7 @@ import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
+import { Card } from "@/components/ui/card"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
@@ -151,22 +152,22 @@ export default function Page() {
             open, and resilient ecosystem of Ethereum and its L2s.
           </p>
           <div className="flex w-full flex-1 gap-4 max-sm:flex-col">
-            <div className="bg-card flex-1 space-y-2 px-6 py-8">
+            <Card className="flex-1 space-y-2 py//-8">
               <p>Stablecoins on Ethereum L1</p>
               {/* // TODO: Live data */}
               <p className="text-big font-bold tracking-[0.055rem]">$162B</p>
               <p className="text-xs font-medium tracking-[0.015rem]">
                 Source: rwa.xyz
               </p>
-            </div>
-            <div className="bg-card flex-1 space-y-2 px-6 py-8">
+            </Card>
+            <Card className="flex-1 space-y-2 py-8">
               <p>Stablecoins on Ethereum L2s</p>
               {/* // TODO: Live data */}
               <p className="text-big font-bold tracking-[0.055rem]">$10B</p>
               <p className="text-xs font-medium tracking-[0.015rem]">
                 Source: rwa.xyz
               </p>
-            </div>
+            </Card>
           </div>
         </div>
 
@@ -242,7 +243,7 @@ export default function Page() {
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
             {stablecoins.map(({ imgSrc, ticker, issuer, href }) => (
-              <div className="bg-card space-y-2 p-6" key={ticker}>
+              <Card key={ticker} className="space-y-2">
                 <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
                 <h3 className="text-h5">{ticker}</h3>
                 <p className="font-medium">By {issuer}</p>
@@ -252,7 +253,7 @@ export default function Page() {
                 >
                   Visit
                 </Link>
-              </div>
+              </Card>
             ))}
           </div>
         </section>
@@ -288,8 +289,8 @@ export default function Page() {
                 metricHref,
                 visitHref,
               }) => (
-                <div
-                  className="bg-card text-card-foreground flex flex-col justify-between gap-y-6 p-8"
+                <Card
+                  className="flex flex-col justify-between gap-y-6 p-8"
                   key={header}
                 >
                   <div className="space-y-2">
@@ -317,7 +318,7 @@ export default function Page() {
                   >
                     Visit
                   </Link>
-                </div>
+                </Card>
               )
             )}
 
@@ -341,8 +342,8 @@ export default function Page() {
                 metricHref,
                 visitHref,
               }) => (
-                <div
-                  className="bg-card text-card-foreground flex flex-col justify-between gap-y-6 p-8"
+                <Card
+                  className="flex flex-col justify-between gap-y-6 p-8"
                   key={header}
                 >
                   <div className="space-y-2">
@@ -370,7 +371,7 @@ export default function Page() {
                   >
                     Visit
                   </Link>
-                </div>
+                </Card>
               )
             )}
           </div>
@@ -391,7 +392,7 @@ export default function Page() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="bg-card p-10">
+            <Card className="p-10">
               <h3 className="text-h4">
                 Ethereum L1: The settlement & liquidity layer
               </h3>
@@ -428,9 +429,9 @@ export default function Page() {
                   settlement, collateral custody, and proofs.
                 </div>
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-card p-10">
+            <Card className="p-10">
               <h3 className="text-h4">
                 Ethereum&apos;s L2s: The execution & scale layer
               </h3>
@@ -470,7 +471,7 @@ export default function Page() {
                   because settlement reconciles on L1.
                 </div>
               </div>
-            </div>
+            </Card>
           </div>
         </section>
       </article>
