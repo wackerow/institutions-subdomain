@@ -50,7 +50,7 @@ export function ScalingPanel() {
         {
           content:
             "ZKSync’s Airbender reaches up to 6x faster proving throughput than competitors, proving Ethereum blocks in real-time with 8 nvidia 5090 GPUs, and unlocking real-time clearing for latency-sensitive finance",
-          href: "https://blog.eigencloud.xyz/eigenda-v2-core-architecture/",
+          href: "https://www.zksync.io/airbender",
         },
       ],
     },
@@ -60,12 +60,12 @@ export function ScalingPanel() {
         {
           content:
             "PeerDAS data availability sampling sets the stage to 8x today’s mainnet throughput",
-          href: "https://blog.eigencloud.xyz/eigenda-v2-core-architecture/",
+          href: "https://blog.ethereum.org/2025/08/22/protocol-update-002",
         },
         {
           content:
             "Block-Level Access Lists enable parallel transaction execution within blocks and parallel state root computation, accelerating block processing times",
-          href: "https://blog.eigencloud.xyz/eigenda-v2-core-architecture/",
+          href: "https://blog.ethereum.org/2025/08/05/protocol-update-001",
         },
       ],
     },
