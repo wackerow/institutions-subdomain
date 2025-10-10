@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
-import { motion, Transition, useMotionValue } from "motion/react"
+import { motion } from "motion/react"
 import type { ComponentProps, ReactNode } from "react"
 
 import { cn } from "@/lib/utils/index"
@@ -110,8 +110,12 @@ function Carousel({
       onIndexChange={handleIndexChange}
       disableDrag={disableDrag}
     >
-      <div className={cn("group/hover relative", className)}>
-        <div className="overflow-hidden">{children}</div>
+      <div
+        className={cn("group/hover relative isolate w-full min-w-0", className)}
+      >
+        <div className="w-full min-w-0 overflow-hidden [contain:layout_inline-size]">
+          {children}
+        </div>
       </div>
     </CarouselProvider>
   )
@@ -210,38 +214,27 @@ function CarouselIndicator({
 export type CarouselContentProps = {
   children: ReactNode
   className?: string
-  transition?: Transition
 }
 
-function CarouselContent({
-  children,
-  className,
-  transition,
-}: CarouselContentProps) {
-  const { index, setIndex, setItemsCount, disableDrag } = useCarousel()
-  const [visibleItemsCount, setVisibleItemsCount] = useState(1)
-  const dragX = useMotionValue(0)
-  const containerRef = useRef<HTMLDivElement>(null)
+function CarouselContent({ children, className }: CarouselContentProps) {
+  const { index, setIndex, setItemsCount } = useCarousel()
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const itemsLength = Children.count(children)
 
   useEffect(() => {
-    if (!containerRef.current) {
+    if (!viewportRef.current || !trackRef.current) {
       return
     }
 
     const options = {
-      root: containerRef.current,
+      root: viewportRef.current,
       threshold: 0.5,
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      const visibleCount = entries.filter(
-        (entry) => entry.isIntersecting
-      ).length
-      setVisibleItemsCount(visibleCount)
-    }, options)
+    const observer = new IntersectionObserver(() => {}, options)
 
-    const childNodes = containerRef.current.children
+    const childNodes = trackRef.current.children
     Array.from(childNodes).forEach((child) => observer.observe(child))
 
     return () => observer.disconnect()
@@ -255,52 +248,48 @@ function CarouselContent({
     setItemsCount(itemsLength)
   }, [itemsLength, setItemsCount])
 
-  const onDragEnd = () => {
-    const x = dragX.get()
+  // Programmatic scroll when index changes
+  useEffect(() => {
+    const viewport = viewportRef.current
+    if (!viewport) return
+    const width = viewport.clientWidth
+    viewport.scrollTo({ left: width * index, behavior: "smooth" })
+  }, [index])
 
-    if (x <= -10 && index < itemsLength - 1) {
-      setIndex(index + 1)
-    } else if (x >= 10 && index > 0) {
-      setIndex(index - 1)
-    }
-  }
+  // Sync index when user scrolls (native drag/swipe)
+  useEffect(() => {
+    const viewport = viewportRef.current
+    const track = trackRef.current
+    if (!viewport || !track) return
+
+    const slide = track.children[index] as HTMLElement | undefined
+    if (!slide) return
+
+    // Use the slide’s actual offset instead of width * index for reliability on iOS
+    viewport.scrollTo({
+      left: slide.offsetLeft,
+      behavior: "smooth",
+    })
+  }, [index])
 
   return (
-    <motion.div
-      drag={disableDrag ? false : "x"}
-      dragConstraints={
-        disableDrag
-          ? undefined
-          : {
-              left: 0,
-              right: 0,
-            }
-      }
-      dragMomentum={disableDrag ? undefined : false}
-      style={{
-        x: disableDrag ? undefined : dragX,
-      }}
-      animate={{
-        translateX: `-${index * (100 / visibleItemsCount)}%`,
-      }}
-      onDragEnd={disableDrag ? undefined : onDragEnd}
-      transition={
-        transition || {
-          damping: 18,
-          stiffness: 90,
-          type: "spring",
-          duration: 0.2,
-        }
-      }
+    <div
+      ref={viewportRef}
       className={cn(
-        "flex w-full items-center",
-        !disableDrag && "cursor-grab active:cursor-grabbing",
-        className
+        "relative w-full min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overscroll-x-contain [contain:layout_inline-size]",
+        "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       )}
-      ref={containerRef}
     >
-      {children}
-    </motion.div>
+      <div
+        ref={trackRef}
+        className={cn(
+          "flex w-full min-w-0 flex-nowrap items-stretch",
+          className
+        )}
+      >
+        {children}
+      </div>
+    </div>
   )
 }
 
@@ -313,7 +302,8 @@ function CarouselItem({ children, className }: CarouselItemProps) {
   return (
     <motion.div
       className={cn(
-        "w-full min-w-0 shrink-0 grow-0 overflow-hidden",
+        // exactly one viewport wide, with strong snap
+        "w-full min-w-0 flex-none snap-start snap-always overflow-hidden",
         className
       )}
     >

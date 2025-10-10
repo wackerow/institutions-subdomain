@@ -454,15 +454,15 @@ export default function Home() {
           <hr className="border-muted m-10 md:my-20" />
 
           <section
-            id="quotes"
-            className="relative flex gap-10 max-lg:flex-col md:gap-20"
+            id="testimonials"
+            className="relative flex gap-10 overflow-x-hidden max-lg:flex-col md:gap-20"
           >
             <div className="flex flex-col gap-y-10 max-lg:items-center">
               <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Industry Leaders Choose Ethereum
               </h2>
             </div>
-            <div className="relative w-full">
+            <div className="relative w-full min-w-0 overflow-x-hidden">
               <Carousel>
                 <CarouselContent>
                   {testimonials.map(({ name, role, imgSrc, content }) => (
