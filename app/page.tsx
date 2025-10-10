@@ -55,16 +55,20 @@ import ubs from "@/public/logos/ubs.png"
 import visaSvg from "@/public/logos/visa.svg"
 
 const logos: { src: StaticImageData; alt: string; className?: string }[] = [
-  { src: blackRock, alt: "BlackRock logo" },
-  { src: citi, alt: "Citi logo" },
-  { src: coinbase, alt: "Coinbase logo" },
-  { src: etoro, alt: "eToro logo" },
-  { src: fidelity, alt: "Fidelity logo" },
-  { src: jpMorgan, alt: "JPMorgan logo" },
+  { src: blackRock, alt: "BlackRock logo", className: "py-1 translate-y-0.5" },
+  { src: citi, alt: "Citi logo", className: "-translate-y-px" },
+  { src: coinbase, alt: "Coinbase logo", className: "py-0.5" },
+  { src: etoro, alt: "eToro logo", className: "py-0.5" },
+  { src: fidelity, alt: "Fidelity logo", className: "scale-110 mx-2 invert" },
+  { src: jpMorgan, alt: "JPMorgan logo", className: "py-0.5 translate-y-0.5" },
   { src: mastercard, alt: "Mastercard logo" },
-  { src: robinhood, alt: "Robinhood logo" },
-  { src: sony, alt: "Sony logo" },
-  { src: standardChartered, alt: "Standard Chartered logo" },
+  { src: robinhood, alt: "Robinhood logo", className: "translate-y-px" },
+  { src: sony, alt: "Sony logo", className: "py-[5px]" },
+  {
+    src: standardChartered,
+    alt: "Standard Chartered logo",
+    className: "scale-120 mx-4 invert",
+  },
   { src: swift, alt: "Swift logo" },
   { src: ubs, alt: "UBS logo" },
 ]
