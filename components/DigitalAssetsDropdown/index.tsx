@@ -37,7 +37,7 @@ const DigitalAssetsDropdown = () => {
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger className="css-primary-conditional font-medium data-[state=open]:[&>svg]:scale-y-75">
+      <DropdownMenuTrigger className="css-primary-conditional !cursor-pointer font-medium data-[state=open]:[&>svg]:scale-y-75">
         Digital assets&nbsp;
         <Triangle className="inline size-[0.75em] -scale-y-75 fill-current transition-transform" />
       </DropdownMenuTrigger>
