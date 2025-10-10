@@ -59,9 +59,18 @@ const socialLinks: LinkProps[] = [
   {
     href: "https://www.linkedin.com/company/ethereum/posts/",
     children: <LinkedIn />,
+    "aria-label": "LinkedIn",
   },
-  { href: "https://x.com/ethdotorg", children: <Twitter /> },
-  { href: "https://farcaster.xyz/ethdotorg", children: <Farcaster /> },
+  {
+    href: "https://x.com/ethdotorg",
+    children: <Twitter />,
+    "aria-label": "Twitter/X",
+  },
+  {
+    href: "https://farcaster.xyz/ethdotorg",
+    children: <Farcaster />,
+    "aria-label": "Farcaster",
+  },
 ]
 
 const externalLinks: LinkProps[] = [
@@ -103,7 +112,7 @@ export default function RootLayout({
       >
         <header className="group-has-[.css-primary-invert]/body:bg-primary w-full max-w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-4 pb-10 sm:p-10">
-            <Link href="/">
+            <Link href="/" aria-label="Go home">
               <SiteLogo
                 aria-label="Ethereum Foundation Enterprise logo"
                 className="group-has-[.css-primary-invert]/body:text-primary-foreground"
