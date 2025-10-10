@@ -14,13 +14,11 @@ export default async function Page() {
 
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="Data hub" shape="chart-no-axes-combined">
-        Hero subtext
-      </Hero>
+      <Hero heading="Data hub" shape="chart-no-axes-combined"></Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
         <section id="SECTION-ID" className="">
           <h2 className="text-h3s max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
-            In progress... soming soon™
+            In progress... coming soon™
           </h2>
           <div className="">
             <ValidatorCount />
