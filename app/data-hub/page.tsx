@@ -6,10 +6,17 @@ import RealWorldAssets from "@/components/data/rwa"
 import UltrasoundMoney from "@/components/data/ultrasound-money"
 import ValidatorCount from "@/components/data/validator-count"
 import Hero from "@/components/Hero"
-import { Card } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardLabel,
+  CardSmallText,
+  CardSource,
+  CardValue,
+} from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
-import { cn } from "@/lib/utils"
+import { formatPercent, getChangeColorClass } from "@/lib/utils/number"
 
 import fetchRWAStablecoins from "../api/rwaStablecoins/fetch"
 
@@ -75,42 +82,30 @@ export default async function Page() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
             {overviewCards.map(
               ({ label, value, percentChange, source, href }) => (
-                <Card key={label}>
-                  <div className="flex h-full flex-col justify-between gap-2">
-                    <div className="space-y-2">
-                      <h3 className="text-base font-medium tracking-[0.02rem]">
-                        {label}
-                      </h3>
-                      <p className="text-big font-bold">{value}</p>
-                      {percentChange && (
-                        <p
-                          className={cn(
-                            "text-muted-foreground text-xs font-medium tracking-[0.015rem]",
-                            percentChange > 0 && "text-green-600",
-                            percentChange < 0 && "text-red-600"
-                          )}
-                        >
-                          {percentChange > 0 ? "+" : ""}
-                          {new Intl.NumberFormat("en-US", {
-                            style: "percent",
-                            minimumSignificantDigits: 2,
-                            maximumSignificantDigits: 2,
-                          }).format(percentChange)}{" "}
-                          vs 30D
-                        </p>
-                      )}
-                    </div>
-                    <p className="text-muted-foreground font-medium">
-                      Source:{" "}
-                      <Link
-                        href={href}
-                        className="text-muted-foreground hover:text-foreground"
-                        inline
+                <Card key={label} variant="flex-height">
+                  <CardContent>
+                    <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                      {label}
+                    </CardLabel>
+                    <CardValue>{value}</CardValue>
+                    {percentChange && (
+                      <CardSmallText
+                        className={getChangeColorClass(percentChange)}
                       >
-                        {source}
-                      </Link>
-                    </p>
-                  </div>
+                        {formatPercent(percentChange, true)} vs 30D
+                      </CardSmallText>
+                    )}
+                  </CardContent>
+                  <CardSource>
+                    Source:{" "}
+                    <Link
+                      href={href}
+                      className="text-muted-foreground hover:text-foreground"
+                      inline
+                    >
+                      {source}
+                    </Link>
+                  </CardSource>
                 </Card>
               )
             )}
