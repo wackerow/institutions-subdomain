@@ -70,7 +70,7 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
 ]
 
 // TODO: Fetch live data
-const bigNumbers: { value: string; label: ReactNode }[] = [
+const metrics: { value: string; label: ReactNode }[] = [
   {
     value: "10 Yrs",
     label: "Uninterrupted uptime and liveness",
@@ -210,14 +210,13 @@ export default function Home() {
               Live Data
             </Link>
           </div>
-          <div className="grid grid-cols-[auto_auto] gap-14 max-sm:hidden">
-            {bigNumbers.map(({ value, label }, idx) => (
+          <div className="grid grid-cols-[auto_auto] gap-14 max-sm:grid-cols-2">
+            {metrics.map(({ value, label }, idx) => (
               <BigNumber key={idx} value={value} className="xl:w-xs">
                 {label}
               </BigNumber>
             ))}
           </div>
-          <div className="sm:hidden">TODO: Mobile slider</div>
         </section>
 
         <section id="digital-assets" className="w-full space-y-7">
