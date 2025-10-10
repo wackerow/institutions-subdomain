@@ -12,6 +12,7 @@ import EthGlyph from "@/components/svg/eth-glyph"
 
 import { cn } from "@/lib/utils"
 
+import BookOpenTextFill from "../svg/book-open-text-fill"
 import HeroBg from "../svg/hero-bg"
 
 const heroShapes = {
@@ -22,6 +23,7 @@ const heroShapes = {
   lock: <Lock className="[&_rect]:fill-current" />,
   handshake: <Handshake />,
   coins: <Coins />,
+  "book-open-text-fill": <BookOpenTextFill />,
 } as const satisfies Record<string, ReactNode>
 
 type HeroShape = keyof typeof heroShapes
