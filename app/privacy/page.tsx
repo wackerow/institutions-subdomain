@@ -203,7 +203,7 @@ export default function Page() {
         </section>
 
         <section id="why" className="flex gap-x-32 gap-y-14 max-lg:flex-col">
-          <div className="flex-1 space-y-7">
+          <div className="flex-3 space-y-7">
             <h2 className="text-h3 tracking-[0.055rem] lg:max-w-lg">
               Why Ethereum for Privacy
             </h2>
@@ -246,7 +246,7 @@ export default function Page() {
               </li>
             </ul>
           </div>
-          <div className="relative min-h-80 flex-1">
+          <div className="relative min-h-80 flex-2">
             <Image
               src={blurWalking}
               alt=""

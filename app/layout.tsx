@@ -181,73 +181,21 @@ export default function RootLayout({
         {children}
         <footer className="row-start-3">
           <div className="bg-primary text-primary-foreground w-screen px-4 py-20 sm:px-10">
-            <div className="mx-auto flex max-w-3xl flex-col items-center">
-              <h2 className="text-h3">Our team</h2>
-              <p className="mb-8 max-w-xl text-center">
-                We will answer your questions, help identify potential paths
-                forward, provide technical support and connect you with relevant
-                industry leaders.
-              </p>
-              {/* <div className="mb-32 grid grid-cols-2 gap-10 md:grid-cols-4">
-                {members.map(
-                  ({ name, expertise, imgSrc, twitter, linkedIn }) => (
-                    <div key={name} className="space-y-2">
-                      <div
-                        data-label="avatar"
-                        className="size-28 border border-dashed border-white/50 p-4"
-                      >
-                        <Image
-                          src={imgSrc}
-                          className="from-background to-muted size-full bg-gradient-to-br grayscale"
-                          alt={name + "profile picture"}
-                          placeholder="blur"
-                          sizes="80px"
-                        />
-                      </div>
-                      <div>
-                        <p className="text-xl/[1.4] font-bold">{name}</p>
-                        <p className="text-sm tracking-[0.0175rem]">
-                          {expertise}
-                        </p>
-                      </div>
-                      <div
-                        data-label="socials"
-                        className="flex gap-4 *:!text-[hsl(226,70%,61%)] *:hover:!text-[hsl(226,70%,71%)]"
-                      >
-                        <a
-                          href={"https://www.linkedin.com/in/" + linkedIn}
-                          {...externalLinkProps}
-                        >
-                          <LinkedIn />
-                        </a>
-                        <a
-                          href={"https://x.com/" + twitter}
-                          {...externalLinkProps}
-                        >
-                          <Twitter />
-                        </a>
-                      </div>
-                    </div>
-                  )
-                )}
-              </div> */}
-              <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-                <div className="space-y-4">
-                  <h3 className="text-h4">Get In Touch</h3>
-                  <p>
-                    We will answer your questions, help identify potential paths
-                    forward, provide technical support and connect you with
-                    relevant industry leaders.
-                  </p>
-                </div>
-                <EnterpriseContactForm />
+            <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 md:grid-cols-2">
+              <div className="space-y-4">
+                <h3 className="text-h4">Get In Touch</h3>
+                <p>
+                  We will answer your questions, help identify potential paths
+                  forward, provide technical support and connect you with
+                  relevant industry leaders.
+                </p>
               </div>
+              <EnterpriseContactForm />
             </div>
           </div>
           <div className="max-w-8xl mx-auto space-y-14 px-12 py-10 sm:space-y-9 xl:space-y-28">
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
               <div className="flex flex-col gap-y-7 max-sm:justify-center">
-                {/* <EnterpriseAcceleration /> */}
                 <div className="flex items-center gap-4 sm:gap-6">
                   {socialLinks.map((props, idx) => (
                     <a key={idx} {...externalLinkProps} {...props} />
