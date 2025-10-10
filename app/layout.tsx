@@ -6,8 +6,6 @@ import type { Metadata } from "next/types"
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
 import MobileMenu from "@/components/MobileMenu"
-// TODO: Confirm removal—delete image if confirmed
-// import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
 import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
 import SiteLogo from "@/components/svg/site-logo"
@@ -53,48 +51,9 @@ const satoshi = localFont({
   ],
 })
 
-// const members: {
-//   name: string
-//   expertise: string
-//   imgSrc: StaticImageData
-//   twitter?: string
-//   linkedIn?: string
-// }[] = [
-//   {
-//     name: "David Walsh",
-//     expertise: "Decentralized Finance",
-//     imgSrc: david,
-//     twitter: "davwals",
-//     linkedIn: "davwals",
-//   },
-//   {
-//     name: "Ash Morgan",
-//     expertise: "RWA & Stablecoins",
-//     imgSrc: ash,
-//     twitter: "_ashmorgan_",
-//     linkedIn: "ash-morgan-ef",
-//   },
-//   {
-//     name: "Matthew Dawson",
-//     expertise: "L2 Ecosystem",
-//     imgSrc: matthew,
-//     twitter: "ismimatthew",
-//     linkedIn: "matthewdawsy",
-//   },
-//   {
-//     name: "Mo Jalil",
-//     expertise: "Privacy & Compliance",
-//     imgSrc: mo,
-//     twitter: "motypes",
-//     linkedIn: "motypes",
-//   },
-// ]
-
 const navItemLinks: LinkProps[] = [
-  // { children: "Why Ethereum", href: "/why-ethereum" },
-  // { children: "Case studies", href: "/case-studies" },
-  { children: "Library", href: "/library" },
   { children: "Live Data", href: "/data-hub" },
+  { children: "Library", href: "/library" },
   { children: "Solution Providers", href: "/providers" },
 ]
 
@@ -103,12 +62,8 @@ const socialLinks: ComponentProps<"a">[] = [
     href: "https://www.linkedin.com/company/ethereum/posts/",
     children: <LinkedIn />,
   },
-  // { href: "#", children: <YouTube /> },
-  // { href: "#", children: <TikTok /> },
   { href: "https://x.com/ethdotorg", children: <Twitter /> },
-  // { href: "#", children: <Threads /> },
   { href: "https://farcaster.xyz/ethdotorg", children: <Farcaster /> },
-  // { href: "#", children: <BlueSky /> },
 ]
 
 const externalLinks: ComponentProps<"a">[] = [
