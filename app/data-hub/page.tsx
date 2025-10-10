@@ -17,7 +17,7 @@ export default async function Page() {
       <Hero heading="Data hub" shape="chart-no-axes-combined"></Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
         <section id="SECTION-ID" className="">
-          <h2 className="text-h3s max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             In progress... coming soon™
           </h2>
           <div className="">

@@ -29,6 +29,11 @@
   --text-h6: var(--text-xl); /* 1.25rem */
   --text-big: var(--text-h3); /* 2.75rem */
 
+  --text-h1-mobile: 2.5rem;
+  --text-h2-mobile: 2.25rem;
+  --text-h3-mobile: 2rem;
+  --text-big-mobile: var(--text-h3-mobile);
+
   --container-8xl: 1400px;
 
   /* TODO: Not yet fully defined: */
@@ -156,13 +161,13 @@
     @apply leading-normal font-bold;
   }
   h1 {
-    @apply text-h2 sm:text-h1 tracking-[0.07rem];
+    @apply text-h1-mobile sm:text-h1 tracking-[0.07rem];
   }
   h2 {
-    @apply text-h2 tracking-[0.06rem];
+    @apply text-h2-mobile sm:text-h2 tracking-[0.06rem];
   }
   h3 {
-    @apply text-h3 tracking-[0.055rem];
+    @apply text-h3-mobile sm:text-h3 tracking-[0.055rem];
   }
   h4 {
     @apply text-h4 tracking-[0.04rem];
@@ -178,7 +183,7 @@
   a {
     @apply cursor-pointer;
   }
-  
+
   a {
     @apply text-section-foreground hover:text-section-foreground/70 font-medium;
   }

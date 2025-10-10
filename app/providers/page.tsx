@@ -217,7 +217,7 @@ export default function Page() {
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
         {regions.map((region) => (
           <section key={region} id={region.toLowerCase()} className="space-y-4">
-            <h2 className="text-h3">{region}</h2>
+            <h2 className="text-h3-mobile sm:text-h3">{region}</h2>
             <div className="*:bg-card grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-4 *:p-6">
               {providers[region].map(({ name, category, href }) => (
                 <div key={name} className="bg-card space-y-2">

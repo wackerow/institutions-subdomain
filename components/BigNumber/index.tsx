@@ -11,7 +11,7 @@ const BigNumber = ({ value, className, children }: BigNumberProps) => (
     className={cn("flex flex-col items-center gap-2 text-center", className)}
   >
     {value && (
-      <p className="text-h4 sm:text-h3 font-bold tracking-[0.055rem]">
+      <p className="text-h3-mobile sm:text-h3 font-bold tracking-[0.055rem]">
         {value}
       </p>
     )}

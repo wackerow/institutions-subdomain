@@ -11,7 +11,7 @@ export default function Page() {
           id="coming-soon"
           className="flex gap-10 max-lg:flex-col md:gap-16"
         >
-          <h2 className="text-h3s max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Soon™
           </h2>
           <div className=""></div>

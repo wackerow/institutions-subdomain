@@ -175,7 +175,7 @@ export default function Page() {
           className="flex gap-x-32 gap-y-14 max-lg:flex-col"
         >
           <div className="flex-1 space-y-7">
-            <h2 className="text-h3 max-w-lg tracking-[0.055rem]">
+            <h2 className="sm:text-h3 text-h3-mobile max-w-lg tracking-[0.055rem]">
               Ethereum as Financial Market Infrastructure
             </h2>
             <p className="text-muted-foreground font-medium">
@@ -378,7 +378,7 @@ export default function Page() {
 
         <section id="why-ethereum" className="space-y-16">
           <div className="flex flex-col items-center gap-y-8 text-center">
-            <h2 className="text-h3 max-w-3xl leading-tight">
+            <h2 className="text-h3-mobile sm:text-h3 max-w-3xl leading-tight">
               Why Ethereum for Financial Market Infrastructure
             </h2>
             <p className="text-muted-foreground max-w-4xl font-medium">

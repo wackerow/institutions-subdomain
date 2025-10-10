@@ -61,7 +61,7 @@ export default function Page() {
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section id="direct" className="flex gap-10 max-lg:flex-col md:gap-16">
           <div className="space-y-6">
-            <h2 className="text-h3s max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+            <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
               A Privacy Strike Team for Institutions
             </h2>
             <p>
@@ -116,7 +116,7 @@ export default function Page() {
         </section>
 
         <section id="building-blocks" className="space-y-14">
-          <h2 className="text-h3 max-w-lg tracking-[0.055rem]">
+          <h2 className="text-h3-mobile sm:text-h3 max-w-lg tracking-[0.055rem]">
             Privacy Building Blocks on Ethereum
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -204,7 +204,7 @@ export default function Page() {
 
         <section id="why" className="flex gap-x-32 gap-y-14 max-lg:flex-col">
           <div className="flex-3 space-y-7">
-            <h2 className="text-h3 tracking-[0.055rem] lg:max-w-lg">
+            <h2 className="text-h3-mobile sm:text-h3 tracking-[0.055rem] lg:max-w-lg">
               Why Ethereum for Privacy
             </h2>
             <ul className="max-w-prose space-y-4">

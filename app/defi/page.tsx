@@ -96,7 +96,7 @@ export default function Page() {
           className="flex gap-x-32 gap-y-14 max-lg:flex-col"
         >
           <div className="flex-1 space-y-7">
-            <h2 className="text-h3 max-w-xl tracking-[0.055rem]">
+            <h2 className="text-h3-mobile sm:text-h3 max-w-xl tracking-[0.055rem]">
               Ethereum is the Platform for DeFi Primitives
             </h2>
             <p className="text-muted-foreground max-w-xl font-medium">
@@ -160,7 +160,7 @@ export default function Page() {
 
         <section id="innovation" className="space-y-8">
           <div className="space-y-2">
-            <h2 className="text-h3s">DeFi Powers Enterprise Innovation</h2>
+            <h2 className="text-h3-mobile sm:text-h3">DeFi Powers Enterprise Innovation</h2>
             <p className="text-muted-foreground font-medium">
               A small selection of DeFi applications that run on Ethereum and
               its Layer 2 networks
@@ -184,7 +184,7 @@ export default function Page() {
 
         <section id="ecosystem" className="space-y-8">
           <div className="space-y-2">
-            <h2 className="text-h3s">Ethereum&apos;s DeFi Ecosystem</h2>
+            <h2 className="text-h3-mobile sm:text-h3">Ethereum&apos;s DeFi Ecosystem</h2>
             <p className="text-muted-foreground font-medium">
               A small selection of DeFi applications that run on Ethereum and
               its Layer 2 networks

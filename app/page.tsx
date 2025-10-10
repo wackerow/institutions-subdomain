@@ -200,7 +200,7 @@ export default function Home() {
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section id="numbers" className="flex gap-20 max-lg:flex-col">
           <div className="flex flex-col gap-y-10 max-lg:items-center">
-            <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
+            <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
             <Link
@@ -336,7 +336,7 @@ export default function Home() {
             className="flex gap-10 max-lg:flex-col md:gap-20"
           >
             <div className="flex flex-col gap-y-10 max-lg:items-center">
-              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+              <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Ethereum Leads Where It Matters
               </h2>
               {/* <Link
@@ -422,7 +422,7 @@ export default function Home() {
 
           <section id="who" className="flex gap-10 max-lg:flex-col md:gap-20">
             <div className="flex flex-col gap-y-10 max-lg:items-center">
-              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+              <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Market-Proven Platform
               </h2>
               {/* <Link
@@ -458,7 +458,7 @@ export default function Home() {
             className="relative flex gap-10 overflow-x-hidden max-lg:flex-col md:gap-20"
           >
             <div className="flex flex-col gap-y-10 max-lg:items-center">
-              <h2 className="text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
+              <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Industry Leaders Choose Ethereum
               </h2>
             </div>
@@ -512,7 +512,7 @@ export default function Home() {
             <p className="text-accent-foreground font-bold tracking-[0.02rem]">
               Premier
             </p>
-            <h2 className="text-h3 mb-6 tracking-[0.055rem]">
+            <h2 className="text-h3-mobile sm:text-h3 mb-6 tracking-[0.055rem]">
               Institutional events
             </h2>
             <p className="mb-12 font-medium">
