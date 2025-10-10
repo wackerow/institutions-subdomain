@@ -44,7 +44,8 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       <div
         className={cn(
           "pointer-events-none z-10 space-y-8 place-self-center px-10",
-          "group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-50% to-transparent md:to-70%"
+          "group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-75% to-transparent md:from-50% md:to-70%",
+          "from-background from-85% max-md:bg-gradient-to-br"
         )}
       >
         <h1 className="leading-tight max-md:text-center">{heading}</h1>
@@ -52,9 +53,10 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       </div>
       <div
         className={cn(
-          "relative inset-y-0 end-0 z-0 min-h-screen place-items-center max-md:grid md:absolute md:min-h-0",
+          "relative inset-y-0 end-0 z-0 place-items-center max-md:grid md:absolute md:h-full",
           "max-[25rem]:-my-32 min-[25rem]:max-[32rem]:-my-24 min-[32rem]:max-sm:-my-20 sm:max-md:-my-12",
-          "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
+          "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground",
+          "max-md:!h-[clamp(--space-60,100vw,--space-80)]"
         )}
       >
         <HeroBg
@@ -75,7 +77,9 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
         )}
       </div>
     </div>
-    <div className="w-full py-10">{beneath}</div>
+    <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-full bg-gradient-to-b to-25% py-10">
+      {beneath}
+    </div>
   </div>
 )
 
