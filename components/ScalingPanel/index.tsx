@@ -123,7 +123,7 @@ export function ScalingPanel() {
         >
           {items.map(({ cards }, index) => (
             <div key={index} className="flex gap-8 max-lg:flex-col">
-              {cards.map(({ content }, index) => (
+              {cards.map(({ content, href }, index) => (
                 <div
                   key={index}
                   className="bg-secondary-foreground flex flex-1 flex-col justify-between gap-y-8 p-8"
@@ -132,8 +132,8 @@ export function ScalingPanel() {
                     {content}
                   </div>
                   <LinkWithArrow
-                    href="#TODO-Learn-more-hrefs"
-                    className="text-secondary hover:text-secondary/80 text-normal block font-medium"
+                    href={href}
+                    className="!text-secondary hover:!text-secondary/80 text-normal font-medium"
                   >
                     Learn more
                   </LinkWithArrow>
