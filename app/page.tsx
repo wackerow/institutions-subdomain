@@ -492,7 +492,7 @@ export default function Home() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselFooter className="flex-col-reverse gap-12">
+                <CarouselFooter className="max-sm:flex-col-reverse gap-12">
                   <CarouselIndicator />
                   <CarouselNavigation alwaysShow />
                 </CarouselFooter>
