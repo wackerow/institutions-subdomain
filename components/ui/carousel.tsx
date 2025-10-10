@@ -217,7 +217,7 @@ export type CarouselContentProps = {
 }
 
 function CarouselContent({ children, className }: CarouselContentProps) {
-  const { index, setIndex, setItemsCount } = useCarousel()
+  const { index, setItemsCount } = useCarousel()
   const viewportRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
   const itemsLength = Children.count(children)
