@@ -12,7 +12,12 @@ import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-i
 import CircleRing from "@/components/svg/circle-ring"
 import Layers2Fill from "@/components/svg/layers-2-fill"
 import LockFill from "@/components/svg/lock-fill"
-import { Card } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardLabel,
+} from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
@@ -230,8 +235,8 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card className="flex flex-col justify-between md:h-[26rem]">
-              <div className="space-y-2">
+            <Card variant="flex-height">
+              <CardContent>
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
@@ -240,57 +245,53 @@ export default function Home() {
                     }
                   />
                 </div>
-                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                  RWAs & Stablecoins
-                </h3>
-                <div className="text-muted-foreground">
+                <CardLabel variant="large">RWAs & Stablecoins</CardLabel>
+                <CardDescription>
                   Real-world assets tokenize offchain assets, like real estate,
                   commodities, or bonds, while stablecoins design for steady
                   value, often pegged to assets like USD.
-                </div>
-              </div>
+                </CardDescription>
+              </CardContent>
               <LinkWithArrow href="/rwa" className="css-secondary max-md:mt-6">
                 More on RWAs
               </LinkWithArrow>
             </Card>
-            <Card className="flex flex-col justify-between md:h-[26rem]">
-              <div className="space-y-2">
+            <Card variant="flex-height">
+              <CardContent>
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={<CircleRing className="size-37 text-white" />}
                   />
                 </div>
-                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                <CardLabel variant="large">
                   Decentralized Finance (DeFi)
-                </h3>
-                <div className="text-muted-foreground">
+                </CardLabel>
+                <CardDescription>
                   Open financial systems built on smart contracts instead of
                   banks. DeFi lets anyone lend, borrow, trade, and earn yield
                   directly from their wallet.
-                </div>
-              </div>
+                </CardDescription>
+              </CardContent>
               <LinkWithArrow href="/defi" className="css-secondary max-md:mt-6">
                 More on DeFi
               </LinkWithArrow>
             </Card>
-            <Card className="flex flex-col justify-between md:h-[26rem]">
-              <div className="space-y-2">
+            <Card variant="flex-height">
+              <CardContent>
                 <div className="size-37 shrink-0 p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={<LockFill className="size-37 text-white" />}
                   />
                 </div>
-                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                  Privacy & Compliance
-                </h3>
-                <div className="text-muted-foreground">
+                <CardLabel variant="large">Privacy & Compliance</CardLabel>
+                <CardDescription>
                   Deploy on Ethereum&apos;s public Mainnet for global
                   transparency, or use enterprise-grade privacy solutions for
                   confidentiality and control.
-                </div>
-              </div>
+                </CardDescription>
+              </CardContent>
               <LinkWithArrow
                 href="/privacy"
                 className="css-secondary max-md:mt-6"
@@ -298,22 +299,20 @@ export default function Home() {
                 More on Privacy
               </LinkWithArrow>
             </Card>
-            <Card className="flex flex-col justify-between md:h-[26rem]">
-              <div className="space-y-2">
+            <Card variant="flex-height">
+              <CardContent>
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={<Layers2Fill className="size-37 text-white" />}
                   />
                 </div>
-                <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                  L2 Ecosystem
-                </h3>
-                <div className="text-muted-foreground">
+                <CardLabel variant="large">L2 Ecosystem</CardLabel>
+                <CardDescription>
                   Layer 2 networks scale Ethereum by processing transactions
                   faster and cheaper.
-                </div>
-              </div>
+                </CardDescription>
+              </CardContent>
               <LinkWithArrow
                 href="/layer-2"
                 className="css-secondary max-md:mt-6"
@@ -335,21 +334,17 @@ export default function Home() {
               </h2>
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Resilience
-                </h3>
+              <CardContent>
+                <CardLabel variant="large">Resilience</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   Ethereum has maintained{" "}
                   <strong>10 years of uninterrupted uptime and liveness</strong>{" "}
                   since its launch. Zero downtime through 15+ successful network
                   upgrades.
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Flexibility{" "}
-                </h3>
+              </CardContent>
+              <CardContent>
+                <CardLabel variant="large">Flexibility</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   Open source, with{" "}
                   <strong>
@@ -358,32 +353,26 @@ export default function Home() {
                   , stack, or architecture. Institutions retain full optionality
                   for their onchain products as business requirements change.
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Credible Neutrality
-                </h3>
+              </CardContent>
+              <CardContent>
+                <CardLabel variant="large">Credible Neutrality</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   No single point of failure, no central coordinator, no pause
                   button, <strong>no counterparty risk</strong>. Resilient to
                   geopolitical, regulatory, and infrastructure-level risks.
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Decentralization
-                </h3>
+              </CardContent>
+              <CardContent>
+                <CardLabel variant="large">Decentralization</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   Secured by 1.1M+ validators distributed across geographies and
                   client implementations.{" "}
                   <strong>$130B+ in economic security</strong> makes Ethereum
                   the most expensive smart contract platform to attack.
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Deep Liquidity
-                </h3>
+              </CardContent>
+              <CardContent>
+                <CardLabel variant="large">Deep Liquidity</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   $12B+ in daily DEX volume,{" "}
                   <strong>
@@ -392,17 +381,15 @@ export default function Home() {
                   . Ethereum is the chosen liquidity layer for institutions to
                   build leading next-gen products.
                 </div>
-              </div>
-              <div className="space-y-2">
-                <h3 className="text-h5 text-foreground tracking-[0.03rem]">
-                  Tokenization
-                </h3>
+              </CardContent>
+              <CardContent>
+                <CardLabel variant="large">Tokenization</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   The leading platform for asset tokenization, with{" "}
                   <strong>90% of all onchain RWAs deployed on Ethereum</strong>{" "}
                   and its L2s, and $140B+ in stablecoin TVL.
                 </div>
-              </div>
+              </CardContent>
             </div>
           </section>
 

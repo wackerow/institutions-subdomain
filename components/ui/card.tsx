@@ -1,18 +1,34 @@
-import * as React from "react"
+import { type ComponentProps, forwardRef } from "react"
+import { cva, type VariantProps } from "class-variance-authority"
+import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/lib/utils/index"
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn("bg-card text-card-foreground p-6", className)}
-      {...props}
-    />
-  )
-}
+const cardVariants = cva("bg-card text-card-foreground p-6", {
+  variants: {
+    variant: {
+      default: "",
+      "flex-height": "flex h-full flex-col justify-between gap-2",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+const Card = ({
+  className,
+  variant,
+  ...props
+}: ComponentProps<"div"> & VariantProps<typeof cardVariants>) => (
+  <div
+    data-slot="card"
+    className={cn(cardVariants({ variant }), className)}
+    {...props}
+  />
+)
+
+function CardHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-header"
@@ -25,7 +41,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-title"
@@ -35,17 +51,15 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  )
-}
+const CardDescription = ({ className, ...props }: ComponentProps<"div">) => (
+  <div
+    data-slot="card-description"
+    className={cn("text-muted-foreground", className)}
+    {...props}
+  />
+)
 
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+function CardAction({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-action"
@@ -58,17 +72,17 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+const CardContent = ({ className, ...props }: ComponentProps<"div">) => {
   return (
     <div
       data-slot="card-content"
-      className={cn("px-6", className)}
+      className={cn("space-y-2", className)}
       {...props}
     />
   )
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+function CardFooter({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="card-footer"
@@ -78,6 +92,63 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+const cardLabelVariants = cva("", {
+  variants: {
+    variant: {
+      default: "text-muted-foreground font-medium",
+      large: "!text-h5 text-card-foreground tracking-[0.03rem]",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+const CardLabel = forwardRef<
+  HTMLHeadingElement,
+  ComponentProps<"h3"> & { asChild?: boolean } & VariantProps<
+      typeof cardLabelVariants
+    >
+>(({ asChild, className, variant, ...props }, ref) => {
+  const Comp = asChild ? Slot : "h3"
+  return (
+    <Comp
+      ref={ref}
+      data-slot="card-label"
+      className={cn(cardLabelVariants({ variant }), className)}
+      {...props}
+    />
+  )
+})
+CardLabel.displayName = "CardLabel"
+
+const CardValue = ({ className, ...props }: ComponentProps<"p">) => (
+  <p
+    data-slot="card-value"
+    className={cn("text-big-mobile sm:text-big font-bold", className)}
+    {...props}
+  />
+)
+
+const CardSmallText = ({ className, ...props }: ComponentProps<"p">) => (
+  <p
+    data-slot="card-small-text"
+    className={cn(
+      "text-muted-foreground text-xs font-medium tracking-[0.015rem]",
+      className
+    )}
+    {...props}
+  />
+)
+
+const CardSource = ({ className, ...props }: ComponentProps<"p">) => (
+  <p
+    data-slot="card-source"
+    className={cn("text-muted-foreground font-medium", className)}
+    {...props}
+  />
+)
+
 export {
   Card,
   CardAction,
@@ -85,5 +156,9 @@ export {
   CardDescription,
   CardFooter,
   CardHeader,
+  CardLabel,
+  CardSmallText,
+  CardSource,
   CardTitle,
+  CardValue,
 }
