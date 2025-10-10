@@ -1,10 +1,11 @@
 import * as React from "react"
 import Image, { type ImageProps } from "next/image"
-import Link, { LinkProps } from "next/link"
 import { Slot } from "@radix-ui/react-slot"
 
 import { isValidDate } from "@/lib/utils/date"
 import { cn } from "@/lib/utils/index"
+
+import Link, { LinkProps } from "./link"
 
 function LibraryCard({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -66,8 +67,7 @@ function LibraryCardTitleLink({
   className,
   href,
   ...props
-}: Omit<LinkProps, "children"> &
-  Pick<React.ComponentProps<"a">, "className" | "children">) {
+}: LinkProps & Pick<React.ComponentProps<"a">, "className">) {
   return (
     <Link
       data-slot="card-title-link"

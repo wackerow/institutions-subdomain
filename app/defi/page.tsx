@@ -1,8 +1,8 @@
 import Image from "next/image"
-import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
+import Link from "@/components/ui/link"
 
 import AppGrid from "./_components/AppGrid"
 
@@ -160,7 +160,9 @@ export default function Page() {
 
         <section id="innovation" className="space-y-8">
           <div className="space-y-2">
-            <h2 className="text-h3-mobile sm:text-h3">DeFi Powers Enterprise Innovation</h2>
+            <h2 className="text-h3-mobile sm:text-h3">
+              DeFi Powers Enterprise Innovation
+            </h2>
             <p className="text-muted-foreground font-medium">
               A small selection of DeFi applications that run on Ethereum and
               its Layer 2 networks
@@ -184,7 +186,9 @@ export default function Page() {
 
         <section id="ecosystem" className="space-y-8">
           <div className="space-y-2">
-            <h2 className="text-h3-mobile sm:text-h3">Ethereum&apos;s DeFi Ecosystem</h2>
+            <h2 className="text-h3-mobile sm:text-h3">
+              Ethereum&apos;s DeFi Ecosystem
+            </h2>
             <p className="text-muted-foreground font-medium">
               A small selection of DeFi applications that run on Ethereum and
               its Layer 2 networks

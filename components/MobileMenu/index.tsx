@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import { X } from "lucide-react"
-import Link from "next/link"
 
 import { Button } from "../ui/button"
 import {
@@ -13,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "../ui/drawer"
+import Link from "../ui/link"
 
 const MobileMenu = () => {
   const [open, setOpen] = useState(false)

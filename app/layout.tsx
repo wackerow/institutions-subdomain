@@ -1,10 +1,7 @@
 import { ComponentProps } from "react"
 import { ExternalLink } from "lucide-react"
 import localFont from "next/font/local"
-import Link from "next/link"
 import type { Metadata } from "next/types"
-
-import type { LinkProps } from "@/lib/types"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
@@ -15,6 +12,7 @@ import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
 import SiteLogo from "@/components/svg/site-logo"
 import Twitter from "@/components/svg/twitter"
+import Link, { LinkProps } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 
@@ -166,7 +164,7 @@ export default function RootLayout({
 
               {navItemLinks.map((props) => (
                 <Link
-                  key={props.children}
+                  key={props.href}
                   className="css-primary-conditional"
                   {...props}
                 />
@@ -201,10 +199,8 @@ export default function RootLayout({
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
                 <DigitalAssetsDropdown />
-                {navItemLinks.map(({ href, children }) => (
-                  <Link key={children} href={href}>
-                    {children}
-                  </Link>
+                {navItemLinks.map((props) => (
+                  <Link key={props.href} {...props} />
                 ))}
               </nav>
             </div>

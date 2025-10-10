@@ -2,9 +2,6 @@
 
 import { useState } from "react"
 import { Triangle } from "lucide-react"
-import Link from "next/link"
-
-import type { LinkProps } from "@/lib/types"
 
 import {
   DropdownMenu,
@@ -12,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu"
+import Link, { LinkProps } from "../ui/link"
 
 export const digitalAssetsLinks: LinkProps[] = [
   {
@@ -43,11 +41,11 @@ const DigitalAssetsDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {digitalAssetsLinks.map((props) => (
-          <DropdownMenuItem key={props.children}>
+          <DropdownMenuItem key={props.href}>
             <Link
-              {...props}
               onClick={() => setOpen(false)}
               className="text-base"
+              {...props}
             />
           </DropdownMenuItem>
         ))}

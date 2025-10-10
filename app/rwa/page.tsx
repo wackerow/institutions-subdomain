@@ -1,11 +1,10 @@
 import { Check } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
-import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
 import { Card } from "@/components/ui/card"
-import { LinkWithArrow } from "@/components/ui/link"
+import Link, { LinkWithArrow } from "@/components/ui/link"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
