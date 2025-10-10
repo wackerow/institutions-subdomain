@@ -8,11 +8,11 @@ import type { LinkProps } from "@/lib/types"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
+import MobileMenu from "@/components/MobileMenu"
 // TODO: Confirm removal—delete image if confirmed
 // import EnterpriseAcceleration from "@/components/svg/enterprise-acceleration"
 import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
-import Menu from "@/components/svg/menu"
 import SiteLogo from "@/components/svg/site-logo"
 import Twitter from "@/components/svg/twitter"
 
@@ -161,7 +161,7 @@ export default function RootLayout({
                 className="group-has-[.css-primary-invert]/body:text-primary-foreground"
               />
             </Link>
-            <nav className="flex items-center gap-4 max-lg:hidden">
+            <nav className="flex items-center gap-4 max-md:hidden">
               <DigitalAssetsDropdown />
 
               {navItemLinks.map(({ footerOnly, ...props }) => (
@@ -175,7 +175,7 @@ export default function RootLayout({
                 />
               ))}
             </nav>
-            <Menu className="fill-accent-foreground stroke-accent-foreground lg:hidden" />
+            <MobileMenu />
           </div>
         </header>
         {children}
