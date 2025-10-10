@@ -1,7 +1,7 @@
-import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
+import { LinkWithArrow } from "@/components/ui/link"
 
 export default function Page() {
   const regions = ["Europe", "US", "MENA", "APAC", "LATAM"] as const
@@ -225,12 +225,12 @@ export default function Page() {
                   <p className="text-muted-foreground font-medium">
                     {category}
                   </p>
-                  <Link
+                  <LinkWithArrow
                     href={href}
-                    className="css-forward-arrow css-secondary mt-6 block"
+                    className="css-secondary mt-6 block"
                   >
                     Visit
-                  </Link>
+                  </LinkWithArrow>
                 </div>
               ))}
             </div>

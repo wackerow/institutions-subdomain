@@ -62,16 +62,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   }
 
   if (isHash) {
-    return (
-      <a
-        onClick={(e) => {
-          e.stopPropagation()
-        }}
-        {...commonProps}
-      >
-        {children}
-      </a>
-    )
+    return <a {...commonProps}>{children}</a>
   }
 
   return <NextLink {...commonProps}>{children}</NextLink>

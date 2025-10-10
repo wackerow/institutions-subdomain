@@ -1,5 +1,6 @@
 import Image from "next/image"
-import Link from "next/link"
+
+import { LinkWithArrow } from "@/components/ui/link"
 
 import { defiEcosystem } from "../data"
 import type { CategoryKey } from "../types"
@@ -20,12 +21,9 @@ const CategoryAppGrid = ({ category }: { category: CategoryKey }) => {
               <h4 className="text-h5">{name}</h4>
               <p className="font-medium">{description}</p>
             </div>
-            <Link
-              href={href}
-              className="css-forward-arrow css-secondary mt-4 block"
-            >
+            <LinkWithArrow href={href} className="css-secondary mt-4 block">
               Visit
-            </Link>
+            </LinkWithArrow>
           </div>
         ))}
       </div>

@@ -1,5 +1,4 @@
 import Image from "next/image"
-import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
@@ -9,6 +8,7 @@ import CpuLock from "@/components/svg/cpu-lock"
 import LayersLock from "@/components/svg/layers-lock"
 import TargetCheck from "@/components/svg/target-check"
 import { Card } from "@/components/ui/card"
+import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 
@@ -274,9 +274,9 @@ export default function Page() {
                     {description}
                   </p>
                 </div>
-                <Link href={href} className="css-forward-arrow css-secondary">
+                <LinkWithArrow href={href} className="css-secondary">
                   Visit
-                </Link>
+                </LinkWithArrow>
               </div>
             ))}
           </div>

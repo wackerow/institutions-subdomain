@@ -1,7 +1,6 @@
 import { ReactNode } from "react"
 import { InfoIcon } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
-import Link from "next/link"
 import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
@@ -31,6 +30,7 @@ import {
   LibraryCardTitle,
   LibraryCardTitleLink,
 } from "@/components/ui/library-card"
+import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 import { isValidDate } from "@/lib/utils/date"
@@ -208,12 +208,9 @@ export default function Home() {
             <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
-            <Link
-              href="#"
-              className="css-forward-arrow css-secondary w-fit text-lg"
-            >
+            <LinkWithArrow href="#" className="css-secondary w-fit text-lg">
               Live Data
-            </Link>
+            </LinkWithArrow>
           </div>
           <div className="grid grid-cols-[auto_auto] gap-14 max-sm:grid-cols-2">
             {metrics.map(({ value, label }, idx) => (
@@ -253,12 +250,9 @@ export default function Home() {
                     steady value, often pegged to assets like USD.
                   </div>
                 </div>
-                <Link
-                  href="#"
-                  className="css-forward-arrow css-secondary md:mx-auto"
-                >
+                <LinkWithArrow href="#" className="css-secondary md:mx-auto">
                   More on RWAs
-                </Link>
+                </LinkWithArrow>
               </div>
             </Card>
             <Card className="flex flex-col justify-between md:h-[26rem]">
@@ -278,12 +272,9 @@ export default function Home() {
                   directly from their wallet.
                 </div>
               </div>
-              <Link
-                href="#"
-                className="css-forward-arrow css-secondary max-md:mt-6"
-              >
+              <LinkWithArrow href="#" className="css-secondary max-md:mt-6">
                 More on DeFi
-              </Link>
+              </LinkWithArrow>
             </Card>
             <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
@@ -302,12 +293,12 @@ export default function Home() {
                   confidentiality and control.
                 </div>
               </div>
-              <Link
+              <LinkWithArrow
                 href="/privacy"
-                className="css-forward-arrow css-secondary max-md:mt-6"
+                className="css-secondary max-md:mt-6"
               >
                 More on Privacy
-              </Link>
+              </LinkWithArrow>
             </Card>
             <Card className="flex flex-col justify-between md:h-[26rem]">
               <div className="space-y-2">
@@ -325,12 +316,9 @@ export default function Home() {
                   faster and cheaper.
                 </div>
               </div>
-              <Link
-                href="#"
-                className="css-forward-arrow css-secondary max-md:mt-6"
-              >
+              <LinkWithArrow href="#" className="css-secondary max-md:mt-6">
                 More on L2s
-              </Link>
+              </LinkWithArrow>
             </Card>
           </div>
         </section>
@@ -344,12 +332,12 @@ export default function Home() {
               <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Ethereum Leads Where It Matters
               </h2>
-              {/* <Link
+              {/* <LinkWithArrow
                 href="/why-ethereum"
-                className="css-forward-arrow css-secondary w-fit text-lg"
+                className="css-secondary w-fit text-lg"
               >
                 Learn more
-              </Link> */}
+              </LinkWithArrow> */}
             </div>
             <div className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-14">
               <div className="space-y-2">
@@ -430,12 +418,12 @@ export default function Home() {
               <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Market-Proven Platform
               </h2>
-              {/* <Link
+              {/* <LinkWithArrow
                 href="/case-studies"
-                className="css-forward-arrow css-secondary w-fit text-lg"
+                className="css-secondary w-fit text-lg"
               >
                 See Case Studies
-              </Link> */}
+              </LinkWithArrow> */}
             </div>
             <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               {platforms.map(
@@ -546,12 +534,12 @@ export default function Home() {
                   17.11.2025
                 </p>
               </div>
-              <Link
+              <LinkWithArrow
                 href="#"
-                className="css-forward-arrow css-secondary sm:mx-auto"
+                className="css-secondary sm:mx-auto"
               >
                 Apply here
-              </Link>
+              </LinkWithArrow>
             </div>
           </div>
         </section> */}
@@ -596,12 +584,12 @@ export default function Home() {
                 </LibraryCard>
               ))}
           </div>
-          <Link
+          <LinkWithArrow
             href="/library"
-            className="css-forward-arrow css-secondary mx-auto block w-fit text-lg"
+            className="css-secondary mx-auto block w-fit text-lg"
           >
             View All Resources
-          </Link>
+          </LinkWithArrow>
         </section>
       </article>
     </main>

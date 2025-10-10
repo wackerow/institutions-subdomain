@@ -1,11 +1,12 @@
 "use client"
 
 import React, { Fragment, ReactNode, useState } from "react"
-import Link from "next/link"
 
 import { TransitionPanel } from "@/components/ui/transition-panel"
 
 import { cn } from "@/lib/utils"
+
+import { LinkWithArrow } from "../ui/link"
 
 export function ScalingPanel() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -130,12 +131,12 @@ export function ScalingPanel() {
                   <div className="text-secondary text-xl font-bold tracking-[0.025rem]">
                     {content}
                   </div>
-                  <Link
+                  <LinkWithArrow
                     href="#TODO-Learn-more-hrefs"
-                    className="css-forward-arrow text-secondary hover:text-secondary/80 text-normal block font-medium"
+                    className="text-secondary hover:text-secondary/80 text-normal block font-medium"
                   >
                     Learn more
-                  </Link>
+                  </LinkWithArrow>
                 </div>
               ))}
             </div>

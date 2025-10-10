@@ -1,6 +1,5 @@
-import Link from "next/link"
-
 import Hero from "@/components/Hero"
+import { LinkWithArrow } from "@/components/ui/link"
 
 export default function Page() {
   return (
@@ -8,9 +7,9 @@ export default function Page() {
       <Hero heading="Oops!" shape="eth-glyph">
         Page not found...
       </Hero>
-      <Link href="/" className="css-forward-arrow mx-auto mb-20 w-fit text-xl">
+      <LinkWithArrow href="/" className="mx-auto mb-20 text-xl">
         Return home
-      </Link>
+      </LinkWithArrow>
     </main>
   )
 }

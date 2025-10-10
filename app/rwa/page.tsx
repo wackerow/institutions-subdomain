@@ -5,6 +5,7 @@ import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
 import { Card } from "@/components/ui/card"
+import { LinkWithArrow } from "@/components/ui/link"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
@@ -152,7 +153,7 @@ export default function Page() {
             open, and resilient ecosystem of Ethereum and its L2s.
           </p>
           <div className="flex w-full flex-1 gap-4 max-sm:flex-col">
-            <Card className="flex-1 space-y-2 py//-8">
+            <Card className="py//-8 flex-1 space-y-2">
               <p>Stablecoins on Ethereum L1</p>
               {/* // TODO: Live data */}
               <p className="text-big font-bold tracking-[0.055rem]">$162B</p>
@@ -247,12 +248,9 @@ export default function Page() {
                 <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
                 <h3 className="text-h5">{ticker}</h3>
                 <p className="font-medium">By {issuer}</p>
-                <Link
-                  href={href}
-                  className="css-forward-arrow css-secondary mt-6 block"
-                >
+                <LinkWithArrow href={href} className="css-secondary mt-6 block">
                   Visit
-                </Link>
+                </LinkWithArrow>
               </Card>
             ))}
           </div>
@@ -312,12 +310,12 @@ export default function Page() {
                       </p>
                     )}
                   </div>
-                  <Link
+                  <LinkWithArrow
                     href={visitHref}
-                    className="css-forward-arrow css-secondary block"
+                    className="css-secondary block"
                   >
                     Visit
-                  </Link>
+                  </LinkWithArrow>
                 </Card>
               )
             )}
@@ -365,12 +363,12 @@ export default function Page() {
                       </p>
                     )}
                   </div>
-                  <Link
+                  <LinkWithArrow
                     href={visitHref}
-                    className="css-forward-arrow css-secondary block"
+                    className="css-secondary block"
                   >
                     Visit
-                  </Link>
+                  </LinkWithArrow>
                 </Card>
               )
             )}

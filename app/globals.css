@@ -210,10 +210,6 @@
     @apply text-secondary-foreground hover:text-secondary-foreground/70;
   }
 
-  .css-forward-arrow {
-    @apply after:content-["\00A0→"];
-  }
-
   @keyframes hero-bg-slide {
     to {
       transform: translateX(var(--x-travel));
