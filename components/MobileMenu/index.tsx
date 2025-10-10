@@ -27,14 +27,14 @@ const MobileMenu = () => {
           Menu
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="!w-sm max-w-screen">
         <DrawerHeader>
           <DrawerTitle className="sr-only">Navigation menu</DrawerTitle>
           <DrawerClose asChild>
             <Button
               variant="ghost"
               size="icon"
-              className="ms-auto"
+              className="ms-auto mt-4 me-4"
               onClick={() => setOpen(false)}
             >
               <X className="size-10" />
