@@ -92,10 +92,10 @@ const satoshi = localFont({
 //   },
 // ]
 
-const navItemLinks: (LinkProps & { footerOnly?: boolean })[] = [
+const navItemLinks: LinkProps[] = [
   // { children: "Why Ethereum", href: "/why-ethereum" },
   // { children: "Case studies", href: "/case-studies" },
-  { children: "Library", href: "/library", footerOnly: true },
+  { children: "Library", href: "/library" },
   { children: "Live Data", href: "/data-hub" },
   { children: "Solution Providers", href: "/providers" },
 ]
@@ -164,13 +164,10 @@ export default function RootLayout({
             <nav className="flex items-center gap-4 max-md:hidden">
               <DigitalAssetsDropdown />
 
-              {navItemLinks.map(({ footerOnly, ...props }) => (
+              {navItemLinks.map((props) => (
                 <Link
                   key={props.children}
-                  className={cn(
-                    "css-primary-conditional",
-                    footerOnly && "hidden"
-                  )}
+                  className="css-primary-conditional"
                   {...props}
                 />
               ))}
