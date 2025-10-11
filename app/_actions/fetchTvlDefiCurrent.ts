@@ -6,7 +6,7 @@ type JSONData = { name: string; tvl: number }[]
 
 export type TvlDefiEthereumCurrentData = {
   mainnetDefiTvl: number
-  multiplier: number
+  runnerUpMultiplier: number
 }
 
 export const fetchTvlDefiEthereumCurrent = async (): Promise<
@@ -29,21 +29,26 @@ export const fetchTvlDefiEthereumCurrent = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const responseData = json.sort((a, b) => (b.tvl || 0) - (a.tvl || 0))
-    const ethereumData = responseData.find(
+    const sortedData = json.sort((a, b) => (b.tvl || 0) - (a.tvl || 0))
+    const ethereumData = sortedData.find(
       ({ name }) => name.toLowerCase() === "ethereum"
     )
 
-    const runnerUpData = responseData.find(
+    if (!ethereumData?.tvl)
+      throw new Error(`Missing Ethereum or runner-up TVL data from ${url}`)
+
+    const otherNetworkData = sortedData.filter(
       ({ name }) => name.toLowerCase() !== "ethereum"
     )
 
-    if (!ethereumData?.tvl || !runnerUpData?.tvl)
-      throw new Error(`Missing Ethereum or runner-up TVL data from ${url}`)
+    const [networkRunnerUpData] = otherNetworkData
 
-    const multiplier = ethereumData.tvl / runnerUpData.tvl
+    const runnerUpMultiplier = ethereumData.tvl / networkRunnerUpData.tvl
 
-    const data = { mainnetDefiTvl: ethereumData.tvl, multiplier }
+    const data = {
+      mainnetDefiTvl: ethereumData.tvl,
+      runnerUpMultiplier,
+    }
 
     return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {

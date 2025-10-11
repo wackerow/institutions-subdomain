@@ -1,6 +1,6 @@
-import { Info } from "lucide-react"
 import type { Metadata } from "next/types"
 
+import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
 import RWAStablecoinsChart from "@/components/data/rwa-stablecoins-chart"
 import Hero from "@/components/Hero"
 import {
@@ -15,26 +15,26 @@ import {
   CardValue,
 } from "@/components/ui/card"
 import Link from "@/components/ui/link"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
 import {
   formatLargeCurrency,
+  formatMultiplier,
   formatNumber,
   formatPercent,
   getChangeColorClass,
 } from "@/lib/utils/number"
 
+import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
 import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
+import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
 import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
   const timeseriesTotalRwaValueData = await fetchTimeseriesTotalRwaValue()
   const validatorCountData = await fetchValidatorCount()
+  const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
+  const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
 
   const overviewCards: {
     label: string
@@ -131,14 +131,127 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Decentralized Finance
           </h2>
-          <Card>Soon™</Card>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_23rem]">
+            <Card className="flex flex-col gap-y-6">
+              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+                <CardContent className="flex-1 gap-4">
+                  <CardTitle className="text-xl">TVL in DeFi</CardTitle>
+                  <CardDescription className="font-medium">
+                    Sum of funds deposited into the applications on the chain.
+                  </CardDescription>
+                </CardContent>
+              </CardHeader>
+
+              <CardContent className="flex flex-1 flex-col justify-between">
+                <DefiHistoricalTvlEthereumChart
+                  chartData={historicalChainTvlEthereumData}
+                />
+                <div className="flex justify-between">
+                  <CardSource className="text-sm">
+                    Source:{" "}
+                    <Link inline href="https://defillama.com">
+                      defillama.com
+                    </Link>
+                  </CardSource>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="flex flex-col gap-y-6">
+              <CardTitle className="text-h5">
+                DeFi TVL vs next largest ecosystem
+              </CardTitle>
+
+              <CardContent className="flex flex-1 flex-col justify-between">
+                <p className="mx-auto mt-12 text-5xl font-bold sm:text-8xl">
+                  {formatMultiplier(
+                    tvlDefiEthereumCurrentData.data.runnerUpMultiplier
+                  )}
+                </p>
+                <div className="flex justify-between">
+                  <CardSource className="text-sm">
+                    Source:{" "}
+                    <Link inline href="https://defillama.com">
+                      defillama.com
+                    </Link>
+                  </CardSource>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section id="stablecoins" className="space-y-4">
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Stablecoins
           </h2>
-          <Card>Soon™</Card>
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Card className="space-y-6">
+              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+                <CardContent className="flex-1 gap-4">
+                  <CardTitle className="text-xl">
+                    Stablecoin TVL (Mainnet)
+                  </CardTitle>
+                  <CardDescription className="font-medium">
+                    Sum of funds deposited into the applications on the chain.
+                    {/* Showing total Ethereum stablecoin market capitalization for all time */}
+                  </CardDescription>
+                </CardContent>
+                <div
+                  title={
+                    "Last updated: " +
+                    formatDateMonthDayYear(
+                      timeseriesTotalRwaValueData.lastUpdated
+                    )
+                  }
+                  className="text-h4 font-bold tracking-[0.04rem]"
+                >
+                  {formatLargeCurrency(
+                    timeseriesTotalRwaValueData.data[
+                      timeseriesTotalRwaValueData.data.length - 1
+                    ].stablecoins
+                  )}
+                </div>
+              </CardHeader>
+
+              <CardContent>
+                <RWAStablecoinsChart chartData={timeseriesTotalRwaValueData} />
+
+                <div className="flex justify-between">
+                  <CardSource className="text-sm">
+                    Source:{" "}
+                    <Link inline href="https://rwa.xyz">
+                      rwa.xyz
+                    </Link>
+                  </CardSource>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="flex flex-col gap-y-6">
+              <CardContent>
+                <CardTitle className="text-xl">
+                  Stablecoin marketshare
+                </CardTitle>
+                <CardDescription className="text-sm font-medium">
+                  Sum of funds deposited into the applications on the chain.
+                </CardDescription>
+              </CardContent>
+
+              <CardContent className="flex flex-1 flex-col justify-between">
+                <p>Pie chart: soon™</p>
+                <div className="flex justify-between">
+                  <CardSource className="text-sm">
+                    Source:{" "}
+                    <Link inline href="https://rwa.xyz">
+                      rwa.xyz
+                    </Link>
+                  </CardSource>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section id="rwa" className="space-y-4">
@@ -154,50 +267,6 @@ export default async function Page() {
           </h2>
           <Card>Soon™</Card>
         </section>
-
-        <div className="mt-20">
-          <Card className="space-y-6">
-            <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
-              <CardContent className="grid flex-1 gap-1">
-                <CardTitle className="text-h5">
-                  Stablecoin Market Cap: All Time
-                </CardTitle>
-                <CardDescription className="font-medium">
-                  Showing total Ethereum stablecoin market capitalization for
-                  all time
-                </CardDescription>
-              </CardContent>
-              <div className="text-h4 font-bold tracking-[0.04rem]">
-                {formatLargeCurrency(
-                  timeseriesTotalRwaValueData.data[
-                    timeseriesTotalRwaValueData.data.length - 1
-                  ].stablecoins
-                )}
-                &nbsp;
-                <Popover>
-                  <PopoverTrigger aria-label="More info">
-                    <Info className="text-muted-foreground size-4" />
-                  </PopoverTrigger>
-                  <PopoverContent className="w-fit space-y-1">
-                    <div className="flex flex-wrap gap-2">
-                      <span className="block">Source:</span>
-                      <Link href="https://rwa.xyz">rwa.xyz</Link>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="block">Last updated:</span>
-                      <span className="block">
-                        {formatDateMonthDayYear(
-                          timeseriesTotalRwaValueData.lastUpdated
-                        )}
-                      </span>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </CardHeader>
-            <RWAStablecoinsChart chartData={timeseriesTotalRwaValueData} />
-          </Card>
-        </div>
       </article>
     </main>
   )
