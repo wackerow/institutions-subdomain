@@ -27,6 +27,7 @@ import {
 
 import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
 import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
+import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
 import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
@@ -35,6 +36,7 @@ export default async function Page() {
   const validatorCountData = await fetchValidatorCount()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
   const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
+  const totalValueSecuredData = await fetchTotalValueSecured()
 
   const overviewCards: {
     label: string
@@ -48,27 +50,27 @@ export default async function Page() {
       label: "Total value locked (TVL)",
       value: "$376.4B*", // TODO: Live data
       percentChange: 0.032,
-      source: "ultrasound.money",
-      href: "https://ultrasound.money",
+      source: "tokenterminal.com",
+      href: "https://tokenterminal.com",
     },
     {
       label: "Total Value Secured (TVS)",
-      value: "$509B*", // TODO: Live data
-      percentChange: 0.032,
-      source: "tokenterminal.com",
-      href: "https://tokenterminal.com",
+      value: formatLargeCurrency(totalValueSecuredData.data.sum),
+      lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
+      source: "ultrasound.money",
+      href: "https://ultrasound.money",
     },
     {
       label: "Validator count",
       value: formatNumber(validatorCountData.data.validatorCount),
       lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
-      percentChange: -0.014,
       source: "beaconcha.in",
       href: "https://beaconcha.in",
     },
     {
       label: "Security Ratio",
-      value: "5.9x*", // TODO: Live data
+      value: formatMultiplier(totalValueSecuredData.data.securityRatio),
+      lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
       source: "ultrasound.money",
       href: "https://ultrasound.money",
     },
@@ -96,13 +98,20 @@ export default async function Page() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
             {overviewCards.map(
-              ({ label, value, percentChange, source, href }) => (
+              ({ label, value, percentChange, source, lastUpdated, href }) => (
                 <Card key={label} variant="flex-height">
                   <CardContent>
                     <CardLabel className="text-base font-medium tracking-[0.02rem]">
                       {label}
                     </CardLabel>
-                    <CardValue>{value}</CardValue>
+                    <CardValue
+                      // TODO: Remove when all data available
+                      title={
+                        value.endsWith("*") ? "*Dummy data—coming soon™" : ""
+                      }
+                    >
+                      {value}
+                    </CardValue>
                     {percentChange && (
                       <CardSmallText
                         className={getChangeColorClass(percentChange)}
@@ -112,7 +121,17 @@ export default async function Page() {
                     )}
                   </CardContent>
                   <CardSource>
-                    Source:{" "}
+                    <span
+                      title={
+                        lastUpdated
+                          ? "Last updated: " +
+                            formatDateMonthDayYear(lastUpdated)
+                          : ""
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
                     <Link
                       href={href}
                       className="text-muted-foreground hover:text-foreground"
@@ -148,7 +167,17 @@ export default async function Page() {
                 />
                 <div className="flex justify-between">
                   <CardSource className="text-sm">
-                    Source:{" "}
+                    <span
+                      title={
+                        "Last updated: " +
+                        formatDateMonthDayYear(
+                          historicalChainTvlEthereumData.lastUpdated
+                        )
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
                     <Link inline href="https://defillama.com">
                       defillama.com
                     </Link>
@@ -170,7 +199,17 @@ export default async function Page() {
                 </p>
                 <div className="flex justify-between">
                   <CardSource className="text-sm">
-                    Source:{" "}
+                    <span
+                      title={
+                        "Last updated: " +
+                        formatDateMonthDayYear(
+                          tvlDefiEthereumCurrentData.lastUpdated
+                        )
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
                     <Link inline href="https://defillama.com">
                       defillama.com
                     </Link>
@@ -220,7 +259,17 @@ export default async function Page() {
 
                 <div className="flex justify-between">
                   <CardSource className="text-sm">
-                    Source:{" "}
+                    <span
+                      title={
+                        "Last updated: " +
+                        formatDateMonthDayYear(
+                          timeseriesTotalRwaValueData.lastUpdated
+                        )
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
                     <Link inline href="https://rwa.xyz">
                       rwa.xyz
                     </Link>
