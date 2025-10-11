@@ -194,7 +194,7 @@ export default function Page() {
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Scale
                 <p className="text-muted-foreground mt-1 text-base font-medium">
-                  Ethereum&apos;s Layer-2s add low-fee rails for retail and
+                  Ethereum&apos;s Layer 2s add low-fee rails for retail and
                   high-frequency flows
                 </p>
               </li>

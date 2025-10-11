@@ -40,7 +40,7 @@ export const defiEcosystem = {
   dex: {
     heading: "Decentralized Exchanges (DEXs)",
     subtext:
-      "A small selection of DeFi applications that run on Ethereum and its Layer-2 networks",
+      "A small selection of DeFi applications that run on Ethereum and its Layer 2 networks",
     platforms: [
       {
         name: "1inch",

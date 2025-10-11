@@ -85,7 +85,7 @@ export default async function Page() {
           foundation for institutional analysis and reporting.
         </p>
         <p>
-          Track live, real-time data for mainnet activity, Layer-2 scaling,
+          Track live, real-time data for mainnet activity, Layer 2 scaling,
           tokenized assets, and DeFi markets.
         </p>
       </Hero>
@@ -275,5 +275,5 @@ export default async function Page() {
 export const metadata: Metadata = {
   title: "Data Hub: Real-Time Intelligence",
   description:
-    "Track live, real-time data for mainnet activity, Layer-2 scaling, tokenized assets, and DeFi markets",
+    "Track live, real-time data for mainnet activity, Layer 2 scaling, tokenized assets, and DeFi markets",
 }

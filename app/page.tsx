@@ -135,7 +135,7 @@ const platforms: {
   {
     name: "Coinbase",
     imgSrc: coinbaseSvg,
-    description: "Base Layer-2 Ecosystem",
+    description: "Base Layer 2 Ecosystem",
     metric: "$4.77B+ TVL",
   },
   {
