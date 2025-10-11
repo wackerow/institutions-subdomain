@@ -70,15 +70,35 @@ export function AnimatedNumberInView({
     if (isInView) setTargetValue(Number.isFinite(parts.value) ? parts.value : 0)
   }, [isInView, parts.value])
 
-  const options = { bounce: 0, duration: 2_500, ...springOptions }
+  const options = { bounce: 0, duration: 2000, ...springOptions }
+
+  // Format the final value to reserve its width
+  const finalFormatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: parts.fractionDigits,
+    maximumFractionDigits: parts.fractionDigits,
+  })
+  const finalFormatted = finalFormatter.format(
+    Number.isFinite(parts.value) ? parts.value : 0
+  )
+
   return (
     <div className={className} ref={ref}>
       {parts.prefix}
-      <AnimatedNumber
-        springOptions={options}
-        value={targetValue}
-        fractionDigits={parts.fractionDigits}
-      />
+      {/* Reserve final width and overlay the animated number */}
+      <span className="inline-grid">
+        <span
+          className="invisible col-start-1 row-start-1 tabular-nums"
+          aria-hidden="true"
+        >
+          {finalFormatted}
+        </span>
+        <AnimatedNumber
+          className="col-start-1 row-start-1"
+          springOptions={options}
+          value={targetValue}
+          fractionDigits={parts.fractionDigits}
+        />
+      </span>
       {parts.suffix}
     </div>
   )
