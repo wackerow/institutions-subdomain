@@ -19,6 +19,10 @@ export type TimeseriesTotalRwaValueData = {
   stablecoins: number
 }[]
 
+/**
+ * STABLECOIN DATA ONLY;
+ * TODO: Update logic or naming
+ */
 export const fetchTimeseriesTotalRwaValue = async (): Promise<
   DataTimestamped<TimeseriesTotalRwaValueData>
 > => {

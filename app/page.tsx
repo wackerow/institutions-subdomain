@@ -39,6 +39,13 @@ import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 import { isValidDate } from "@/lib/utils/date"
+import { formatLargeCurrency, formatLargeNumber } from "@/lib/utils/number"
+import { formatDuration } from "@/lib/utils/time"
+
+import fetchTimeseriesTotalRwaValue from "./_actions/fetchTimeseriesTotalRwaValue"
+import fetchTvlDefiEthereumCurrent from "./_actions/fetchTvlDefiCurrent"
+import fetchValidatorCount from "./_actions/fetchValidatorCount"
+import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
 import robertMitchnick from "@/public/images/robert-mitchnick.png"
 import tomZschach from "@/public/images/tom-zschach.png"
@@ -79,79 +86,6 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: ubs, alt: "UBS logo" },
 ]
 
-// TODO: Fetch live data
-const metrics: { value: string; label: ReactNode }[] = [
-  {
-    value: "10 Yrs",
-    label: "Uninterrupted uptime and liveness",
-  },
-  {
-    value: "1.1M+",
-    label: "Validators securing the network",
-  },
-  {
-    value: "$140B+",
-    label: "Stablecoin TVL 60%+ of all stablecoin supply",
-  },
-  {
-    value: "90%+",
-    label: "RWA marketshare on Ethereum and its L2s",
-  },
-  {
-    value: "$87B+",
-    label: (
-      <>
-        DeFi TVL
-        <br /> 65%+ of all blockchains
-      </>
-    ),
-  },
-  {
-    value: "$12B+",
-    label: (
-      <>
-        24 Hour DEX Volume
-        <br />
-        2025 ecosystem average
-      </>
-    ),
-  },
-]
-
-// TODO: Live metrics and info tooltips
-const platforms: {
-  name: string
-  imgSrc: StaticImageData
-  description: ReactNode
-  metric: ReactNode
-  className?: string
-}[] = [
-  {
-    name: "BlackRock",
-    imgSrc: blackRockSvg,
-    description: "Onchain Tokenization via Securitize",
-    metric: "$2.1B+ AUM",
-  },
-  {
-    name: "Coinbase",
-    imgSrc: coinbaseSvg,
-    description: "Base Layer 2 Ecosystem",
-    metric: "$4.77B+ TVL",
-  },
-  {
-    name: "Visa",
-    imgSrc: visaSvg,
-    description: "Stablecoin Payment Settlement",
-    metric: "$2.67T Volume 2025",
-  },
-  {
-    name: "eToro",
-    imgSrc: etoroSvg,
-    description: "Stock Tokenization Platform",
-    metric: "100 Stocks Trade 24/5",
-  },
-]
-
 const testimonials: {
   name: string
   role: string
@@ -186,7 +120,90 @@ const testimonials: {
   },
 ]
 
-export default function Home() {
+export default async function Home() {
+  const uptime = getTimeSinceGenesis()
+  const timeseriesTotalRwaValueData = await fetchTimeseriesTotalRwaValue()
+  const validatorCountData = await fetchValidatorCount()
+  const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
+
+  const metrics: { value: string; label: ReactNode }[] = [
+    {
+      value: formatDuration(uptime),
+      label: "Uninterrupted uptime and liveness",
+    },
+    {
+      value: formatLargeNumber(validatorCountData.data.validatorCount),
+      label: "Validators securing the network",
+    },
+    {
+      value: formatLargeCurrency(
+        timeseriesTotalRwaValueData.data[
+          timeseriesTotalRwaValueData.data.length - 1
+        ].stablecoins
+      ),
+      label: "Stablecoin TVL 60%+ of all stablecoin supply",
+    },
+    {
+      value: "90%+*", // TODO: Fetch live data
+      label: "RWA marketshare on Ethereum and its L2s",
+    },
+    {
+      value:
+        formatLargeCurrency(tvlDefiEthereumCurrentData.data.mainnetDefiTvl) +
+        "+", // TODO: Confirm "+" suffix usage
+      label: (
+        <>
+          DeFi TVL
+          <br /> 65%+ of all blockchains
+        </>
+      ),
+    },
+    {
+      value: "$12B+*", // TODO: Fetch live data
+      label: (
+        <>
+          24 Hour DEX Volume
+          <br />
+          2025 ecosystem average
+        </>
+      ),
+    },
+  ]
+
+  // TODO: Live metrics and info tooltips
+  const platforms: {
+    name: string
+    imgSrc: StaticImageData
+    description: ReactNode
+    metric: ReactNode
+    className?: string
+  }[] = [
+    {
+      name: "BlackRock",
+      imgSrc: blackRockSvg,
+      description: "Onchain Tokenization via Securitize",
+      metric: "$2.1B+ AUM",
+    },
+    {
+      name: "Coinbase",
+      imgSrc: coinbaseSvg,
+      description: "Base Layer 2 Ecosystem",
+      metric: "$4.77B+ TVL",
+    },
+    {
+      name: "Visa",
+      imgSrc: visaSvg,
+      description: "Stablecoin Payment Settlement",
+      metric: "$2.67T Volume 2025",
+    },
+    {
+      name: "eToro",
+      imgSrc: etoroSvg,
+      description: "Stock Tokenization Platform",
+      metric: "100 Stocks Trade 24/5",
+    },
+  ]
+
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero

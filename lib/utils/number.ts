@@ -85,6 +85,26 @@ export const formatNumber = (
 ) => Intl.NumberFormat("en-US", { ...options }).format(value)
 
 /**
+ * Formats a large number using compact notation (e.g., 1K, 1M).
+ *
+ * @param value - The number to format.
+ * @param options - Optional formatting options to customize the output, extending `Intl.NumberFormatOptions`.
+ * @param sigDigits - Optional number of significant digits to display (defaults to 3).
+ * @returns The formatted number as a string.
+ */
+export const formatLargeNumber = (
+  value: number,
+  options?: Partial<Intl.NumberFormatOptions>,
+  sigDigits?: number
+) =>
+  formatNumber(value, {
+    notation: "compact",
+    minimumSignificantDigits: sigDigits || 3,
+    maximumSignificantDigits: sigDigits || 3,
+    ...options,
+  })
+
+/**
  * Extracts the prefix, numeric value, suffix, and number of fraction digits from a given input string or number.
  *
  * If the input is a number, returns an object with an empty prefix and suffix, the numeric value, and the count of fraction digits.
