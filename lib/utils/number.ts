@@ -81,3 +81,40 @@ export const formatNumber = (
   value: number,
   options?: Intl.NumberFormatOptions
 ) => Intl.NumberFormat("en-US", { ...options }).format(value)
+
+/**
+ * Extracts the prefix, numeric value, suffix, and number of fraction digits from a given input string or number.
+ *
+ * If the input is a number, returns an object with an empty prefix and suffix, the numeric value, and the count of fraction digits.
+ * If the input is a string, attempts to parse out any non-numeric prefix and suffix, the numeric value (removing commas), and the count of fraction digits.
+ *
+ * @param input - The value to parse, which can be a string or a number.
+ * @returns An object containing:
+ * - `prefix`: Any non-numeric characters before the number.
+ * - `value`: The parsed numeric value.
+ * - `suffix`: Any non-numeric characters after the number.
+ * - `fractionDigits`: The number of digits after the decimal point.
+ */
+export const getValueParts = (
+  input: string | number
+): {
+  prefix: string
+  value: number
+  suffix: string
+  fractionDigits: number
+} => {
+  if (typeof input === "number") {
+    const fractionDigits = `${input}`.split(".")[1]?.length ?? 0
+    return { prefix: "", value: input, suffix: "", fractionDigits }
+  }
+
+  const stringValueRegExp = /^([^\d\.]*)([\d\.\,]*)([^\d\.]*)$/
+  const match = input.match(stringValueRegExp) ?? []
+
+  const [, prefix, strValue, suffix] = match
+  const clean = strValue.replace(/,/g, "")
+  const value = +clean
+  const fractionDigits = clean.split(".")[1]?.length ?? 0
+
+  return { prefix, value, suffix, fractionDigits }
+}
