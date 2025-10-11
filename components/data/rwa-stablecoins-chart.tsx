@@ -8,8 +8,6 @@ import { DataTimestamped } from "@/lib/types"
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
@@ -69,7 +67,6 @@ const RWAStablecoinsChart = ({ chartData }: RWAStablecoinsChartProps) => (
         stroke="var(--chart-1)"
         stackId="a"
       />
-      <ChartLegend content={<ChartLegendContent />} />
     </AreaChart>
   </ChartContainer>
 )
