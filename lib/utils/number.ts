@@ -11,7 +11,7 @@ export const formatPercent = (
   includeSign: boolean = false,
   sigDigits: number = 2
 ) => {
-  const formatted = new Intl.NumberFormat("en-US", {
+  const formatted = Intl.NumberFormat("en-US", {
     style: "percent",
     minimumSignificantDigits: sigDigits,
     maximumSignificantDigits: sigDigits,
@@ -35,3 +35,49 @@ export const getChangeColorClass = (value: number) => {
   if (value < 0) return "text-red-600"
   return "text-muted-foreground"
 }
+
+/**
+ * Formats a numeric multiplier value with two significant digits and appends "x" to indicate multiplication.
+ *
+ * @param value - The numeric value to format as a multiplier.
+ * @returns The formatted multiplier string (e.g., "1.2x").
+ */
+export const formatMultiplier = (value: number, sigDigits: number = 2) =>
+  Intl.NumberFormat("en-US", {
+    minimumSignificantDigits: sigDigits,
+    maximumSignificantDigits: sigDigits,
+  }).format(value) + "x"
+
+/**
+ * Formats a large currency value using compact notation and a specified number of significant digits.
+ *
+ * @param value - The numeric value to format as currency.
+ * @param sigDigits - The number of significant digits to display (default is 3).
+ * @returns The formatted currency string in USD using compact notation.
+ *
+ * @example
+ * formatLargeCurrency(1500000); // "$1.50M"
+ * formatLargeCurrency(12345, 4); // "$12,350"
+ */
+export const formatLargeCurrency = (value: number, sigDigits: number = 3) =>
+  Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    notation: "compact",
+    minimumSignificantDigits: sigDigits,
+    maximumSignificantDigits: sigDigits,
+  }).format(value)
+
+/**
+ * Formats a number according to the specified locale and formatting options.
+ *
+ * @param value - The number to format.
+ * @param options - Optional formatting options conforming to `Intl.NumberFormatOptions`.
+ * @returns The formatted number as a string.
+ *
+ * @example formatNumber(1234567.89); // "1,234,567.89"
+ */
+export const formatNumber = (
+  value: number,
+  options?: Intl.NumberFormatOptions
+) => Intl.NumberFormat("en-US", { ...options }).format(value)
