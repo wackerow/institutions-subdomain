@@ -8,3 +8,10 @@ export type LibraryItem = {
 }
 
 export type DataTimestamped<T> = { data: T; lastUpdated: number }
+
+export type NumberParts = {
+  prefix: string
+  value: number
+  suffix: string
+  fractionDigits: number
+}

@@ -1,8 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "motion/react"
 import { motion, SpringOptions, useSpring, useTransform } from "motion/react"
+
+import { NumberParts } from "@/lib/types"
 
 import { cn } from "@/lib/utils/index"
 import { getValueParts } from "@/lib/utils/number"
@@ -64,11 +66,39 @@ export function AnimatedNumberInView({
   const ref = useRef(null)
   const isInView = useInView(ref)
 
-  const parts = getValueParts(children)
+  const { parts, error } = useMemo(() => {
+    const defaultParts: NumberParts = {
+      prefix: "",
+      value: 0,
+      suffix: "",
+      fractionDigits: 0,
+    }
+    try {
+      const _parts = getValueParts(children)
+      return {
+        parts: {
+          prefix: _parts.prefix,
+          value: _parts.value,
+          suffix: _parts.suffix,
+          fractionDigits: _parts.fractionDigits,
+        },
+        error: false,
+      }
+    } catch {
+      return { parts: defaultParts, error: true }
+    }
+  }, [children])
 
   useEffect(() => {
     if (isInView) setTargetValue(Number.isFinite(parts.value) ? parts.value : 0)
   }, [isInView, parts.value])
+
+  if (error)
+    return (
+      <div className={className} ref={ref}>
+        {children}
+      </div>
+    )
 
   const options = { bounce: 0, duration: 2000, ...springOptions }
 

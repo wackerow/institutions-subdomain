@@ -1,3 +1,5 @@
+import { NumberParts } from "../types"
+
 /**
  * Formats a number as a percentage string with configurable significant digits and optional sign.
  *
@@ -95,14 +97,7 @@ export const formatNumber = (
  * - `suffix`: Any non-numeric characters after the number.
  * - `fractionDigits`: The number of digits after the decimal point.
  */
-export const getValueParts = (
-  input: string | number
-): {
-  prefix: string
-  value: number
-  suffix: string
-  fractionDigits: number
-} => {
+export const getValueParts = (input: string | number): NumberParts => {
   if (typeof input === "number") {
     const fractionDigits = `${input}`.split(".")[1]?.length ?? 0
     return { prefix: "", value: input, suffix: "", fractionDigits }
