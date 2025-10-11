@@ -151,9 +151,10 @@
   --chart-4: oklch(0.8235 0.133 78.368); /* #F4BA57 */
   --chart-5: oklch(0.8583 0.1133 192.495); /* #68E8E4 */
 
-  /* TODO: Not yet fully defined */
-  --popover: oklch(0.982 0 0); /* #F9F9F9 off-white bg */
+  --popover: oklch(1 0 0); /* #FFFFFF pure white bg */
   --popover-foreground: oklch(0.25 0 0); /* #222222 near-black text */
+
+  /* TODO: Not yet fully defined */
   --input: oklch(0.922 0 0); /* #E5E5E5 */
 }
 
