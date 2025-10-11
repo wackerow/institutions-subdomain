@@ -141,11 +141,6 @@ export default async function Page() {
         </section>
 
         <div className="mt-20">
-          <ValidatorCount />
-          <DeFiTotalValueLocked />
-          <Layer2Data />
-          <UltrasoundMoney />
-          <RealWorldAssets chartData={stablecoinChartData} />
         </div>
       </article>
     </main>

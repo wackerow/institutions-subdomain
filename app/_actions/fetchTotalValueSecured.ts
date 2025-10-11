@@ -1,0 +1,40 @@
+"use server"
+
+import type { DataTimestamped } from "@/lib/types"
+
+type JSONData = { sum: number; securityRatio: number }
+
+export type TotalValueSecuredData = JSONData
+
+export const fetchTotalValueSecured = async (): Promise<
+  DataTimestamped<TotalValueSecuredData>
+> => {
+  const url = "https://ultrasound.money/api/fees/total-value-secured"
+
+  try {
+    const response = await fetch(url, {
+      next: {
+        revalidate: 60 * 60, // 1 hour
+        tags: ["ultrasound:fees:total-value-secured"],
+      },
+    })
+
+    if (!response.ok)
+      throw new Error(
+        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+      )
+
+    const data: JSONData = await response.json()
+
+    return { data, lastUpdated: Date.now() }
+  } catch (error: unknown) {
+    console.error("fetchTotalValueSecured failed", {
+      name: error instanceof Error ? error.name : undefined,
+      message: error instanceof Error ? error.message : String(error),
+      url,
+    })
+    throw error
+  }
+}
+
+export default fetchTotalValueSecured

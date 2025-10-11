@@ -1,3 +1,6 @@
+/**
+ * @deprecated Use fetchValidatorCount
+ */
 const ValidatorCount = async () => {
   const response = await fetch("https://beaconcha.in/api/v1/epoch/latest")
 

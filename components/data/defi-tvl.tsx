@@ -1,3 +1,6 @@
+/**
+ * @deprecated Use fetchTvlDefiEthereumCurrent
+ */
 const DeFiTotalValueLocked = async () => {
   const response = await fetch("https://api.llama.fi/v2/chains")
 

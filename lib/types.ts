@@ -6,3 +6,5 @@ export type LibraryItem = {
   date: string
   href: string
 }
+
+export type DataTimestamped<T> = { data: T; lastUpdated: number }

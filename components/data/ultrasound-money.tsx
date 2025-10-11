@@ -1,5 +1,6 @@
-// https://ultrasound.money/api/fees/total-value-secured
-
+/**
+ * @deprecated Use fetchTotalValueSecured
+ */
 const UltrasoundMoney = async () => {
   const response = await fetch(
     "https://ultrasound.money/api/fees/total-value-secured"

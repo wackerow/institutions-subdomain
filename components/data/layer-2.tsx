@@ -1,3 +1,6 @@
+/**
+ * @deprecated Use fetchL2ScalingSummary
+ */
 const Layer2Data = async () => {
   const response = await fetch("https://l2beat.com/api/scaling/summary")
 
@@ -71,15 +74,6 @@ const Layer2Data = async () => {
 
   const latestCanonicalTvl = json.chart.data[json.chart.data.length - 1][2]
   const allProjectsCount = Object.keys(json.projects).length
-  const stageZeroCount = Object.values(json.projects).filter(
-    ({ stage }) => stage.toLowerCase() === "stage 0"
-  ).length
-  const stageOneCount = Object.values(json.projects).filter(
-    ({ stage }) => stage.toLowerCase() === "stage 1"
-  ).length
-  const stageTwoCount = Object.values(json.projects).filter(
-    ({ stage }) => stage.toLowerCase() === "stage 2"
-  ).length
 
   return (
     <>
@@ -96,18 +90,7 @@ const Layer2Data = async () => {
         Layer 2 Networks (Live—Any stage):{" "}
         {Intl.NumberFormat("en-US", {}).format(allProjectsCount)}
       </p>
-      <p>
-        Layer 2 Networks (Live—Stage 0):{" "}
-        {Intl.NumberFormat("en-US", {}).format(stageZeroCount)}
-      </p>
-      <p>
-        Layer 2 Networks (Live—Stage 1):{" "}
-        {Intl.NumberFormat("en-US", {}).format(stageOneCount)}
-      </p>
-      <p>
-        Layer 2 Networks (Live—Stage 2):{" "}
-        {Intl.NumberFormat("en-US", {}).format(stageTwoCount)}
-      </p>
+      \{" "}
     </>
   )
 }
