@@ -32,7 +32,10 @@ export const fetchHistoricalChainTvlEthereum = async (): Promise<
     const trimmedData = json.filter((_, idx) => idx % 7 === 0)
 
     // Take one data point per week for loading efficiency
-    const data = trimmedData.map(({ date, tvl }) => ({ date, defiTvl: tvl }))
+    const data = trimmedData.map(({ date, tvl }) => ({
+      date: date * 1e3,
+      defiTvl: tvl,
+    }))
 
     return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
