@@ -230,7 +230,10 @@ export default async function Home() {
             <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:max-w-md">
               Ethereum is the Backbone of the Onchain Economy
             </h2>
-            <LinkWithArrow href="#" className="css-secondary w-fit text-lg">
+            <LinkWithArrow
+              href="/data-hub"
+              className="css-secondary w-fit text-lg"
+            >
               Live Data
             </LinkWithArrow>
           </div>
