@@ -122,13 +122,22 @@ const CardLabel = forwardRef<
 })
 CardLabel.displayName = "CardLabel"
 
-const CardValue = ({ className, ...props }: ComponentProps<"p">) => (
-  <p
-    data-slot="card-value"
-    className={cn("text-big-mobile sm:text-big font-bold", className)}
-    {...props}
-  />
-)
+const CardValue = forwardRef<
+  HTMLHeadingElement,
+  ComponentProps<"p"> & { asChild?: boolean }
+>(({ className, asChild, ...props }, ref) => {
+  const Comp = asChild ? Slot : "p"
+
+  return (
+    <Comp
+      ref={ref}
+      data-slot="card-value"
+      className={cn("text-big-mobile sm:text-big font-bold", className)}
+      {...props}
+    />
+  )
+})
+CardValue.displayName = "CardValue"
 
 const CardSmallText = ({ className, ...props }: ComponentProps<"p">) => (
   <p
