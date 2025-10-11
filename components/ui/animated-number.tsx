@@ -1,6 +1,6 @@
 "use client"
 
-import { ComponentProps, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useInView } from "motion/react"
 import { motion, SpringOptions, useSpring, useTransform } from "motion/react"
 
@@ -57,12 +57,11 @@ export function AnimatedNumberInView({
   children,
   className,
   springOptions,
-  ...props
 }: {
   children: number | string
   className?: string
   springOptions?: Partial<SpringOptions>
-} & Omit<ComponentProps<"div">, "children" | "className">) {
+}) {
   const [targetValue, setTargetValue] = useState(0)
   const ref = useRef(null)
   const isInView = useInView(ref)
@@ -96,7 +95,7 @@ export function AnimatedNumberInView({
 
   if (error)
     return (
-      <div className={className} ref={ref} {...props}>
+      <div className={className} ref={ref}>
         {children}
       </div>
     )
@@ -113,7 +112,7 @@ export function AnimatedNumberInView({
   )
 
   return (
-    <div className={className} ref={ref} {...props}>
+    <div className={className} ref={ref}>
       {parts.prefix}
       {/* Reserve final width and overlay the animated number */}
       <span className="inline-grid">

@@ -49,7 +49,7 @@ export default async function Page() {
   }[] = [
     {
       label: "Total value locked (TVL)",
-      value: "$376.4B*", // TODO: Live data
+      value: "$376.4B", // TODO: Live data
       percentChange: 0.032,
       source: "tokenterminal.com",
       href: "https://tokenterminal.com",
@@ -105,13 +105,7 @@ export default async function Page() {
                     <CardLabel className="text-base font-medium tracking-[0.02rem]">
                       {label}
                     </CardLabel>
-                    <CardValue
-                      // TODO: Remove when all data available
-                      title={
-                        value.endsWith("*") ? "*Dummy data—coming soon™" : ""
-                      }
-                      asChild
-                    >
+                    <CardValue asChild>
                       <AnimatedNumberInView>{value}</AnimatedNumberInView>
                     </CardValue>
                     {percentChange && (

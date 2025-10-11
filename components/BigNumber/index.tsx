@@ -13,10 +13,7 @@ const BigNumber = ({ value, className, children }: BigNumberProps) => (
     className={cn("flex flex-col items-center gap-2 text-center", className)}
   >
     {value && (
-      <AnimatedNumberInView
-        className="text-h3-mobile sm:text-h3 font-bold tracking-[0.055rem]"
-        title={value.endsWith("*") ? "*Dummy data—coming soon™" : ""} // TODO: Remove when all data available
-      >
+      <AnimatedNumberInView className="text-h3-mobile sm:text-h3 font-bold tracking-[0.055rem]">
         {value}
       </AnimatedNumberInView>
     )}

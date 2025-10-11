@@ -144,7 +144,7 @@ export default async function Home() {
       label: "Stablecoin TVL 60%+ of all stablecoin supply",
     },
     {
-      value: "90%+*", // TODO: Fetch live data
+      value: "90%+", // TODO: Live data
       label: "RWA marketshare on Ethereum and its L2s",
     },
     {
@@ -159,7 +159,7 @@ export default async function Home() {
       ),
     },
     {
-      value: "$12B+*", // TODO: Fetch live data
+      value: "$12B+", // TODO: Live data
       label: (
         <>
           24 Hour DEX Volume
@@ -170,7 +170,7 @@ export default async function Home() {
     },
   ]
 
-  // TODO: Live metrics and info tooltips
+  // TODO: Live data and info tooltips
   const platforms: {
     name: string
     imgSrc: StaticImageData
