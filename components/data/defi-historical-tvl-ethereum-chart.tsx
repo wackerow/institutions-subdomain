@@ -5,14 +5,9 @@ import { YAxis } from "recharts"
 
 import { DataTimestamped } from "@/lib/types"
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart"
+import { ChartConfig, ChartContainer } from "@/components/ui/chart"
 
-import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
+import { formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
 import type { HistoricalChainTvlEthereumData } from "@/app/_actions/fetchHistoricalChainTvlEthereum"
@@ -54,15 +49,13 @@ const DefiHistoricalTvlEthereumChart = ({
         minTickGap={32}
         tickFormatter={(v) => formatDateMonthYear(v)}
       />
-      <ChartTooltip
-        content={(props) => (
-          <ChartTooltipContent
-            {...props}
-            labelFormatter={(v) => formatDateFull(v)}
-            indicator="dot"
-          />
-        )}
-      />
+      {/* // TODO: Debug ChartTooltip error */}
+      {/* <ChartTooltip
+        labelFormatter={(v) =>
+          formatDateFull(typeof v === "number" ? v : Number(v))
+        }
+        content={(props) => <ChartTooltipContent {...props} indicator="dot" />}
+      /> */}
       <Area
         dataKey="defiTvl"
         type="natural"
