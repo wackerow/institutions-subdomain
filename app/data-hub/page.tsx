@@ -1,27 +1,40 @@
+import { Info } from "lucide-react"
 import type { Metadata } from "next/types"
 
-import DeFiTotalValueLocked from "@/components/data/defi-tvl"
-import Layer2Data from "@/components/data/layer-2"
-import RealWorldAssets from "@/components/data/rwa"
-import UltrasoundMoney from "@/components/data/ultrasound-money"
-import ValidatorCount from "@/components/data/validator-count"
+import RWAStablecoinsChart from "@/components/data/rwa-stablecoins-chart"
 import Hero from "@/components/Hero"
 import {
   Card,
   CardContent,
+  CardDescription,
+  CardHeader,
   CardLabel,
   CardSmallText,
   CardSource,
+  CardTitle,
   CardValue,
 } from "@/components/ui/card"
 import Link from "@/components/ui/link"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
-import { formatPercent, getChangeColorClass } from "@/lib/utils/number"
+import { formatDateMonthDayYear } from "@/lib/utils/date"
+import {
+  formatLargeCurrency,
+  formatNumber,
+  formatPercent,
+  getChangeColorClass,
+} from "@/lib/utils/number"
 
-import fetchRWAStablecoins from "../api/rwaStablecoins/fetch"
+import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
+import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
-  const stablecoinChartData = await fetchRWAStablecoins()
+  const timeseriesTotalRwaValueData = await fetchTimeseriesTotalRwaValue()
+  const validatorCountData = await fetchValidatorCount()
 
   const overviewCards: {
     label: string
@@ -29,33 +42,35 @@ export default async function Page() {
     percentChange?: number
     source: string
     href: string
+    lastUpdated?: string
   }[] = [
     {
       label: "Total value locked (TVL)",
-      value: "$376.4B", // TODO: Live data
+      value: "$376.4B*", // TODO: Live data
       percentChange: 0.032,
       source: "ultrasound.money",
       href: "https://ultrasound.money",
     },
     {
       label: "Total Value Secured (TVS)",
-      value: "$509B", // TODO: Live data
+      value: "$509B*", // TODO: Live data
       percentChange: 0.032,
       source: "tokenterminal.com",
       href: "https://tokenterminal.com",
     },
     {
       label: "Validator count",
-      value: "1,035,307", // TODO: Live data
+      value: formatNumber(validatorCountData.data.validatorCount),
+      lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
       percentChange: -0.014,
-      source: "ultrasound.money",
-      href: "https://ultrasound.money",
+      source: "beaconcha.in",
+      href: "https://beaconcha.in",
     },
     {
       label: "Security Ratio",
-      value: "5.9x", // TODO: Live data
-      source: "beaconcha.in",
-      href: "https://beaconcha.in",
+      value: "5.9x*", // TODO: Live data
+      source: "ultrasound.money",
+      href: "https://ultrasound.money",
     },
   ]
 
@@ -141,6 +156,47 @@ export default async function Page() {
         </section>
 
         <div className="mt-20">
+          <Card className="space-y-6">
+            <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+              <CardContent className="grid flex-1 gap-1">
+                <CardTitle className="text-h5">
+                  Stablecoin Market Cap: All Time
+                </CardTitle>
+                <CardDescription className="font-medium">
+                  Showing total Ethereum stablecoin market capitalization for
+                  all time
+                </CardDescription>
+              </CardContent>
+              <div className="text-h4 font-bold tracking-[0.04rem]">
+                {formatLargeCurrency(
+                  timeseriesTotalRwaValueData.data[
+                    timeseriesTotalRwaValueData.data.length - 1
+                  ].stablecoins
+                )}
+                &nbsp;
+                <Popover>
+                  <PopoverTrigger aria-label="More info">
+                    <Info className="text-muted-foreground size-4" />
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit space-y-1">
+                    <div className="flex flex-wrap gap-2">
+                      <span className="block">Source:</span>
+                      <Link href="https://rwa.xyz">rwa.xyz</Link>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="block">Last updated:</span>
+                      <span className="block">
+                        {formatDateMonthDayYear(
+                          timeseriesTotalRwaValueData.lastUpdated
+                        )}
+                      </span>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </CardHeader>
+            <RWAStablecoinsChart chartData={timeseriesTotalRwaValueData} />
+          </Card>
         </div>
       </article>
     </main>
