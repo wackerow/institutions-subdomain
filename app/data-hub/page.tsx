@@ -3,6 +3,7 @@ import type { Metadata } from "next/types"
 import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
 import RWAStablecoinsChart from "@/components/data/rwa-stablecoins-chart"
 import Hero from "@/components/Hero"
+import { AnimatedNumberInView } from "@/components/ui/animated-number"
 import {
   Card,
   CardContent,
@@ -109,8 +110,9 @@ export default async function Page() {
                       title={
                         value.endsWith("*") ? "*Dummy data—coming soon™" : ""
                       }
+                      asChild
                     >
-                      {value}
+                      <AnimatedNumberInView>{value}</AnimatedNumberInView>
                     </CardValue>
                     {percentChange && (
                       <CardSmallText
@@ -193,11 +195,11 @@ export default async function Page() {
 
               <CardContent className="flex flex-1 flex-col justify-between">
                 <div className="my-10 flex flex-col items-center gap-y-6 sm:my-14">
-                  <p className="text-6xl font-bold tracking-[0.08rem] sm:text-7xl">
+                  <AnimatedNumberInView className="text-6xl font-bold tracking-[0.08rem] sm:text-7xl">
                     {formatMultiplier(
                       tvlDefiEthereumCurrentData.data.runnerUpMultiplier
                     )}
-                  </p>
+                  </AnimatedNumberInView>
                   <CardSmallText className="text-center text-sm">
                     Bigger
                   </CardSmallText>
@@ -251,11 +253,13 @@ export default async function Page() {
                   }
                   className="text-h4 font-bold tracking-[0.04rem]"
                 >
-                  {formatLargeCurrency(
-                    timeseriesTotalRwaValueData.data[
-                      timeseriesTotalRwaValueData.data.length - 1
-                    ].stablecoins
-                  )}
+                  <AnimatedNumberInView>
+                    {formatLargeCurrency(
+                      timeseriesTotalRwaValueData.data[
+                        timeseriesTotalRwaValueData.data.length - 1
+                      ].stablecoins
+                    )}
+                  </AnimatedNumberInView>
                 </div>
               </CardHeader>
 
