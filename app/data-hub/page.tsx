@@ -166,7 +166,7 @@ export default async function Page() {
                   chartData={historicalChainTvlEthereumData}
                 />
                 <div className="flex justify-between">
-                  <CardSource className="text-sm">
+                  <CardSource>
                     <span
                       title={
                         "Last updated: " +
@@ -192,13 +192,18 @@ export default async function Page() {
               </CardTitle>
 
               <CardContent className="flex flex-1 flex-col justify-between">
-                <p className="mx-auto my-12 text-5xl font-bold sm:text-8xl">
-                  {formatMultiplier(
-                    tvlDefiEthereumCurrentData.data.runnerUpMultiplier
-                  )}
-                </p>
+                <div className="my-10 flex flex-col items-center gap-y-6 sm:my-14">
+                  <p className="text-6xl font-bold tracking-[0.08rem] sm:text-7xl">
+                    {formatMultiplier(
+                      tvlDefiEthereumCurrentData.data.runnerUpMultiplier
+                    )}
+                  </p>
+                  <CardSmallText className="text-center text-sm">
+                    Bigger
+                  </CardSmallText>
+                </div>
                 <div className="flex justify-between">
-                  <CardSource className="text-sm">
+                  <CardSource>
                     <span
                       title={
                         "Last updated: " +
@@ -258,7 +263,7 @@ export default async function Page() {
                 <RWAStablecoinsChart chartData={timeseriesTotalRwaValueData} />
 
                 <div className="flex justify-between">
-                  <CardSource className="text-sm">
+                  <CardSource>
                     <span
                       title={
                         "Last updated: " +
@@ -291,7 +296,7 @@ export default async function Page() {
               <CardContent className="flex flex-1 flex-col justify-between">
                 <p>Pie chart: soon™</p>
                 <div className="flex justify-between">
-                  <CardSource className="text-sm">
+                  <CardSource>
                     Source:{" "}
                     <Link inline href="https://rwa.xyz">
                       rwa.xyz

@@ -144,7 +144,10 @@ const CardSmallText = ({ className, ...props }: ComponentProps<"p">) => (
 const CardSource = ({ className, ...props }: ComponentProps<"p">) => (
   <p
     data-slot="card-source"
-    className={cn("text-muted-foreground font-medium", className)}
+    className={cn(
+      "text-muted-foreground [&_a]:text-muted-foreground [&_a]:hover:text-foreground text-xs font-medium tracking-[0.015rem]",
+      className
+    )}
     {...props}
   />
 )
