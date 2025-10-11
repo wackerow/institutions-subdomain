@@ -150,7 +150,7 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Decentralized Finance
           </h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_23rem]">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1fr_23rem]">
             <Card className="flex flex-col gap-y-6">
               <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
                 <CardContent className="flex-1 gap-4">
@@ -192,7 +192,7 @@ export default async function Page() {
               </CardTitle>
 
               <CardContent className="flex flex-1 flex-col justify-between">
-                <p className="mx-auto mt-12 text-5xl font-bold sm:text-8xl">
+                <p className="mx-auto my-12 text-5xl font-bold sm:text-8xl">
                   {formatMultiplier(
                     tvlDefiEthereumCurrentData.data.runnerUpMultiplier
                   )}
