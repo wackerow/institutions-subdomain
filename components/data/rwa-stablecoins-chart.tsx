@@ -1,12 +1,11 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
-import { YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import { DataTimestamped } from "@/lib/types"
+import type { DataTimestamped } from "@/lib/types"
 
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -30,7 +29,7 @@ type RWAStablecoinsChartProps = {
   chartData: DataTimestamped<TimeseriesTotalRwaValueData>
 }
 const RWAStablecoinsChart = ({ chartData }: RWAStablecoinsChartProps) => (
-  <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
+  <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
     <AreaChart data={chartData.data}>
       <defs>
         <linearGradient id="fillStablecoins" x1="0" y1="0" x2="0" y2="1">
