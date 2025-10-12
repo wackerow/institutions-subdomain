@@ -236,7 +236,7 @@ export default async function Page() {
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Card className="space-y-6">
+            <Card className="flex flex-col gap-y-6">
               <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">
@@ -266,29 +266,27 @@ export default async function Page() {
                 </div>
               </CardHeader>
 
-              <CardContent>
+              <CardContent className="flex flex-1 flex-col justify-between">
                 <StablecoinHistoricalTvlLineChart
                   chartData={timeseriesTotalRwaValueData}
                 />
 
-                <div className="flex justify-between">
-                  <CardSource>
-                    <span
-                      title={
-                        "Last updated: " +
-                        formatDateMonthDayYear(
-                          timeseriesTotalRwaValueData.lastUpdated
-                        )
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
-                    <Link inline href="https://rwa.xyz">
-                      rwa.xyz
-                    </Link>
-                  </CardSource>
-                </div>
+                <CardSource>
+                  <span
+                    title={
+                      "Last updated: " +
+                      formatDateMonthDayYear(
+                        timeseriesTotalRwaValueData.lastUpdated
+                      )
+                    }
+                  >
+                    Source
+                  </span>
+                  :{" "}
+                  <Link inline href="https://rwa.xyz">
+                    rwa.xyz
+                  </Link>
+                </CardSource>
               </CardContent>
             </Card>
 
