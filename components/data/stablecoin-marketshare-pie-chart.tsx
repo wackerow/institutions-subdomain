@@ -1,6 +1,15 @@
 "use client"
 
-import { Pie, PieChart } from "recharts"
+import { useState } from "react"
+import {
+  Cell,
+  Pie,
+  PieChart,
+  type PieLabelRenderProps,
+  Sector,
+  type SectorProps,
+  TooltipContentProps,
+} from "recharts"
 
 import type { DataTimestamped, NetworkPieChartData } from "@/lib/types"
 
@@ -10,10 +19,29 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
-  ChartTooltipContent,
 } from "@/components/ui/chart"
 
 import { formatPercent } from "@/lib/utils/number"
+
+type PieSlicePayload = {
+  name?: string | number
+  network?: string
+  fill?: string
+  [k: string]: unknown
+}
+
+type PieSliceProps = Partial<SectorProps> & {
+  cx?: number
+  cy?: number
+  midAngle?: number
+  outerRadius?: number
+  innerRadius?: number
+  startAngle?: number
+  endAngle?: number
+  percent?: number
+  value?: number
+  payload?: PieSlicePayload
+}
 
 const chartConfig = {
   marketshare: {
@@ -37,30 +65,257 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
+/**
+ * Renders a custom label for a pie chart slice, consisting of a small connector line
+ * and a short value label. Intended for non-hovered slices.
+ *
+ * @param cx - The x-coordinate of the pie chart center.
+ * @param cy - The y-coordinate of the pie chart center.
+ * @param midAngle - The middle angle of the slice, in degrees.
+ * @param outerRadius - The outer radius of the pie chart.
+ * @param percent - The percentage value of the slice.
+ * @param value - The value to display in the label.
+ * @param payload - The data payload for the slice, used for color.
+ * @returns SVG elements representing the connector and label.
+ */
+const RenderedLabel = ({
+  cx,
+  cy,
+  midAngle,
+  outerRadius,
+  percent,
+  value,
+  payload,
+}: PieLabelRenderProps & { payload?: PieSlicePayload }) => {
+  const cxNum = typeof cx === "number" ? cx : Number(cx) || 0
+  const cyNum = typeof cy === "number" ? cy : Number(cy) || 0
+  const midAngleNum =
+    typeof midAngle === "number" ? midAngle : Number(midAngle) || 0
+  const outerNum =
+    typeof outerRadius === "number" ? outerRadius : Number(outerRadius) || 0
+
+  const RADIAN = Math.PI / 180
+  const sin = Math.sin(-RADIAN * midAngleNum)
+  const cos = Math.cos(-RADIAN * midAngleNum)
+
+  const sx = cxNum + outerNum * cos
+  const sy = cyNum + outerNum * sin
+  const ex = cxNum + (outerNum + 26) * cos
+  const ey = cyNum + (outerNum + 26) * sin
+  const textAnchor = cos >= 0 ? "start" : "end"
+
+  return (
+    <g>
+      <path
+        d={`M${sx},${sy}L${ex},${ey}`}
+        stroke={String(payload?.fill ?? "currentColor")}
+        fill="none"
+      />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 6}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#333"
+        fontSize={12}
+      >
+        {formatPercent(Number(value ?? percent ?? 0))}
+      </text>
+    </g>
+  )
+}
+
+/**
+ * Renders the active (hovered) pie chart slice with enhanced visual emphasis.
+ *
+ * Displays:
+ * - The main slice sector.
+ * - A subtle, larger outer arc to emphasize the hovered slice.
+ * - A connector line from the slice to the label.
+ * - The slice's value (as a percentage) and its network name at the end of the connector.
+ *
+ * @param cx - The x-coordinate of the pie center.
+ * @param cy - The y-coordinate of the pie center.
+ * @param midAngle - The middle angle of the slice.
+ * @param innerRadius - The inner radius of the slice.
+ * @param outerRadius - The outer radius of the slice.
+ * @param startAngle - The starting angle of the slice.
+ * @param endAngle - The ending angle of the slice.
+ * @param fill - The fill color for the slice.
+ * @param payload - The data payload for the slice, containing network or name.
+ * @param percent - The percentage value of the slice.
+ * @param value - The value of the slice.
+ *
+ * @remarks
+ * Used to highlight the hovered slice in a stablecoin market share pie chart.
+ */
+const RenderedActiveShape = ({
+  cx,
+  cy,
+  midAngle,
+  innerRadius,
+  outerRadius,
+  startAngle,
+  endAngle,
+  fill,
+  percent,
+  value,
+}: PieSliceProps) => {
+  const RADIAN = Math.PI / 180
+  const sin = Math.sin(-RADIAN * (midAngle ?? 0))
+  const cos = Math.cos(-RADIAN * (midAngle ?? 0))
+
+  // connector points
+  const sx = (cx ?? 0) + (outerRadius ?? 0) * cos
+  const sy = (cy ?? 0) + (outerRadius ?? 0) * sin
+  const mx = (cx ?? 0) + ((outerRadius ?? 0) + 24) * cos
+  const my = (cy ?? 0) + ((outerRadius ?? 0) + 24) * sin
+  const ex = mx + (cos >= 0 ? 1 : -1) * 8
+  const ey = my
+  const textAnchor = cos >= 0 ? "start" : "end"
+
+  return (
+    <g pointerEvents="none">
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      {/* subtle outer arc to emphasize slice */}
+      <Sector
+        cx={cx}
+        cy={cy}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        innerRadius={(outerRadius ?? 0) + 4}
+        outerRadius={(outerRadius ?? 0) + 10}
+        fill={fill}
+      />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={String(fill)}
+        fill="none"
+      />
+      <circle cx={ex} cy={ey} r={3} fill={String(fill)} stroke="none" />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 8}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#111"
+        fontWeight={600}
+      >
+        {formatPercent(Number(value ?? percent ?? 0))}
+      </text>
+    </g>
+  )
+}
+
 type StablecoinMarketsharePieChartProps = {
   chartData: DataTimestamped<NetworkPieChartData>
 }
+
 const StablecoinMarketsharePieChart = ({
   chartData,
-}: StablecoinMarketsharePieChartProps) => (
-  <ChartContainer config={chartConfig} className="aspect-auto h-[280px] w-full">
-    <PieChart>
-      <ChartTooltip
-        formatter={(value: unknown) => formatPercent(Number(value))}
-        content={(props) => <ChartTooltipContent {...props} />}
-      />
-      <Pie
-        data={chartData.data}
-        dataKey="marketshare"
-        label={({ value }) => formatPercent(Number(value))}
-        nameKey="network"
-      />
-      <ChartLegend
-        content={<ChartLegendContent nameKey="network" />}
-        className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center"
-      />
-    </PieChart>
-  </ChartContainer>
-)
+}: StablecoinMarketsharePieChartProps) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+
+  const colorLookup = chartConfig as Record<
+    string,
+    { label: string; color?: string }
+  >
+
+  // rotation in degrees clockwise (change this to rotate the starting point)
+  const ROTATION = 150 // e.g. 45 to rotate 45° clockwise
+  const startAngle = 90 - ROTATION
+  const endAngle = startAngle - 360
+
+  return (
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[320px] w-full sm:max-lg:h-[320px]"
+    >
+      <PieChart
+        onMouseLeave={() => setActiveIndex(null)}
+        margin={{ left: 0, right: 0, top: 0, bottom: 32 }}
+      >
+        <ChartTooltip
+          formatter={(value: unknown) => formatPercent(Number(value))}
+          // ((props: TooltipContentProps<TValue, TName>) => ReactNode)
+          // content={(props: TooltipProps<number, string> | undefined) => {
+          content={(props: TooltipContentProps<number, string>) => {
+            if (
+              !props ||
+              !props.active ||
+              !props.payload ||
+              props.payload.length === 0
+            )
+              return null
+            const item = props.payload[0]
+            const entry = item.payload as {
+              network?: string
+              name?: string
+              [k: string]: unknown
+            }
+            const key = String(entry.network ?? entry.name ?? item.name ?? "")
+            const label =
+              (chartConfig as Record<string, { label: string }>)[key]?.label ??
+              key
+            return (
+              <div className="bg-card/95 rounded p-2 text-sm font-semibold shadow">
+                {label}
+              </div>
+            )
+          }}
+        />
+        <Pie
+          data={chartData.data}
+          dataKey="marketshare"
+          // label function hides the label for the hovered slice immediately
+          label={(props: PieLabelRenderProps) => {
+            const payload = props.payload as PieSlicePayload | undefined
+            const key = payload?.network ?? payload?.name
+            const idx = chartData.data.findIndex(
+              (d) => String(d.network) === String(key)
+            )
+            if (idx === activeIndex) return null
+            return <RenderedLabel {...props} />
+          }}
+          nameKey="network"
+          startAngle={startAngle}
+          endAngle={endAngle}
+          activeShape={RenderedActiveShape}
+          // remove Pie-level mouse handlers (we'll attach handlers to Cells)
+          isAnimationActive={false} // disable animation so labels/slices switch immediately
+          animationDuration={0}
+        >
+          {chartData.data.map((entry, i) => {
+            const cfg = colorLookup[String(entry.network)] ?? {}
+            const fill = cfg.color ?? "var(--chart-1)"
+            return (
+              <Cell
+                key={`cell-${i}`}
+                fill={fill}
+                stroke="var(--card-bg, #fff)" // keep 1px gap if desired
+                strokeWidth={1}
+                // attach events to the Cell so the hovered target is stable
+                onMouseEnter={() => setActiveIndex(i)}
+                onMouseLeave={() => setActiveIndex(null)}
+                // only treat the filled area as pointer-target (ignore stroke)
+                style={{ pointerEvents: "fill" }}
+              />
+            )
+          })}
+        </Pie>
+        <ChartLegend
+          content={<ChartLegendContent nameKey="network" />}
+          className="flex-wrap gap-2 *:basis-1/4 *:justify-center"
+        />
+      </PieChart>
+    </ChartContainer>
+  )
+}
 
 export default StablecoinMarketsharePieChart
