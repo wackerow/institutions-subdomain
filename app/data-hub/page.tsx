@@ -1,7 +1,7 @@
 import type { Metadata } from "next/types"
 
 import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
-import L2TvlChart from "@/components/data/l2-tvl-chart"
+// import L2TvlChart from "@/components/data/l2-tvl-chart"
 import StablecoinHistoricalTvlLineChart from "@/components/data/stablecoin-historical-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import Hero from "@/components/Hero"
@@ -30,7 +30,7 @@ import {
 } from "@/lib/utils/number"
 
 import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
-import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
+// import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
@@ -46,7 +46,7 @@ export default async function Page() {
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
     await fetchStablecoinMarketshare()
   )
-  const l2TvlExportData = await fetchL2TvlExport()
+  // const l2TvlExportData = await fetchL2TvlExport()
 
   const overviewCards: {
     label: string
@@ -328,7 +328,7 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Layer 2 Ecosystem
           </h2>
-          <L2TvlChart chartData={l2TvlExportData} />
+          {/* <L2TvlChart chartData={l2TvlExportData} /> */}
         </section>
       </article>
     </main>
