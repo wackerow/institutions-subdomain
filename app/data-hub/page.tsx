@@ -2,6 +2,7 @@ import type { Metadata } from "next/types"
 
 import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
 import RWAStablecoinsChart from "@/components/data/rwa-stablecoins-chart"
+import L2TvlChart from "@/components/data/l2-tvl-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import Hero from "@/components/Hero"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
@@ -29,6 +30,7 @@ import {
 } from "@/lib/utils/number"
 
 import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
+import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
@@ -41,10 +43,10 @@ export default async function Page() {
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
   const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
   const totalValueSecuredData = await fetchTotalValueSecured()
-  const _stablecoinMarketshareData = await fetchStablecoinMarketshare()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
-    _stablecoinMarketshareData
+    await fetchStablecoinMarketshare()
   )
+  const l2TvlExportData = await fetchL2TvlExport()
 
   const overviewCards: {
     label: string
@@ -326,7 +328,7 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Layer 2 Ecosystem
           </h2>
-          <Card>Soon™</Card>
+          <L2TvlChart chartData={l2TvlExportData} />
         </section>
       </article>
     </main>
