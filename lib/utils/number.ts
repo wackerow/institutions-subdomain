@@ -51,6 +51,29 @@ export const formatMultiplier = (value: number, sigDigits: number = 2) =>
   }).format(value) + "x"
 
 /**
+ * Formats a number as a currency string in US dollars.
+ *
+ * @param value - The numeric value to format.
+ * @param options - Optional `Intl.NumberFormatOptions` to customize formatting.
+ * @returns The formatted currency string.
+ *
+ * @example
+ * ```typescript
+ * formatCurrency(1234.56); // "$1,234.56"
+ * formatCurrency(1234.56, { minimumFractionDigits: 0 }); // "$1,235"
+ * ```
+ */
+export const formatCurrency = (
+  value: number,
+  options?: Intl.NumberFormatOptions
+) =>
+  Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    ...options,
+  }).format(value)
+
+/**
  * Formats a large currency value using compact notation and a specified number of significant digits.
  *
  * @param value - The numeric value to format as currency.

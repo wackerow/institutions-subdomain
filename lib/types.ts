@@ -38,7 +38,7 @@ type AssetClassSlug =
   | "private-credit"
   | "institutional-alternative-funds"
 
-type AssetValueMetrics = {
+export type AssetValueMetrics = {
   val: number
   val_7d: number
   val_30d: number
@@ -104,3 +104,12 @@ export type NetworkResult = {
   holding_addresses_count: Record<string, unknown>
   trailing_30_day_transfer_volume: Record<string, unknown>
 }
+
+/**
+ * growthepie https://api.growthepie.com/v1/export/tvl.json response type
+ */
+
+export type L2TvlExportData = {
+  date: number
+  value: number
+}[]

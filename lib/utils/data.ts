@@ -36,3 +36,14 @@ export const stablecoinMarketshareToPieChartData = (
     ],
   }
 }
+
+/**
+ * Trim large timeseries data, default one value per week (mod 7).
+ * Filters any array to include only elements whose index modulo `mod` equals the last index modulo `mod`.
+ *
+ * @param array - The array to filter.
+ * @param mod - The modulus value used for filtering. Defaults to 7 (one value per week).
+ * @returns A new array containing elements that satisfy the filtering condition.
+ */
+export const modFilter = <T>(array: T[], mod: number = 7): T[] =>
+  array.filter((_, idx) => idx % mod === (array.length - 1) % mod)
