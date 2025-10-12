@@ -29,37 +29,61 @@ export const fetchStablecoinMarketshare = async (): Promise<
     throw new Error(`No API key available for ${url.toString()}`)
   }
 
-  const query = {
+  const query = (page: number = 1) => ({
     sort: {
       direction: "desc",
       field: "circulating_asset_value_dollar:val",
     },
     pagination: {
-      page: 1,
-      perPage: 25,
+      page,
+      perPage: 20,
     },
-  }
-
-  url.searchParams.set("query", JSON.stringify(query))
+  })
 
   try {
-    const response = await fetch(url.toString(), {
+    // Page 1 results (broken out to prevent hitting 2MB cache limit)
+    url.searchParams.set("query", JSON.stringify(query(1)))
+    const response1 = await fetch(url.toString(), {
       headers: {
         Authorization: `Bearer ${apiKey}`,
         Accept: "application/json",
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v4:networks:stablecoins"],
+        tags: ["rwa:v4:networks:stablecoins:page-1"],
       },
     })
 
-    if (!response.ok)
+    if (!response1.ok)
       throw new Error(
-        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+        `Fetch response1 not OK from ${url}: ${response1.status} ${response1.statusText}`
       )
 
-    const json: JSONData = await response.json()
+    const json1: JSONData = await response1.json()
+
+    // Page 2
+    url.searchParams.set("query", JSON.stringify(query(2)))
+    const response2 = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        Accept: "application/json",
+      },
+      next: {
+        revalidate: 60 * 60, // 1 hour
+        tags: ["rwa:v4:networks:stablecoins:page-2"],
+      },
+    })
+
+    if (!response2.ok)
+      console.error(
+        `Fetch response2 not OK from ${url}: ${response2.status} ${response2.statusText}`
+      )
+
+    const json2: JSONData = response2.ok
+      ? await response2.json()
+      : { results: [] }
+
+    const json: JSONData = { results: [...json1.results, ...json2.results] }
 
     // Network separation
     const ethereumL1 = json.results.filter(
