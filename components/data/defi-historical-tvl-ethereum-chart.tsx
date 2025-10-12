@@ -4,7 +4,12 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import type { DataTimestamped } from "@/lib/types"
 
-import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
+import {
+  type ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart"
 
 import { formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
@@ -49,12 +54,12 @@ const DefiHistoricalTvlEthereumChart = ({
         tickFormatter={(v) => formatDateMonthYear(v)}
       />
       {/* // TODO: Debug ChartTooltip error */}
-      {/* <ChartTooltip
-        labelFormatter={(v) =>
-          formatDateFull(typeof v === "number" ? v : Number(v))
-        }
+      <ChartTooltip
+        // labelFormatter={(v) =>
+        //   formatDateFull(typeof v === "number" ? v : Number(v))
+        // }
         content={(props) => <ChartTooltipContent {...props} indicator="dot" />}
-      /> */}
+      />
       <Area
         dataKey="defiTvl"
         type="natural"

@@ -15,6 +15,7 @@ import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
 import type { TimeseriesTotalRwaValueData } from "@/app/_actions/fetchTimeseriesTotalRwaValue"
+
 const chartConfig = {
   data: {
     label: "Data",
@@ -28,12 +29,15 @@ const chartConfig = {
 type RWAStablecoinsChartProps = {
   chartData: DataTimestamped<TimeseriesTotalRwaValueData>
 }
-const RWAStablecoinsChart = ({ chartData }: RWAStablecoinsChartProps) => (
+const StablecoinHistoricalTvlLineChart = ({
+  chartData,
+}: RWAStablecoinsChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
     <AreaChart data={chartData.data}>
       <defs>
-        <linearGradient id="fillStablecoins" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
+        <linearGradient id="fillStablecoinTvl" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />
+          <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
         </linearGradient>
       </defs>
       <CartesianGrid vertical horizontal />
@@ -62,7 +66,7 @@ const RWAStablecoinsChart = ({ chartData }: RWAStablecoinsChartProps) => (
       <Area
         dataKey="stablecoins"
         type="natural"
-        fill="url(#fillStablecoins)"
+        fill="url(#fillStablecoinTvl)"
         stroke="var(--chart-1)"
         stackId="a"
       />
@@ -70,4 +74,4 @@ const RWAStablecoinsChart = ({ chartData }: RWAStablecoinsChartProps) => (
   </ChartContainer>
 )
 
-export default RWAStablecoinsChart
+export default StablecoinHistoricalTvlLineChart

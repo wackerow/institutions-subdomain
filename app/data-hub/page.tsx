@@ -1,8 +1,8 @@
 import type { Metadata } from "next/types"
 
 import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
-import RWAStablecoinsChart from "@/components/data/rwa-stablecoins-chart"
 import L2TvlChart from "@/components/data/l2-tvl-chart"
+import StablecoinHistoricalTvlLineChart from "@/components/data/stablecoin-historical-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import Hero from "@/components/Hero"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
@@ -267,7 +267,9 @@ export default async function Page() {
               </CardHeader>
 
               <CardContent>
-                <RWAStablecoinsChart chartData={timeseriesTotalRwaValueData} />
+                <StablecoinHistoricalTvlLineChart
+                  chartData={timeseriesTotalRwaValueData}
+                />
 
                 <div className="flex justify-between">
                   <CardSource>
