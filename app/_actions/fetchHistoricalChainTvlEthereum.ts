@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { modFilter } from "@/lib/utils/data"
+
 type JSONData = { date: number; tvl: number }[]
 
 export type HistoricalChainTvlEthereumData = {
@@ -29,7 +31,7 @@ export const fetchHistoricalChainTvlEthereum = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const trimmedData = json.filter((_, idx) => idx % 7 === 0)
+    const trimmedData = modFilter(json)
 
     // Take one data point per week for loading efficiency
     const data = trimmedData.map(({ date, tvl }) => ({

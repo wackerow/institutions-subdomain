@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { modFilter } from "@/lib/utils/data"
+
 type JSONData = {
   results: {
     group: {
@@ -77,8 +79,7 @@ export const fetchTimeseriesTotalRwaValue = async (): Promise<
         }))
       : []
 
-    // Take one data point per week for loading efficiency
-    const data = dataPoints.filter((_, idx) => idx % 7 === 0)
+    const data = modFilter(dataPoints)
 
     return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
