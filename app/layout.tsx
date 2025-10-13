@@ -4,9 +4,9 @@ import type { Metadata } from "next/types"
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
 import MobileMenu from "@/components/MobileMenu"
+import EthereumOrgLogo from "@/components/svg/ethereum-org-logo"
 import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
-import SiteLogo from "@/components/svg/site-logo"
 import Twitter from "@/components/svg/twitter"
 import Link, { LinkProps } from "@/components/ui/link"
 
@@ -112,11 +112,18 @@ export default function RootLayout({
       >
         <header className="group-has-[.css-primary-invert]/body:bg-primary w-full max-w-screen">
           <div className="max-w-8xl mx-auto flex justify-between p-4 pb-10 sm:p-10">
-            <Link href="/" aria-label="Go home">
-              <SiteLogo
-                aria-label="Ethereum Foundation Enterprise logo"
-                className="group-has-[.css-primary-invert]/body:text-primary-foreground"
+            <Link
+              href="/"
+              aria-label="Go home"
+              className="group/link inline-flex items-center gap-x-2.5"
+            >
+              <EthereumOrgLogo
+                aria-label="ethereum.org ETH glyph"
+                className="group-hover/link:stroke-secondary-foreground group-hover/link:stroke-[0.25]"
               />
+              <span className="group-has-[.css-primary-invert]/body:text-primary-foreground text-//foreground group-hover/link:group-has-[.css-primary-invert]/body:text-primary-foreground/80 text-lg font-medium tracking-[0.045rem]">
+                Institutions
+              </span>
             </Link>
             <nav className="flex items-center gap-4 max-md:hidden">
               <DigitalAssetsDropdown />
