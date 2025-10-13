@@ -2,7 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 
 import type { L2TvlExportData } from "@/lib/types"
 
-import { modFilter } from "@/lib/utils/data"
+import { filterFirstAndFifteenth } from "@/lib/utils/data"
 
 type JSONItem = {
   metric_key: "tvl" | "tvl_eth"
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
   )
   const dataSorted = dataSummed.sort((a, b) => a.date - b.date)
 
-  const data = modFilter(dataSorted)
+  const data = filterFirstAndFifteenth(dataSorted)
 
   return new Response(JSON.stringify({ data, lastUpdated: Date.now() }), {
     headers: { "content-type": "application/json" },

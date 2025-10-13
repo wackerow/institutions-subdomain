@@ -2,7 +2,7 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-import { modFilter } from "@/lib/utils/data"
+import { filterFirstAndFifteenth } from "@/lib/utils/data"
 
 import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
 
@@ -76,7 +76,7 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
         }))
       : []
 
-    const data = modFilter(dataPoints)
+    const data = filterFirstAndFifteenth(dataPoints)
 
     return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {

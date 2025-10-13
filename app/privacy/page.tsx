@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image, { StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
@@ -8,10 +8,14 @@ import CpuLock from "@/components/svg/cpu-lock"
 import LayersLock from "@/components/svg/layers-lock"
 import TargetCheck from "@/components/svg/target-check"
 import { Card } from "@/components/ui/card"
-import { LinkWithArrow } from "@/components/ui/link"
+import Link from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 
+import aztec from "@/public/images/app-logos/aztec.png"
+import chainlink from "@/public/images/app-logos/chainlink.png"
+import railgun from "@/public/images/app-logos/railgun.png"
+import zama from "@/public/images/app-logos/zama.png"
 import blurWalking from "@/public/images/blur-walking.png"
 
 export default function Page() {
@@ -19,30 +23,35 @@ export default function Page() {
     heading: string
     description: string
     href: string
+    imgSrc: StaticImageData
   }[] = [
     {
       heading: "Chainlink Automated Compliance Engine (ACE)",
       description:
         "Policy enforcement and verifiable entity identity to automate KYC/AML and transfer rules directly in smart contracts.",
       href: "https://chain.link/automated-compliance-engine",
+      imgSrc: chainlink,
     },
     {
       heading: "Railgun",
       description:
         "On-chain ZK privacy system for private balances and private DeFi interactions on Ethereum and major L2s.",
       href: "https://www.railgun.org/",
+      imgSrc: railgun,
     },
     {
       heading: "Aztec Network",
       description:
         "Privacy-first zkRollup with encrypted state and selective disclosure; building private smart contracts on Ethereum.",
       href: "https://aztec.network/",
+      imgSrc: aztec,
     },
     {
       heading: "Zama",
       description:
         "Tools to build smart contracts that compute on encrypted data, so balances and logic stay confidential.",
       href: "https://www.zama.ai/",
+      imgSrc: zama,
     },
   ]
 
@@ -261,24 +270,34 @@ export default function Page() {
               "*:bg-card *:space-y-2 *:p-6"
             )}
           >
-            {productionSolutions.map(({ heading, description, href }) => (
-              <div
-                key={heading}
-                className="flex flex-col justify-between gap-y-6"
-              >
-                <div className="space-y-2">
-                  <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
-                    {heading}
-                  </h3>
-                  <p className="text-muted-foreground font-medium">
-                    {description}
+            {productionSolutions.map(
+              ({ heading, imgSrc, description, href }) => (
+                <Link
+                  key={heading}
+                  href={href}
+                  className="bg-card group flex flex-col justify-between p-6 transition-transform hover:scale-105 hover:transition-transform"
+                  aria-label={`Visit ${heading}`}
+                >
+                  <div className="space-y-2">
+                    <Image
+                      src={imgSrc}
+                      alt=""
+                      sizes="48px"
+                      className="size-12"
+                    />
+                    <h3 className="text-h5 text-section-foreground tracking-[0.03rem]">
+                      {heading}
+                    </h3>
+                    <p className="text-muted-foreground font-medium">
+                      {description}
+                    </p>
+                  </div>
+                  <p className="text-secondary-foreground mt-4 group-hover:underline">
+                    Visit →
                   </p>
-                </div>
-                <LinkWithArrow href={href} className="css-secondary">
-                  Visit
-                </LinkWithArrow>
-              </div>
-            ))}
+                </Link>
+              )
+            )}
           </div>
         </section>
       </article>

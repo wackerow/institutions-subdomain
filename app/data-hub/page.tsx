@@ -186,9 +186,7 @@ export default async function Page() {
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      historicalChainTvlEthereumData.data[
-                        historicalChainTvlEthereumData.data.length - 1
-                      ].defiTvl
+                      historicalChainTvlEthereumData.data.at(-1).defiTvl
                     )}
                   </AnimatedNumberInView>
                 </div>

@@ -4,7 +4,6 @@ import type { Metadata } from "next/types"
 import Hero from "@/components/Hero"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
 import { Card } from "@/components/ui/card"
-import Link from "@/components/ui/link"
 
 export default function Page() {
   return (
@@ -24,76 +23,88 @@ export default function Page() {
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section id="role" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">The Role of L2s</h2>
-
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card className="p-10">
-              <h3 className="text-h4">Why L2s Exist</h3>
+              <h3 className="text-h4">
+                Ethereum L1: The settlement & liquidity layer
+              </h3>
 
               <hr className="my-6" />
-              <div className="space-y-6 font-medium">
-                <p className="text-muted-foreground">
-                  Ethereum L1 is highly secure and decentralized, but its
-                  challenges include:
-                </p>
-                <ul className="ms-6 list-disc">
-                  <li>Throughput thresholds</li>
-                  <li>Higher gas fees during congestion</li>
-                  <li>All data is public</li>
-                </ul>
-                <p>
-                  While Ethereum&apos;s network upgrades are{" "}
-                  <Link
-                    className="css-secondary"
-                    href="https://blog.ethereum.org/2025/08/05/protocol-update-001"
-                    inline
-                  >
-                    rapidly scaling
-                  </Link>{" "}
-                  L1 capacity today, L2s offer an immediate solution{" "}
-                </p>
+
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Finality & Credible Neutrality</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  High-value settlement, state roots for rollups, and durable
+                  records institutions can audit and attest against.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Security</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Assets can be stored in an environment that is built to
+                  withstand major catastrophes and geopolitical tensions.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Risk gating</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Keep complex or experimental logic off L1; use it for final
+                  settlement, collateral custody, and proofs.
+                </div>
               </div>
             </Card>
+
             <Card className="p-10">
-              <h3 className="text-h4">How L2s Work</h3>
+              <h3 className="text-h4">
+                Ethereum&apos;s L2s: The execution & scale layer
+              </h3>
 
               <hr className="my-6" />
-              <div className="space-y-6 font-medium">
-                <p className="text-muted-foreground">
-                  L2s offer faster, cheaper transaction execution, while
-                  Ethereum acts as the ultimate source of truth for settlement.
-                </p>
-                <ol className="space-y-4">
-                  <li className="flex items-center gap-2">
-                    <div className="bg-secondary-foreground text-secondary grid aspect-square size-8 shrink-0 place-items-center rounded-full">
-                      1
-                    </div>
-                    <span className="block">
-                      Users send transactions to the L2 network, instead of
-                      directly to Ethereum
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="bg-secondary-foreground text-secondary grid aspect-square size-8 shrink-0 place-items-center rounded-full">
-                      2
-                    </div>
-                    <span className="block">
-                      The L2 batches and/or compresses transactions, and
-                      executes them off-chain
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <div className="bg-secondary-foreground text-secondary grid aspect-square size-8 shrink-0 place-items-center rounded-full">
-                      3
-                    </div>
-                    <span className="block">
-                      The L2 posts proofs and/or data back to Ethereum to ensure
-                      everything is valid
-                    </span>
-                  </li>
-                </ol>
+
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Throughput & UX</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Rollups process transactions off-chain, inherit L1 security,
+                  and deliver low fees suitable for payments, market-making, and
+                  high-frequency flows.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Configurable</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  L2s can add compliance features, like allowlisting or
+                  KYC&apos;d pools, while remaining non-custodial and settling
+                  to L1.
+                </div>
+              </div>
+              <div className="space-y-2 py-6">
+                <div className="flex items-center gap-x-3">
+                  <Check className="text-secondary-foreground" />
+                  <h4 className="text-h6">Specialization</h4>
+                </div>
+                <div className="text-muted-foreground font-medium">
+                  Multiple L2s let institutions segregate workloads, such as
+                  retail payments vs. treasury ops, without fragmenting trust,
+                  because settlement reconciles on L1.
+                </div>
               </div>
             </Card>
-          </div>
+          </div>{" "}
         </section>
 
         <section id="benefits" className="space-y-8">

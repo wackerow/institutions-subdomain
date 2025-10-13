@@ -58,7 +58,7 @@ import coinbaseSvg from "@/public/logos/coinbase.svg"
 import etoro from "@/public/logos/etoro.png"
 import etoroSvg from "@/public/logos/etoro.svg"
 import fidelity from "@/public/logos/fidelity.png"
-import jpMorgan from "@/public/logos/jp-morgan.png"
+import jpMorgan from "@/public/logos/jp-morgan.svg"
 import mastercard from "@/public/logos/mastercard.png"
 import robinhood from "@/public/logos/robinhood.png"
 import sony from "@/public/logos/sony.png"
@@ -72,11 +72,7 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: citi, alt: "Citi logo", className: "-translate-y-px" },
   { src: coinbase, alt: "Coinbase logo", className: "py-0.5" },
   { src: etoro, alt: "eToro logo", className: "py-0.5" },
-  {
-    src: fidelity,
-    alt: "Fidelity logo",
-    className: "scale-110 mx-2 invert translate-y-1",
-  },
+  { src: fidelity, alt: "Fidelity logo", className: "opacity-80" },
   { src: jpMorgan, alt: "JPMorgan logo", className: "py-0.5 translate-y-1.5" },
   { src: mastercard, alt: "Mastercard logo", className: "translate-y-[3px]" },
   { src: robinhood, alt: "Robinhood logo", className: "translate-y-1" },
@@ -226,7 +222,7 @@ export default async function Home() {
                 key={alt}
                 src={src}
                 alt={alt}
-                className={cn("h-8 w-auto grayscale", className)}
+                className={cn("h-6 w-auto grayscale", className)}
               />
             ))}
           </InfiniteSlider>
@@ -568,14 +564,14 @@ export default async function Home() {
               Latest updates relevant for institutions
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-[6.5rem]">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8 lg:gap-16">
             {libraryItems
               .sort((a, b) => {
                 if (!isValidDate(a.date)) return -1
                 if (!isValidDate(b.date)) return 1
                 return new Date(b.date).getTime() - new Date(a.date).getTime()
               })
-              .slice(0, 2)
+              .slice(0, 3)
               .map(({ title, imgSrc, date, href }) => (
                 <LibraryCard key={title}>
                   <LibraryCardHeader>

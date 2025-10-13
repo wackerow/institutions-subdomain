@@ -48,8 +48,12 @@ const chartConfig = {
     label: "Percent marketshare",
   },
   ethereum: {
-    label: "Ethereum (incl. L2s)",
+    label: "Ethereum (Mainnet)",
     color: "var(--chart-1)",
+  },
+  "ethereum-l2s": {
+    label: "Ethereum (L2s)",
+    color: "var(--chart-5)",
   },
   "alt-2nd": {
     label: "2nd largest ecosystem",
@@ -60,7 +64,7 @@ const chartConfig = {
     color: "var(--chart-2)",
   },
   "alt-rest": {
-    label: "Rest of ecosystem",
+    label: "Remainder of market",
     color: "var(--chart-3)",
   },
 } satisfies ChartConfig
@@ -240,7 +244,7 @@ const StablecoinMarketsharePieChart = ({
     >
       <PieChart
         onMouseLeave={() => setActiveIndex(null)}
-        margin={{ left: 0, right: 0, top: 0, bottom: 32 }}
+        margin={{ left: 0, right: 0, top: 24, bottom: 32 }}
       >
         <ChartTooltip
           formatter={(value: unknown) => formatPercent(Number(value))}
@@ -299,6 +303,7 @@ const StablecoinMarketsharePieChart = ({
               <Cell
                 key={`cell-${i}`}
                 fill={fill}
+                fillOpacity={0.9}
                 stroke="var(--card-bg, #fff)" // keep 1px gap if desired
                 strokeWidth={1}
                 // attach events to the Cell so the hovered target is stable

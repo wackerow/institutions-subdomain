@@ -27,7 +27,6 @@ import polymarket from "@/public/images/defi-protocols/polymarket.png"
 import rocketPool from "@/public/images/defi-protocols/rocket-pool.png"
 import securitize from "@/public/images/defi-protocols/securitize.png"
 import sky from "@/public/images/defi-protocols/sky.png"
-import spark from "@/public/images/defi-protocols/spark.png"
 import stakewise from "@/public/images/defi-protocols/stakewise.png"
 import symbiotic from "@/public/images/defi-protocols/symbiotic.png"
 import synthetix from "@/public/images/defi-protocols/synthetix.png"
@@ -39,8 +38,7 @@ import wisdomTree from "@/public/images/defi-protocols/wisdom-tree.png"
 export const defiEcosystem = {
   dex: {
     heading: "Decentralized Exchanges (DEXs)",
-    subtext:
-      "A small selection of DeFi applications that run on Ethereum and its Layer 2 networks",
+    subtext: "Explore onchain platforms where users can trade tokens anytime, 24/7",
     platforms: [
       {
         name: "1inch",

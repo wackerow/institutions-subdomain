@@ -99,12 +99,12 @@ const socialLinks: LinkProps[] = [
     "aria-label": "LinkedIn",
   },
   {
-    href: "https://x.com/ethdotorg",
+    href: "https://x.com/ethereum",
     children: <Twitter />,
     "aria-label": "Twitter/X",
   },
   {
-    href: "https://farcaster.xyz/ethdotorg",
+    href: "https://farcaster.xyz/ethereum",
     children: <Farcaster />,
     "aria-label": "Farcaster",
   },

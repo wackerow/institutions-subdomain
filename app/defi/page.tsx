@@ -60,7 +60,7 @@ export default function Page() {
       heading: "Société Générale",
       description:
         "Euro and dollar stablecoins integrated with Uniswap and Morpho, for institutional clients to swap, lend, and borrow onchain",
-      year: "2022",
+      year: "2025",
       href: "https://www.dlnews.com/articles/defi/societe-generale-taps-uniswap-and-morpho-in-defi-lending-push/",
     },
   ]
@@ -152,7 +152,7 @@ export default function Page() {
               alt=""
               fill
               placeholder="blur"
-              className="object-cover object-center"
+              className="object-cover object-center grayscale"
               sizes="(max-width: 1024px) 100vw, 536px"
             />
           </div>
@@ -164,23 +164,26 @@ export default function Page() {
               DeFi Powers Enterprise Innovation
             </h2>
             <p className="text-muted-foreground font-medium">
-              A small selection of DeFi applications that run on Ethereum and
-              its Layer 2 networks
+              Institutions build on Ethereum’s open DeFi primitives to advance
+              transparent, efficient, and accessible tools for a global
+              financial system
             </p>
           </div>
 
           <div className="sm:grid-col-2 grid grid-cols-1 gap-4 lg:grid-cols-4">
-            {innovations.map(({ heading, description, year, href }) => (
-              <div key={heading} className="bg-card space-y-2 p-6">
-                <p className="text-muted-foreground font-bold">{year}</p>
-                <Link href={href} className="css-secondary block">
-                  <h3 className="text-h5">{heading}</h3>
-                </Link>
-                <p className="text-muted-foreground font-medium">
-                  {description}
-                </p>
-              </div>
-            ))}
+            {innovations
+              .sort((a, b) => Number(b.year) - Number(a.year))
+              .map(({ heading, description, year, href }) => (
+                <div key={heading} className="bg-card space-y-2 p-6">
+                  <p className="text-muted-foreground font-bold">{year}</p>
+                  <Link href={href} className="css-secondary block">
+                    <h3 className="text-h5">{heading}</h3>
+                  </Link>
+                  <p className="text-muted-foreground font-medium">
+                    {description}
+                  </p>
+                </div>
+              ))}
           </div>
         </section>
 

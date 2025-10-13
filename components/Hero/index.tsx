@@ -77,7 +77,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
         )}
       </div>
     </div>
-    <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-screen bg-gradient-to-b to-25% py-10">
+    <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-screen bg-gradient-to-b to-25% py-6">
       {beneath}
     </div>
   </div>

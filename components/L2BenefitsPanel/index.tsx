@@ -111,8 +111,9 @@ export function L2BenefitsPanel() {
             <button
               onClick={() => setActiveIndex(index)}
               className={cn(
-                "text-h5 text-muted-foreground hover:text-muted-foreground/80 text-start font-bold tracking-[0.03rem] text-nowrap",
-                activeIndex === index && "text-foreground"
+                "text-h5 text-secondary-foreground hover:text-secondary-foreground/80 text-start font-bold tracking-[0.03rem] text-nowrap",
+                activeIndex === index &&
+                  "text-foreground hover:text-foreground cursor-auto"
               )}
             >
               {title}

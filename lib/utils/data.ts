@@ -17,11 +17,13 @@ export const stablecoinMarketshareToPieChartData = (
     data: [
       {
         network: "ethereum",
-        marketshare:
-          (apiData.data.ethereumL1StablecoinUSD +
-            apiData.data.ethereumL2StablecoinUSD) /
-          totalUSD,
+        marketshare: apiData.data.ethereumL1StablecoinUSD / totalUSD,
         fill: "var(--color-ethereum)",
+      },
+      {
+        network: "ethereum-l2s",
+        marketshare: apiData.data.ethereumL2StablecoinUSD / totalUSD,
+        fill: "var(--color-ethereum-l2s)",
       },
       {
         network: "alt-2nd",
@@ -65,5 +67,21 @@ export const rwaMarketshareToSummaryData = (
  * @param mod - The modulus value used for filtering. Defaults to 7 (one value per week).
  * @returns A new array containing elements that satisfy the filtering condition.
  */
-export const modFilter = <T>(array: T[], mod: number = 7): T[] =>
+export const modFilter = <T>(array: T[], mod: number = 28): T[] =>
   array.filter((_, idx) => idx % mod === (array.length - 1) % mod)
+
+/**
+ * Filters an array of objects with a `date` property to only include those where the date is the first or fifteenth day of any month.
+ *
+ * @param array - The array to filter.
+ * @returns A new array containing only elements with dates on the first of the month.
+ */
+export const filterFirstAndFifteenth = <
+  T extends { date: string | number | Date } & Record<string, unknown>,
+>(
+  array: T[]
+): T[] =>
+  array.filter((item) => {
+    const d = new Date(item.date)
+    return d.getDate() === 1 || d.getDate() === 15
+  })

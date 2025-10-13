@@ -31,9 +31,10 @@ export const fetchHistoricalChainTvlEthereum = async (): Promise<
 
     const json: JSONData = await response.json()
 
+    // TODO: Debug filterFirstAndFifteenth function
+    // const trimmedData: JSONData = filterFirstAndFifteenth(json)
     const trimmedData = modFilter(json)
 
-    // Take one data point per week for loading efficiency
     const data = trimmedData.map(({ date, tvl }) => ({
       date: date * 1e3,
       defiTvl: tvl,

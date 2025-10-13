@@ -1,6 +1,6 @@
 "use client"
 
-import { ReactNode, useState } from "react"
+import { Fragment, ReactNode, useState } from "react"
 
 import { TransitionPanel } from "@/components/ui/transition-panel"
 
@@ -99,16 +99,19 @@ export function ScalingPanel() {
     <div className="flex min-h-90 gap-10 border p-8 max-lg:flex-col max-sm:max-w-[calc(100vw-48px)] sm:max-lg:max-w-[calc(100vw-96px)]">
       <div className="flex gap-8 max-lg:overflow-x-auto max-lg:pb-4 lg:flex-col">
         {items.map(({ title }, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={cn(
-              "text-h5 text-muted-foreground hover:text-muted-foreground/80 text-start font-bold tracking-[0.03rem] text-nowrap",
-              activeIndex === index && "text-foreground"
-            )}
-          >
-            {title}
-          </button>
+          <Fragment key={index}>
+            <button
+              onClick={() => setActiveIndex(index)}
+              className={cn(
+                "text-h5 text-secondary-foreground hover:text-secondary-foreground/80 text-start font-bold tracking-[0.03rem] text-nowrap",
+                activeIndex === index &&
+                  "text-foreground hover:text-foreground cursor-auto"
+              )}
+            >
+              {title}
+            </button>
+            <hr className={cn(index === items.length - 1 && "hidden")} />
+          </Fragment>
         ))}
       </div>
       <div className="overflow-hidden">

@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import { LinkWithArrow } from "@/components/ui/link"
+import Link from "@/components/ui/link"
 
 import { defiEcosystem } from "../data"
 import type { CategoryKey } from "../types"
@@ -15,16 +15,21 @@ const CategoryAppGrid = ({ category }: { category: CategoryKey }) => {
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(18rem,1fr))] gap-4">
         {platforms.map(({ name, description, imgSrc, href }) => (
-          <div key={name} className="bg-card flex flex-col justify-between p-6">
+          <Link
+            key={name}
+            href={href}
+            className="bg-card group flex flex-col justify-between p-6 transition-transform hover:scale-105 hover:transition-transform"
+            aria-label={`Visit ${name}`}
+          >
             <div className="space-y-2">
               <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
               <h4 className="text-h5">{name}</h4>
               <p className="font-medium">{description}</p>
             </div>
-            <LinkWithArrow href={href} className="css-secondary mt-4 block">
-              Visit
-            </LinkWithArrow>
-          </div>
+            <p className="text-secondary-foreground mt-4 group-hover:underline">
+              Visit →
+            </p>
+          </Link>
         ))}
       </div>
     </div>
