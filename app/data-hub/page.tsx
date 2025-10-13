@@ -33,13 +33,13 @@ import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvl
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
-import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
+import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
 import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
-  const timeseriesTotalRwaValueData = await fetchTimeseriesTotalRwaValue()
+  const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
   const validatorCountData = await fetchValidatorCount()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
   const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
@@ -253,15 +253,15 @@ export default async function Page() {
                   title={
                     "Last updated: " +
                     formatDateMonthDayYear(
-                      timeseriesTotalRwaValueData.lastUpdated
+                      timeseriesStablecoinsValueData.lastUpdated
                     )
                   }
                   className="text-h4 font-bold tracking-[0.04rem]"
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      timeseriesTotalRwaValueData.data[
-                        timeseriesTotalRwaValueData.data.length - 1
+                      timeseriesStablecoinsValueData.data[
+                        timeseriesStablecoinsValueData.data.length - 1
                       ].stablecoins
                     )}
                   </AnimatedNumberInView>
@@ -270,7 +270,7 @@ export default async function Page() {
 
               <CardContent variant="flex-1-height-between">
                 <StablecoinHistoricalTvlLineChart
-                  chartData={timeseriesTotalRwaValueData}
+                  chartData={timeseriesStablecoinsValueData}
                 />
 
                 <CardSource>
@@ -278,7 +278,7 @@ export default async function Page() {
                     title={
                       "Last updated: " +
                       formatDateMonthDayYear(
-                        timeseriesTotalRwaValueData.lastUpdated
+                        timeseriesStablecoinsValueData.lastUpdated
                       )
                     }
                   >
@@ -380,7 +380,7 @@ export default async function Page() {
                   title={
                     "Last updated: " +
                     formatDateMonthDayYear(
-                      timeseriesTotalRwaValueData.lastUpdated
+                      timeseriesStablecoinsValueData.lastUpdated
                     )
                   }
                   className="text-h4 font-bold tracking-[0.04rem]"

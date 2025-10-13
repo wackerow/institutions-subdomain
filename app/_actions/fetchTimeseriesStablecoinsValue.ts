@@ -4,29 +4,24 @@ import type { DataTimestamped } from "@/lib/types"
 
 import { modFilter } from "@/lib/utils/data"
 
+import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
+
 type JSONData = {
   results: {
     group: {
       id: number
-      // type: string
-      // name: string
-      // color: string
     }
     points: [string, number][]
   }[]
 }
 
-export type TimeseriesTotalRwaValueData = {
+export type TimeseriesStablecoinsValueData = {
   date: string
   stablecoins: number
 }[]
 
-/**
- * STABLECOIN DATA ONLY;
- * TODO: Update logic or naming
- */
-export const fetchTimeseriesTotalRwaValue = async (): Promise<
-  DataTimestamped<TimeseriesTotalRwaValueData>
+export const fetchTimeseriesStablecoinsValue = async (): Promise<
+  DataTimestamped<TimeseriesStablecoinsValueData>
 > => {
   const url = "https://api.rwa.xyz/v4/timeseries/total_rwa_value"
 
@@ -44,7 +39,7 @@ export const fetchTimeseriesTotalRwaValue = async (): Promise<
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v4:timeseries:total_rwa_value"],
+        tags: ["rwa:v4:timeseries:total_rwa_value:stablecoins"],
       },
     })
 
@@ -70,7 +65,9 @@ export const fetchTimeseriesTotalRwaValue = async (): Promise<
      * - Private Credit
      */
 
-    const stablecoinData = json.results.find(({ group: { id } }) => id === 28) // Stablecoins: id === 28
+    const stablecoinData = json.results.find(
+      ({ group: { id } }) => id === RWA_XYZ_STABLECOINS_GROUP_ID
+    )
 
     const dataPoints = stablecoinData?.points?.length
       ? stablecoinData?.points.map(([dateString, mktCapValue]) => ({
@@ -92,4 +89,4 @@ export const fetchTimeseriesTotalRwaValue = async (): Promise<
   }
 }
 
-export default fetchTimeseriesTotalRwaValue
+export default fetchTimeseriesStablecoinsValue

@@ -5,4 +5,5 @@ export const MAX_MESSAGE_LENGTH = 2 ** 12 // 4,096
 
 export const MAINNET_GENESIS = "2015-07-30T15:26:13Z"
 
-export const RWA_ETHEREUM_NETWORK_ID = 1
+export const RWA_XYZ_ETHEREUM_NETWORK_ID = 1
+export const RWA_XYZ_STABLECOINS_GROUP_ID = 28

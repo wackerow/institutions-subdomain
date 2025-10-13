@@ -42,7 +42,7 @@ import { isValidDate } from "@/lib/utils/date"
 import { formatLargeCurrency, formatLargeNumber } from "@/lib/utils/number"
 import { formatDuration } from "@/lib/utils/time"
 
-import fetchTimeseriesTotalRwaValue from "./_actions/fetchTimeseriesTotalRwaValue"
+import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
 import fetchTvlDefiEthereumCurrent from "./_actions/fetchTvlDefiCurrent"
 import fetchValidatorCount from "./_actions/fetchValidatorCount"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
@@ -126,7 +126,7 @@ const testimonials: {
 
 export default async function Home() {
   const uptime = getTimeSinceGenesis()
-  const timeseriesTotalRwaValueData = await fetchTimeseriesTotalRwaValue()
+  const timeseriesTotalRwaValueData = await fetchTimeseriesStablecoinsValue()
   const validatorCountData = await fetchValidatorCount()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
 
@@ -158,7 +158,7 @@ export default async function Home() {
       label: (
         <>
           DeFi TVL
-          <br /> 65%+ of all blockchains
+          <br /> 65%+ of all blockchains {/* // TODO: Live data */}
         </>
       ),
     },

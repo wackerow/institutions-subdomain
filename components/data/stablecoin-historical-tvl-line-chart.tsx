@@ -14,7 +14,7 @@ import {
 import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import type { TimeseriesTotalRwaValueData } from "@/app/_actions/fetchTimeseriesTotalRwaValue"
+import type { TimeseriesStablecoinsValueData } from "@/app/_actions/fetchTimeseriesStablecoinsValue"
 
 const chartConfig = {
   data: {
@@ -26,12 +26,12 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-type RWAStablecoinsChartProps = {
-  chartData: DataTimestamped<TimeseriesTotalRwaValueData>
+type StablecoinHistoricalTvlLineChartProps = {
+  chartData: DataTimestamped<TimeseriesStablecoinsValueData>
 }
 const StablecoinHistoricalTvlLineChart = ({
   chartData,
-}: RWAStablecoinsChartProps) => (
+}: StablecoinHistoricalTvlLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
     <AreaChart data={chartData.data}>
       <defs>

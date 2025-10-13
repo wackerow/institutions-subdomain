@@ -4,7 +4,7 @@ import type { DataTimestamped, NetworkResult } from "@/lib/types"
 
 import { isValidDate } from "@/lib/utils/date"
 
-import { RWA_ETHEREUM_NETWORK_ID } from "@/lib/constants"
+import { RWA_XYZ_ETHEREUM_NETWORK_ID } from "@/lib/constants"
 
 type JSONData = {
   results: NetworkResult[]
@@ -40,19 +40,21 @@ export const fetchStablecoinMarketshare = async (): Promise<
     },
   })
 
+  const fetchInit = (page: number = 1) => ({
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      Accept: "application/json",
+    },
+    next: {
+      revalidate: 60 * 60, // 1 hour
+      tags: [`rwa:v4:networks:stablecoins:page-${page}`],
+    },
+  })
+
   try {
     // Page 1 results (broken out to prevent hitting 2MB cache limit)
     url.searchParams.set("query", JSON.stringify(query(1)))
-    const response1 = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Accept: "application/json",
-      },
-      next: {
-        revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v4:networks:stablecoins:page-1"],
-      },
-    })
+    const response1 = await fetch(url.toString(), fetchInit(1))
 
     if (!response1.ok)
       throw new Error(
@@ -63,16 +65,7 @@ export const fetchStablecoinMarketshare = async (): Promise<
 
     // Page 2
     url.searchParams.set("query", JSON.stringify(query(2)))
-    const response2 = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        Accept: "application/json",
-      },
-      next: {
-        revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v4:networks:stablecoins:page-2"],
-      },
-    })
+    const response2 = await fetch(url.toString(), fetchInit(2))
 
     if (!response2.ok)
       console.error(
@@ -87,13 +80,13 @@ export const fetchStablecoinMarketshare = async (): Promise<
 
     // Network separation
     const ethereumL1 = json.results.filter(
-      (result) => result.network_id === RWA_ETHEREUM_NETWORK_ID
+      (result) => result.network_id === RWA_XYZ_ETHEREUM_NETWORK_ID
     )[0]
     const ethereumL2s = json.results.filter((r) => r.layer_description === "L2")
     const altNetworks = json.results.filter(
       (result) =>
         result.layer_description === "L1" &&
-        result.network_id !== RWA_ETHEREUM_NETWORK_ID
+        result.network_id !== RWA_XYZ_ETHEREUM_NETWORK_ID
     )
 
     // Stablecoins only
