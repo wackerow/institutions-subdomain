@@ -62,7 +62,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
         <HeroBg
           className={cn(
             "w-full max-w-full place-self-center",
-            "max-[25rem]:scale-y-150 min-[25rem]:max-[32rem]:scale-y-130 min-[32rem]:max-sm:scale-y-120 sm:max-md:scale-y-110"
+            "max-[25rem]:scale-150 min-[25rem]:max-[32rem]:scale-130 min-[32rem]:max-sm:scale-120 sm:max-md:scale-110"
           )}
         />
         {shape && (
@@ -77,7 +77,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
         )}
       </div>
     </div>
-    <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-full bg-gradient-to-b to-25% py-10">
+    <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-screen bg-gradient-to-b to-25% py-10">
       {beneath}
     </div>
   </div>
