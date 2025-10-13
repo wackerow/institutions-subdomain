@@ -1,13 +1,23 @@
+import { Fragment } from "react"
+import { X } from "lucide-react"
 import localFont from "next/font/local"
 import type { Metadata } from "next/types"
 
 import EnterpriseContactForm from "@/components/ContactForm"
 import DigitalAssetsDropdown from "@/components/DigitalAssetsDropdown"
-import MobileMenu from "@/components/MobileMenu"
 import EthereumOrgLogo from "@/components/svg/ethereum-org-logo"
 import Farcaster from "@/components/svg/farcaster"
 import LinkedIn from "@/components/svg/linked-in"
 import Twitter from "@/components/svg/twitter"
+import { Button } from "@/components/ui/button"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
 import Link, { LinkProps } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
@@ -53,6 +63,33 @@ const navItemLinks: LinkProps[] = [
   { children: "Live Data", href: "/data-hub" },
   { children: "Library", href: "/library" },
   { children: "Solution Providers", href: "/providers" },
+]
+
+const mobileMenuItems: LinkProps[] = [
+  {
+    children: "RWAs & Stablecoins",
+    href: "/rwa",
+  },
+  {
+    children: "Decentralized Finance",
+    href: "/defi",
+  },
+  {
+    children: "Compliant Privacy",
+    href: "/privacy",
+  },
+  {
+    children: "L2 Ecosystem",
+    href: "/layer-2",
+  },
+  {
+    children: "Live data",
+    href: "/data-hub",
+  },
+  {
+    children: "Solution providers",
+    href: "/providers",
+  },
 ]
 
 const socialLinks: LinkProps[] = [
@@ -136,7 +173,49 @@ export default function RootLayout({
                 />
               ))}
             </nav>
-            <MobileMenu />
+
+            <Drawer direction="right">
+              <DrawerTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="group-has-[.css-primary-invert]/body:text-primary-foreground hover:group-has-[.css-primary-invert]/body:text-primary-foreground/70 text-lg font-medium md:hidden"
+                >
+                  Menu
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent className="!w-sm max-w-screen">
+                <DrawerHeader>
+                  <DrawerTitle className="sr-only">Navigation menu</DrawerTitle>
+                  <DrawerClose asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="ms-auto me-4 mt-4"
+                    >
+                      <X className="size-10" />
+                    </Button>
+                  </DrawerClose>
+                </DrawerHeader>
+                <div className="flex flex-col gap-y-6 p-10 [&_hr]:border-[#5676E1]">
+                  <p className="text-[#5676E1]">Digital Assets</p>
+                  {mobileMenuItems.map((props, idx) => (
+                    <Fragment key={idx}>
+                      <DrawerClose asChild>
+                        <Link
+                          className="text-primary-foreground hover:text-primary-foreground/70 block text-2xl font-medium tracking-[0.03rem]"
+                          {...props}
+                        />
+                      </DrawerClose>
+                      <hr
+                        className={cn(
+                          idx === mobileMenuItems.length - 1 && "hidden"
+                        )}
+                      />
+                    </Fragment>
+                  ))}
+                </div>
+              </DrawerContent>
+            </Drawer>
           </div>
         </header>
         {children}
