@@ -13,11 +13,13 @@ export const fetchL2TvlExport = async (): Promise<
     // Call internal trimmed endpoint and let Next cache the small response.
     const internalOrigin =
       process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000"
+    const secret = process.env.INTERNAL_API_SECRET || ""
+    if (!secret) throw new Error("Internal API secret not found")
 
-    const url = new URL(
-      "api/growthepie-v1-export-tvl",
-      internalOrigin
-    ).toString()
+    const internalUrl = new URL("api/growthepie-v1-export-tvl", internalOrigin)
+    internalUrl.searchParams.set("secret", secret)
+    const url = internalUrl.toString()
+
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60 * 24, // 1 day

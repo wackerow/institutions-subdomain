@@ -1,3 +1,5 @@
+import { type NextRequest, NextResponse } from "next/server"
+
 import type { L2TvlExportData } from "@/lib/types"
 
 import { modFilter } from "@/lib/utils/data"
@@ -9,7 +11,17 @@ type JSONItem = {
   value: number // USD (metric_key === "tvl") or ETH (metric_key === "tvl_eth")
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams
+  const secret = searchParams.get("secret")
+
+  if (secret !== process.env.INTERNAL_API_SECRET) {
+    return NextResponse.json(
+      { message: "Invalid internal API secret" },
+      { status: 401 } // 401 Unauthorized
+    )
+  }
+
   const upstream = "https://api.growthepie.com/v1/export/tvl.json"
 
   // Fetch upstream without letting Next cache the raw ~5MB payload
