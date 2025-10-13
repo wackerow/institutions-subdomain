@@ -30,6 +30,7 @@ import {
 } from "@/lib/utils/number"
 
 import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
+import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesTotalRwaValue from "../_actions/fetchTimeseriesTotalRwaValue"
@@ -47,6 +48,7 @@ export default async function Page() {
     await fetchStablecoinMarketshare()
   )
   const l2TvlExportData = await fetchL2TvlExport()
+  const l2ScalingSummaryData = await fetchL2ScalingSummary()
 
   const overviewCards: {
     label: string
@@ -304,14 +306,23 @@ export default async function Page() {
                 <StablecoinMarketsharePieChart
                   chartData={stablecoinMarketshareData}
                 />
-                <div className="flex justify-between">
-                  <CardSource>
-                    Source:{" "}
-                    <Link inline href="https://rwa.xyz">
-                      rwa.xyz
-                    </Link>
-                  </CardSource>
-                </div>
+
+                <CardSource>
+                  <span
+                    title={
+                      "Last updated: " +
+                      formatDateMonthDayYear(
+                        stablecoinMarketshareData.lastUpdated
+                      )
+                    }
+                  >
+                    Source
+                  </span>
+                  :{" "}
+                  <Link inline href="https://rwa.xyz">
+                    rwa.xyz
+                  </Link>
+                </CardSource>
               </CardContent>
             </Card>
           </div>
@@ -328,7 +339,81 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
             Layer 2 Ecosystem
           </h2>
-          <L2TvlChart chartData={l2TvlExportData} />
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[16rem_1fr]">
+            <Card variant="flex-column">
+              <CardContent variant="flex-1-height-between">
+                <CardContent>
+                  <h3 className="text-base font-medium tracking-[0.02rem]">
+                    Number of L2s
+                  </h3>
+                  <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
+                    {l2ScalingSummaryData.data.allProjectsCount}
+                  </AnimatedNumberInView>
+                </CardContent>
+
+                <CardSource>
+                  <span
+                    title={
+                      "Last updated: " +
+                      formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated)
+                    }
+                  >
+                    Source
+                  </span>
+                  :{" "}
+                  <Link inline href="https://l2beat.com">
+                    l2beat.com
+                  </Link>
+                </CardSource>
+              </CardContent>
+            </Card>
+
+            <Card variant="flex-column">
+              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+                <CardContent className="flex-1 gap-4">
+                  <CardTitle className="text-xl">TVL of L2s</CardTitle>
+                  <CardDescription className="font-medium">
+                    Daily Average
+                  </CardDescription>
+                </CardContent>
+                <div
+                  title={
+                    "Last updated: " +
+                    formatDateMonthDayYear(
+                      timeseriesTotalRwaValueData.lastUpdated
+                    )
+                  }
+                  className="text-h4 font-bold tracking-[0.04rem]"
+                >
+                  <AnimatedNumberInView>
+                    {formatLargeCurrency(
+                      l2TvlExportData.data[l2TvlExportData.data.length - 1]
+                        .value
+                    )}
+                  </AnimatedNumberInView>
+                </div>
+              </CardHeader>
+
+              <CardContent variant="flex-1-height-between" className="gap-y-4">
+                <L2TvlChart chartData={l2TvlExportData} />
+
+                <CardSource>
+                  <span
+                    title={
+                      "Last updated: " +
+                      formatDateMonthDayYear(l2TvlExportData.lastUpdated)
+                    }
+                  >
+                    Source
+                  </span>
+                  :{" "}
+                  <Link inline href="https://growthepie.com">
+                    growthepie.com
+                  </Link>
+                </CardSource>
+              </CardContent>
+            </Card>
+          </div>
         </section>
       </article>
     </main>
