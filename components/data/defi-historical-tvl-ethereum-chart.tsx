@@ -34,12 +34,7 @@ const DefiHistoricalTvlEthereumChart = ({
 }: DefiHistoricalTvlEthereumChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
     <AreaChart data={chartData.data}>
-      <defs>
-        <linearGradient id="fillDefiTvl" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.8} />
-        </linearGradient>
-      </defs>
-      <CartesianGrid vertical horizontal />
+      <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
         tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0*/, "")}
         axisLine={false}
@@ -66,6 +61,7 @@ const DefiHistoricalTvlEthereumChart = ({
         fill="url(#fillDefiTvl)"
         stroke="var(--chart-1)"
         stackId="a"
+        strokeWidth={2}
       />
     </AreaChart>
   </ChartContainer>

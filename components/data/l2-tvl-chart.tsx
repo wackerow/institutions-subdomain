@@ -36,7 +36,7 @@ const L2TvlChart = ({ chartData }: L2TvlChartProps) => (
           <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
         </linearGradient>
       </defs>
-      <CartesianGrid vertical horizontal />
+      <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
         tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0*/, "")}
         axisLine={false}
