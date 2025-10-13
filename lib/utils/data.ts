@@ -1,5 +1,10 @@
-import type { DataTimestamped, NetworkPieChartData } from "../types"
+import type {
+  DataTimestamped,
+  NetworkPieChartData,
+  RwaMarketshareSummaryData,
+} from "../types"
 
+import { RwaMarketshareData } from "@/app/_actions/fetchRwaMarketshare"
 import type { StablecoinMarketshareData } from "@/app/_actions/fetchStablecoinMarketshare"
 
 export const stablecoinMarketshareToPieChartData = (
@@ -34,6 +39,21 @@ export const stablecoinMarketshareToPieChartData = (
         fill: "var(--color-alt-rest)",
       },
     ],
+  }
+}
+
+export const rwaMarketshareToSummaryData = (
+  apiData: DataTimestamped<RwaMarketshareData>
+): DataTimestamped<RwaMarketshareSummaryData> => {
+  const totalUSD = Object.values(apiData.data).reduce((sum, v) => sum + v, 0)
+  return {
+    ...apiData,
+    data: {
+      ethereumL1RwaMarketshare: apiData.data.ethereumL1RwaUSD / totalUSD,
+      ethereumL1L2RwaMarketshare:
+        (apiData.data.ethereumL1RwaUSD + apiData.data.ethereumL2RwaUSD) /
+        totalUSD,
+    },
   }
 }
 

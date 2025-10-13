@@ -2,6 +2,7 @@ import type { Metadata } from "next/types"
 
 import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
 import L2TvlChart from "@/components/data/l2-tvl-chart"
+import RwaHistoricalTvlLineChart from "@/components/data/rwa-historical-tvl-line-chart"
 import StablecoinHistoricalTvlLineChart from "@/components/data/stablecoin-historical-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import Hero from "@/components/Hero"
@@ -19,7 +20,10 @@ import {
 } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
-import { stablecoinMarketshareToPieChartData } from "@/lib/utils/data"
+import {
+  rwaMarketshareToSummaryData,
+  stablecoinMarketshareToPieChartData,
+} from "@/lib/utils/data"
 import { formatDateMonthDayYear } from "@/lib/utils/date"
 import {
   formatLargeCurrency,
@@ -32,7 +36,9 @@ import {
 import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
+import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
+import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
 import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
@@ -40,6 +46,7 @@ import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
   const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
+  const timeseriesRwaValueData = await fetchTimeseriesRwaValue()
   const validatorCountData = await fetchValidatorCount()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
   const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
@@ -49,6 +56,9 @@ export default async function Page() {
   )
   const l2TvlExportData = await fetchL2TvlExport()
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
+  const rwaMarketshareData = rwaMarketshareToSummaryData(
+    await fetchRwaMarketshare()
+  )
 
   const overviewCards: {
     label: string
@@ -60,8 +70,7 @@ export default async function Page() {
   }[] = [
     {
       label: "Total value locked (TVL)",
-      value: "$376.4B", // TODO: Live data
-      percentChange: 0.032,
+      value: "$123.4B™", // TODO: Live data
       source: "tokenterminal.com",
       href: "https://tokenterminal.com",
     },
@@ -332,7 +341,117 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Real-World Assets
           </h2>
-          <Card>Soon™</Card>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_16rem]">
+            <Card variant="flex-column">
+              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
+                <CardContent className="flex-1 gap-4">
+                  <CardTitle className="text-xl">
+                    Value of Real World Assets (RWAs)
+                  </CardTitle>
+                  <CardDescription className="font-medium">
+                    {/* // TODO: Add description */}
+                    TODO: Patch API data fetch—coming soon™
+                  </CardDescription>
+                </CardContent>
+                <div
+                  title={
+                    "Last updated: " +
+                    formatDateMonthDayYear(
+                      timeseriesStablecoinsValueData.lastUpdated
+                    )
+                  }
+                  className="text-h4 font-bold tracking-[0.04rem]"
+                >
+                  <AnimatedNumberInView>
+                    {formatLargeCurrency(
+                      timeseriesRwaValueData.data[
+                        timeseriesRwaValueData.data.length - 1
+                      ].rwa
+                    )}
+                  </AnimatedNumberInView>
+                </div>
+              </CardHeader>
+
+              <CardContent variant="flex-1-height-between" className="gap-y-4">
+                <RwaHistoricalTvlLineChart chartData={timeseriesRwaValueData} />
+
+                <CardSource>
+                  <span
+                    title={
+                      "Last updated: " +
+                      formatDateMonthDayYear(timeseriesRwaValueData.lastUpdated)
+                    }
+                  >
+                    Source
+                  </span>
+                  :{" "}
+                  <Link inline href="https://rwa.xyz">
+                    rwa.xyz
+                  </Link>
+                </CardSource>
+              </CardContent>
+            </Card>
+
+            <div className="flex flex-col gap-y-4">
+              <Card variant="flex-column" className="flex-1">
+                <CardContent variant="flex-1-height-between">
+                  <CardContent>
+                    <h3 className="text-base font-medium tracking-[0.02rem]">
+                      Ethereum L1 marketshare
+                    </h3>
+                    <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
+                      {formatPercent(
+                        rwaMarketshareData.data.ethereumL1RwaMarketshare
+                      )}
+                    </AnimatedNumberInView>
+                  </CardContent>
+                  <CardSource>
+                    <span
+                      title={
+                        "Last updated: " +
+                        formatDateMonthDayYear(rwaMarketshareData.lastUpdated)
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
+                    <Link inline href="https://rwa.xyz">
+                      rwa.xyz
+                    </Link>
+                  </CardSource>
+                </CardContent>
+              </Card>
+
+              <Card variant="flex-column" className="flex-1">
+                <CardContent variant="flex-1-height-between">
+                  <CardContent>
+                    <h3 className="text-base font-medium tracking-[0.02rem]">
+                      Ethereum L1 + L2 marketshare
+                    </h3>
+                    <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
+                      {formatPercent(
+                        rwaMarketshareData.data.ethereumL1L2RwaMarketshare
+                      )}
+                    </AnimatedNumberInView>
+                  </CardContent>
+                  <CardSource>
+                    <span
+                      title={
+                        "Last updated: " +
+                        formatDateMonthDayYear(rwaMarketshareData.lastUpdated)
+                      }
+                    >
+                      Source
+                    </span>
+                    :{" "}
+                    <Link inline href="https://rwa.xyz">
+                      rwa.xyz
+                    </Link>
+                  </CardSource>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </section>
 
         <section id="layer-2" className="space-y-4">

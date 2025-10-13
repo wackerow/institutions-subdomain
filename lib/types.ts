@@ -22,6 +22,11 @@ export type NetworkPieChartData = {
   fill: string
 }[]
 
+export type RwaMarketshareSummaryData = {
+  ethereumL1RwaMarketshare: number
+  ethereumL1L2RwaMarketshare: number
+}
+
 /**
  * RWA.xyz https://api.rwa.xyz/v4/networks response types
  */
