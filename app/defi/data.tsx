@@ -147,13 +147,6 @@ export const defiEcosystem = {
         imgSrc: sky,
         href: "https://sky.money/",
       },
-      {
-        name: "Spark",
-        description:
-          "A DeFi protocol focused on earning savings on stablecoin holdings, providing liquidity across DeFi markets, and borrowing via a USDS-centric money market protocol. ",
-        imgSrc: spark,
-        href: "https://spark.fi/",
-      },
     ],
   },
   "rwa-yield": {

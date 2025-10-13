@@ -79,12 +79,12 @@ export default function Page() {
         href: "https://alluvial.finance/",
       },
       {
-        name: "Offchain",
+        name: "Offchain Labs",
         category: "Infra",
         href: "https://www.offchainlabs.com/",
       },
       {
-        name: "OP",
+        name: "OP Labs",
         category: "Infra",
         href: "https://www.oplabs.co/",
       },
@@ -204,7 +204,7 @@ export default function Page() {
 
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
-      <Hero heading="Regional Solution Providers" shape="handshake">
+      <Hero heading="Solution Providers" shape="handshake">
         <p>
           Connect with a curated network of solution providers that specialize
           in building in the Ethereum ecosystem.

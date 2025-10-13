@@ -202,7 +202,7 @@ export default function Page() {
             </h2>
             <ul className="max-w-prose space-y-4">
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
-                Credibly Neutral, Audit-Ready:
+                Credibly Neutral, Audit-Ready
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Prove compliance without exposing raw data. Unlock
                   verification of KYC-checks, legitimate sources of funds, and
@@ -211,7 +211,7 @@ export default function Page() {
                 </p>
               </li>
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
-                Composability with Liquidity:
+                Composability with Liquidity
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Private flows can still plug into the liquidity on Ethereum
                   and its L2s. Privacy is composable with stablecoin and
@@ -220,7 +220,7 @@ export default function Page() {
                 </p>
               </li>
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
-                No Vendor Lock In:
+                No Vendor Lock In
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Launch on Ethereum mainnet for maximum composability, or
                   launch on Ethereum&apos;s L2s for lower settlement costs, with
@@ -229,7 +229,7 @@ export default function Page() {
                 </p>
               </li>
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
-                Security at Scale:
+                Security at Scale
                 <p className="text-muted-foreground mt-1 text-base font-medium">
                   Privacy features inherit Ethereum&apos;s decentralization and
                   resilience. Build future-proof products and services on a

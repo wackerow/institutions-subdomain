@@ -138,7 +138,7 @@ export function L2BenefitsPanel() {
                   key={index}
                   className="bg-background flex flex-1 flex-col justify-between gap-y-2 p-8"
                 >
-                  <h3 className="text-h6/snug font-bold">{heading}:</h3>
+                  <h3 className="text-h6/snug font-bold">{heading}</h3>
                   <ul className="text-muted-foreground ms-6 list-disc font-medium">
                     {items.map((item, idx) => (
                       <li key={idx} className="">

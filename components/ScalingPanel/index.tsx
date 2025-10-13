@@ -75,7 +75,7 @@ export function ScalingPanel() {
         {
           content: (
             <>
-              <span className="mb-6 block">2-5 year targets propose:</span>
+              <span className="mb-6 block">2-5 year targets propose</span>
               <ul className="ms-6 list-disc">
                 <li>1 gigagas/sec on L1: 10K TPS, ambitious vertical scale</li>
                 <li>

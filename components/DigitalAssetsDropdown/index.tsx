@@ -23,7 +23,7 @@ export const digitalAssetsLinks: LinkProps[] = [
     href: "/defi",
   },
   {
-    children: "Privacy & Compliance",
+    children: "Compliant Privacy",
     href: "/privacy",
   },
   {

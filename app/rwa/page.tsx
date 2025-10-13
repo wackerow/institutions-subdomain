@@ -237,7 +237,7 @@ export default function Page() {
             <h2>Stablecoins on Ethereum</h2>
             <p className="text-muted-foreground font-medium">
               {/* // TODO: Live data */}
-              Total stablecoin market cap on Ethereum L1:{" "}
+              Total stablecoin market cap on Ethereum L1{" "}
               <span className="text-foreground font-bold">$157.81B</span>
             </p>
           </div>
@@ -260,7 +260,7 @@ export default function Page() {
             <h2>Real-World Assets (RWAs) on Ethereum</h2>
             <p className="text-muted-foreground font-medium">
               {/* // TODO: Live data */}
-              Total RWA sector: on Ethereum L1:{" "}
+              Total RWA sector: on Ethereum L1{" "}
               <span className="text-foreground font-bold">$9.1B</span>
             </p>
           </div>

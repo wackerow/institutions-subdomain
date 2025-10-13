@@ -10,9 +10,8 @@ export default function Page() {
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Ethereum L2s" shape="layers-2">
-        {/* // TODO: Update with final copy when ready */}
         <p>
-          Layer-2s (L2s) are protocols that settle to Ethereum, making execution
+          Layer-2s (L2s) are networks that settle to Ethereum, making execution
           faster, cheaper and more scalable—while still relying on Ethereum for
           security and finality.
         </p>
