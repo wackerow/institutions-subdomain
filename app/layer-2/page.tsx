@@ -1,11 +1,79 @@
+import { ReactNode } from "react"
 import { Check } from "lucide-react"
+import Image, { type StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
 import { Card } from "@/components/ui/card"
+import Link from "@/components/ui/link"
+
+import celo from "@/public/images/app-logos/celo.png"
+import coinbase from "@/public/images/app-logos/coinbase.png"
+import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
+import ey from "@/public/images/app-logos/ey.png"
 
 export default function Page() {
+  const caseStudies: {
+    heading: string
+    description: string
+    href: string
+    imgSrc: StaticImageData
+    ctaLabel: ReactNode
+  }[] = [
+    {
+      heading: "Ernst & Young",
+      description: "Nightfall L2 Platform",
+      href: "https://blockchain.ey.com/uploads/Nightfall_FAQ.pdf",
+      imgSrc: ey,
+      ctaLabel: (
+        <>
+          90%
+          <br />
+          Cheaper Transactions
+        </>
+      ),
+    },
+    {
+      heading: "Coinbase",
+      description: "Base L2 Ecosystem",
+      href: "https://l2beat.com/scaling/projects/base",
+      imgSrc: coinbase,
+      ctaLabel: (
+        <>
+          $14.95B
+          <br />
+          Total Value Secured
+        </>
+      ),
+    },
+    {
+      heading: "Deutsche Bank",
+      description: "DAMA 2 Permissioned L2",
+      href: "https://www.db.com/news/detail/20250618-dama-2-litepaper-institutional-blueprint-for-asset-tokenisation-and-servicing-on-ethereum-layer-2?language_id=1",
+      imgSrc: deutscheBank,
+      ctaLabel: (
+        <>
+          $84T
+          <br />
+          Est. Digital-Native by 2045
+        </>
+      ),
+    },
+    {
+      heading: "Celo",
+      description: "L1 Transitioned to Ethereum L2",
+      href: "https://app.artemisanalytics.com/asset/celo?from=assets&tab=metrics&category=KEY_METRICS&metric=STABLECOIN_TRANSFER_VOLUME",
+      imgSrc: celo,
+      ctaLabel: (
+        <>
+          $10.6B
+          <br />
+          Monthly Stablecoin Volume
+        </>
+      ),
+    },
+  ]
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Ethereum L2s" shape="layers-2">
@@ -133,9 +201,30 @@ export default function Page() {
         <section id="cases" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">Case Studies</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Card key={i}>Soon™</Card>
-            ))}
+            {caseStudies.map(
+              ({ heading, description, imgSrc, href, ctaLabel }) => (
+                <Link
+                  key={heading}
+                  href={href}
+                  className="bg-card group flex w-full flex-col justify-between p-6 transition-transform hover:scale-105 hover:transition-transform"
+                  aria-label={`Visit ${heading}`}
+                >
+                  <div className="space-y-2">
+                    <Image
+                      src={imgSrc}
+                      alt=""
+                      sizes="48px"
+                      className="size-12"
+                    />
+                    <h3 className="text-h5">{heading}</h3>
+                    <p className="font-medium">{description}</p>
+                  </div>
+                  <p className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
+                    {ctaLabel}
+                  </p>
+                </Link>
+              )
+            )}
           </div>
         </section>
 
