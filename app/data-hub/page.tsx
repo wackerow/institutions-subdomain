@@ -156,7 +156,7 @@ export default async function Page() {
             Decentralized Finance
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1fr_23rem]">
-            <Card className="flex flex-col gap-y-6">
+            <Card variant="flex-column">
               <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">TVL in DeFi</CardTitle>
@@ -166,7 +166,7 @@ export default async function Page() {
                 </CardContent>
               </CardHeader>
 
-              <CardContent className="flex flex-1 flex-col justify-between">
+              <CardContent variant="flex-1-height-between">
                 <DefiHistoricalTvlEthereumChart
                   chartData={historicalChainTvlEthereumData}
                 />
@@ -191,12 +191,12 @@ export default async function Page() {
               </CardContent>
             </Card>
 
-            <Card className="flex flex-col gap-y-6">
+            <Card variant="flex-column">
               <CardTitle className="text-h5">
                 DeFi TVL vs next largest ecosystem
               </CardTitle>
 
-              <CardContent className="flex flex-1 flex-col justify-between">
+              <CardContent variant="flex-1-height-between">
                 <div className="my-10 flex flex-col items-center gap-y-6 sm:my-14">
                   <AnimatedNumberInView className="text-6xl font-bold tracking-[0.08rem] sm:text-7xl">
                     {formatMultiplier(
@@ -236,7 +236,7 @@ export default async function Page() {
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Card className="flex flex-col gap-y-6">
+            <Card variant="flex-column">
               <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">
@@ -266,7 +266,7 @@ export default async function Page() {
                 </div>
               </CardHeader>
 
-              <CardContent className="flex flex-1 flex-col justify-between">
+              <CardContent variant="flex-1-height-between">
                 <StablecoinHistoricalTvlLineChart
                   chartData={timeseriesTotalRwaValueData}
                 />
@@ -290,7 +290,7 @@ export default async function Page() {
               </CardContent>
             </Card>
 
-            <Card className="flex flex-col gap-y-6">
+            <Card variant="flex-column">
               <CardContent>
                 <CardTitle className="text-xl">
                   Stablecoin marketshare
@@ -300,7 +300,7 @@ export default async function Page() {
                 </CardDescription>
               </CardContent>
 
-              <CardContent className="flex flex-1 flex-col justify-between">
+              <CardContent variant="flex-1-height-between">
                 <StablecoinMarketsharePieChart
                   chartData={stablecoinMarketshareData}
                 />

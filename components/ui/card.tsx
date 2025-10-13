@@ -9,6 +9,7 @@ const cardVariants = cva("bg-card text-card-foreground p-6", {
     variant: {
       default: "",
       "flex-height": "flex h-full flex-col justify-between gap-2",
+      "flex-column": "flex flex-col gap-y-6",
     },
   },
   defaultVariants: {
@@ -72,15 +73,29 @@ function CardAction({ className, ...props }: ComponentProps<"div">) {
   )
 }
 
-const CardContent = ({ className, ...props }: ComponentProps<"div">) => {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("space-y-2", className)}
-      {...props}
-    />
-  )
-}
+const cardContentVariants = cva("", {
+  variants: {
+    variant: {
+      "small-spacing": "space-y-2",
+      "flex-1-height-between": "flex flex-1 flex-col justify-between",
+    },
+  },
+  defaultVariants: {
+    variant: "small-spacing",
+  },
+})
+
+const CardContent = ({
+  className,
+  variant,
+  ...props
+}: ComponentProps<"div"> & VariantProps<typeof cardContentVariants>) => (
+  <div
+    data-slot="card-content"
+    className={cn(cardContentVariants({ variant }), className)}
+    {...props}
+  />
+)
 
 function CardFooter({ className, ...props }: ComponentProps<"div">) {
   return (
