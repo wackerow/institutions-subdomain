@@ -221,6 +221,7 @@ const StablecoinMarketsharePieChart = ({
   chartData,
 }: StablecoinMarketsharePieChartProps) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [activated, setActivated] = useState(false)
 
   const colorLookup = chartConfig as Record<
     string,
@@ -288,8 +289,8 @@ const StablecoinMarketsharePieChart = ({
           endAngle={endAngle}
           activeShape={RenderedActiveShape}
           // remove Pie-level mouse handlers (we'll attach handlers to Cells)
-          isAnimationActive={false} // disable animation so labels/slices switch immediately
-          animationDuration={0}
+          isAnimationActive={!activated} // disable animation after activated so labels/slices switch immediately
+          animationDuration={activated ? 0 : 2000}
         >
           {chartData.data.map((entry, i) => {
             const cfg = colorLookup[String(entry.network)] ?? {}
@@ -301,7 +302,10 @@ const StablecoinMarketsharePieChart = ({
                 stroke="var(--card-bg, #fff)" // keep 1px gap if desired
                 strokeWidth={1}
                 // attach events to the Cell so the hovered target is stable
-                onMouseEnter={() => setActiveIndex(i)}
+                onMouseEnter={() => {
+                  setActivated(true)
+                  setActiveIndex(i)
+                }}
                 onMouseLeave={() => setActiveIndex(null)}
                 // only treat the filled area as pointer-target (ignore stroke)
                 style={{ pointerEvents: "fill" }}
