@@ -175,6 +175,23 @@ export default async function Page() {
                     Sum of funds deposited into the applications on the chain.
                   </CardDescription>
                 </CardContent>
+                <div
+                  title={
+                    "Last updated: " +
+                    formatDateMonthDayYear(
+                      historicalChainTvlEthereumData.lastUpdated
+                    )
+                  }
+                  className="text-h4 font-bold tracking-[0.04rem]"
+                >
+                  <AnimatedNumberInView>
+                    {formatLargeCurrency(
+                      historicalChainTvlEthereumData.data[
+                        historicalChainTvlEthereumData.data.length - 1
+                      ].defiTvl
+                    )}
+                  </AnimatedNumberInView>
+                </div>
               </CardHeader>
 
               <CardContent variant="flex-1-height-between">
@@ -356,9 +373,7 @@ export default async function Page() {
                 <div
                   title={
                     "Last updated: " +
-                    formatDateMonthDayYear(
-                      timeseriesStablecoinsValueData.lastUpdated
-                    )
+                    formatDateMonthDayYear(timeseriesRwaValueData.lastUpdated)
                   }
                   className="text-h4 font-bold tracking-[0.04rem]"
                 >
