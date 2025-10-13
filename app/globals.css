@@ -147,9 +147,9 @@
 
   --chart-1: oklch(0.4253 0.2415 263.919); /* #0030CF */
   --chart-2: oklch(0.6403 0.2309 316.464); /* #C150E7 */
-  --chart-3: oklch(67.957% 0.04715 187.297); /* #2A9D90 */
+  --chart-3: oklch(0.68 0.0472 187.297); /* #77a29d */
   --chart-4: oklch(0.8235 0.133 78.368); /* #F4BA57 */
-  --chart-5: oklch(74.8% 0.10545 237.688); /* #68E8E4 */
+  --chart-5: oklch(0.618 0.2 267.459); /* #5179FC */
 
   --popover: oklch(1 0 0); /* #FFFFFF pure white bg */
   --popover-foreground: oklch(0.25 0 0); /* #222222 near-black text */
