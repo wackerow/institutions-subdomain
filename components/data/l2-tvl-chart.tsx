@@ -38,7 +38,7 @@ const L2TvlChart = ({ chartData }: L2TvlChartProps) => (
       </defs>
       <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
-        tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0*/, "")}
+        tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0+/, "")}
         axisLine={false}
         tickLine={false}
         tickMargin={8}
