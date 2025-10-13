@@ -206,7 +206,12 @@ const EnterpriseContactForm = () => {
           <>
             Unable to send your message. Please try again or contact us directly
             at{" "}
-            <Link href={ENTERPRISE_MAILTO} showDecorator>
+            <Link
+              href={ENTERPRISE_MAILTO}
+              inline
+              showDecorator
+              className="text-current hover:text-current/80"
+            >
               {ENTERPRISE_EMAIL}
             </Link>
           </>
