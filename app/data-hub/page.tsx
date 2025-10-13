@@ -105,7 +105,7 @@ export default async function Page() {
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
         <section id="overview" className="space-y-4">
-          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Overview
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
@@ -154,12 +154,12 @@ export default async function Page() {
         </section>
 
         <section id="defi" className="space-y-4">
-          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Decentralized Finance
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-[1fr_23rem]">
             <Card variant="flex-column">
-              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">TVL in DeFi</CardTitle>
                   <CardDescription className="font-medium">
@@ -233,13 +233,13 @@ export default async function Page() {
         </section>
 
         <section id="stablecoins" className="space-y-4">
-          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Stablecoins
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Card variant="flex-column">
-              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">
                     Stablecoin TVL (Mainnet)
@@ -329,14 +329,14 @@ export default async function Page() {
         </section>
 
         <section id="rwa" className="space-y-4">
-          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Real-World Assets
           </h2>
           <Card>Soon™</Card>
         </section>
 
         <section id="layer-2" className="space-y-4">
-          <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-lg lg:max-w-lg lg:shrink-0">
+          <h2 className="text-h3-mobile sm:text-h3 lg:w-lg lg:max-w-lg lg:shrink-0">
             Layer 2 Ecosystem
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[16rem_1fr]">
@@ -369,7 +369,7 @@ export default async function Page() {
             </Card>
 
             <Card variant="flex-column">
-              <CardHeader className="flex items-center gap-2 !px-0 max-sm:flex-col">
+              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">TVL of L2s</CardTitle>
                   <CardDescription className="font-medium">
