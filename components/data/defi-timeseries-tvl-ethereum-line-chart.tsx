@@ -14,26 +14,26 @@ import {
 import { formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import type { HistoricalChainTvlEthereumData } from "@/app/_actions/fetchHistoricalChainTvlEthereum"
+import type { TimeseriesDefiTvlEthereumData } from "@/app/_actions/fetchTimeseriesDefiTvlEthereum"
 
 const chartConfig = {
   data: {
     label: "Data",
   },
-  defiTvl: {
+  value: {
     label: "DeFi TVL",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
-type DefiHistoricalTvlEthereumChartProps = {
-  chartData: DataTimestamped<HistoricalChainTvlEthereumData>
+type DefiTimeseriesTvlEthereumLineChartProps = {
+  chartData: DataTimestamped<TimeseriesDefiTvlEthereumData>
 }
-const DefiHistoricalTvlEthereumChart = ({
+const DefiTimeseriesTvlEthereumLineChart = ({
   chartData,
-}: DefiHistoricalTvlEthereumChartProps) => (
+}: DefiTimeseriesTvlEthereumLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
-    <AreaChart data={chartData.data}>
+    <AreaChart data={chartData.data.series}>
       <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
         tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0+/, "")}
@@ -56,7 +56,7 @@ const DefiHistoricalTvlEthereumChart = ({
         content={(props) => <ChartTooltipContent {...props} indicator="dot" />}
       />
       <Area
-        dataKey="defiTvl"
+        dataKey="value"
         type="natural"
         fill="url(#fillDefiTvl)"
         stroke="var(--chart-1)"
@@ -67,4 +67,4 @@ const DefiHistoricalTvlEthereumChart = ({
   </ChartContainer>
 )
 
-export default DefiHistoricalTvlEthereumChart
+export default DefiTimeseriesTvlEthereumLineChart

@@ -4,7 +4,7 @@ import type { L2TvlExportData } from "@/lib/types"
 
 import { filterFirstAndFifteenth } from "@/lib/utils/data"
 
-type JSONItem = {
+type JSONData = {
   metric_key: "tvl" | "tvl_eth"
   origin_key: string // Layer 2 network
   date: string // '2025-07-30'
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
   const res = await fetch(upstream, { cache: "no-store" })
   if (!res.ok) return new Response("Upstream error", { status: res.status })
 
-  const json: JSONItem[] = await res.json()
+  const json: JSONData[] = await res.json()
 
   // Trim/aggregate to { date, value } for metric_key === "tvl"
   const dataAllUSD = json.filter(({ metric_key }) => metric_key === "tvl")

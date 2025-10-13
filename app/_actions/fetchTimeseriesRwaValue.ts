@@ -1,9 +1,13 @@
 // TODO: FIX DATA FETCH LOGIC: Compare to https://app.rwa.xyz/
 "use server"
 
-import type { DataTimestamped } from "@/lib/types"
+import type {
+  DataSeries,
+  DataSeriesWithCurrent,
+  DataTimestamped,
+} from "@/lib/types"
 
-import { filterFirstAndFifteenth } from "@/lib/utils/data"
+import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
 import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
 
@@ -16,10 +20,7 @@ type JSONData = {
   }[]
 }
 
-export type TimeseriesRwaValueData = {
-  date: string
-  rwa: number
-}[]
+export type TimeseriesRwaValueData = DataSeriesWithCurrent<string>
 
 export const fetchTimeseriesRwaValue = async (): Promise<
   DataTimestamped<TimeseriesRwaValueData>
@@ -70,16 +71,14 @@ export const fetchTimeseriesRwaValue = async (): Promise<
       ({ group: { id } }) => id !== RWA_XYZ_STABLECOINS_GROUP_ID
     )
 
-    const dataPoints = rwaData?.points?.length
+    const seriesMapped: DataSeries<string> = rwaData?.points?.length
       ? rwaData?.points.map(([dateString, mktCapValue]) => ({
           date: dateString,
-          rwa: mktCapValue,
+          value: mktCapValue,
         }))
       : []
 
-    const data = filterFirstAndFifteenth(dataPoints)
-
-    return { data, lastUpdated: Date.now() }
+    return getDataSeriesWithCurrent(seriesMapped)
   } catch (error: unknown) {
     console.error("fetchTimeseriesTotalRwaValue failed", {
       name: error instanceof Error ? error.name : undefined,

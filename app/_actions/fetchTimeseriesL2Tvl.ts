@@ -1,11 +1,20 @@
 "use server"
 
-import type { DataTimestamped, L2TvlExportData } from "@/lib/types"
+import type {
+  DataSeries,
+  DataSeriesWithCurrent,
+  DataTimestamped,
+  L2TvlExportData,
+} from "@/lib/types"
+
+import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
 type JSONData = { data: L2TvlExportData }
 
-export const fetchL2TvlExport = async (): Promise<
-  DataTimestamped<L2TvlExportData>
+export type TimeseriesL2TvlData = DataSeriesWithCurrent
+
+export const fetchTimeseriesL2Tvl = async (): Promise<
+  DataTimestamped<TimeseriesL2TvlData>
 > => {
   const url = "https://api.growthepie.com/v1/export/tvl.json"
 
@@ -32,11 +41,13 @@ export const fetchL2TvlExport = async (): Promise<
         `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
       )
 
-    const { data }: JSONData = await response.json()
+    const json: JSONData = await response.json()
 
-    return { data, lastUpdated: Date.now() }
+    const seriesMapped: DataSeries = json.data
+
+    return getDataSeriesWithCurrent(seriesMapped, true)
   } catch (error: unknown) {
-    console.error("fetchL2TvlExport failed", {
+    console.error("fetchTimeseriesL2Tvl failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -45,4 +56,4 @@ export const fetchL2TvlExport = async (): Promise<
   }
 }
 
-export default fetchL2TvlExport
+export default fetchTimeseriesL2Tvl

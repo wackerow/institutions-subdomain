@@ -2,7 +2,7 @@
 
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
-import type { DataTimestamped, L2TvlExportData } from "@/lib/types"
+import type { DataTimestamped } from "@/lib/types"
 
 import {
   type ChartConfig,
@@ -14,6 +14,8 @@ import {
 import { formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
+import type { TimeseriesL2TvlData } from "@/app/_actions/fetchTimeseriesL2Tvl"
+
 const chartConfig = {
   data: {
     label: "Data",
@@ -24,12 +26,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-type L2TvlChartProps = {
-  chartData: DataTimestamped<L2TvlExportData>
+type L2TimeseriesTvlLineChartProps = {
+  chartData: DataTimestamped<TimeseriesL2TvlData>
 }
-const L2TvlChart = ({ chartData }: L2TvlChartProps) => (
+const L2TimeseriesTvlLineChart = ({
+  chartData,
+}: L2TimeseriesTvlLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
-    <AreaChart data={chartData.data}>
+    <AreaChart data={chartData.data.series}>
       <defs>
         <linearGradient id="fillL2Tvl" x1="0" y1="0" x2="0" y2="1">
           <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />
@@ -70,4 +74,4 @@ const L2TvlChart = ({ chartData }: L2TvlChartProps) => (
   </ChartContainer>
 )
 
-export default L2TvlChart
+export default L2TimeseriesTvlLineChart

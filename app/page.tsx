@@ -137,11 +137,7 @@ export default async function Home() {
       label: "Validators securing the network",
     },
     {
-      value: formatLargeCurrency(
-        timeseriesTotalRwaValueData.data[
-          timeseriesTotalRwaValueData.data.length - 1
-        ].stablecoins
-      ),
+      value: formatLargeCurrency(timeseriesTotalRwaValueData.data.currentValue),
       label: "Stablecoin TVL 60%+ of all stablecoin supply",
     },
     {

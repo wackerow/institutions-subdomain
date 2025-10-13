@@ -1,18 +1,19 @@
 "use server"
 
-import type { DataTimestamped } from "@/lib/types"
+import type {
+  DataSeries,
+  DataSeriesWithCurrent,
+  DataTimestamped,
+} from "@/lib/types"
 
-import { modFilter } from "@/lib/utils/data"
+import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
 type JSONData = { date: number; tvl: number }[]
 
-export type HistoricalChainTvlEthereumData = {
-  date: number
-  defiTvl: number
-}[]
+export type TimeseriesDefiTvlEthereumData = DataSeriesWithCurrent
 
-export const fetchHistoricalChainTvlEthereum = async (): Promise<
-  DataTimestamped<HistoricalChainTvlEthereumData>
+export const fetchTimeseriesDefiTvlEthereum = async (): Promise<
+  DataTimestamped<TimeseriesDefiTvlEthereumData>
 > => {
   const url = "https://api.llama.fi/v2/historicalChainTvl/ethereum"
 
@@ -31,16 +32,12 @@ export const fetchHistoricalChainTvlEthereum = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    // TODO: Debug filterFirstAndFifteenth function
-    // const trimmedData: JSONData = filterFirstAndFifteenth(json)
-    const trimmedData = modFilter(json)
-
-    const data = trimmedData.map(({ date, tvl }) => ({
+    const seriesMapped: DataSeries = json.map(({ tvl, date }) => ({
+      value: tvl,
       date: date * 1e3,
-      defiTvl: tvl,
     }))
 
-    return { data, lastUpdated: Date.now() }
+    return getDataSeriesWithCurrent(seriesMapped)
   } catch (error: unknown) {
     console.error("fetchHistoricalChainTvlEthereum failed", {
       name: error instanceof Error ? error.name : undefined,
@@ -51,4 +48,4 @@ export const fetchHistoricalChainTvlEthereum = async (): Promise<
   }
 }
 
-export default fetchHistoricalChainTvlEthereum
+export default fetchTimeseriesDefiTvlEthereum

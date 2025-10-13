@@ -9,6 +9,16 @@ export type LibraryItem = {
 
 export type DataTimestamped<T> = { data: T; lastUpdated: number }
 
+export type DataSeries<T extends number | string = number> = {
+  date: T
+  value: number
+}[]
+
+export type DataSeriesWithCurrent<T extends number | string = number> = {
+  series: DataSeries<T>
+  currentValue: number
+}
+
 export type NumberParts = {
   prefix: string
   value: number
@@ -25,6 +35,15 @@ export type NetworkPieChartData = {
 export type RwaMarketshareSummaryData = {
   ethereumL1RwaMarketshare: number
   ethereumL1L2RwaMarketshare: number
+}
+
+export type MetricWithSource = {
+  label: string
+  value: string | number
+  source: string
+  sourceHref: string
+  lastUpdated: string
+  percentChange?: number
 }
 
 /**

@@ -3,19 +3,62 @@ import { Check } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
+import { MetricWithSource } from "@/lib/types"
+
 import Hero from "@/components/Hero"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
 import { Card } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
+import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
+import { formatCurrency, formatLargeCurrency } from "@/lib/utils/number"
+
+import fetchL2MedianTxCost from "../_actions/fetchL2MedianTxCost"
+import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 
 import celo from "@/public/images/app-logos/celo.png"
 import coinbase from "@/public/images/app-logos/coinbase.png"
 import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
 import ey from "@/public/images/app-logos/ey.png"
 
-export default function Page() {
+export default async function Page() {
+  const l2ScalingSummaryData = await fetchL2ScalingSummary()
+  const l2MedianTxCostData = await fetchL2MedianTxCost()
+
+  const metrics: MetricWithSource[] = [
+    {
+      label: "Total Value Locked (TVL) across L2s",
+      value: formatLargeCurrency(l2ScalingSummaryData.data.latestCanonicalTvl),
+      source: "l2beat.com",
+      sourceHref: "https://l2beat.com",
+      lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
+    },
+    {
+      label: "Avg. Transaction Cost daily",
+      value: formatCurrency(
+        l2MedianTxCostData.data.latestWeightedMedianTxCostUsd
+      ),
+      source: "growthepie.com",
+      sourceHref: "https://growthepie.com",
+      lastUpdated: formatDateMonthDayYear(l2MedianTxCostData.lastUpdated),
+    },
+    {
+      label: "Avg. User Operations Per Seconds",
+      value: "216™", // TODO: Live data
+      source: "",
+      sourceHref: "",
+      lastUpdated: "",
+    },
+    {
+      label: "Number of L2s",
+      value: l2ScalingSummaryData.data.allProjectsCount,
+      source: "l2beat.com",
+      sourceHref: "https://l2beat.com",
+      lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
+    },
+  ]
+
   const caseStudies: {
     heading: string
     description: string
@@ -91,6 +134,16 @@ export default function Page() {
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
+        <section>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+            {metrics.map(({ label, value }) => (
+              <div key={label} className="">
+                <p>{value}</p>
+                <p>{label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
         <section id="role" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">The Role of L2s</h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">

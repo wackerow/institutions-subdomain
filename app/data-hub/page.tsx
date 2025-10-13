@@ -1,10 +1,12 @@
 import type { Metadata } from "next/types"
 
-import DefiHistoricalTvlEthereumChart from "@/components/data/defi-historical-tvl-ethereum-chart"
-import L2TvlChart from "@/components/data/l2-tvl-chart"
-import RwaHistoricalTvlLineChart from "@/components/data/rwa-historical-tvl-line-chart"
-import StablecoinHistoricalTvlLineChart from "@/components/data/stablecoin-historical-tvl-line-chart"
+import { MetricWithSource } from "@/lib/types"
+
+import DefiTimeseriesTvlEthereumLineChart from "@/components/data/defi-timeseries-tvl-ethereum-line-chart"
+import L2TimeseriesTvlLineChart from "@/components/data/l2-timeseries-tvl-line-chart"
+import RwaTimeseriesTvlLineChart from "@/components/data/rwa-timeseries-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
+import StablecoinTimeseriesTvlLineChart from "@/components/data/stablecoin-timeseries-tvl-line-chart"
 import Hero from "@/components/Hero"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
 import {
@@ -34,11 +36,11 @@ import {
   getChangeColorClass,
 } from "@/lib/utils/number"
 
-import fetchHistoricalChainTvlEthereum from "../_actions/fetchHistoricalChainTvlEthereum"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
-import fetchL2TvlExport from "../_actions/fetchL2TvlExport"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
+import fetchTimeseriesDefiTvlEthereum from "../_actions/fetchTimeseriesDefiTvlEthereum"
+import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
 import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
 import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
@@ -46,55 +48,50 @@ import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
 import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
+  const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
   const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
   const timeseriesRwaValueData = await fetchTimeseriesRwaValue()
+  const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
+
   const validatorCountData = await fetchValidatorCount()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
-  const historicalChainTvlEthereumData = await fetchHistoricalChainTvlEthereum()
   const totalValueSecuredData = await fetchTotalValueSecured()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
     await fetchStablecoinMarketshare()
   )
-  const l2TvlExportData = await fetchL2TvlExport()
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
   const rwaMarketshareData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
   )
 
-  const overviewCards: {
-    label: string
-    value: string
-    percentChange?: number
-    source: string
-    href: string
-    lastUpdated?: string
-  }[] = [
+  const overviewCards: MetricWithSource[] = [
     {
       label: "Total value locked (TVL)",
       value: "$123.4B™", // TODO: Live data
       source: "tokenterminal.com",
-      href: "https://tokenterminal.com",
+      sourceHref: "https://tokenterminal.com",
+      lastUpdated: formatDateMonthDayYear(0),
     },
     {
       label: "Total Value Secured (TVS)",
       value: formatLargeCurrency(totalValueSecuredData.data.sum),
       lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
       source: "ultrasound.money",
-      href: "https://ultrasound.money",
+      sourceHref: "https://ultrasound.money",
     },
     {
       label: "Validator count",
       value: formatNumber(validatorCountData.data.validatorCount),
       lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
       source: "beaconcha.in",
-      href: "https://beaconcha.in",
+      sourceHref: "https://beaconcha.in",
     },
     {
       label: "Security Ratio",
       value: formatMultiplier(totalValueSecuredData.data.securityRatio),
       lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
       source: "ultrasound.money",
-      href: "https://ultrasound.money",
+      sourceHref: "https://ultrasound.money",
     },
   ]
 
@@ -120,7 +117,14 @@ export default async function Page() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
             {overviewCards.map(
-              ({ label, value, percentChange, source, lastUpdated, href }) => (
+              ({
+                label,
+                value,
+                source,
+                lastUpdated,
+                percentChange,
+                sourceHref,
+              }) => (
                 <Card key={label} variant="flex-height">
                   <CardContent>
                     <CardLabel className="text-base font-medium tracking-[0.02rem]">
@@ -150,7 +154,7 @@ export default async function Page() {
                     </span>
                     :{" "}
                     <Link
-                      href={href}
+                      href={sourceHref}
                       className="text-muted-foreground hover:text-foreground"
                       inline
                     >
@@ -180,22 +184,22 @@ export default async function Page() {
                   title={
                     "Last updated: " +
                     formatDateMonthDayYear(
-                      historicalChainTvlEthereumData.lastUpdated
+                      timeseriesDefiTvlEthereumData.lastUpdated
                     )
                   }
                   className="text-h4 font-bold tracking-[0.04rem]"
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      historicalChainTvlEthereumData.data.at(-1).defiTvl
+                      timeseriesDefiTvlEthereumData.data.currentValue
                     )}
                   </AnimatedNumberInView>
                 </div>
               </CardHeader>
 
               <CardContent variant="flex-1-height-between">
-                <DefiHistoricalTvlEthereumChart
-                  chartData={historicalChainTvlEthereumData}
+                <DefiTimeseriesTvlEthereumLineChart
+                  chartData={timeseriesDefiTvlEthereumData}
                 />
                 <div className="flex justify-between">
                   <CardSource>
@@ -203,7 +207,7 @@ export default async function Page() {
                       title={
                         "Last updated: " +
                         formatDateMonthDayYear(
-                          historicalChainTvlEthereumData.lastUpdated
+                          timeseriesDefiTvlEthereumData.lastUpdated
                         )
                       }
                     >
@@ -285,16 +289,14 @@ export default async function Page() {
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      timeseriesStablecoinsValueData.data[
-                        timeseriesStablecoinsValueData.data.length - 1
-                      ].stablecoins
+                      timeseriesStablecoinsValueData.data.currentValue
                     )}
                   </AnimatedNumberInView>
                 </div>
               </CardHeader>
 
               <CardContent variant="flex-1-height-between">
-                <StablecoinHistoricalTvlLineChart
+                <StablecoinTimeseriesTvlLineChart
                   chartData={timeseriesStablecoinsValueData}
                 />
 
@@ -378,16 +380,14 @@ export default async function Page() {
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      timeseriesRwaValueData.data[
-                        timeseriesRwaValueData.data.length - 1
-                      ].rwa
+                      timeseriesRwaValueData.data.currentValue
                     )}
                   </AnimatedNumberInView>
                 </div>
               </CardHeader>
 
               <CardContent variant="flex-1-height-between" className="gap-y-4">
-                <RwaHistoricalTvlLineChart chartData={timeseriesRwaValueData} />
+                <RwaTimeseriesTvlLineChart chartData={timeseriesRwaValueData} />
 
                 <CardSource>
                   <span
@@ -519,22 +519,19 @@ export default async function Page() {
                   className="text-h4 font-bold tracking-[0.04rem]"
                 >
                   <AnimatedNumberInView>
-                    {formatLargeCurrency(
-                      l2TvlExportData.data[l2TvlExportData.data.length - 1]
-                        .value
-                    )}
+                    {formatLargeCurrency(timeseriesL2TvlData.data.currentValue)}
                   </AnimatedNumberInView>
                 </div>
               </CardHeader>
 
               <CardContent variant="flex-1-height-between" className="gap-y-4">
-                <L2TvlChart chartData={l2TvlExportData} />
+                <L2TimeseriesTvlLineChart chartData={timeseriesL2TvlData} />
 
                 <CardSource>
                   <span
                     title={
                       "Last updated: " +
-                      formatDateMonthDayYear(l2TvlExportData.lastUpdated)
+                      formatDateMonthDayYear(timeseriesL2TvlData.lastUpdated)
                     }
                   >
                     Source

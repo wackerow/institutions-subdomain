@@ -14,35 +14,35 @@ import {
 import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import type { TimeseriesStablecoinsValueData } from "@/app/_actions/fetchTimeseriesStablecoinsValue"
+import type { TimeseriesRwaValueData } from "@/app/_actions/fetchTimeseriesRwaValue"
 
 const chartConfig = {
   data: {
     label: "Data",
   },
-  stablecoins: {
-    label: "Stablecoins",
+  value: {
+    label: "Real-World Assets",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig
 
-type StablecoinHistoricalTvlLineChartProps = {
-  chartData: DataTimestamped<TimeseriesStablecoinsValueData>
+type RwaTimeseriesTvlLineChartProps = {
+  chartData: DataTimestamped<TimeseriesRwaValueData>
 }
-const StablecoinHistoricalTvlLineChart = ({
+const RwaTimeseriesTvlLineChart = ({
   chartData,
-}: StablecoinHistoricalTvlLineChartProps) => (
+}: RwaTimeseriesTvlLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
-    <AreaChart data={chartData.data}>
+    <AreaChart data={chartData.data.series}>
       <defs>
-        <linearGradient id="fillStablecoinTvl" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="fillRwaTvl" x1="0" y1="0" x2="0" y2="1">
           <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />
           <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
         </linearGradient>
       </defs>
       <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
-        tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0+/, "")}
+        tickFormatter={(v) => formatLargeCurrency(v, 2).replace(/\.0+/, "")}
         axisLine={false}
         tickLine={false}
         tickMargin={8}
@@ -64,9 +64,9 @@ const StablecoinHistoricalTvlLineChart = ({
         )}
       />
       <Area
-        dataKey="stablecoins"
+        dataKey="value"
         type="natural"
-        fill="url(#fillStablecoinTvl)"
+        fill="url(#fillRwaTvl)"
         stroke="var(--chart-1)"
         stackId="a"
       />
@@ -74,4 +74,4 @@ const StablecoinHistoricalTvlLineChart = ({
   </ChartContainer>
 )
 
-export default StablecoinHistoricalTvlLineChart
+export default RwaTimeseriesTvlLineChart

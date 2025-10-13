@@ -1,8 +1,12 @@
 "use server"
 
-import type { DataTimestamped } from "@/lib/types"
+import type {
+  DataSeries,
+  DataSeriesWithCurrent,
+  DataTimestamped,
+} from "@/lib/types"
 
-import { filterFirstAndFifteenth } from "@/lib/utils/data"
+import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
 import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
 
@@ -15,10 +19,7 @@ type JSONData = {
   }[]
 }
 
-export type TimeseriesStablecoinsValueData = {
-  date: string
-  stablecoins: number
-}[]
+export type TimeseriesStablecoinsValueData = DataSeriesWithCurrent<string>
 
 export const fetchTimeseriesStablecoinsValue = async (): Promise<
   DataTimestamped<TimeseriesStablecoinsValueData>
@@ -69,16 +70,14 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
       ({ group: { id } }) => id === RWA_XYZ_STABLECOINS_GROUP_ID
     )
 
-    const dataPoints = stablecoinData?.points?.length
+    const seriesMapped: DataSeries<string> = stablecoinData?.points?.length
       ? stablecoinData?.points.map(([dateString, mktCapValue]) => ({
           date: dateString,
-          stablecoins: mktCapValue,
+          value: mktCapValue,
         }))
       : []
 
-    const data = filterFirstAndFifteenth(dataPoints)
-
-    return { data, lastUpdated: Date.now() }
+    return getDataSeriesWithCurrent(seriesMapped)
   } catch (error: unknown) {
     console.error("fetchTimeseriesTotalRwaValue failed", {
       name: error instanceof Error ? error.name : undefined,
