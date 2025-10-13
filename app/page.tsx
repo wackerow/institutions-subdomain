@@ -1,7 +1,7 @@
 import { ReactNode } from "react"
+import { Metadata } from "next"
 import { InfoIcon } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
-import type { Metadata } from "next/types"
 
 import BigNumber from "@/components/BigNumber"
 import { libraryItems } from "@/components/data/library"
@@ -39,6 +39,7 @@ import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 import { isValidDate } from "@/lib/utils/date"
+import { getMetadata } from "@/lib/utils/metadata"
 import { formatLargeCurrency, formatLargeNumber } from "@/lib/utils/number"
 import { formatDuration } from "@/lib/utils/time"
 
@@ -596,7 +597,10 @@ export default async function Home() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Ethereum for Institutions",
-  description: "Ethereum: The Institutional Liquidity Layer",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Ethereum for Institutions",
+    description: "Ethereum: The Institutional Liquidity Layer",
+    image: "/images/og/home.png",
+  })
 }

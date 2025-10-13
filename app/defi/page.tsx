@@ -4,6 +4,8 @@ import type { Metadata } from "next/types"
 import Hero from "@/components/Hero"
 import Link from "@/components/ui/link"
 
+import { getMetadata } from "@/lib/utils/metadata"
+
 import AppGrid from "./_components/AppGrid"
 
 import buildings from "@/public/images/buildings2.png"
@@ -207,9 +209,11 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "The Home of Decentralized Finance",
-  description:
-    "Ethereum introduced the world to decentralized finance (DeFi): open financial systems built on smart contracts.",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "The Home of Decentralized Finance",
+    description:
+      "Ethereum introduced the world to decentralized finance (DeFi): open financial systems built on smart contracts.",
+    image: "/images/og/rwa.png",
+  })
 }
-//

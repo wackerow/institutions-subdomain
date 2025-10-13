@@ -17,6 +17,7 @@ import chainlink from "@/public/images/app-logos/chainlink.png"
 import railgun from "@/public/images/app-logos/railgun.png"
 import zama from "@/public/images/app-logos/zama.png"
 import blurWalking from "@/public/images/blur-walking.png"
+import { getMetadata } from "@/lib/utils/metadata"
 
 export default function Page() {
   const productionSolutions: {
@@ -305,7 +306,10 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Privacy on Ethereum",
-  description: "Compliant Privacy on Ethereum for Institutions",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Privacy on Ethereum",
+    description: "Compliant Privacy on Ethereum for Institutions",
+    image: "/images/og/rwa.png",
+  })
 }

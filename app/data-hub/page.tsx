@@ -25,6 +25,7 @@ import {
   stablecoinMarketshareToPieChartData,
 } from "@/lib/utils/data"
 import { formatDateMonthDayYear } from "@/lib/utils/date"
+import { getMetadata } from "@/lib/utils/metadata"
 import {
   formatLargeCurrency,
   formatMultiplier,
@@ -552,8 +553,11 @@ export default async function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Data Hub: Real-Time Intelligence",
-  description:
-    "Track live, real-time data for mainnet activity, Layer 2 scaling, tokenized assets, and DeFi markets",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Data Hub: Real-Time Intelligence",
+    description:
+      "Track live, real-time data for mainnet activity, Layer 2 scaling, tokenized assets, and DeFi markets",
+    image: "/images/og/rwa.png",
+  })
 }

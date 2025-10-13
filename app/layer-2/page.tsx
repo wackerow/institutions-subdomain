@@ -8,6 +8,8 @@ import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
 import { Card } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
+import { getMetadata } from "@/lib/utils/metadata"
+
 import celo from "@/public/images/app-logos/celo.png"
 import coinbase from "@/public/images/app-logos/coinbase.png"
 import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
@@ -332,8 +334,11 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Ethereum L2s",
-  description:
-    "Layer-2s (L2s) are protocols that settle to Ethereum, making execution faster, cheaper and more scalable—while still relying on Ethereum for security and finality.",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Ethereum L2s",
+    description:
+      "Layer-2s (L2s) are protocols that settle to Ethereum, making execution faster, cheaper and more scalable—while still relying on Ethereum for security and finality.",
+    image: "/images/og/rwa.png",
+  })
 }

@@ -3,6 +3,8 @@ import type { Metadata } from "next/types"
 import Hero from "@/components/Hero"
 import { LinkWithArrow } from "@/components/ui/link"
 
+import { getMetadata } from "@/lib/utils/metadata"
+
 export default function Page() {
   const regions = ["Europe", "US", "MENA", "APAC", "LATAM"] as const
 
@@ -241,8 +243,11 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Regional Solution Providers",
-  description:
-    "Connect with a curated network of solution providers that specialize in building in the Ethereum ecosystem",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Regional Solution Providers",
+    description:
+      "Connect with a curated network of solution providers that specialize in building in the Ethereum ecosystem",
+    image: "/images/og/rwa.png",
+  })
 }

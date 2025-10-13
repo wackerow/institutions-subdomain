@@ -6,6 +6,8 @@ import Hero from "@/components/Hero"
 import { Card } from "@/components/ui/card"
 import Link, { LinkWithArrow } from "@/components/ui/link"
 
+import { getMetadata } from "@/lib/utils/metadata"
+
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
 import eurc from "@/public/images/tokens/eurc.svg"
@@ -476,7 +478,11 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "PAGE TITLE",
-  description: "PAGE DESCRIPTION",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Stablecoins & Real-World Assets on Ethereum",
+    description:
+      "Ethereum is the dominant network for asset tokenization, home to majority of all tokenized real-world assets (RWAs) and global stablecoin supply.",
+    image: "/images/og/rwa.png",
+  })
 }

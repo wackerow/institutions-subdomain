@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/library-card"
 
 import { isValidDate } from "@/lib/utils/date"
+import { getMetadata } from "@/lib/utils/metadata"
 
 export default function Page() {
   return (
@@ -53,7 +54,11 @@ export default function Page() {
   )
 }
 
-export const metadata: Metadata = {
-  title: "Library: Institutional Insights",
-  description: "Library of external references related to enterprise Ethereum",
+export async function generateMetadata(): Promise<Metadata> {
+  return getMetadata({
+    title: "Library: Institutional Insights",
+    description:
+      "Library of external references related to enterprise Ethereum",
+    image: "/images/og/rwa.png",
+  })
 }
