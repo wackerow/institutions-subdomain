@@ -62,7 +62,7 @@ import jpMorgan from "@/public/logos/jp-morgan.png"
 import mastercard from "@/public/logos/mastercard.png"
 import robinhood from "@/public/logos/robinhood.png"
 import sony from "@/public/logos/sony.png"
-import standardChartered from "@/public/logos/standard-chartered.png"
+import standardChartered from "@/public/logos/standard-chartered.svg"
 import swift from "@/public/logos/swift.png"
 import ubs from "@/public/logos/ubs.png"
 import visaSvg from "@/public/logos/visa.svg"
@@ -72,18 +72,22 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: citi, alt: "Citi logo", className: "-translate-y-px" },
   { src: coinbase, alt: "Coinbase logo", className: "py-0.5" },
   { src: etoro, alt: "eToro logo", className: "py-0.5" },
-  { src: fidelity, alt: "Fidelity logo", className: "scale-110 mx-2 invert" },
-  { src: jpMorgan, alt: "JPMorgan logo", className: "py-0.5 translate-y-0.5" },
-  { src: mastercard, alt: "Mastercard logo" },
-  { src: robinhood, alt: "Robinhood logo", className: "translate-y-px" },
-  { src: sony, alt: "Sony logo", className: "py-[5px]" },
+  {
+    src: fidelity,
+    alt: "Fidelity logo",
+    className: "scale-110 mx-2 invert translate-y-1",
+  },
+  { src: jpMorgan, alt: "JPMorgan logo", className: "py-0.5 translate-y-1.5" },
+  { src: mastercard, alt: "Mastercard logo", className: "translate-y-[3px]" },
+  { src: robinhood, alt: "Robinhood logo", className: "translate-y-1" },
+  { src: sony, alt: "Sony logo", className: "py-[5px] translate-y-[3px]" },
   {
     src: standardChartered,
     alt: "Standard Chartered logo",
-    className: "scale-120 mx-4 invert",
+    className: "scale-120 mx-4 translate-y-1",
   },
-  { src: swift, alt: "Swift logo" },
-  { src: ubs, alt: "UBS logo" },
+  { src: swift, alt: "Swift logo", className: "translate-y-[3px]" },
+  { src: ubs, alt: "UBS logo", className: "translate-y-[3px]" },
 ]
 
 const testimonials: {
@@ -212,7 +216,11 @@ export default async function Home() {
         shape="eth-glyph"
         className="css-primary-invert"
         beneath={
-          <InfiniteSlider speedOnHover={16} gap={56}>
+          <InfiniteSlider
+            speedOnHover={16}
+            gap={56}
+            className="overflow-visible"
+          >
             {logos.map(({ src, alt, className }) => (
               <Image
                 key={alt}
