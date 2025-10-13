@@ -156,15 +156,13 @@ export default function RootLayout({
           </div>
           <div className="max-w-8xl mx-auto space-y-14 px-12 py-10 sm:space-y-9 xl:space-y-28">
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
-              <div className="flex flex-col gap-y-7 max-sm:justify-center">
-                <div className="flex items-center gap-4 sm:gap-6">
-                  {socialLinks.map((props) => (
-                    <Link key={props.href} {...props} />
-                  ))}
-                </div>
+              <div className="flex items-center gap-4 sm:gap-6">
+                {socialLinks.map((props) => (
+                  <Link key={props.href} {...props} />
+                ))}
               </div>
-              <nav className="*:text-muted-foreground *:hover:text-foreground flex gap-x-6 gap-y-1.5 text-center text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:text-end">
-                <DigitalAssetsDropdown />
+              <nav className="*:text-muted-foreground *:hover:text-foreground flex items-center gap-x-6 gap-y-1.5 text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:max-xl:items-end">
+                <DigitalAssetsDropdown className="w-fit" />
                 {navItemLinks.map((props) => (
                   <Link key={props.href} {...props} />
                 ))}
