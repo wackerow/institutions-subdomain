@@ -11,13 +11,13 @@ import { Card } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
+import { getMetadata } from "@/lib/utils/metadata"
 
 import aztec from "@/public/images/app-logos/aztec.png"
 import chainlink from "@/public/images/app-logos/chainlink.png"
 import railgun from "@/public/images/app-logos/railgun.png"
 import zama from "@/public/images/app-logos/zama.png"
 import blurWalking from "@/public/images/blur-walking.png"
-import { getMetadata } from "@/lib/utils/metadata"
 
 export default function Page() {
   const productionSolutions: {
