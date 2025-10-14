@@ -8,12 +8,14 @@ import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
 import { Card, CardSource } from "@/components/ui/card"
+import { InlineText } from "@/components/ui/inline-text"
 import Link, { LinkWithArrow } from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
+import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 
 import buildings from "@/public/images/buildings.png"
@@ -28,6 +30,7 @@ import usdt from "@/public/images/tokens/usdt.svg"
 
 export default async function Page() {
   const stablecoinMarketshareData = await fetchStablecoinMarketshare()
+  const rwaMarketshareData = await fetchRwaMarketshare()
 
   const metrics: MetricWithSource[] = [
     {
@@ -282,9 +285,19 @@ export default async function Page() {
           <div className="space-y-2">
             <h2>Stablecoins on Ethereum</h2>
             <p className="text-muted-foreground font-medium">
-              {/* // TODO: Live data */}
-              Total stablecoin market cap on Ethereum L1{" "}
-              <span className="text-foreground font-bold">$157.81B</span>
+              Total stablecoin market cap on Ethereum L1:{" "}
+              <InlineText className="text-foreground font-bold">
+                {formatLargeCurrency(
+                  stablecoinMarketshareData.data.ethereumL1StablecoinUSD
+                )}
+                <SourceInfoTooltip
+                  iconClassName="translate-y-0"
+                  lastUpdated={formatDateMonthDayYear(
+                    stablecoinMarketshareData.lastUpdated
+                  )}
+                  {...stablecoinMarketshareData.sourceInfo}
+                />
+              </InlineText>
             </p>
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
@@ -305,9 +318,17 @@ export default async function Page() {
           <div className="space-y-2">
             <h2>Real-World Assets (RWAs) on Ethereum</h2>
             <p className="text-muted-foreground font-medium">
-              {/* // TODO: Live data */}
-              Total RWA sector: on Ethereum L1{" "}
-              <span className="text-foreground font-bold">$9.1B</span>
+              Total RWA sector on Ethereum L1:{" "}
+              <InlineText className="text-foreground font-bold">
+                {formatLargeCurrency(rwaMarketshareData.data.ethereumL1RwaUSD)}
+                <SourceInfoTooltip
+                  iconClassName="translate-y-0"
+                  lastUpdated={formatDateMonthDayYear(
+                    rwaMarketshareData.lastUpdated
+                  )}
+                  {...rwaMarketshareData.sourceInfo}
+                />
+              </InlineText>
             </p>
           </div>
 
