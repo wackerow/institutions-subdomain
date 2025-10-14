@@ -232,7 +232,7 @@ export default async function Home() {
         <>
           24-Hour DEX Volume
           <br />
-          2025 ecosystem average
+          (12-month avg)
         </>
       ),
       lastUpdated: formatDateMonthDayYear(dexVolume.lastUpdated),

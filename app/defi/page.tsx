@@ -1,33 +1,62 @@
 import Image from "next/image"
 import type { Metadata } from "next/types"
 
+import { MetricWithSource } from "@/lib/types"
+
+import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
 import Link from "@/components/ui/link"
 
+import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
+import {
+  formatLargeCurrency,
+  formatMultiplier,
+  formatPercent,
+} from "@/lib/utils/number"
+
+import fetchDexVolume from "../_actions/fetchDexVolume"
+import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
 
 import AppGrid from "./_components/AppGrid"
 
 import buildings from "@/public/images/buildings2.png"
 
-export default function Page() {
-  // TODO: Live data
-  const metrics: { label: string; value: string }[] = [
+export default async function Page() {
+  const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
+  const dexVolume = await fetchDexVolume()
+
+  const metrics: MetricWithSource[] = [
     {
       label: "DeFi Total Value Locked (TVL)",
-      value: "$87B+",
+      value: formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl),
+      lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
+      ...defiTvlAllCurrentData.sourceInfo,
     },
     {
       label: "Of All Global DeFi TVL",
-      value: "67%+",
+      value:
+        formatPercent(defiTvlAllCurrentData.data.mainnetDefiMarketshare) + "+",
+      lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
+      ...defiTvlAllCurrentData.sourceInfo,
     },
     {
-      label: "24 Hour DEX Volume (2025 Avg.)",
-      value: "$12B+",
+      value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
+      label: (
+        <>
+          24-Hour DEX Volume
+          <br />
+          (12-month avg)
+        </>
+      ),
+      lastUpdated: formatDateMonthDayYear(dexVolume.lastUpdated),
+      ...dexVolume.sourceInfo,
     },
     {
       label: "TVL vs. Next-Largest Ecosystem",
-      value: "8x",
+      value: formatMultiplier(defiTvlAllCurrentData.data.runnerUpMultiplier),
+      lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
+      ...defiTvlAllCurrentData.sourceInfo,
     },
   ]
 
@@ -82,14 +111,10 @@ export default function Page() {
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-20 sm:px-10 sm:py-20 md:space-y-40">
         <section id="metrics" className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <h2 className="sr-only">DeFi Ecosystem Metrics</h2>
-          {metrics.map(({ label, value }) => (
-            <div
-              key={label}
-              className="flex max-w-50 flex-col items-center text-center"
-            >
-              <p className="text-big font-bold">{value}</p>
-              <p className="text-muted-foreground font-medium">{label}</p>
-            </div>
+          {metrics.map(({ label, ...props }, idx) => (
+            <BigNumber key={idx} {...props}>
+              {label}
+            </BigNumber>
           ))}
         </section>
 
