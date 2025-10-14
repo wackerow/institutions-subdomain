@@ -21,6 +21,18 @@ import celo from "@/public/images/app-logos/celo.png"
 import coinbase from "@/public/images/app-logos/coinbase.png"
 import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
 import ey from "@/public/images/app-logos/ey.png"
+import arbitrum from "@/public/images/networks/arbitrum.png"
+import optimism from "@/public/images/networks/optimism.png"
+import polygon from "@/public/images/networks/polygon.png"
+import zksync from "@/public/images/networks/zksync.png"
+
+type CardItem = {
+  heading: string
+  description: string
+  href: string
+  imgSrc: StaticImageData
+  ctaLabel?: ReactNode
+}
 
 export default async function Page() {
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
@@ -63,13 +75,38 @@ export default async function Page() {
     },
   ]
 
-  const caseStudies: {
-    heading: string
-    description: string
-    href: string
-    imgSrc: StaticImageData
-    ctaLabel: ReactNode
-  }[] = [
+  const frameworks: CardItem[] = [
+    {
+      heading: "Arbitrum",
+      description:
+        "A suite of Ethereum scaling solutions that make it easy to build and use decentralized applications.",
+      href: "https://arbitrum.io/",
+      imgSrc: arbitrum,
+    },
+    {
+      heading: "Optimism",
+      description:
+        "The OP Stack is a standardized  development stack to spin up a L2. The Superchain is a network of interoperable OP Stack chains.",
+      href: "https://www.optimism.io/",
+      imgSrc: optimism,
+    },
+    {
+      heading: "Polygon",
+      description:
+        "Polygon protocols and scaling technologies are used to build and deploy apps, or launch ZK rollups and validiums as L2s. ",
+      href: "https://polygon.technology/",
+      imgSrc: polygon,
+    },
+    {
+      heading: "ZKSync",
+      description:
+        "A scaling and privacy engine for Ethereum with a network of interoperable chains, secured by ZK privacy technology. ",
+      href: "https://www.zksync.io/",
+      imgSrc: zksync,
+    },
+  ]
+
+  const caseStudies: CardItem[] = [
     {
       heading: "Ernst & Young",
       description: "Nightfall L2 Platform",
@@ -123,6 +160,7 @@ export default async function Page() {
       ),
     },
   ]
+
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Ethereum L2s" shape="layers-2">
@@ -231,7 +269,7 @@ export default async function Page() {
                 </div>
               </div>
             </Card>
-          </div>{" "}
+          </div>
         </section>
 
         <section id="benefits" className="space-y-8">
@@ -240,7 +278,7 @@ export default async function Page() {
           <L2BenefitsPanel />
         </section>
 
-        <section id="simple" className="space-y-8">
+        <section id="frameworks" className="space-y-8">
           <div className="space-y-2">
             <h2 className="text-h3-mobile sm:text-h3">
               Simplified Deployment and Flexibility
@@ -251,8 +289,22 @@ export default async function Page() {
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <Card key={i}>Soon™</Card>
+            {frameworks.map(({ heading, description, imgSrc, href }) => (
+              <Link
+                key={heading}
+                href={href}
+                className="bg-card group flex w-full flex-col justify-between p-6 transition-transform hover:scale-105 hover:transition-transform"
+                aria-label={`Visit ${heading}`}
+              >
+                <div className="space-y-2">
+                  <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
+                  <h3 className="text-h5">{heading}</h3>
+                  <p className="font-medium">{description}</p>
+                </div>
+                <p className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
+                  Visit →
+                </p>
+              </Link>
             ))}
           </div>
         </section>
@@ -279,7 +331,7 @@ export default async function Page() {
                     <p className="font-medium">{description}</p>
                   </div>
                   <p className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
-                    {ctaLabel}
+                    {ctaLabel || "Visit →"}
                   </p>
                 </Link>
               )
