@@ -2,23 +2,23 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-type JSONData = { ethereum: { usd: number } }
+type JSONData = { total1y: number }
 
-export type EthPriceData = {
-  usd: number
+export type DexVolumeData = {
+  trailing12moAvgDexVolume: number
 }
 
-export const fetchEthPrice = async (): Promise<
-  DataTimestamped<EthPriceData>
+export const fetchDexVolume = async (): Promise<
+  DataTimestamped<DexVolumeData>
 > => {
   const url =
-    "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
+    "https://api.llama.fi/overview/dexs/ethereum?excludeTotalDataChartBreakdown=true"
 
   try {
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["coingecko:v3:simple:price"],
+        tags: ["llama:dexs:ethereum"],
       },
     })
 
@@ -29,9 +29,11 @@ export const fetchEthPrice = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    return { data: json.ethereum, lastUpdated: Date.now() }
+    const trailing12moAvgDexVolume = json.total1y / 365
+
+    return { data: { trailing12moAvgDexVolume }, lastUpdated: Date.now() }
   } catch (error: unknown) {
-    console.error("fetchEthPrice failed", {
+    console.error("fetchDexVolume failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -40,4 +42,4 @@ export const fetchEthPrice = async (): Promise<
   }
 }
 
-export default fetchEthPrice
+export default fetchDexVolume

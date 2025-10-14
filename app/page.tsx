@@ -1,6 +1,4 @@
-import { ReactNode } from "react"
 import { Metadata } from "next"
-import { InfoIcon } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 
 import { MetricWithSource } from "@/lib/types"
@@ -8,6 +6,7 @@ import { MetricWithSource } from "@/lib/types"
 import BigNumber from "@/components/BigNumber"
 import { libraryItems } from "@/components/data/library"
 import Hero from "@/components/Hero"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import MaskedParallelsIcon from "@/components/MaskedParallelsIcon"
 import { ScalingPanel } from "@/components/ScalingPanel"
 import BadgeDollarSignFillInvert from "@/components/svg/badge-dollar-sign-fill-invert"
@@ -56,6 +55,7 @@ import { formatDuration } from "@/lib/utils/time"
 import { MAINNET_GENESIS } from "@/lib/constants"
 
 import fetchBeaconChain from "./_actions/fetchBeaconChain"
+import fetchDexVolume from "./_actions/fetchDexVolume"
 import fetchEthPrice from "./_actions/fetchEthPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
@@ -142,11 +142,13 @@ export default async function Home() {
   const beaconChainData = await fetchBeaconChain()
   const ethPrice = await fetchEthPrice()
   const tvlDefiAllCurrentData = await fetchTvlDefiAllCurrent()
+  const dexVolume = await fetchDexVolume()
   const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
   )
+  const stablecoinMarketshareUsdData = await fetchStablecoinMarketshare()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
-    await fetchStablecoinMarketshare()
+    stablecoinMarketshareUsdData
   )
   const stablecoinMarketshareDataEthereum =
     stablecoinMarketshareData.data.filter(
@@ -211,7 +213,6 @@ export default async function Home() {
       label: (
         <>
           DeFi TVL
-          {/* // TODO: Live data */}
           <br />{" "}
           <span className="font-medium">
             {formatPercent(
@@ -227,7 +228,7 @@ export default async function Home() {
       lastUpdated: formatDateMonthDayYear(tvlDefiAllCurrentData.lastUpdated),
     },
     {
-      value: "$12B+™", // TODO: Live data
+      value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
       label: (
         <>
           24-Hour DEX Volume
@@ -235,40 +236,41 @@ export default async function Home() {
           2025 ecosystem average
         </>
       ),
+      source: "defillama.com",
+      sourceHref: "https://defillama.com/",
+      lastUpdated: formatDateMonthDayYear(dexVolume.lastUpdated),
     },
   ]
 
   // TODO: Live data and info tooltips
-  const platforms: {
+  const platforms: ({
     name: string
     imgSrc: StaticImageData
-    description: ReactNode
-    metric: ReactNode
     className?: string
-  }[] = [
+  } & Omit<MetricWithSource, "percentChange">)[] = [
     {
       name: "BlackRock",
       imgSrc: blackRockSvg,
-      description: "Onchain Tokenization via Securitize",
-      metric: "$2.1B+ AUM",
+      label: "Onchain Tokenization via Securitize",
+      value: "$2.1B+ AUM™",
     },
     {
       name: "Coinbase",
       imgSrc: coinbaseSvg,
-      description: "Base Layer 2 Ecosystem",
-      metric: "$4.77B+ TVL",
+      label: "Base Layer 2 Ecosystem",
+      value: "$4.77B+ TVL™",
     },
     {
       name: "Visa",
       imgSrc: visaSvg,
-      description: "Stablecoin Payment Settlement",
-      metric: "$2.67T Volume 2025",
+      label: "Stablecoin Payment Settlement",
+      value: "$2.67T Volume 2025™",
     },
     {
       name: "eToro",
       imgSrc: etoroSvg,
-      description: "Stock Tokenization Platform",
-      metric: "100 Stocks Trade 24/5",
+      label: "Stock Tokenization Platform",
+      value: "100 Stocks Trade 24/5™",
     },
   ]
 
@@ -486,7 +488,8 @@ export default async function Home() {
               <CardContent>
                 <CardLabel variant="large">Deep Liquidity</CardLabel>
                 <div className="text-muted-foreground font-medium">
-                  $12B+ in daily DEX volume,{" "}
+                  {formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume)}
+                  + in daily DEX volume,{" "}
                   <strong>
                     the deepest liquidity of any onchain environment
                   </strong>
@@ -498,8 +501,18 @@ export default async function Home() {
                 <CardLabel variant="large">Tokenization</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   The leading platform for asset tokenization, with{" "}
-                  <strong>90% of all onchain RWAs deployed on Ethereum</strong>{" "}
-                  and its L2s, and $140B+ in stablecoin TVL.
+                  <strong>
+                    {formatPercent(
+                      rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
+                    )}{" "}
+                    of all onchain RWAs deployed on Ethereum
+                  </strong>{" "}
+                  and its L2s, and{" "}
+                  {formatLargeCurrency(
+                    stablecoinMarketshareUsdData.data.ethereumL1StablecoinUSD +
+                      stablecoinMarketshareUsdData.data.ethereumL2StablecoinUSD
+                  )}{" "}
+                  in stablecoin TVL.
                 </div>
               </CardContent>
             </div>
@@ -515,16 +528,16 @@ export default async function Home() {
             </div>
             <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               {platforms.map(
-                ({ name, imgSrc, description, metric, className }) => (
+                ({ name, imgSrc, label, value, className, ...sourceInfo }) => (
                   <div key={name} className={cn("space-y-2", className)}>
                     <h3 className="text-h5 text-foreground sr-only tracking-[0.03rem]">
                       {name}
                     </h3>
                     <Image src={imgSrc} alt={`${name} logo`} className="h-10" />
-                    <p className="text-muted-foreground">{description}</p>
+                    <p className="text-muted-foreground">{label}</p>
                     <div className="text-muted-foreground inline-flex items-center font-bold">
-                      {metric}&nbsp;
-                      <InfoIcon className="size-4" />
+                      {value}
+                      <SourceInfoTooltip {...sourceInfo} />
                     </div>
                   </div>
                 )
