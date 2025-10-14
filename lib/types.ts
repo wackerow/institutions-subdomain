@@ -13,11 +13,14 @@ export type SourceInfo = {
   sourceHref?: string
 }
 
+export type MetricLastUpdated = {
+  lastUpdated?: string
+}
+
 export type Metric = {
   label: ReactNode
   value: string | number
-  lastUpdated?: string
-}
+} & MetricLastUpdated
 
 export type MetricWithSource = Metric & SourceInfo
 

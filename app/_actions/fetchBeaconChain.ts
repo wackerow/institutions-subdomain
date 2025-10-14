@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = {
   data: {
     validatorscount: number
@@ -43,6 +45,7 @@ export const fetchBeaconChain = async (): Promise<
         totalStakedEther: eligibleGwei * 1e-9,
       },
       lastUpdated: new Date(ts).getTime() || Date.now(),
+      sourceInfo: SOURCE.BEACONCHAIN,
     }
   } catch (error: unknown) {
     console.error("fetchBeaconChain failed", {
