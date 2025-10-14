@@ -337,7 +337,7 @@ export default async function Home() {
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
                     maskShape={
-                      <BadgeDollarSignFillInvert className="size-37 text-white" />
+                      <BadgeDollarSignFillInvert className="size-full text-white" />
                     }
                   />
                 </div>
@@ -357,7 +357,7 @@ export default async function Home() {
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
-                    maskShape={<CircleRing className="size-37 text-white" />}
+                    maskShape={<CircleRing className="size-full text-white" />}
                   />
                 </div>
                 <CardLabel variant="large">
@@ -378,7 +378,7 @@ export default async function Home() {
                 <div className="size-37 shrink-0 p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
-                    maskShape={<LockFill className="size-37 text-white" />}
+                    maskShape={<LockFill className="size-full text-white" />}
                   />
                 </div>
                 <CardLabel variant="large">Privacy & Compliance</CardLabel>
@@ -400,7 +400,7 @@ export default async function Home() {
                 <div className="size-37 shrink-0 overflow-hidden p-2.5">
                   <MaskedParallelsIcon
                     className="text-secondary-foreground"
-                    maskShape={<Layers2Fill className="size-37 text-white" />}
+                    maskShape={<Layers2Fill className="size-full text-white" />}
                   />
                 </div>
                 <CardLabel variant="large">L2 Ecosystem</CardLabel>
