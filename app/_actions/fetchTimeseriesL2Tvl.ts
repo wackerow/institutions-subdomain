@@ -9,6 +9,8 @@ import type {
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = { data: L2TvlExportData }
 
 export type TimeseriesL2TvlData = DataSeriesWithCurrent
@@ -45,7 +47,10 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
 
     const seriesMapped: DataSeries = json.data
 
-    return getDataSeriesWithCurrent(seriesMapped, true)
+    return {
+      ...getDataSeriesWithCurrent(seriesMapped, true),
+      sourceInfo: SOURCE.GROWTHEPIE,
+    }
   } catch (error: unknown) {
     console.error("fetchTimeseriesL2Tvl failed", {
       name: error instanceof Error ? error.name : undefined,

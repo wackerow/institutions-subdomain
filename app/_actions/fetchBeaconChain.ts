@@ -5,7 +5,8 @@ import type { DataTimestamped } from "@/lib/types"
 type JSONData = {
   data: {
     validatorscount: number
-    eligibleether: number
+    eligibleether: number // in gwei
+    ts: string // timestamp, e.g., "2025-10-14T19:47:35Z"
   }
 }
 
@@ -34,14 +35,15 @@ export const fetchBeaconChain = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const { validatorscount, eligibleether: eligibleGwei } = json.data
+    const { validatorscount, eligibleether: eligibleGwei, ts } = json.data
 
-    const data = {
-      validatorCount: validatorscount,
-      totalStakedEther: eligibleGwei * 1e-9,
+    return {
+      data: {
+        validatorCount: validatorscount,
+        totalStakedEther: eligibleGwei * 1e-9,
+      },
+      lastUpdated: new Date(ts).getTime() || Date.now(),
     }
-
-    return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
     console.error("fetchBeaconChain failed", {
       name: error instanceof Error ? error.name : undefined,

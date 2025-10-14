@@ -8,6 +8,8 @@ import type {
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = {
   results: {
     group: {
@@ -94,7 +96,10 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
         }))
       : []
 
-    return getDataSeriesWithCurrent(seriesMapped)
+    return {
+      ...getDataSeriesWithCurrent(seriesMapped),
+      sourceInfo: SOURCE.RWA,
+    }
   } catch (error: unknown) {
     console.error("fetchTimeseriesTotalRwaValue failed", {
       name: error instanceof Error ? error.name : undefined,

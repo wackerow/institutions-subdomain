@@ -9,7 +9,7 @@ import type {
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
-import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
+import { RWA_XYZ_STABLECOINS_GROUP_ID, SOURCE } from "@/lib/constants"
 
 type JSONData = {
   results: {
@@ -78,7 +78,10 @@ export const fetchTimeseriesRwaValue = async (): Promise<
         }))
       : []
 
-    return getDataSeriesWithCurrent(seriesMapped)
+    return {
+      ...getDataSeriesWithCurrent(seriesMapped),
+      sourceInfo: SOURCE.RWA,
+    }
   } catch (error: unknown) {
     console.error("fetchTimeseriesTotalRwaValue failed", {
       name: error instanceof Error ? error.name : undefined,

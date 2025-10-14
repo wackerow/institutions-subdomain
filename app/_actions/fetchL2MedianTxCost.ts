@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = {
   metric_key: "txcosts_median_usd" | "txcount"
   origin_key: string // Network, e.g., "ethereum"
@@ -22,7 +24,7 @@ export const fetchL2MedianTxCost = async (): Promise<
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["l2beat:fundamentals_7d"],
+        tags: ["growthepie:fundamentals_7d"],
       },
     })
 
@@ -77,12 +79,15 @@ export const fetchL2MedianTxCost = async (): Promise<
       { weightedSum: 0, totalTxCount: 0 }
     )
 
-    const latestWeightedMedianTxCostUsd =
-      totalTxCount > 0 ? weightedSum / totalTxCount : 0
+    // const latestWeightedMedianTxCostUsd =
 
     return {
-      data: { latestWeightedMedianTxCostUsd },
-      lastUpdated: new Date(latestDate).getTime(),
+      data: {
+        latestWeightedMedianTxCostUsd:
+          totalTxCount > 0 ? weightedSum / totalTxCount : 0,
+      },
+      lastUpdated: new Date(latestDate).getTime() || Date.now(),
+      sourceInfo: SOURCE.GROWTHEPIE,
     }
   } catch (error: unknown) {
     console.error("fetchL2MedianTxCost failed", {

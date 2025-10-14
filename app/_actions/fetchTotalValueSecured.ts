@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = { sum: number; securityRatio: number }
 
 export type TotalValueSecuredData = JSONData
@@ -24,9 +26,13 @@ export const fetchTotalValueSecured = async (): Promise<
         `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
       )
 
-    const data: JSONData = await response.json()
+    const json: JSONData = await response.json()
 
-    return { data, lastUpdated: Date.now() }
+    return {
+      data: json,
+      lastUpdated: Date.now(),
+      sourceInfo: SOURCE.ULTRASOUND,
+    }
   } catch (error: unknown) {
     console.error("fetchTotalValueSecured failed", {
       name: error instanceof Error ? error.name : undefined,

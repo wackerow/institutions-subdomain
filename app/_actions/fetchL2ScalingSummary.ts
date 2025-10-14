@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = {
   chart: {
     data: [
@@ -97,13 +99,15 @@ export const fetchL2ScalingSummary = async (): Promise<
       project.toLowerCase().replace(/[\s-]/g, "")
     )
 
-    const data = {
-      latestCanonicalTvl: json.chart.data[json.chart.data.length - 1][2],
-      allL2Slugs,
-      allProjectsCount: allL2Slugs.length,
+    return {
+      data: {
+        latestCanonicalTvl: json.chart.data[json.chart.data.length - 1][2],
+        allL2Slugs,
+        allProjectsCount: allL2Slugs.length,
+      },
+      lastUpdated: Date.now(),
+      sourceInfo: SOURCE.L2BEAT,
     }
-
-    return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
     console.error("fetchL2ScalingSummary failed", {
       name: error instanceof Error ? error.name : undefined,

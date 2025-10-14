@@ -8,6 +8,8 @@ import type {
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = { date: number; tvl: number }[]
 
 export type TimeseriesDefiTvlEthereumData = DataSeriesWithCurrent
@@ -37,7 +39,10 @@ export const fetchTimeseriesDefiTvlEthereum = async (): Promise<
       date: date * 1e3,
     }))
 
-    return getDataSeriesWithCurrent(seriesMapped)
+    return {
+      ...getDataSeriesWithCurrent(seriesMapped),
+      sourceInfo: SOURCE.LLAMA,
+    }
   } catch (error: unknown) {
     console.error("fetchHistoricalChainTvlEthereum failed", {
       name: error instanceof Error ? error.name : undefined,

@@ -6,11 +6,9 @@ import type {
   NetworkResult,
 } from "@/lib/types"
 
-import { RWA_XYZ_ETHEREUM_NETWORK_ID } from "@/lib/constants"
+import { RWA_XYZ_ETHEREUM_NETWORK_ID, SOURCE } from "@/lib/constants"
 
-type JSONData = {
-  results: NetworkResult[]
-}
+type JSONData = { results: NetworkResult[] }
 
 export type RwaMarketshareData = {
   ethereumL1RwaUSD: number
@@ -129,15 +127,17 @@ export const fetchRwaMarketshare = async (): Promise<
 
     const lastUpdated = new Date(ethereumL1._updated_at).getTime()
 
-    const data: RwaMarketshareData = {
-      ethereumL1RwaUSD,
-      ethereumL2RwaUSD,
-      altNetwork2ndRwaUSD,
-      altNetwork3rdRwaUSD,
-      altNetworksRestRwaUSD,
+    return {
+      data: {
+        ethereumL1RwaUSD,
+        ethereumL2RwaUSD,
+        altNetwork2ndRwaUSD,
+        altNetwork3rdRwaUSD,
+        altNetworksRestRwaUSD,
+      },
+      lastUpdated,
+      sourceInfo: SOURCE.RWA,
     }
-
-    return { data, lastUpdated }
   } catch (error: unknown) {
     console.error("fetchRwaMarketshare failed", {
       name: error instanceof Error ? error.name : undefined,

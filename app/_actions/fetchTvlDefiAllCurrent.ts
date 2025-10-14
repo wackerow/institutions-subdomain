@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 import fetchL2ScalingSummary from "./fetchL2ScalingSummary"
 
 type JSONData = { name: string; tvl: number }[]
@@ -69,14 +71,16 @@ export const fetchTvlDefiAllCurrent = async (): Promise<
     const mainnetDefiMarketshare = ethereumData.tvl / totalDefiTvl
     const layer2DefiMarketshare = totalLayer2DefiTvl / totalDefiTvl
 
-    const data = {
-      mainnetDefiTvl: ethereumData.tvl,
-      runnerUpMultiplier,
-      mainnetDefiMarketshare,
-      layer2DefiMarketshare,
+    return {
+      data: {
+        mainnetDefiTvl: ethereumData.tvl,
+        runnerUpMultiplier,
+        mainnetDefiMarketshare,
+        layer2DefiMarketshare,
+      },
+      lastUpdated: Date.now(),
+      sourceInfo: SOURCE.LLAMA,
     }
-
-    return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
     console.error("fetchTvlDefiAllCurrent failed", {
       name: error instanceof Error ? error.name : undefined,

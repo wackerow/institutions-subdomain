@@ -34,7 +34,6 @@ import {
   formatMultiplier,
   formatNumber,
   formatPercent,
-  getChangeColorClass,
 } from "@/lib/utils/number"
 
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
@@ -117,50 +116,41 @@ export default async function Page() {
             Overview
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
-            {overviewCards.map(
-              ({ label, value, percentChange, ...sourceInfo }, idx) => {
-                const { source, sourceHref } = sourceInfo
-                return (
-                  <Card key={idx} variant="flex-height">
-                    <CardContent>
-                      <CardLabel className="text-base font-medium tracking-[0.02rem]">
-                        {label}
-                      </CardLabel>
-                      <CardValue asChild>
-                        <AnimatedNumberInView>{value}</AnimatedNumberInView>
-                      </CardValue>
-                      {percentChange && (
-                        <CardSmallText
-                          className={getChangeColorClass(percentChange)}
+            {overviewCards.map(({ label, value, ...sourceInfo }, idx) => {
+              const { source, sourceHref } = sourceInfo
+              return (
+                <Card key={idx} variant="flex-height">
+                  <CardContent>
+                    <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                      {label}
+                    </CardLabel>
+                    <CardValue asChild>
+                      <AnimatedNumberInView>{value}</AnimatedNumberInView>
+                    </CardValue>
+                  </CardContent>
+                  {source && (
+                    <CardSource>
+                      Source:{" "}
+                      {sourceHref ? (
+                        <Link
+                          href={sourceHref}
+                          className="text-muted-foreground hover:text-foreground"
+                          inline
                         >
-                          {formatPercent(percentChange, true)} vs 30D
-                        </CardSmallText>
+                          {source}
+                        </Link>
+                      ) : (
+                        source
                       )}
-                    </CardContent>
-                    {source && (
-                      <CardSource>
-                        Source:{" "}
-                        {sourceHref ? (
-                          <Link
-                            href={sourceHref}
-                            className="text-muted-foreground hover:text-foreground"
-                            inline
-                          >
-                            {source}
-                          </Link>
-                        ) : (
-                          source
-                        )}
-                        <SourceInfoTooltip
-                          {...sourceInfo}
-                          iconClassName="translate-y-px"
-                        />
-                      </CardSource>
-                    )}
-                  </Card>
-                )
-              }
-            )}
+                      <SourceInfoTooltip
+                        {...sourceInfo}
+                        iconClassName="translate-y-px"
+                      />
+                    </CardSource>
+                  )}
+                </Card>
+              )
+            })}
           </div>
         </section>
 

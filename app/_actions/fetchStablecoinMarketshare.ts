@@ -4,7 +4,7 @@ import type { DataTimestamped, NetworkResult } from "@/lib/types"
 
 import { isValidDate } from "@/lib/utils/date"
 
-import { RWA_XYZ_ETHEREUM_NETWORK_ID } from "@/lib/constants"
+import { RWA_XYZ_ETHEREUM_NETWORK_ID, SOURCE } from "@/lib/constants"
 
 type JSONData = {
   results: NetworkResult[]
@@ -140,6 +140,7 @@ export const fetchStablecoinMarketshare = async (): Promise<
         altNetworksRestStablecoinUSD,
       },
       lastUpdated,
+      sourceInfo: SOURCE.RWA,
     }
   } catch (error: unknown) {
     console.error("fetchStablecoinMarketshare failed", {

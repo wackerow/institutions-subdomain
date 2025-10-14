@@ -2,11 +2,11 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = { total1y: number }
 
-export type DexVolumeData = {
-  trailing12moAvgDexVolume: number
-}
+export type DexVolumeData = { trailing12moAvgDexVolume: number }
 
 export const fetchDexVolume = async (): Promise<
   DataTimestamped<DexVolumeData>
@@ -18,7 +18,7 @@ export const fetchDexVolume = async (): Promise<
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["llama:dexs:ethereum"],
+        tags: ["llama:overview:dexs:ethereum"],
       },
     })
 
@@ -29,9 +29,11 @@ export const fetchDexVolume = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const trailing12moAvgDexVolume = json.total1y / 365
-
-    return { data: { trailing12moAvgDexVolume }, lastUpdated: Date.now() }
+    return {
+      data: { trailing12moAvgDexVolume: json.total1y / 365 },
+      lastUpdated: Date.now(),
+      sourceInfo: SOURCE.LLAMA,
+    }
   } catch (error: unknown) {
     console.error("fetchDexVolume failed", {
       name: error instanceof Error ? error.name : undefined,

@@ -247,7 +247,7 @@ export default async function Home() {
     name: string
     imgSrc: StaticImageData
     className?: string
-  } & Omit<MetricWithSource, "percentChange">)[] = [
+  } & MetricWithSource)[] = [
     {
       name: "BlackRock",
       imgSrc: blackRockSvg,

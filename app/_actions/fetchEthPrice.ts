@@ -2,11 +2,11 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { SOURCE } from "@/lib/constants"
+
 type JSONData = { ethereum: { usd: number } }
 
-export type EthPriceData = {
-  usd: number
-}
+export type EthPriceData = { usd: number }
 
 export const fetchEthPrice = async (): Promise<
   DataTimestamped<EthPriceData>
@@ -29,7 +29,11 @@ export const fetchEthPrice = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    return { data: json.ethereum, lastUpdated: Date.now() }
+    return {
+      data: json.ethereum,
+      lastUpdated: Date.now(),
+      sourceInfo: SOURCE.COINGECKO,
+    }
   } catch (error: unknown) {
     console.error("fetchEthPrice failed", {
       name: error instanceof Error ? error.name : undefined,

@@ -8,7 +8,24 @@ export type LibraryItem = {
   href: string
 }
 
-export type DataTimestamped<T> = { data: T; lastUpdated: number }
+export type SourceInfo = {
+  source?: string
+  sourceHref?: string
+}
+
+export type Metric = {
+  label: ReactNode
+  value: string | number
+  lastUpdated?: string
+}
+
+export type MetricWithSource = Metric & SourceInfo
+
+export type DataTimestamped<T> = {
+  data: T
+  lastUpdated: number
+  sourceInfo: SourceInfo
+}
 
 export type DataSeries<T extends number | string = number> = {
   date: T
@@ -36,18 +53,6 @@ export type NetworkPieChartData = {
 export type RwaMarketshareSummaryData = {
   ethereumL1RwaMarketshare: number
   ethereumL1L2RwaMarketshare: number
-}
-
-export type SourceInfo = {
-  source?: string
-  sourceHref?: string
-  lastUpdated?: string
-}
-
-export type MetricWithSource = SourceInfo & {
-  label: ReactNode
-  value: string | number
-  percentChange?: number
 }
 
 /**
