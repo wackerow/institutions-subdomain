@@ -37,12 +37,15 @@ export type RwaMarketshareSummaryData = {
   ethereumL1L2RwaMarketshare: number
 }
 
-export type MetricWithSource = {
-  label: string
-  value: string | number
+export type SourceInfo = {
   source: string
   sourceHref: string
   lastUpdated: string
+}
+
+export type MetricWithSource = SourceInfo & {
+  label: string
+  value: string | number
   percentChange?: number
 }
 
