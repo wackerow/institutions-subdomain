@@ -311,7 +311,7 @@ export default async function Page() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 grid-rows-8 gap-4 sm:grid-cols-2 sm:grid-rows-4 lg:grid-cols-4 lg:grid-rows-2">
             <div className="bg-secondary-foreground text-secondary space-y-2 p-8">
               <h3 className="text-xl font-bold tracking-[0.025rem]">
                 Tokenized Treasuries & Cash-Equivalents
