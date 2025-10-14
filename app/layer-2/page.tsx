@@ -392,6 +392,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Ethereum L2s",
     description:
       "Layer-2s (L2s) are protocols that settle to Ethereum, making execution faster, cheaper and more scalable—while still relying on Ethereum for security and finality.",
-    image: "/images/og/rwa.png",
+    image: "/images/og/layer-2.png",
   })
 }

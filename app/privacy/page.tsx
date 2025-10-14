@@ -310,6 +310,6 @@ export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
     title: "Privacy on Ethereum",
     description: "Compliant Privacy on Ethereum for Institutions",
-    image: "/images/og/rwa.png",
+    image: "/images/og/privacy.png",
   })
 }

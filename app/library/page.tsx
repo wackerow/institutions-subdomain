@@ -59,6 +59,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Library: Institutional Insights",
     description:
       "Library of external references related to enterprise Ethereum",
-    image: "/images/og/rwa.png",
+    image: "/images/og/library.png",
   })
 }

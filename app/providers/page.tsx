@@ -248,6 +248,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Regional Solution Providers",
     description:
       "Connect with a curated network of solution providers that specialize in building in the Ethereum ecosystem",
-    image: "/images/og/rwa.png",
+    image: "/images/og/providers.png",
   })
 }

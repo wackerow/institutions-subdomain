@@ -555,6 +555,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Data Hub: Real-Time Intelligence",
     description:
       "Track live, real-time data for mainnet activity, Layer 2 scaling, tokenized assets, and DeFi markets",
-    image: "/images/og/rwa.png",
+    image: "/images/og/data-hub.png",
   })
 }

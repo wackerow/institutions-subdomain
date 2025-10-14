@@ -214,6 +214,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "The Home of Decentralized Finance",
     description:
       "Ethereum introduced the world to decentralized finance (DeFi): open financial systems built on smart contracts.",
-    image: "/images/og/rwa.png",
+    image: "/images/og/defi.png",
   })
 }
