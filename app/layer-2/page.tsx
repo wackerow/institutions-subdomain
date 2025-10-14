@@ -7,7 +7,7 @@ import { MetricWithSource } from "@/lib/types"
 
 import Hero from "@/components/Hero"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
@@ -139,12 +139,12 @@ export default async function Page() {
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map(({ label, value }) => (
-              <div key={label} className="">
-                <p>{value}</p>
-                <p>{label}</p>
-              </div>
+              <CardContent key={label} className="text-center">
+                <p className="text-big font-bold">{value}</p>
+                <p className="text-muted-foreground font-medium">{label}</p>
+              </CardContent>
             ))}
           </div>
         </section>
