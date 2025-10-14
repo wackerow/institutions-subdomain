@@ -8,12 +8,10 @@ import type {
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
-import { RWA_XYZ_STABLECOINS_GROUP_ID } from "@/lib/constants"
-
 type JSONData = {
   results: {
     group: {
-      id: number
+      name: string
     }
     points: [string, number][]
   }[]
@@ -24,13 +22,46 @@ export type TimeseriesStablecoinsValueData = DataSeriesWithCurrent<string>
 export const fetchTimeseriesStablecoinsValue = async (): Promise<
   DataTimestamped<TimeseriesStablecoinsValueData>
 > => {
-  const url = "https://api.rwa.xyz/v4/timeseries/total_rwa_value"
+  const url = new URL("https://api.rwa.xyz/v3/assets/aggregates/timeseries")
 
   const apiKey = process.env.RWA_API_KEY || ""
 
   if (!apiKey) {
-    throw new Error(`No API key available for ${url}`)
+    throw new Error(`No API key available for ${url.toString()}`)
   }
+
+  const myQuery = {
+    sort: {
+      direction: "asc",
+      field: "date",
+    },
+    pagination: {
+      page: 1,
+      perPage: 25,
+    },
+    aggregate: {
+      groupBy: "network",
+      aggregateFunction: "sum",
+      interval: "day",
+    },
+    filter: {
+      operator: "and",
+      filters: [
+        {
+          field: "measureID",
+          operator: "equals",
+          value: 70,
+        },
+        {
+          field: "assetClassID",
+          operator: "equals",
+          value: 28,
+        },
+      ],
+    },
+  }
+
+  url.searchParams.set("query", JSON.stringify(myQuery))
 
   try {
     const response = await fetch(url, {
@@ -40,38 +71,24 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v4:timeseries:total_rwa_value:stablecoins"],
+        tags: ["rwa:v3:assets:aggregates:timeseries"],
       },
     })
 
     if (!response.ok)
       throw new Error(
-        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+        `Fetch response not OK from ${url.toString()}: ${response.status} ${response.statusText}`
       )
 
     const json: JSONData = await response.json()
 
-    /**
-     * results[x].name:
-     * - US Treasury Debt
-     * - Stablecoins
-     * - non-US Government Debt
-     * - Corporate Bonds
-     * - Stocks
-     * - Private Equity
-     * - Real Estate
-     * - Commodities
-     * - Institutional Alternative Funds
-     * - Actively-Managed Strategies
-     * - Private Credit
-     */
-
-    const stablecoinData = json.results.find(
-      ({ group: { id } }) => id === RWA_XYZ_STABLECOINS_GROUP_ID
+    const ethereumStablecoinData = json.results.find(
+      ({ group: { name } }) => name.toLowerCase() === "ethereum" // && id === RWA_XYZ_STABLECOINS_GROUP_ID
     )
 
-    const seriesMapped: DataSeries<string> = stablecoinData?.points?.length
-      ? stablecoinData?.points.map(([dateString, mktCapValue]) => ({
+    const seriesMapped: DataSeries<string> = ethereumStablecoinData?.points
+      ?.length
+      ? ethereumStablecoinData?.points.map(([dateString, mktCapValue]) => ({
           date: dateString,
           value: mktCapValue,
         }))
