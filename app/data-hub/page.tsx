@@ -37,6 +37,7 @@ import {
   getChangeColorClass,
 } from "@/lib/utils/number"
 
+import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
@@ -46,7 +47,6 @@ import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
 import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchTvlDefiAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
-import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
@@ -54,7 +54,7 @@ export default async function Page() {
   const timeseriesRwaValueData = await fetchTimeseriesRwaValue()
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
-  const validatorCountData = await fetchValidatorCount()
+  const validatorCountData = await fetchBeaconChain()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiAllCurrent()
   const totalValueSecuredData = await fetchTotalValueSecured()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(

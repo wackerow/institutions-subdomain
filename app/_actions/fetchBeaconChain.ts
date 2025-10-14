@@ -2,14 +2,20 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-type JSONData = { data: { validatorscount: number } }
-
-export type ValidatorCountData = {
-  validatorCount: number
+type JSONData = {
+  data: {
+    validatorscount: number
+    eligibleether: number
+  }
 }
 
-export const fetchValidatorCount = async (): Promise<
-  DataTimestamped<ValidatorCountData>
+export type beaconChainData = {
+  validatorCount: number
+  totalStakedEther: number
+}
+
+export const fetchBeaconChain = async (): Promise<
+  DataTimestamped<beaconChainData>
 > => {
   const url = "https://beaconcha.in/api/v1/epoch/latest"
 
@@ -28,13 +34,16 @@ export const fetchValidatorCount = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const { validatorscount } = json.data
+    const { validatorscount, eligibleether: eligibleGwei } = json.data
 
-    const data = { validatorCount: validatorscount }
+    const data = {
+      validatorCount: validatorscount,
+      totalStakedEther: eligibleGwei * 1e-9,
+    }
 
     return { data, lastUpdated: Date.now() }
   } catch (error: unknown) {
-    console.error("fetchValidatorCount failed", {
+    console.error("fetchBeaconChain failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -43,4 +52,4 @@ export const fetchValidatorCount = async (): Promise<
   }
 }
 
-export default fetchValidatorCount
+export default fetchBeaconChain

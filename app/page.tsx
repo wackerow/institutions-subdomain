@@ -55,11 +55,12 @@ import { formatDuration } from "@/lib/utils/time"
 
 import { MAINNET_GENESIS } from "@/lib/constants"
 
+import fetchBeaconChain from "./_actions/fetchBeaconChain"
+import fetchEthPrice from "./_actions/fetchEthPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
 import fetchTvlDefiAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
-import fetchValidatorCount from "./_actions/fetchValidatorCount"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
 import robertMitchnick from "@/public/images/robert-mitchnick.png"
@@ -138,7 +139,8 @@ const testimonials: {
 export default async function Home() {
   const uptime = getTimeSinceGenesis()
   const timeseriesTotalRwaValueData = await fetchTimeseriesStablecoinsValue()
-  const validatorCountData = await fetchValidatorCount()
+  const beaconChainData = await fetchBeaconChain()
+  const ethPrice = await fetchEthPrice()
   const tvlDefiAllCurrentData = await fetchTvlDefiAllCurrent()
   const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
@@ -163,11 +165,11 @@ export default async function Home() {
       lastUpdated: formatDateMonthDayYear(Date.now()),
     },
     {
-      value: formatLargeNumber(validatorCountData.data.validatorCount),
+      value: formatLargeNumber(beaconChainData.data.validatorCount),
       label: "Validators securing the network",
       source: "beaconcha.in",
       sourceHref: "https://beaconcha.in",
-      lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
+      lastUpdated: formatDateMonthDayYear(beaconChainData.lastUpdated),
     },
     {
       value: formatLargeCurrency(timeseriesTotalRwaValueData.data.currentValue),
@@ -433,7 +435,10 @@ export default async function Home() {
                 <CardLabel variant="large">Resilience</CardLabel>
                 <div className="text-muted-foreground font-medium">
                   Ethereum has maintained{" "}
-                  <strong>10 years of uninterrupted uptime and liveness</strong>{" "}
+                  <strong>
+                    {formatDuration(uptime, { language: "en" })} of
+                    uninterrupted uptime and liveness
+                  </strong>{" "}
                   since its launch. Zero downtime through 15+ successful network
                   upgrades.
                 </div>
@@ -460,10 +465,22 @@ export default async function Home() {
               <CardContent>
                 <CardLabel variant="large">Decentralization</CardLabel>
                 <div className="text-muted-foreground font-medium">
-                  Secured by 1.1M+ validators distributed across geographies and
-                  client implementations.{" "}
-                  <strong>$130B+ in economic security</strong> makes Ethereum
-                  the most expensive smart contract platform to attack.
+                  Secured by{" "}
+                  {formatLargeNumber(
+                    beaconChainData.data.validatorCount,
+                    {},
+                    2
+                  )}
+                  + validators distributed across geographies and client
+                  implementations.{" "}
+                  <strong>
+                    {formatLargeCurrency(
+                      beaconChainData.data.totalStakedEther * ethPrice.data.usd
+                    )}
+                    + in economic security
+                  </strong>{" "}
+                  makes Ethereum the most expensive smart contract platform to
+                  attack.
                 </div>
               </CardContent>
               <CardContent>
