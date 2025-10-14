@@ -208,12 +208,8 @@ export default function Page() {
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Solution Providers" shape="handshake">
         <p>
-          Connect with a curated network of solution providers that specialize
-          in building in the Ethereum ecosystem.
-        </p>
-        <p>
-          From tokenization platforms to infrastructure and compliance, find
-          established, regional teams to support your onchain strategy.
+          Discover providers offering expertise, tools, and support for your
+          business.
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
@@ -247,7 +243,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
     title: "Regional Solution Providers",
     description:
-      "Connect with a curated network of solution providers that specialize in building in the Ethereum ecosystem",
+      "Discover providers offering expertise, tools, and support for your business.",
     image: "/images/og/providers.png",
   })
 }

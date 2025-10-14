@@ -44,12 +44,12 @@ export function ScalingPanel() {
       cards: [
         {
           content:
-            "Eigen DA throughput reaches 100MB/second, allowing Ethereum rollups to operate at 12.8x Visa’s peak throughput and enabling >800K ERC-20 transfers per second",
+            "Eigen DA throughput reaches 100MB/second, allowing Ethereum rollups to operate at 12.8x Visa's peak throughput and enabling >800K ERC-20 transfers per second",
           href: "https://blog.eigencloud.xyz/eigenda-v2-core-architecture/",
         },
         {
           content:
-            "ZKSync’s Airbender reaches up to 6x faster proving throughput than competitors, proving Ethereum blocks in real-time with 8 nvidia 5090 GPUs, and unlocking real-time clearing for latency-sensitive finance",
+            "ZKSync's Airbender reaches up to 6x faster proving throughput than competitors, proving Ethereum blocks in real-time with 8 nvidia 5090 GPUs, and unlocking real-time clearing for latency-sensitive finance",
           href: "https://www.zksync.io/airbender",
         },
       ],
@@ -59,7 +59,7 @@ export function ScalingPanel() {
       cards: [
         {
           content:
-            "PeerDAS data availability sampling sets the stage to 8x today’s mainnet throughput",
+            "PeerDAS data availability sampling sets the stage to 8x today's mainnet throughput",
           href: "https://blog.ethereum.org/2025/08/22/protocol-update-002",
         },
         {
