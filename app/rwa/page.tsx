@@ -2,11 +2,18 @@ import { Check } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
+import { MetricWithSource } from "@/lib/types"
+
 import Hero from "@/components/Hero"
-import { Card } from "@/components/ui/card"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
+import { Card, CardSource } from "@/components/ui/card"
 import Link, { LinkWithArrow } from "@/components/ui/link"
 
+import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
+import { formatLargeCurrency } from "@/lib/utils/number"
+
+import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
@@ -18,7 +25,32 @@ import usde from "@/public/images/tokens/usde.svg"
 import usds from "@/public/images/tokens/usds.svg"
 import usdt from "@/public/images/tokens/usdt.svg"
 
-export default function Page() {
+export default async function Page() {
+  const stablecoinMarketshareData = await fetchStablecoinMarketshare()
+
+  const metrics: MetricWithSource[] = [
+    {
+      label: "Stablecoins on Etheruem L1",
+      value: formatLargeCurrency(
+        stablecoinMarketshareData.data.ethereumL1StablecoinUSD
+      ),
+      lastUpdated: formatDateMonthDayYear(
+        stablecoinMarketshareData.lastUpdated
+      ),
+      ...stablecoinMarketshareData.sourceInfo,
+    },
+    {
+      label: "Stablecoins on Etheruem L2",
+      value: formatLargeCurrency(
+        stablecoinMarketshareData.data.ethereumL2StablecoinUSD
+      ),
+      lastUpdated: formatDateMonthDayYear(
+        stablecoinMarketshareData.lastUpdated
+      ),
+      ...stablecoinMarketshareData.sourceInfo,
+    },
+  ]
+
   const stablecoins: {
     ticker: string
     issuer: string
@@ -136,6 +168,7 @@ export default function Page() {
       visitHref: "https://www.usdc.com/", // TODO: Confirm href
     },
   ]
+
   return (
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero
@@ -154,22 +187,35 @@ export default function Page() {
             open, and resilient ecosystem of Ethereum and its L2s.
           </p>
           <div className="flex w-full flex-1 gap-4 max-sm:flex-col">
-            <Card className="py//-8 flex-1 space-y-2">
-              <p>Stablecoins on Ethereum L1</p>
-              {/* // TODO: Live data */}
-              <p className="text-big font-bold tracking-[0.055rem]">$162B</p>
-              <p className="text-xs font-medium tracking-[0.015rem]">
-                Source: rwa.xyz
-              </p>
-            </Card>
-            <Card className="flex-1 space-y-2 py-8">
-              <p>Stablecoins on Ethereum L2s</p>
-              {/* // TODO: Live data */}
-              <p className="text-big font-bold tracking-[0.055rem]">$10B</p>
-              <p className="text-xs font-medium tracking-[0.015rem]">
-                Source: rwa.xyz
-              </p>
-            </Card>
+            {metrics.map(({ label, value, ...sourceInfo }, idx) => {
+              const { source, sourceHref } = sourceInfo
+              return (
+                <Card key={idx} className="flex-1 space-y-2 py-8">
+                  <p className="font-medium">{label}</p>
+                  <p className="text-big font-bold tracking-[0.055rem]">
+                    {value}
+                  </p>
+                  <CardSource>
+                    Source:{" "}
+                    {sourceHref ? (
+                      <Link
+                        href={sourceHref}
+                        className="text-muted-foreground hover:text-foreground"
+                        inline
+                      >
+                        {source}
+                      </Link>
+                    ) : (
+                      source
+                    )}
+                    <SourceInfoTooltip
+                      {...sourceInfo}
+                      iconClassName="translate-y-px"
+                    />
+                  </CardSource>
+                </Card>
+              )
+            })}
           </div>
         </div>
 
