@@ -8,6 +8,7 @@ import RwaTimeseriesTvlLineChart from "@/components/data/rwa-timeseries-tvl-line
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import StablecoinTimeseriesTvlLineChart from "@/components/data/stablecoin-timeseries-tvl-line-chart"
 import Hero from "@/components/Hero"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
 import {
   Card,
@@ -44,7 +45,7 @@ import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
 import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
 import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
-import fetchTvlDefiEthereumCurrent from "../_actions/fetchTvlDefiCurrent"
+import fetchTvlDefiAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
 import fetchValidatorCount from "../_actions/fetchValidatorCount"
 
 export default async function Page() {
@@ -54,7 +55,7 @@ export default async function Page() {
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
   const validatorCountData = await fetchValidatorCount()
-  const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
+  const tvlDefiEthereumCurrentData = await fetchTvlDefiAllCurrent()
   const totalValueSecuredData = await fetchTotalValueSecured()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
     await fetchStablecoinMarketshare()
@@ -70,7 +71,7 @@ export default async function Page() {
       value: "$123.4B™", // TODO: Live data
       source: "tokenterminal.com",
       sourceHref: "https://tokenterminal.com",
-      lastUpdated: formatDateMonthDayYear(0),
+      // lastUpdated: formatDateMonthDayYear(0),
     },
     {
       label: "Total Value Secured (TVS)",
@@ -117,52 +118,48 @@ export default async function Page() {
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
             {overviewCards.map(
-              ({
-                label,
-                value,
-                source,
-                lastUpdated,
-                percentChange,
-                sourceHref,
-              }) => (
-                <Card key={label} variant="flex-height">
-                  <CardContent>
-                    <CardLabel className="text-base font-medium tracking-[0.02rem]">
-                      {label}
-                    </CardLabel>
-                    <CardValue asChild>
-                      <AnimatedNumberInView>{value}</AnimatedNumberInView>
-                    </CardValue>
-                    {percentChange && (
-                      <CardSmallText
-                        className={getChangeColorClass(percentChange)}
-                      >
-                        {formatPercent(percentChange, true)} vs 30D
-                      </CardSmallText>
+              ({ label, value, percentChange, ...sourceInfo }, idx) => {
+                const { source, sourceHref } = sourceInfo
+                return (
+                  <Card key={idx} variant="flex-height">
+                    <CardContent>
+                      <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                        {label}
+                      </CardLabel>
+                      <CardValue asChild>
+                        <AnimatedNumberInView>{value}</AnimatedNumberInView>
+                      </CardValue>
+                      {percentChange && (
+                        <CardSmallText
+                          className={getChangeColorClass(percentChange)}
+                        >
+                          {formatPercent(percentChange, true)} vs 30D
+                        </CardSmallText>
+                      )}
+                    </CardContent>
+                    {source && (
+                      <CardSource>
+                        Source:{" "}
+                        {sourceHref ? (
+                          <Link
+                            href={sourceHref}
+                            className="text-muted-foreground hover:text-foreground"
+                            inline
+                          >
+                            {source}
+                          </Link>
+                        ) : (
+                          source
+                        )}
+                        <SourceInfoTooltip
+                          {...sourceInfo}
+                          iconClassName="translate-y-px"
+                        />
+                      </CardSource>
                     )}
-                  </CardContent>
-                  <CardSource>
-                    <span
-                      title={
-                        lastUpdated
-                          ? "Last updated: " +
-                            formatDateMonthDayYear(lastUpdated)
-                          : ""
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
-                    <Link
-                      href={sourceHref}
-                      className="text-muted-foreground hover:text-foreground"
-                      inline
-                    >
-                      {source}
-                    </Link>
-                  </CardSource>
-                </Card>
-              )
+                  </Card>
+                )
+              }
             )}
           </div>
         </section>

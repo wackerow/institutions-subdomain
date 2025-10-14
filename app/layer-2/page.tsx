@@ -6,6 +6,7 @@ import type { Metadata } from "next/types"
 import { MetricWithSource } from "@/lib/types"
 
 import Hero from "@/components/Hero"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from "@/components/ui/link"
@@ -178,10 +179,13 @@ export default async function Page() {
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {metrics.map(({ label, value }) => (
-              <CardContent key={label} className="text-center">
+            {metrics.map(({ label, value, ...sourceInfo }, idx) => (
+              <CardContent key={idx} className="text-center">
                 <p className="text-big font-bold">{value}</p>
-                <p className="text-muted-foreground font-medium">{label}</p>
+                <div className="text-muted-foreground font-medium">
+                  {label}
+                  <SourceInfoTooltip {...sourceInfo} />
+                </div>
               </CardContent>
             ))}
           </div>

@@ -70,6 +70,7 @@ type JSONData = {
 export type L2ScalingSummaryData = {
   latestCanonicalTvl: number
   allProjectsCount: number
+  allL2Slugs: string[]
 }
 
 export const fetchL2ScalingSummary = async (): Promise<
@@ -92,9 +93,14 @@ export const fetchL2ScalingSummary = async (): Promise<
 
     const json: JSONData = await response.json()
 
+    const allL2Slugs = Object.keys(json.projects).map((project) =>
+      project.toLowerCase().replace(/[\s-]/g, "")
+    )
+
     const data = {
       latestCanonicalTvl: json.chart.data[json.chart.data.length - 1][2],
-      allProjectsCount: Object.keys(json.projects).length,
+      allL2Slugs,
+      allProjectsCount: allL2Slugs.length,
     }
 
     return { data, lastUpdated: Date.now() }

@@ -1,14 +1,21 @@
 import type { ComponentProps } from "react"
 
+import { MetricWithSource } from "@/lib/types"
+
 import { cn } from "@/lib/utils"
 
+import { SourceInfoTooltip } from "../InfoTooltip"
 import { AnimatedNumberInView } from "../ui/animated-number"
 
-type BigNumberProps = Pick<ComponentProps<"div">, "className" | "children"> & {
-  value: string
-}
+type BigNumberProps = Pick<ComponentProps<"div">, "className" | "children"> &
+  Omit<MetricWithSource, "label">
 
-const BigNumber = ({ value, className, children }: BigNumberProps) => (
+const BigNumber = ({
+  value,
+  className,
+  children,
+  ...sourceInfo
+}: BigNumberProps) => (
   <div
     className={cn("flex flex-col items-center gap-2 text-center", className)}
   >
@@ -20,6 +27,9 @@ const BigNumber = ({ value, className, children }: BigNumberProps) => (
     {children && (
       <p className="text-muted-foreground mx-auto max-w-52 tracking-[0.02rem]">
         {children}
+        {(sourceInfo.source || sourceInfo.lastUpdated) && (
+          <SourceInfoTooltip {...sourceInfo} />
+        )}
       </p>
     )}
   </div>

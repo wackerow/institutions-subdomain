@@ -1,3 +1,4 @@
+import { ReactNode } from "react"
 import { StaticImageData } from "next/image"
 
 export type LibraryItem = {
@@ -38,13 +39,13 @@ export type RwaMarketshareSummaryData = {
 }
 
 export type SourceInfo = {
-  source: string
-  sourceHref: string
-  lastUpdated: string
+  source?: string
+  sourceHref?: string
+  lastUpdated?: string
 }
 
 export type MetricWithSource = SourceInfo & {
-  label: string
+  label: ReactNode
   value: string | number
   percentChange?: number
 }

@@ -3,6 +3,8 @@ import { Metadata } from "next"
 import { InfoIcon } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 
+import { MetricWithSource } from "@/lib/types"
+
 import BigNumber from "@/components/BigNumber"
 import { libraryItems } from "@/components/data/library"
 import Hero from "@/components/Hero"
@@ -38,13 +40,21 @@ import {
 import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
-import { isValidDate } from "@/lib/utils/date"
+import { rwaMarketshareToSummaryData } from "@/lib/utils/data"
+import { formatDateMonthDayYear, isValidDate } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
-import { formatLargeCurrency, formatLargeNumber } from "@/lib/utils/number"
+import {
+  formatLargeCurrency,
+  formatLargeNumber,
+  formatPercent,
+} from "@/lib/utils/number"
 import { formatDuration } from "@/lib/utils/time"
 
+import { MAINNET_GENESIS } from "@/lib/constants"
+
+import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
-import fetchTvlDefiEthereumCurrent from "./_actions/fetchTvlDefiCurrent"
+import fetchTvlDefiAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
 import fetchValidatorCount from "./_actions/fetchValidatorCount"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
@@ -125,41 +135,71 @@ export default async function Home() {
   const uptime = getTimeSinceGenesis()
   const timeseriesTotalRwaValueData = await fetchTimeseriesStablecoinsValue()
   const validatorCountData = await fetchValidatorCount()
-  const tvlDefiEthereumCurrentData = await fetchTvlDefiEthereumCurrent()
+  const tvlDefiAllCurrentData = await fetchTvlDefiAllCurrent()
+  const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
+    await fetchRwaMarketshare()
+  )
 
-  const metrics: { value: string; label: ReactNode }[] = [
+  const metrics: MetricWithSource[] = [
     {
-      value: formatDuration(uptime),
+      value: formatDuration(uptime, { maxDecimalPoints: 1 }),
       label: "Uninterrupted uptime and liveness",
+      source: `Genesis ${formatDateMonthDayYear(MAINNET_GENESIS)}`,
+      lastUpdated: formatDateMonthDayYear(Date.now()),
     },
     {
       value: formatLargeNumber(validatorCountData.data.validatorCount),
       label: "Validators securing the network",
+      source: "beaconcha.in",
+      sourceHref: "https://beaconcha.in",
+      lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
     },
     {
       value: formatLargeCurrency(timeseriesTotalRwaValueData.data.currentValue),
       label: "Stablecoin TVL 60%+ of all stablecoin supply",
-    },
-    {
-      value: "90%+", // TODO: Live data
-      label: "RWA marketshare on Ethereum and its L2s",
-    },
-    {
-      value:
-        formatLargeCurrency(tvlDefiEthereumCurrentData.data.mainnetDefiTvl) +
-        "+", // TODO: Confirm "+" suffix usage
-      label: (
-        <>
-          DeFi TVL
-          <br /> 65%+ of all blockchains {/* // TODO: Live data */}
-        </>
+      source: "rwa.xyz",
+      sourceHref: "https://rwa.xyz",
+      lastUpdated: formatDateMonthDayYear(
+        timeseriesTotalRwaValueData.lastUpdated
       ),
     },
     {
-      value: "$12B+", // TODO: Live data
+      value: formatPercent(
+        rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
+      ),
+      label: "RWA marketshare on Ethereum and its L2s",
+      source: "rwa.xyz",
+      sourceHref: "https://rwa.xyz",
+      lastUpdated: formatDateMonthDayYear(
+        rwaMarketshareSummaryData.lastUpdated
+      ),
+    },
+    {
+      value:
+        formatLargeCurrency(tvlDefiAllCurrentData.data.mainnetDefiTvl) + "+", // TODO: Confirm "+" suffix usage
       label: (
         <>
-          24 Hour DEX Volume
+          DeFi TVL
+          {/* // TODO: Live data */}
+          <br />{" "}
+          <span className="font-medium">
+            {formatPercent(
+              tvlDefiAllCurrentData.data.mainnetDefiMarketshare +
+                tvlDefiAllCurrentData.data.layer2DefiMarketshare
+            )}
+          </span>
+          + of all blockchains
+        </>
+      ),
+      source: "defillama.com",
+      sourceHref: "https://defillama.com/",
+      lastUpdated: formatDateMonthDayYear(tvlDefiAllCurrentData.lastUpdated),
+    },
+    {
+      value: "$12B+™", // TODO: Live data
+      label: (
+        <>
+          24-Hour DEX Volume
           <br />
           2025 ecosystem average
         </>
@@ -239,8 +279,13 @@ export default async function Home() {
             </LinkWithArrow>
           </div>
           <div className="grid grid-cols-[auto_auto] gap-14 max-sm:grid-cols-2">
-            {metrics.map(({ value, label }, idx) => (
-              <BigNumber key={idx} value={value} className="xl:w-xs">
+            {metrics.map(({ value, label, ...sourceInfo }, idx) => (
+              <BigNumber
+                key={idx}
+                value={value}
+                {...sourceInfo}
+                className="xl:w-xs"
+              >
                 {label}
               </BigNumber>
             ))}

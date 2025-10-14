@@ -32,16 +32,21 @@ const SourceInfoTooltip = ({
   sourceHref,
   lastUpdated,
   children,
-}: SourceInfo & { children?: ReactNode }) => (
-  <InfoTooltip>
+  iconClassName,
+}: SourceInfo & Omit<InfoTooltipProps, "children"> & { children?: string }) => (
+  <InfoTooltip iconClassName={iconClassName}>
     {children}
     <p className={cn("text-nowrap", children && "mt-2")}>
       Source:{" "}
-      <Link inline href={sourceHref}>
-        {source}
-      </Link>
+      {sourceHref ? (
+        <Link inline href={sourceHref}>
+          {source}
+        </Link>
+      ) : (
+        source
+      )}
     </p>
-    <p className="text-nowrap">Last updated: {lastUpdated}</p>
+    {lastUpdated && <p className="text-nowrap">Last updated: {lastUpdated}</p>}
   </InfoTooltip>
 )
 
