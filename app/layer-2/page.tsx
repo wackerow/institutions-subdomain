@@ -13,9 +13,15 @@ import Link from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
-import { formatCurrency, formatLargeCurrency } from "@/lib/utils/number"
+import {
+  formatCurrency,
+  formatLargeCurrency,
+  formatLargeNumber,
+} from "@/lib/utils/number"
 
+import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchL2MedianTxCost from "../_actions/fetchL2MedianTxCost"
+import fetchL2ScalingActivity from "../_actions/fetchL2ScalingActivity"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 
 import celo from "@/public/images/app-logos/celo.png"
@@ -37,7 +43,9 @@ type CardItem = {
 
 export default async function Page() {
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
+  const l2ScalingActivityData = await fetchL2ScalingActivity()
   const l2MedianTxCostData = await fetchL2MedianTxCost()
+  const beaconchainData = await fetchBeaconChain()
 
   const metrics: MetricWithSource[] = [
     {
@@ -60,10 +68,9 @@ export default async function Page() {
     },
     {
       label: "Avg. User Operations Per Seconds",
-      value: "216™", // TODO: Live data
-      source: "",
-      sourceHref: "",
-      lastUpdated: "",
+      value: formatLargeNumber(l2ScalingActivityData.data.uops),
+      lastUpdated: formatDateMonthDayYear(l2ScalingActivityData.lastUpdated),
+      ...l2ScalingActivityData.sourceInfo,
     },
     {
       label: "Number of L2s",
@@ -272,7 +279,13 @@ export default async function Page() {
         <section id="benefits" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">Benefits of L2s</h2>
 
-          <L2BenefitsPanel />
+          <L2BenefitsPanel
+            validatorsCount={formatLargeNumber(
+              beaconchainData.data.validatorCount,
+              {},
+              2
+            )}
+          />
         </section>
 
         <section id="frameworks" className="space-y-8">

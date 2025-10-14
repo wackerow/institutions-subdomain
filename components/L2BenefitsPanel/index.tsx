@@ -8,7 +8,10 @@ import { cn } from "@/lib/utils"
 
 import Link from "../ui/link"
 
-export function L2BenefitsPanel() {
+type L2BenefitsPanelProps = {
+  validatorsCount: string
+}
+export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   const items: {
@@ -39,7 +42,7 @@ export function L2BenefitsPanel() {
                 inline
                 className="css-secondary"
               >
-                1M+ validators
+                {validatorsCount}+ validators
               </Link>
               , paying only usage-based fees.
             </>,
