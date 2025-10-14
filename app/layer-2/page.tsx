@@ -37,7 +37,11 @@ export default async function Page() {
     {
       label: "Avg. Transaction Cost daily",
       value: formatCurrency(
-        l2MedianTxCostData.data.latestWeightedMedianTxCostUsd
+        l2MedianTxCostData.data.latestWeightedMedianTxCostUsd,
+        {
+          minimumSignificantDigits: 3,
+          maximumSignificantDigits: 3,
+        }
       ),
       source: "growthepie.com",
       sourceHref: "https://growthepie.com",

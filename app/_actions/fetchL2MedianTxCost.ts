@@ -33,43 +33,52 @@ export const fetchL2MedianTxCost = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    // const filteredData = json.filter((item) =>
-    //   ["txcosts_median_usd", "txcount"].includes(item.metric_key)
-    // )
+    const filteredResponses = json.filter((item) =>
+      ["txcosts_median_usd", "txcount"].includes(item.metric_key)
+    )
 
     // TODO: Confirm usage of most recent day
-    const latestDate = json.reduce((latest, item) => {
+    const latestDate = filteredResponses.reduce((latest, item) => {
       const itemDate = new Date(item.date)
       return itemDate > new Date(latest) ? item.date : latest
-    }, json[0].date)
+    }, filteredResponses[0].date)
 
-    const latestDayData = json.filter((item) => item.date === latestDate)
-
-    const txcosts = latestDayData.filter(
-      (item) => item.metric_key === "txcosts_median_usd"
-    )
-    const txcounts = latestDayData.filter(
-      (item) => item.metric_key === "txcount"
+    const latestDayData = filteredResponses.filter(
+      (item) => item.date === latestDate
     )
 
-    const latestWeightedMedianTxCostUsd = (() => {
-      // Map origin_key to txcost and txcount
-      const txcostMap = new Map<string, number>()
-      txcosts.forEach((item) => txcostMap.set(item.origin_key, item.value))
+    const collated: Record<
+      string,
+      {
+        txCount?: number
+        medianTxCost?: number
+      }
+    > = {}
 
-      let totalTxCount = 0
-      let weightedSum = 0
+    latestDayData.forEach(({ metric_key, origin_key, value }) => {
+      // Skip Mainnet
+      if (origin_key === "ethereum") return
+      // Add key if not yet initialized
+      if (!collated[origin_key]) collated[origin_key] = {}
+      // Update values
+      if (metric_key === "txcount") collated[origin_key].txCount = value
+      if (metric_key === "txcosts_median_usd")
+        collated[origin_key].medianTxCost = value
+    })
 
-      txcounts.forEach((item) => {
-        const txcost = txcostMap.get(item.origin_key)
-        if (typeof txcost === "number") {
-          weightedSum += txcost * item.value
-          totalTxCount += item.value
+    const { weightedSum, totalTxCount } = Object.values(collated).reduce(
+      (acc, { txCount, medianTxCost }) => {
+        if (typeof txCount === "number" && typeof medianTxCost === "number") {
+          acc.weightedSum += medianTxCost * txCount
+          acc.totalTxCount += txCount
         }
-      })
+        return acc
+      },
+      { weightedSum: 0, totalTxCount: 0 }
+    )
 
-      return totalTxCount > 0 ? weightedSum / totalTxCount : 0
-    })()
+    const latestWeightedMedianTxCostUsd =
+      totalTxCount > 0 ? weightedSum / totalTxCount : 0
 
     return {
       data: { latestWeightedMedianTxCostUsd },
