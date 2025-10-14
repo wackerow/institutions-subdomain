@@ -40,7 +40,10 @@ import {
 import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
-import { rwaMarketshareToSummaryData } from "@/lib/utils/data"
+import {
+  rwaMarketshareToSummaryData,
+  stablecoinMarketshareToPieChartData,
+} from "@/lib/utils/data"
 import { formatDateMonthDayYear, isValidDate } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import {
@@ -53,6 +56,7 @@ import { formatDuration } from "@/lib/utils/time"
 import { MAINNET_GENESIS } from "@/lib/constants"
 
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
+import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
 import fetchTvlDefiAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
 import fetchValidatorCount from "./_actions/fetchValidatorCount"
@@ -139,6 +143,17 @@ export default async function Home() {
   const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
   )
+  const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
+    await fetchStablecoinMarketshare()
+  )
+  const stablecoinMarketshareDataEthereum =
+    stablecoinMarketshareData.data.filter(
+      ({ network }) => network === "ethereum"
+    )
+  const ethereumStablecoinMarketshare =
+    stablecoinMarketshareDataEthereum.length > 0
+      ? stablecoinMarketshareDataEthereum[0].marketshare
+      : 0
 
   const metrics: MetricWithSource[] = [
     {
@@ -156,7 +171,21 @@ export default async function Home() {
     },
     {
       value: formatLargeCurrency(timeseriesTotalRwaValueData.data.currentValue),
-      label: "Stablecoin TVL 60%+ of all stablecoin supply",
+      label: (
+        <>
+          Stablecoin TVL{" "}
+          {ethereumStablecoinMarketshare ? (
+            <>
+              <span className="font-medium">
+                {formatPercent(ethereumStablecoinMarketshare)}+
+              </span>{" "}
+              of all stablecoin supply
+            </>
+          ) : (
+            ""
+          )}
+        </>
+      ),
       source: "rwa.xyz",
       sourceHref: "https://rwa.xyz",
       lastUpdated: formatDateMonthDayYear(
