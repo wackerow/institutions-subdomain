@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 
 import { SourceInfoTooltip } from "../InfoTooltip"
 import { AnimatedNumberInView } from "../ui/animated-number"
+import { InlineText } from "../ui/inline-text"
 
 type BigNumberProps = Pick<ComponentProps<"div">, "className" | "children"> &
   Omit<MetricWithSource, "label">
@@ -17,20 +18,23 @@ const BigNumber = ({
   ...sourceInfo
 }: BigNumberProps) => (
   <div
-    className={cn("flex flex-col items-center gap-2 text-center", className)}
+    className={cn(
+      "flex flex-col items-center gap-2 text-center xl:w-xs",
+      className
+    )}
   >
     {value && (
-      <AnimatedNumberInView className="text-h3-mobile sm:text-h3 font-bold tracking-[0.055rem]">
+      <AnimatedNumberInView className="text-big-mobile sm:text-big font-bold tracking-[0.055rem]">
         {value}
       </AnimatedNumberInView>
     )}
     {children && (
-      <p className="text-muted-foreground mx-auto max-w-52 tracking-[0.02rem]">
+      <InlineText className="text-muted-foreground mx-auto max-w-52 font-medium tracking-[0.02rem]">
         {children}
         {(sourceInfo.source || sourceInfo.lastUpdated) && (
           <SourceInfoTooltip {...sourceInfo} />
         )}
-      </p>
+      </InlineText>
     )}
   </div>
 )

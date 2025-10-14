@@ -13,7 +13,7 @@ export function InlineText({
 
   return (
     <Comp
-      className={cn("relative inline-block pr-[1.25em]", className)}
+      className={cn("relative inline-block pe-[1.25em]", className)}
       data-slot="inline-text"
       {...props}
     />
@@ -27,7 +27,7 @@ export function InlineTextIcon({
   return (
     <span
       className={cn(
-        "absolute ml-[.25em] inline-flex h-[1lh] flex-none items-center [&>svg]:size-[1em]",
+        "absolute ms-[0.25em] inline-flex h-[1lh] flex-none items-center",
         className
       )}
       data-slot="inline-text-icon"

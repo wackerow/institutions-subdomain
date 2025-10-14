@@ -6,6 +6,7 @@ import { MetricWithSource } from "@/lib/types"
 
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
+import { AnimatedNumberInView } from "@/components/ui/animated-number"
 import { Card, CardSource } from "@/components/ui/card"
 import Link, { LinkWithArrow } from "@/components/ui/link"
 
@@ -192,9 +193,9 @@ export default async function Page() {
               return (
                 <Card key={idx} className="flex-1 space-y-2 py-8">
                   <p className="font-medium">{label}</p>
-                  <p className="text-big font-bold tracking-[0.055rem]">
+                  <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                     {value}
-                  </p>
+                  </AnimatedNumberInView>
                   <CardSource>
                     Source:{" "}
                     {sourceHref ? (
@@ -208,10 +209,7 @@ export default async function Page() {
                     ) : (
                       source
                     )}
-                    <SourceInfoTooltip
-                      {...sourceInfo}
-                      iconClassName="translate-y-px"
-                    />
+                    <SourceInfoTooltip {...sourceInfo} />
                   </CardSource>
                 </Card>
               )

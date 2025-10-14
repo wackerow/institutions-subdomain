@@ -28,6 +28,7 @@ import {
   CarouselNavigation,
 } from "@/components/ui/carousel"
 import { InfiniteSlider } from "@/components/ui/infinite-slider"
+import { InlineText } from "@/components/ui/inline-text"
 import {
   LibraryCard,
   LibraryCardDate,
@@ -60,7 +61,7 @@ import fetchEthPrice from "./_actions/fetchEthPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
-import fetchTvlDefiAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
+import fetchDefiTvlAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
 import robertMitchnick from "@/public/images/robert-mitchnick.png"
@@ -141,7 +142,7 @@ export default async function Home() {
   const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
   const beaconChainData = await fetchBeaconChain()
   const ethPrice = await fetchEthPrice()
-  const tvlDefiAllCurrentData = await fetchTvlDefiAllCurrent()
+  const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
   const dexVolume = await fetchDexVolume()
   const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
@@ -208,22 +209,22 @@ export default async function Home() {
     },
     {
       value:
-        formatLargeCurrency(tvlDefiAllCurrentData.data.mainnetDefiTvl) + "+", // TODO: Confirm "+" suffix usage
+        formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl) + "+", // TODO: Confirm "+" suffix usage
       label: (
         <>
           DeFi TVL
           <br />{" "}
           <span className="font-medium">
             {formatPercent(
-              tvlDefiAllCurrentData.data.mainnetDefiMarketshare +
-                tvlDefiAllCurrentData.data.layer2DefiMarketshare
+              defiTvlAllCurrentData.data.mainnetDefiMarketshare +
+                defiTvlAllCurrentData.data.layer2DefiMarketshare
             )}
           </span>
           + of all blockchains
         </>
       ),
-      lastUpdated: formatDateMonthDayYear(tvlDefiAllCurrentData.lastUpdated),
-      ...tvlDefiAllCurrentData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
+      ...defiTvlAllCurrentData.sourceInfo,
     },
     {
       value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
@@ -309,13 +310,8 @@ export default async function Home() {
             </LinkWithArrow>
           </div>
           <div className="grid grid-cols-[auto_auto] gap-14 max-sm:grid-cols-2">
-            {metrics.map(({ value, label, ...sourceInfo }, idx) => (
-              <BigNumber
-                key={idx}
-                value={value}
-                {...sourceInfo}
-                className="xl:w-xs"
-              >
+            {metrics.map(({ label, ...props }, idx) => (
+              <BigNumber key={idx} {...props}>
                 {label}
               </BigNumber>
             ))}
@@ -532,10 +528,10 @@ export default async function Home() {
                     </h3>
                     <Image src={imgSrc} alt={`${name} logo`} className="h-10" />
                     <p className="text-muted-foreground">{label}</p>
-                    <div className="text-muted-foreground inline-flex items-center font-bold">
+                    <InlineText className="text-muted-foreground inline//-flex items//-center font-bold">
                       {value}
                       <SourceInfoTooltip {...sourceInfo} />
-                    </div>
+                    </InlineText>
                   </div>
                 )
               )}

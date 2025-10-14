@@ -8,15 +8,15 @@ import fetchL2ScalingSummary from "./fetchL2ScalingSummary"
 
 type JSONData = { name: string; tvl: number }[]
 
-export type TvlDefiAllCurrentData = {
+export type DefiTvlAllCurrentData = {
   mainnetDefiTvl: number
   mainnetDefiMarketshare: number
   layer2DefiMarketshare: number
   runnerUpMultiplier: number
 }
 
-export const fetchTvlDefiAllCurrent = async (): Promise<
-  DataTimestamped<TvlDefiAllCurrentData>
+export const fetchDefiTvlAllCurrent = async (): Promise<
+  DataTimestamped<DefiTvlAllCurrentData>
 > => {
   const url = "https://api.llama.fi/v2/chains"
 
@@ -47,7 +47,7 @@ export const fetchTvlDefiAllCurrent = async (): Promise<
       ({ name }) => name.toLowerCase() !== "ethereum"
     )
 
-    // Get list of all L2 network slugs from L2Beat
+    // Fetch list of all L2 network slugs from L2Beat
     const {
       data: { allL2Slugs },
     } = await fetchL2ScalingSummary()
@@ -82,7 +82,7 @@ export const fetchTvlDefiAllCurrent = async (): Promise<
       sourceInfo: SOURCE.LLAMA,
     }
   } catch (error: unknown) {
-    console.error("fetchTvlDefiAllCurrent failed", {
+    console.error("fetchDefiTvlAllCurrent failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -91,4 +91,4 @@ export const fetchTvlDefiAllCurrent = async (): Promise<
   }
 }
 
-export default fetchTvlDefiAllCurrent
+export default fetchDefiTvlAllCurrent

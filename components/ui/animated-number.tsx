@@ -112,7 +112,7 @@ export function AnimatedNumberInView({
   )
 
   return (
-    <div className={className} ref={ref}>
+    <div className={cn("text-nowrap", className)} ref={ref}>
       {parts.prefix}
       {/* Reserve final width and overlay the animated number */}
       <span className="inline-grid">

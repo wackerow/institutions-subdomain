@@ -47,7 +47,7 @@ import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
 import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
 import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
-import fetchTvlDefiAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
+import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
 
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
@@ -56,7 +56,7 @@ export default async function Page() {
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
   const beaconChainData = await fetchBeaconChain()
-  const tvlDefiEthereumCurrentData = await fetchTvlDefiAllCurrent()
+  const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
   const totalValueSecuredData = await fetchTotalValueSecured()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
     await fetchStablecoinMarketshare()
@@ -140,10 +140,7 @@ export default async function Page() {
                       ) : (
                         source
                       )}
-                      <SourceInfoTooltip
-                        {...sourceInfo}
-                        iconClassName="translate-y-px"
-                      />
+                      <SourceInfoTooltip {...sourceInfo} />
                     </CardSource>
                   )}
                 </Card>
@@ -216,7 +213,7 @@ export default async function Page() {
                 <div className="my-10 flex flex-col items-center gap-y-6 sm:my-14">
                   <AnimatedNumberInView className="text-6xl font-bold tracking-[0.08rem] sm:text-7xl">
                     {formatMultiplier(
-                      tvlDefiEthereumCurrentData.data.runnerUpMultiplier
+                      defiTvlAllCurrentData.data.runnerUpMultiplier
                     )}
                   </AnimatedNumberInView>
                   <CardSmallText className="text-center text-sm">
@@ -229,7 +226,7 @@ export default async function Page() {
                       title={
                         "Last updated: " +
                         formatDateMonthDayYear(
-                          tvlDefiEthereumCurrentData.lastUpdated
+                          defiTvlAllCurrentData.lastUpdated
                         )
                       }
                     >

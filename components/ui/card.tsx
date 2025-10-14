@@ -4,6 +4,8 @@ import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/lib/utils/index"
 
+import { InlineText } from "./inline-text"
+
 const cardVariants = cva("bg-card text-card-foreground p-6", {
   variants: {
     variant: {
@@ -166,14 +168,16 @@ const CardSmallText = ({ className, ...props }: ComponentProps<"p">) => (
 )
 
 const CardSource = ({ className, ...props }: ComponentProps<"p">) => (
-  <p
-    data-slot="card-source"
-    className={cn(
-      "text-muted-foreground [&_a]:text-muted-foreground [&_a]:hover:text-foreground text-xs font-medium tracking-[0.015rem]",
-      className
-    )}
-    {...props}
-  />
+  <InlineText asChild>
+    <p
+      data-slot="card-source"
+      className={cn(
+        "text-muted-foreground [&_a]:text-muted-foreground [&_a]:hover:text-foreground text-xs font-medium tracking-[0.015rem]",
+        className
+      )}
+      {...props}
+    />
+  </InlineText>
 )
 
 export {
