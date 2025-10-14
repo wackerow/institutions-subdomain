@@ -10,13 +10,13 @@ type JSONData = {
   }
 }
 
-export type beaconChainData = {
+export type BeaconChainData = {
   validatorCount: number
   totalStakedEther: number
 }
 
 export const fetchBeaconChain = async (): Promise<
-  DataTimestamped<beaconChainData>
+  DataTimestamped<BeaconChainData>
 > => {
   const url = "https://beaconcha.in/api/v1/epoch/latest"
 

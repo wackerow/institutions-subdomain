@@ -138,7 +138,7 @@ const testimonials: {
 
 export default async function Home() {
   const uptime = getTimeSinceGenesis()
-  const timeseriesTotalRwaValueData = await fetchTimeseriesStablecoinsValue()
+  const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
   const beaconChainData = await fetchBeaconChain()
   const ethPrice = await fetchEthPrice()
   const tvlDefiAllCurrentData = await fetchTvlDefiAllCurrent()
@@ -169,12 +169,13 @@ export default async function Home() {
     {
       value: formatLargeNumber(beaconChainData.data.validatorCount),
       label: "Validators securing the network",
-      source: "beaconcha.in",
-      sourceHref: "https://beaconcha.in",
       lastUpdated: formatDateMonthDayYear(beaconChainData.lastUpdated),
+      ...beaconChainData.sourceInfo,
     },
     {
-      value: formatLargeCurrency(timeseriesTotalRwaValueData.data.currentValue),
+      value: formatLargeCurrency(
+        timeseriesStablecoinsValueData.data.currentValue
+      ),
       label: (
         <>
           Stablecoin TVL{" "}
@@ -190,22 +191,20 @@ export default async function Home() {
           )}
         </>
       ),
-      source: "rwa.xyz",
-      sourceHref: "https://rwa.xyz",
       lastUpdated: formatDateMonthDayYear(
-        timeseriesTotalRwaValueData.lastUpdated
+        timeseriesStablecoinsValueData.lastUpdated
       ),
+      ...timeseriesStablecoinsValueData.sourceInfo,
     },
     {
       value: formatPercent(
         rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
       ),
       label: "RWA marketshare on Ethereum and its L2s",
-      source: "rwa.xyz",
-      sourceHref: "https://rwa.xyz",
       lastUpdated: formatDateMonthDayYear(
         rwaMarketshareSummaryData.lastUpdated
       ),
+      ...rwaMarketshareSummaryData.sourceInfo,
     },
     {
       value:
@@ -223,9 +222,8 @@ export default async function Home() {
           + of all blockchains
         </>
       ),
-      source: "defillama.com",
-      sourceHref: "https://defillama.com/",
       lastUpdated: formatDateMonthDayYear(tvlDefiAllCurrentData.lastUpdated),
+      ...tvlDefiAllCurrentData.sourceInfo,
     },
     {
       value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
@@ -236,9 +234,8 @@ export default async function Home() {
           2025 ecosystem average
         </>
       ),
-      source: "defillama.com",
-      sourceHref: "https://defillama.com/",
       lastUpdated: formatDateMonthDayYear(dexVolume.lastUpdated),
+      ...dexVolume.sourceInfo,
     },
   ]
 

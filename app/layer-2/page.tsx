@@ -43,9 +43,8 @@ export default async function Page() {
     {
       label: "Total Value Locked (TVL) across L2s",
       value: formatLargeCurrency(l2ScalingSummaryData.data.latestCanonicalTvl),
-      source: "l2beat.com",
-      sourceHref: "https://l2beat.com",
       lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
+      ...l2ScalingSummaryData.sourceInfo,
     },
     {
       label: "Avg. Transaction Cost daily",
@@ -56,9 +55,8 @@ export default async function Page() {
           maximumSignificantDigits: 3,
         }
       ),
-      source: "growthepie.com",
-      sourceHref: "https://growthepie.com",
       lastUpdated: formatDateMonthDayYear(l2MedianTxCostData.lastUpdated),
+      ...l2MedianTxCostData.sourceInfo,
     },
     {
       label: "Avg. User Operations Per Seconds",
@@ -70,9 +68,8 @@ export default async function Page() {
     {
       label: "Number of L2s",
       value: l2ScalingSummaryData.data.allProjectsCount,
-      source: "l2beat.com",
-      sourceHref: "https://l2beat.com",
       lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
+      ...l2ScalingSummaryData.sourceInfo,
     },
   ]
 

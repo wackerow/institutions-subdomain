@@ -36,6 +36,8 @@ import {
   formatPercent,
 } from "@/lib/utils/number"
 
+import { SOURCE } from "@/lib/constants"
+
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
@@ -53,7 +55,7 @@ export default async function Page() {
   const timeseriesRwaValueData = await fetchTimeseriesRwaValue()
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
-  const validatorCountData = await fetchBeaconChain()
+  const beaconChainData = await fetchBeaconChain()
   const tvlDefiEthereumCurrentData = await fetchTvlDefiAllCurrent()
   const totalValueSecuredData = await fetchTotalValueSecured()
   const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
@@ -68,30 +70,26 @@ export default async function Page() {
     {
       label: "Total value locked (TVL)",
       value: "$123.4B™", // TODO: Live data
-      source: "tokenterminal.com",
-      sourceHref: "https://tokenterminal.com",
+      ...SOURCE.TOKENTERMINAL,
       // lastUpdated: formatDateMonthDayYear(0),
     },
     {
       label: "Total Value Secured (TVS)",
       value: formatLargeCurrency(totalValueSecuredData.data.sum),
       lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
-      source: "ultrasound.money",
-      sourceHref: "https://ultrasound.money",
+      ...totalValueSecuredData.sourceInfo,
     },
     {
       label: "Validator count",
-      value: formatNumber(validatorCountData.data.validatorCount),
-      lastUpdated: formatDateMonthDayYear(validatorCountData.lastUpdated),
-      source: "beaconcha.in",
-      sourceHref: "https://beaconcha.in",
+      value: formatNumber(beaconChainData.data.validatorCount),
+      lastUpdated: formatDateMonthDayYear(beaconChainData.lastUpdated),
+      ...beaconChainData.sourceInfo,
     },
     {
       label: "Security Ratio",
       value: formatMultiplier(totalValueSecuredData.data.securityRatio),
       lastUpdated: formatDateMonthDayYear(totalValueSecuredData.lastUpdated),
-      source: "ultrasound.money",
-      sourceHref: "https://ultrasound.money",
+      ...totalValueSecuredData.sourceInfo,
     },
   ]
 
