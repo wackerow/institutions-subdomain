@@ -1,3 +1,5 @@
+import { LinkProps } from "@/components/ui/link"
+
 import { SourceInfo } from "./types"
 
 export const ENTERPRISE_EMAIL = "enterprise@ethereum.org"
@@ -35,12 +37,33 @@ export const SOURCE = {
     source: "growthepie.com",
     sourceHref: "https://growthepie.com",
   },
-  TOKENTERMINAL: {
-    source: "tokenterminal.com",
-    sourceHref: "https://tokenterminal.com",
-  },
   COINGECKO: {
     source: "coingecko.com",
     sourceHref: "https://coingecko.com",
   },
 } as const satisfies Record<string, SourceInfo>
+
+export const DA_NAV_ITEM_LINKS: LinkProps[] = [
+  {
+    children: "RWAs & Stablecoins",
+    href: "/rwa",
+  },
+  {
+    children: "Decentralized Finance",
+    href: "/defi",
+  },
+  {
+    children: "Compliant Privacy",
+    href: "/privacy",
+  },
+  {
+    children: "L2 Ecosystem",
+    href: "/layer-2",
+  },
+]
+
+export const NAV_ITEM_LINKS: LinkProps[] = [
+  { children: "Live Data", href: "/data-hub" },
+  { children: "Library", href: "/library" },
+  { children: "Solution Providers", href: "/providers" },
+]

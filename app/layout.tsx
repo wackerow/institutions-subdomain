@@ -22,6 +22,8 @@ import Link, { LinkProps } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
 
+import { DA_NAV_ITEM_LINKS, NAV_ITEM_LINKS } from "@/lib/constants"
+
 import "./globals.css"
 
 const satoshi = localFont({
@@ -59,40 +61,7 @@ const satoshi = localFont({
   ],
 })
 
-const navItemLinks: LinkProps[] = [
-  { children: "Live Data", href: "/data-hub" },
-  { children: "Library", href: "/library" },
-  { children: "Solution Providers", href: "/providers" },
-]
-
-const mobileMenuItems: LinkProps[] = [
-  {
-    children: "RWAs & Stablecoins",
-    href: "/rwa",
-  },
-  {
-    children: "Decentralized Finance",
-    href: "/defi",
-  },
-  {
-    children: "Compliant Privacy",
-    href: "/privacy",
-  },
-  {
-    children: "L2 Ecosystem",
-    href: "/layer-2",
-  },
-  {
-    children: "Live data",
-    href: "/data-hub",
-  },
-  {
-    children: "Solution providers",
-    href: "/providers",
-  },
-]
-
-const socialLinks: LinkProps[] = [
+const SOCIAL_LINKS: LinkProps[] = [
   {
     href: "https://www.linkedin.com/company/ethereum/posts/",
     children: <LinkedIn />,
@@ -110,7 +79,7 @@ const socialLinks: LinkProps[] = [
   },
 ]
 
-const externalLinks: LinkProps[] = [
+const EXTERNAL_LINKS: LinkProps[] = [
   {
     href: "https://ethereum.org/privacy-policy/",
     children: "Privacy Policy",
@@ -165,7 +134,7 @@ export default function RootLayout({
             <nav className="flex items-center gap-4 max-md:hidden">
               <DigitalAssetsDropdown />
 
-              {navItemLinks.map((props) => (
+              {NAV_ITEM_LINKS.map((props) => (
                 <Link
                   key={props.href}
                   className="css-primary-conditional"
@@ -198,21 +167,19 @@ export default function RootLayout({
                 </DrawerHeader>
                 <div className="flex flex-col gap-y-6 p-10 [&_hr]:border-[#5676E1]">
                   <p className="text-[#5676E1]">Digital Assets</p>
-                  {mobileMenuItems.map((props, idx) => (
-                    <Fragment key={idx}>
-                      <DrawerClose asChild>
-                        <Link
-                          className="text-primary-foreground hover:text-primary-foreground/70 block text-2xl font-medium tracking-[0.03rem]"
-                          {...props}
-                        />
-                      </DrawerClose>
-                      <hr
-                        className={cn(
-                          idx === mobileMenuItems.length - 1 && "hidden"
-                        )}
-                      />
-                    </Fragment>
-                  ))}
+                  {[...DA_NAV_ITEM_LINKS, ...NAV_ITEM_LINKS].map(
+                    (props, idx) => (
+                      <Fragment key={idx}>
+                        <DrawerClose asChild>
+                          <Link
+                            className="text-primary-foreground hover:text-primary-foreground/70 block text-2xl font-medium tracking-[0.03rem]"
+                            {...props}
+                          />
+                        </DrawerClose>
+                        <hr className="last:hidden" />
+                      </Fragment>
+                    )
+                  )}
                 </div>
               </DrawerContent>
             </Drawer>
@@ -236,20 +203,19 @@ export default function RootLayout({
           <div className="max-w-8xl mx-auto space-y-14 px-12 py-10 sm:space-y-9 xl:space-y-28">
             <div className="flex justify-between gap-x-4 gap-y-10 max-sm:flex-col max-sm:items-center">
               <div className="flex items-center gap-4 sm:gap-6">
-                {socialLinks.map((props) => (
+                {SOCIAL_LINKS.map((props) => (
                   <Link key={props.href} {...props} />
                 ))}
               </div>
               <nav className="*:text-muted-foreground *:hover:text-foreground flex items-center gap-x-6 gap-y-1.5 text-nowrap *:block *:text-sm *:tracking-[0.0175rem] max-xl:flex-col sm:ms-auto sm:max-xl:items-end">
-                <DigitalAssetsDropdown className="w-fit" />
-                {navItemLinks.map((props) => (
+                {[...DA_NAV_ITEM_LINKS, ...NAV_ITEM_LINKS].map((props) => (
                   <Link key={props.href} {...props} />
                 ))}
               </nav>
             </div>
             <div className="text-muted-foreground space-y-3 text-xs font-medium *:tracking-[0.0175rem]">
               <nav className="mx-auto flex justify-center gap-4 max-sm:flex-col max-sm:items-center">
-                {externalLinks.map((props) => (
+                {EXTERNAL_LINKS.map((props) => (
                   <Link
                     key={props.href}
                     className="text-muted-foreground hover:text-foreground group block"
