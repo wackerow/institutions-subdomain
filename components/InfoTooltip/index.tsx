@@ -37,16 +37,18 @@ const SourceInfoTooltip = ({
   <InlineTextIcon>
     <InfoTooltip iconClassName={iconClassName}>
       {children}
-      <p className={cn("text-nowrap", children && "mt-2")}>
-        Source:{" "}
-        {sourceHref ? (
-          <Link inline href={sourceHref}>
-            {source}
-          </Link>
-        ) : (
-          source
-        )}
-      </p>
+      {source && (
+        <p className={cn("text-nowrap", children && "mt-2")}>
+          Source:{" "}
+          {sourceHref ? (
+            <Link inline href={sourceHref}>
+              {source}
+            </Link>
+          ) : (
+            source
+          )}
+        </p>
+      )}
       {lastUpdated && (
         <p className="text-nowrap">Last updated: {lastUpdated}</p>
       )}

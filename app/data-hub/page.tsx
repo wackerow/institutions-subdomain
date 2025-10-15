@@ -115,9 +115,8 @@ export default async function Page() {
             Overview
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
-            {overviewCards.map(({ label, value, ...sourceInfo }, idx) => {
-              const { source, sourceHref } = sourceInfo
-              return (
+            {overviewCards.map(
+              ({ label, value, source, sourceHref, lastUpdated }, idx) => (
                 <Card key={idx} variant="flex-height">
                   <CardContent>
                     <CardLabel className="text-base font-medium tracking-[0.02rem]">
@@ -141,12 +140,16 @@ export default async function Page() {
                       ) : (
                         source
                       )}
-                      <SourceInfoTooltip {...sourceInfo} />
+                      {lastUpdated && (
+                        <SourceInfoTooltip
+                          lastUpdated={formatDateMonthDayYear(lastUpdated)}
+                        />
+                      )}
                     </CardSource>
                   )}
                 </Card>
               )
-            })}
+            )}
           </div>
         </section>
 
@@ -186,20 +189,16 @@ export default async function Page() {
                 />
                 <div className="flex justify-between">
                   <CardSource>
-                    <span
-                      title={
-                        "Last updated: " +
-                        formatDateMonthDayYear(
-                          timeseriesDefiTvlEthereumData.lastUpdated
-                        )
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
+                    Source:{" "}
                     <Link inline href="https://defillama.com">
                       defillama.com
                     </Link>
+                    <SourceInfoTooltip
+                      iconClassName="translate-y-0"
+                      lastUpdated={formatDateMonthDayYear(
+                        timeseriesDefiTvlEthereumData.lastUpdated
+                      )}
+                    />
                   </CardSource>
                 </div>
               </CardContent>
@@ -223,20 +222,16 @@ export default async function Page() {
                 </div>
                 <div className="flex justify-between">
                   <CardSource>
-                    <span
-                      title={
-                        "Last updated: " +
-                        formatDateMonthDayYear(
-                          defiTvlAllCurrentData.lastUpdated
-                        )
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
+                    Source:{" "}
                     <Link inline href="https://defillama.com">
                       defillama.com
                     </Link>
+                    <SourceInfoTooltip
+                      iconClassName="translate-y-0"
+                      lastUpdated={formatDateMonthDayYear(
+                        defiTvlAllCurrentData.lastUpdated
+                      )}
+                    />
                   </CardSource>
                 </div>
               </CardContent>
@@ -257,8 +252,7 @@ export default async function Page() {
                     Stablecoin TVL (Mainnet)
                   </CardTitle>
                   <CardDescription className="font-medium">
-                    Sum of funds deposited into the applications on the chain.
-                    {/* Showing total Ethereum stablecoin market capitalization for all time */}
+                    Total value of stablecoins on Ethereum Mainnet.
                   </CardDescription>
                 </CardContent>
                 <div
@@ -284,20 +278,16 @@ export default async function Page() {
                 />
 
                 <CardSource>
-                  <span
-                    title={
-                      "Last updated: " +
-                      formatDateMonthDayYear(
-                        timeseriesStablecoinsValueData.lastUpdated
-                      )
-                    }
-                  >
-                    Source
-                  </span>
-                  :{" "}
+                  Source:{" "}
                   <Link inline href="https://rwa.xyz">
                     rwa.xyz
                   </Link>
+                  <SourceInfoTooltip
+                    iconClassName="translate-y-0"
+                    lastUpdated={formatDateMonthDayYear(
+                      timeseriesStablecoinsValueData.lastUpdated
+                    )}
+                  />
                 </CardSource>
               </CardContent>
             </Card>
@@ -308,7 +298,7 @@ export default async function Page() {
                   Stablecoin marketshare
                 </CardTitle>
                 <CardDescription className="text-sm font-medium">
-                  Sum of funds deposited into the applications on the chain.
+                  Total value of stablecoins on Ethereum Mainnet.
                 </CardDescription>
               </CardContent>
 
@@ -318,20 +308,16 @@ export default async function Page() {
                 />
 
                 <CardSource>
-                  <span
-                    title={
-                      "Last updated: " +
-                      formatDateMonthDayYear(
-                        stablecoinMarketshareData.lastUpdated
-                      )
-                    }
-                  >
-                    Source
-                  </span>
-                  :{" "}
+                  Source:{" "}
                   <Link inline href="https://rwa.xyz">
                     rwa.xyz
                   </Link>
+                  <SourceInfoTooltip
+                    iconClassName="translate-y-0"
+                    lastUpdated={formatDateMonthDayYear(
+                      stablecoinMarketshareData.lastUpdated
+                    )}
+                  />
                 </CardSource>
               </CardContent>
             </Card>
@@ -373,18 +359,16 @@ export default async function Page() {
                 <RwaTimeseriesTvlLineChart chartData={timeseriesRwaValueData} />
 
                 <CardSource>
-                  <span
-                    title={
-                      "Last updated: " +
-                      formatDateMonthDayYear(timeseriesRwaValueData.lastUpdated)
-                    }
-                  >
-                    Source
-                  </span>
-                  :{" "}
+                  Source:{" "}
                   <Link inline href="https://rwa.xyz">
                     rwa.xyz
                   </Link>
+                  <SourceInfoTooltip
+                    iconClassName="translate-y-0"
+                    lastUpdated={formatDateMonthDayYear(
+                      timeseriesRwaValueData.lastUpdated
+                    )}
+                  />
                 </CardSource>
               </CardContent>
             </Card>
@@ -403,18 +387,16 @@ export default async function Page() {
                     </AnimatedNumberInView>
                   </CardContent>
                   <CardSource>
-                    <span
-                      title={
-                        "Last updated: " +
-                        formatDateMonthDayYear(rwaMarketshareData.lastUpdated)
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
+                    Source:{" "}
                     <Link inline href="https://rwa.xyz">
                       rwa.xyz
                     </Link>
+                    <SourceInfoTooltip
+                      iconClassName="translate-y-0"
+                      lastUpdated={formatDateMonthDayYear(
+                        rwaMarketshareData.lastUpdated
+                      )}
+                    />
                   </CardSource>
                 </CardContent>
               </Card>
@@ -432,18 +414,16 @@ export default async function Page() {
                     </AnimatedNumberInView>
                   </CardContent>
                   <CardSource>
-                    <span
-                      title={
-                        "Last updated: " +
-                        formatDateMonthDayYear(rwaMarketshareData.lastUpdated)
-                      }
-                    >
-                      Source
-                    </span>
-                    :{" "}
+                    Source:{" "}
                     <Link inline href="https://rwa.xyz">
                       rwa.xyz
                     </Link>
+                    <SourceInfoTooltip
+                      iconClassName="translate-y-0"
+                      lastUpdated={formatDateMonthDayYear(
+                        rwaMarketshareData.lastUpdated
+                      )}
+                    />
                   </CardSource>
                 </CardContent>
               </Card>
@@ -468,18 +448,16 @@ export default async function Page() {
                 </CardContent>
 
                 <CardSource>
-                  <span
-                    title={
-                      "Last updated: " +
-                      formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated)
-                    }
-                  >
-                    Source
-                  </span>
-                  :{" "}
+                  Source:{" "}
                   <Link inline href="https://l2beat.com">
                     l2beat.com
                   </Link>
+                  <SourceInfoTooltip
+                    iconClassName="translate-y-0"
+                    lastUpdated={formatDateMonthDayYear(
+                      l2ScalingSummaryData.lastUpdated
+                    )}
+                  />
                 </CardSource>
               </CardContent>
             </Card>
@@ -511,18 +489,16 @@ export default async function Page() {
                 <L2TimeseriesTvlLineChart chartData={timeseriesL2TvlData} />
 
                 <CardSource>
-                  <span
-                    title={
-                      "Last updated: " +
-                      formatDateMonthDayYear(timeseriesL2TvlData.lastUpdated)
-                    }
-                  >
-                    Source
-                  </span>
-                  :{" "}
+                  Source:{" "}
                   <Link inline href="https://growthepie.com">
                     growthepie.com
                   </Link>
+                  <SourceInfoTooltip
+                    iconClassName="translate-y-0"
+                    lastUpdated={formatDateMonthDayYear(
+                      timeseriesL2TvlData.lastUpdated
+                    )}
+                  />
                 </CardSource>
               </CardContent>
             </Card>
