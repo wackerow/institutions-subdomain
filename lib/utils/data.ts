@@ -88,7 +88,7 @@ export const filterFirstAndFifteenth = <
   dateMatches = [1, 15]
 ): T[] => {
   const filtered = array.filter((item) =>
-    dateMatches.includes(new Date(item.date).getDate())
+    dateMatches.includes(new Date(item.date).getUTCDate())
   )
   const last = array[array.length - 1]
   // Check if last is already included (by reference)
@@ -112,8 +112,7 @@ export const getDataSeriesWithCurrent = <T extends number | string = number>(
   seriesMapped: DataSeries<T>,
   skipFiltering?: boolean
 ) => {
-  if (seriesMapped?.length <= 0)
-    throw new Error("Data series array empty: fetchTimeseriesStablecoinsValue")
+  if (seriesMapped?.length <= 0) throw new Error("Data series array empty")
 
   const series = skipFiltering
     ? seriesMapped

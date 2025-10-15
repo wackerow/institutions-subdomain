@@ -103,10 +103,6 @@ export const fetchTimeseriesAssetsValue = async (
       )
 
     const json: JSONData = await response.json()
-    if (series === "stablecoins") {
-      console.log("json.results LENGTH: ", json.results.length)
-      console.log(json.results)
-    }
 
     const ethereumStablecoinData = json.results[0]
 

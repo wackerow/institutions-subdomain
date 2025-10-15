@@ -14,7 +14,7 @@ import {
 import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import type { TimeseriesStablecoinsValueData } from "@/app/_actions/fetchTimeseriesStablecoinsValue"
+import type { TimeseriesAssetsValueData } from "@/app/_actions/fetchTimeseriesAssetsValue"
 
 const chartConfig = {
   data: {
@@ -27,7 +27,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 type StablecoinTimeseriesTvlLineChartProps = {
-  chartData: DataTimestamped<TimeseriesStablecoinsValueData>
+  chartData: DataTimestamped<TimeseriesAssetsValueData>
 }
 const StablecoinTimeseriesTvlLineChart = ({
   chartData,
