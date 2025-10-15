@@ -50,7 +50,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "from-background from-85% max-md:bg-gradient-to-br"
         )}
       >
-        <h1 className="leading-tight max-md:text-center">{heading}</h1>
+        <h1 className="leading-tight">{heading}</h1>
         {children && <div className="space-y-6 font-medium">{children}</div>}
       </div>
       <div

@@ -107,8 +107,8 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
   ]
 
   return (
-    <div className="bg-card flex min-h-90 gap-x-20 gap-y-10 p-8 max-lg:flex-col max-sm:max-w-[calc(100vw-48px)] sm:max-lg:max-w-[calc(100vw-96px)]">
-      <div className="flex gap-8 max-lg:overflow-x-auto max-lg:pb-4 lg:flex-col">
+    <div className="bg-card flex min-h-90 gap-x-20 gap-y-10 p-4 max-lg:flex-col max-sm:max-w-[calc(100vw-32px)] sm:p-8 sm:max-lg:max-w-[calc(100vw-96px)]">
+      <div className="flex gap-3 max-lg:overflow-x-auto max-lg:pb-4 sm:gap-8 lg:flex-col">
         {items.map(({ title }, index) => (
           <Fragment key={index}>
             <button
