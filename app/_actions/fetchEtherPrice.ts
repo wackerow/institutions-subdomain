@@ -8,7 +8,7 @@ type JSONData = { ethereum: { usd: number } }
 
 export type EthPriceData = { usd: number }
 
-export const fetchEthPrice = async (): Promise<
+export const fetchEtherPrice = async (): Promise<
   DataTimestamped<EthPriceData>
 > => {
   const url =
@@ -35,7 +35,7 @@ export const fetchEthPrice = async (): Promise<
       sourceInfo: SOURCE.COINGECKO,
     }
   } catch (error: unknown) {
-    console.error("fetchEthPrice failed", {
+    console.error("fetchEtherPrice failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -44,4 +44,4 @@ export const fetchEthPrice = async (): Promise<
   }
 }
 
-export default fetchEthPrice
+export default fetchEtherPrice

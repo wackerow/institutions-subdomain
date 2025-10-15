@@ -57,7 +57,7 @@ import { MAINNET_GENESIS } from "@/lib/constants"
 
 import fetchBeaconChain from "./_actions/fetchBeaconChain"
 import fetchDexVolume from "./_actions/fetchDexVolume"
-import fetchEthPrice from "./_actions/fetchEthPrice"
+import fetchEtherPrice from "./_actions/fetchEtherPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchSecuritizeAum from "./_actions/fetchSecuritizeAum"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
@@ -147,7 +147,7 @@ export default async function Home() {
   const timeseriesStablecoinsValueData =
     await fetchTimeseriesAssetsValue("stablecoins")
   const beaconChainData = await fetchBeaconChain()
-  const ethPrice = await fetchEthPrice()
+  const ethPrice = await fetchEtherPrice()
   const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
   const dexVolume = await fetchDexVolume()
   const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
@@ -215,8 +215,7 @@ export default async function Home() {
       ...rwaMarketshareSummaryData.sourceInfo,
     },
     {
-      value:
-        formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl) + "+", // TODO: Confirm "+" suffix usage
+      value: formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl),
       label: (
         <>
           DeFi TVL
@@ -277,7 +276,7 @@ export default async function Home() {
       name: "eToro",
       imgSrc: etoroSvg,
       label: "Stock Tokenization Platform",
-      value: "100 Stocks Trade 24/5™",
+      value: "100 Stocks Trade 24/7™",
     },
   ]
 
