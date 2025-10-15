@@ -37,11 +37,12 @@ export const fetchL2ScalingActivity = async (): Promise<
       )
 
     const json: JSONData = await response.json()
-    const latestData = json.data.chart.data
 
-    if (!latestData.length) throw new Error(`Empty data array from ${url}`)
+    const chartData = json.data.chart.data // ascending array by timestamp
 
-    const [timestamp, , uopsCount] = latestData[latestData.length - 1]
+    if (!chartData.length) throw new Error(`Empty chart data array from ${url}`)
+
+    const [timestamp, , uopsCount] = chartData[chartData.length - 1]
 
     return {
       data: {

@@ -45,12 +45,12 @@ export default async function Page() {
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
   const l2ScalingActivityData = await fetchL2ScalingActivity()
   const l2MedianTxCostData = await fetchL2MedianTxCost()
-  const beaconchainData = await fetchBeaconChain()
+  const beaconChainData = await fetchBeaconChain()
 
   const metrics: MetricWithSource[] = [
     {
       label: "Total Value Locked (TVL) across L2s",
-      value: formatLargeCurrency(l2ScalingSummaryData.data.latestCanonicalTvl),
+      value: formatLargeCurrency(l2ScalingSummaryData.data.totalTvl),
       lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
       ...l2ScalingSummaryData.sourceInfo,
     },
@@ -281,7 +281,7 @@ export default async function Page() {
 
           <L2BenefitsPanel
             validatorsCount={formatLargeNumber(
-              beaconchainData.data.validatorCount,
+              beaconChainData.data.validatorCount,
               {},
               2
             )}

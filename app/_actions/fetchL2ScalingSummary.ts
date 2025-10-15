@@ -7,11 +7,11 @@ import { SOURCE } from "@/lib/constants"
 type JSONData = {
   chart: {
     data: [
-      number, // 1756620000, timestamp (Unix seconds)
-      number, // 12_527_885_542.3945, native (USD)
-      number, // 21_966_306_078.2627, canonical (USD)
-      number, // 21_104_738_337.5352, external (USD)
-      number, // 4_214.4897, ethPrice (USD)
+      number, // timestamp, e.g., 1760313600 (seconds, daily x 1 month, ascending)
+      number, // native minted, e.g., 12_527_885_542.3945 (USD)
+      number, // canonical bridge, e.g., 21_966_306_078.2627 (USD)
+      number, // externally bridged, e.g., 21_104_738_337.5352 (USD)
+      number, // ethPrice, e.g., 1234.5678 (USD)
     ][] // Most recent last
     syncedUntil: number // timestamp (Unix seconds)
   }
@@ -70,7 +70,10 @@ type JSONData = {
 }
 
 export type L2ScalingSummaryData = {
-  latestCanonicalTvl: number
+  nativelyMintedTvl: number
+  canonicallyBridgedTvl: number
+  externallyBridgedTvl: number
+  totalTvl: number
   allProjectsCount: number
   allL2Slugs: string[]
 }
@@ -95,17 +98,29 @@ export const fetchL2ScalingSummary = async (): Promise<
 
     const json: JSONData = await response.json()
 
+    const chartData = json.chart.data
+
+    if (!chartData.length) throw new Error(`Empty chart data array from ${url}`)
+
+    const [, nativelyMintedTvl, canonicallyBridgedTvl, externallyBridgedTvl] =
+      chartData[chartData.length - 1]
+
     const allL2Slugs = Object.keys(json.projects).map((project) =>
       project.toLowerCase().replace(/[\s-]/g, "")
     )
 
     return {
       data: {
-        latestCanonicalTvl: json.chart.data[json.chart.data.length - 1][2],
+        nativelyMintedTvl,
+        canonicallyBridgedTvl,
+        externallyBridgedTvl,
+        totalTvl:
+          nativelyMintedTvl + canonicallyBridgedTvl + externallyBridgedTvl,
         allL2Slugs,
         allProjectsCount: allL2Slugs.length,
       },
-      lastUpdated: Date.now(),
+      lastUpdated:
+        new Date(json.chart.syncedUntil * 1e3).getTime() || Date.now(),
       sourceInfo: SOURCE.L2BEAT,
     }
   } catch (error: unknown) {
