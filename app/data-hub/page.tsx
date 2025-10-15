@@ -31,14 +31,13 @@ import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import {
   formatLargeCurrency,
+  formatLargeNumber,
   formatMultiplier,
-  formatNumber,
   formatPercent,
 } from "@/lib/utils/number"
 
-import { SOURCE } from "@/lib/constants"
-
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
+import fetchEtherMarketDetails from "../_actions/fetchEtherMarketDetails"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
@@ -66,13 +65,14 @@ export default async function Page() {
   const rwaMarketshareData = rwaMarketshareToSummaryData(
     await fetchRwaMarketshare()
   )
+  const etherMarketDetailsData = await fetchEtherMarketDetails()
 
   const overviewCards: MetricWithSource[] = [
     {
-      label: "Total value locked (TVL)",
-      value: "$123.4B™", // TODO: Live data
-      ...SOURCE.TOKENTERMINAL,
-      // lastUpdated: formatDateMonthDayYear(0),
+      label: "Market Cap",
+      value: formatLargeCurrency(etherMarketDetailsData.data.etherMarketCap),
+      lastUpdated: formatDateMonthDayYear(etherMarketDetailsData.lastUpdated),
+      ...etherMarketDetailsData.sourceInfo,
     },
     {
       label: "Total Value Secured (TVS)",
@@ -82,7 +82,7 @@ export default async function Page() {
     },
     {
       label: "Validator count",
-      value: formatNumber(beaconChainData.data.validatorCount),
+      value: formatLargeNumber(beaconChainData.data.validatorCount),
       lastUpdated: formatDateMonthDayYear(beaconChainData.lastUpdated),
       ...beaconChainData.sourceInfo,
     },
