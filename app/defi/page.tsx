@@ -35,8 +35,7 @@ export default async function Page() {
     },
     {
       label: "Of All Global DeFi TVL",
-      value:
-        formatPercent(defiTvlAllCurrentData.data.mainnetDefiMarketshare) + "+",
+      value: formatPercent(defiTvlAllCurrentData.data.mainnetDefiMarketshare),
       lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
       ...defiTvlAllCurrentData.sourceInfo,
     },
