@@ -105,7 +105,7 @@ type AssetClassStats = {
   trailing_30_day_active_addresses_count: AssetValueMetrics
 }
 
-export type NetworkResult = {
+export type RwaApiNetworkResult = {
   id: number
   name: string
   description: string

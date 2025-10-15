@@ -1,13 +1,13 @@
 "use server"
 
-import type { DataTimestamped, NetworkResult } from "@/lib/types"
+import type { DataTimestamped, RwaApiNetworkResult } from "@/lib/types"
 
 import { isValidDate } from "@/lib/utils/date"
 
 import { RWA_XYZ_ETHEREUM_NETWORK_ID, SOURCE } from "@/lib/constants"
 
 type JSONData = {
-  results: NetworkResult[]
+  results: RwaApiNetworkResult[]
 }
 
 export type StablecoinMarketshareData = {

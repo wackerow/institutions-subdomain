@@ -3,12 +3,12 @@
 import type {
   AssetValueMetrics,
   DataTimestamped,
-  NetworkResult,
+  RwaApiNetworkResult,
 } from "@/lib/types"
 
 import { RWA_XYZ_ETHEREUM_NETWORK_ID, SOURCE } from "@/lib/constants"
 
-type JSONData = { results: NetworkResult[] }
+type JSONData = { results: RwaApiNetworkResult[] }
 
 export type RwaMarketshareData = {
   ethereumL1RwaUSD: number
@@ -18,7 +18,7 @@ export type RwaMarketshareData = {
   altNetworksRestRwaUSD: number
 }
 
-const sumRwaForNetwork = (network: NetworkResult): number => {
+const sumRwaForNetwork = (network: RwaApiNetworkResult): number => {
   return network.asset_class_stats.reduce((sum, stat) => {
     // RWA = everything except stablecoins and cryptocurrencies
     if (stat.slug !== "stablecoins" && stat.slug !== "cryptocurrencies") {
