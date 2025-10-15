@@ -1,7 +1,8 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { HeartHandshake, TriangleAlert } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -65,21 +66,27 @@ const CONSUMER_DOMAINS = [
 ]
 
 const EnterpriseContactForm = () => {
-  const getCharacterCountClasses = (currentLength: number, maxLength: number) =>
-    cn(
-      currentLength >= Math.floor(maxLength * 0.9) && "flex", // Show char count when within 10% remaining to limit
-      currentLength > maxLength - 64 && "text-warning-border", // Warning color within 64 chars (border version for proper contrast ratio),
-      currentLength > maxLength && "text-destructive [&_svg]:inline" // Error color over limit
-    )
+  const pathname = usePathname()
+  const prevPathname = useRef(pathname)
 
   const [formData, setFormData] = useState<FormState>({
     name: "",
     email: "",
     message: "",
   })
+
   const [errors, setErrors] = useState<FormErrors>({})
   const [submissionState, setSubmissionState] =
     useState<SubmissionState>("idle")
+
+  // Reset form errors and submission state on page transition—keep any progress
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      setErrors({})
+      setSubmissionState("idle")
+      prevPathname.current = pathname
+    }
+  }, [pathname])
 
   const handleInputChange =
     (field: keyof FormState) =>
@@ -219,6 +226,13 @@ const EnterpriseContactForm = () => {
       })
     }
   }
+
+  const getCharacterCountClasses = (currentLength: number, maxLength: number) =>
+    cn(
+      currentLength >= Math.floor(maxLength * 0.9) && "flex", // Show char count when within 10% remaining to limit
+      currentLength > maxLength - 64 && "text-warning-border", // Warning color within 64 chars (border version for proper contrast ratio),
+      currentLength > maxLength && "text-destructive [&_svg]:inline" // Error color over limit
+    )
 
   const isDisabled =
     submissionState === "submitting" ||
