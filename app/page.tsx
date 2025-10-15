@@ -89,7 +89,11 @@ const logos: { src: StaticImageData; alt: string; className?: string }[] = [
   { src: citi, alt: "Citi logo", className: "-translate-y-px" },
   { src: coinbase, alt: "Coinbase logo", className: "py-0.5" },
   { src: etoro, alt: "eToro logo", className: "py-0.5" },
-  { src: fidelity, alt: "Fidelity logo", className: "opacity-80" },
+  {
+    src: fidelity,
+    alt: "Fidelity logo",
+    className: "brightness-75 translate-y-[3px]",
+  },
   { src: jpMorgan, alt: "JPMorgan logo", className: "py-0.5 translate-y-1.5" },
   { src: mastercard, alt: "Mastercard logo", className: "translate-y-[3px]" },
   { src: robinhood, alt: "Robinhood logo", className: "translate-y-1" },

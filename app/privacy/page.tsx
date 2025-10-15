@@ -135,7 +135,7 @@ export default function Page() {
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
-                  maskShape={<TargetCheck className="size-37 text-white" />}
+                  maskShape={<TargetCheck className="size-full text-white" />}
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function Page() {
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
-                  maskShape={<BinaryLock className="size-37 text-white" />}
+                  maskShape={<BinaryLock className="size-full text-white" />}
                 />
               </div>
 
@@ -171,7 +171,7 @@ export default function Page() {
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
-                  maskShape={<CpuLock className="size-37 text-white" />}
+                  maskShape={<CpuLock className="size-full text-white" />}
                 />
               </div>
 
@@ -188,7 +188,7 @@ export default function Page() {
               <div className="size-37 shrink-0 overflow-hidden p-2.5">
                 <MaskedParallelsIcon
                   className="text-secondary-foreground"
-                  maskShape={<LayersLock className="size-37 text-white" />}
+                  maskShape={<LayersLock className="size-full text-white" />}
                 />
               </div>
 
