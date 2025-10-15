@@ -59,6 +59,7 @@ import fetchBeaconChain from "./_actions/fetchBeaconChain"
 import fetchDexVolume from "./_actions/fetchDexVolume"
 import fetchEthPrice from "./_actions/fetchEthPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
+import fetchSecuritizeAum from "./_actions/fetchSecuritizeAum"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesAssetsValue from "./_actions/fetchTimeseriesAssetsValue"
 import fetchDefiTvlAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
@@ -164,6 +165,7 @@ export default async function Home() {
     stablecoinMarketshareDataEthereum.length > 0
       ? stablecoinMarketshareDataEthereum[0].marketshare
       : 0
+  const securitizeAumData = await fetchSecuritizeAum()
 
   const metrics: MetricWithSource[] = [
     {
@@ -255,7 +257,9 @@ export default async function Home() {
       name: "BlackRock",
       imgSrc: blackRockSvg,
       label: "Onchain Tokenization via Securitize",
-      value: "$2.1B+ AUM™",
+      value: formatLargeCurrency(securitizeAumData.data.currentValue) + "+ AUM",
+      lastUpdated: formatDateMonthDayYear(securitizeAumData.lastUpdated),
+      ...securitizeAumData.sourceInfo,
     },
     {
       name: "Coinbase",
