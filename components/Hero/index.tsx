@@ -55,11 +55,23 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       </div>
       <div
         className={cn(
-          "relative end-0 z-0 place-items-center max-md:inset-y-0 max-md:grid md:absolute md:h-full",
+          "relative end-0 z-0 place-items-center max-md:hidden max-md:inset-y-0 max-lg:grid md:absolute md:h-full ",
           "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
         <HeroBg
+          strokeWidth={1.5}
+          // calmer motion
+          splineTension={0.6}          // smoother, less overshoot
+          hoverStrokeGain={0.35}       // subtler hover
+          hoverSigmaX={80}
+          hoverSigmaY={48}
+          // gentler ripple cost/shape
+          rippleAmplitude={6}
+          rippleSpread={10}
+          rippleSampleCount={17}
+          initialDrawMs={500}
+          initialDrawStaggerMs={16}
           className={cn(
             "w-full max-w-full place-self-center",
             "max-[25rem]:scale-150 min-[25rem]:max-[32rem]:scale-130 min-[32rem]:max-sm:scale-120 sm:max-md:scale-110"

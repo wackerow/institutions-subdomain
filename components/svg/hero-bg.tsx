@@ -91,7 +91,8 @@ const HeroBg = ({
     return () => cancelAnimationFrame(id)
   }, [mounted])
 
-  const minLength = 0.4 * +width // Minimum 40% box width
+  // const minLength = 0.4 * +width // Minimum 40% box width (Original)
+  const minLength = 0.6 * +width // Minimum 60% box width
   const maxLength = 0.9 * +width // Maximum 90% box width
   const xRange = +width - minLength // Range of 60% box width
   const segmentHeight = +strokeWidth + gap
@@ -106,9 +107,12 @@ const HeroBg = ({
       const length = minLength + Math.random() * (maxLineLength - minLength)
       const opacity = 0.8 * Math.random() + 0.2 // Ranges from 20% to 100%
       const direction = Math.random() > 0.5 ? 1 : -1
-      const travel = direction * (0.2 * +width + Math.random() * 0.35 * +width)
-      const duration = 14 + Math.random() * 22 // 14s – 36s
-      const delay = Math.random() * 8 // up to 8s stagger
+      // const travel = direction * (0.2 * +width + Math.random() * 0.35 * +width) (Original)
+      const travel = direction * (0.2 * +width);      // smaller sway
+      // const duration = 14 + Math.random() * 22 // 14s – 36s (Original)
+      const duration = 28 + Math.random() * 20; // 28–48s (slower)
+      // const delay = Math.random() * 8 // up to 8s stagger (Original)
+      const delay = Math.random() * 2;   // small desync only
       return {
         id: `line-index-${idx}`,
         x,
