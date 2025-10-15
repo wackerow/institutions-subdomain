@@ -20,7 +20,7 @@ import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
-import eurc from "@/public/images/tokens/eurc.svg"
+import dai from "@/public/images/tokens/dai.svg"
 import fdusd from "@/public/images/tokens/fdusd.svg"
 import pyusd from "@/public/images/tokens/pyusd.svg"
 import usdc from "@/public/images/tokens/usdc.svg"
@@ -34,7 +34,7 @@ export default async function Page() {
 
   const metrics: MetricWithSource[] = [
     {
-      label: "Stablecoins on Etheruem L1",
+      label: "Stablecoins on Ethereum L1",
       value: formatLargeCurrency(
         stablecoinMarketshareData.data.ethereumL1StablecoinUSD
       ),
@@ -44,7 +44,7 @@ export default async function Page() {
       ...stablecoinMarketshareData.sourceInfo,
     },
     {
-      label: "Stablecoins on Etheruem L2",
+      label: "Stablecoins on Ethereum L2",
       value: formatLargeCurrency(
         stablecoinMarketshareData.data.ethereumL2StablecoinUSD
       ),
@@ -80,10 +80,10 @@ export default async function Page() {
       href: "https://ethena.fi/",
     },
     {
-      ticker: "EURC",
-      issuer: "Circle",
-      imgSrc: eurc,
-      href: "https://www.circle.com/eurc",
+      ticker: "DAI",
+      issuer: "MakerDAO",
+      imgSrc: dai,
+      href: "https://makerdao.com/",
     },
     {
       ticker: "USDS",
