@@ -36,6 +36,8 @@
 
   --container-8xl: 1400px;
 
+  --breakpoint-xs: 30rem; /* 480px */
+
   /* TODO: Not yet fully defined: */
   --font-sans: var(--font-satoshi);
   --color-chart-5: var(--chart-5);
