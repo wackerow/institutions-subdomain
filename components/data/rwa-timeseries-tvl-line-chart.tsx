@@ -14,7 +14,7 @@ import {
 import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import type { TimeseriesRwaValueData } from "@/app/_actions/fetchTimeseriesRwaValue"
+import type { TimeseriesAssetsValueData } from "@/app/_actions/fetchTimeseriesAssetsValue"
 
 const chartConfig = {
   data: {
@@ -27,7 +27,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 type RwaTimeseriesTvlLineChartProps = {
-  chartData: DataTimestamped<TimeseriesRwaValueData>
+  chartData: DataTimestamped<TimeseriesAssetsValueData>
 }
 const RwaTimeseriesTvlLineChart = ({
   chartData,

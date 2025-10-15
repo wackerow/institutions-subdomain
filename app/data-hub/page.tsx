@@ -42,17 +42,18 @@ import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
+import fetchTimeseriesAssetsValue from "../_actions/fetchTimeseriesAssetsValue"
 import fetchTimeseriesDefiTvlEthereum from "../_actions/fetchTimeseriesDefiTvlEthereum"
 import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
-import fetchTimeseriesRwaValue from "../_actions/fetchTimeseriesRwaValue"
-import fetchTimeseriesStablecoinsValue from "../_actions/fetchTimeseriesStablecoinsValue"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
 
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
-  const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
-  const timeseriesRwaValueData = await fetchTimeseriesRwaValue()
+  const timeseriesStablecoinsValueData =
+    await fetchTimeseriesAssetsValue("stablecoins")
+  const timeseriesRwaValueData =
+    await fetchTimeseriesAssetsValue("real-world-assets")
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
   const beaconChainData = await fetchBeaconChain()

@@ -60,7 +60,7 @@ import fetchDexVolume from "./_actions/fetchDexVolume"
 import fetchEthPrice from "./_actions/fetchEthPrice"
 import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
-import fetchTimeseriesStablecoinsValue from "./_actions/fetchTimeseriesStablecoinsValue"
+import fetchTimeseriesAssetsValue from "./_actions/fetchTimeseriesAssetsValue"
 import fetchDefiTvlAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
@@ -143,7 +143,8 @@ const testimonials: {
 
 export default async function Home() {
   const uptime = getTimeSinceGenesis()
-  const timeseriesStablecoinsValueData = await fetchTimeseriesStablecoinsValue()
+  const timeseriesStablecoinsValueData =
+    await fetchTimeseriesAssetsValue("stablecoins")
   const beaconChainData = await fetchBeaconChain()
   const ethPrice = await fetchEthPrice()
   const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()

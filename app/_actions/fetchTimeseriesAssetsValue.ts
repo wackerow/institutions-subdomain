@@ -10,26 +10,41 @@ import { getDataSeriesWithCurrent } from "@/lib/utils/data"
 
 import { SOURCE } from "@/lib/constants"
 
+const MEASURE_ID = {
+  "Total Asset Value (Dollar)": 2,
+  "Market Value (Dollar)": 40,
+  "Bridged Token Market Cap (Dollar)": 70, // Used for Stablecoin series
+  "Bridged Token Value (Dollar)": 71, // Used for RWA series
+} as const
+
+type MeasureID = keyof typeof MEASURE_ID
+
 type JSONData = {
   results: {
-    group: {
-      name: string
-    }
     points: [string, number][]
   }[]
 }
 
-export type TimeseriesStablecoinsValueData = DataSeriesWithCurrent<string>
+export type TimeseriesAssetsValueData = DataSeriesWithCurrent<string>
 
-export const fetchTimeseriesStablecoinsValue = async (): Promise<
-  DataTimestamped<TimeseriesStablecoinsValueData>
-> => {
+export const fetchTimeseriesAssetsValue = async (
+  series: "stablecoins" | "real-world-assets" = "real-world-assets",
+  measureId?: MeasureID
+): Promise<DataTimestamped<TimeseriesAssetsValueData>> => {
   const url = new URL("https://api.rwa.xyz/v3/assets/aggregates/timeseries")
 
   const apiKey = process.env.RWA_API_KEY || ""
 
   if (!apiKey) {
     throw new Error(`No API key available for ${url.toString()}`)
+  }
+
+  const getMeasureIdValue = () => {
+    if (measureId) return MEASURE_ID[measureId]
+    if (series === "stablecoins")
+      return MEASURE_ID["Bridged Token Market Cap (Dollar)"]
+    if (series === "real-world-assets")
+      return MEASURE_ID["Bridged Token Value (Dollar)"]
   }
 
   const myQuery = {
@@ -50,14 +65,19 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
       operator: "and",
       filters: [
         {
+          field: "networkID",
+          operator: "equals",
+          value: 1, // Ethereum
+        },
+        {
           field: "measureID",
           operator: "equals",
-          value: 70,
+          value: getMeasureIdValue(),
         },
         {
           field: "assetClassID",
-          operator: "equals",
-          value: 28,
+          operator: series === "stablecoins" ? "equals" : "notEquals",
+          value: 28, // Stablecoins (Else, real-world assets)
         },
       ],
     },
@@ -73,20 +93,22 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v3:assets:aggregates:timeseries"],
+        tags: [`rwa:v3:assets:aggregates:timeseries:${series}`],
       },
     })
 
     if (!response.ok)
       throw new Error(
-        `Fetch response not OK from ${url.toString()}: ${response.status} ${response.statusText}`
+        `Fetch response not OK from ${decodeURIComponent(url.toString())}: ${response.status} ${response.statusText}`
       )
 
     const json: JSONData = await response.json()
+    if (series === "stablecoins") {
+      console.log("json.results LENGTH: ", json.results.length)
+      console.log(json.results)
+    }
 
-    const ethereumStablecoinData = json.results.find(
-      ({ group: { name } }) => name.toLowerCase() === "ethereum" // && id === RWA_XYZ_STABLECOINS_GROUP_ID
-    )
+    const ethereumStablecoinData = json.results[0]
 
     const seriesMapped: DataSeries<string> = ethereumStablecoinData?.points
       ?.length
@@ -101,7 +123,7 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
       sourceInfo: SOURCE.RWA,
     }
   } catch (error: unknown) {
-    console.error("fetchTimeseriesTotalRwaValue failed", {
+    console.error("fetchTimeseriesAssetsValue failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -110,4 +132,4 @@ export const fetchTimeseriesStablecoinsValue = async (): Promise<
   }
 }
 
-export default fetchTimeseriesStablecoinsValue
+export default fetchTimeseriesAssetsValue
