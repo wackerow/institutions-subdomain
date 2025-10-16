@@ -311,8 +311,11 @@ export default async function Page() {
                   <h3 className="text-h5">{heading}</h3>
                   <p className="font-medium">{description}</p>
                 </div>
-                <p className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
-                  Visit →
+                <p className="text-secondary-foreground mt-12 font-bold lg:mt-16">
+                  Visit{" "}
+                  <span className="group-hover:animate-x-bounce inline-block">
+                    →
+                  </span>
                 </p>
               </Link>
             ))}

@@ -26,8 +26,11 @@ const CategoryAppGrid = ({ category }: { category: CategoryKey }) => {
               <h4 className="text-h5">{name}</h4>
               <p className="font-medium">{description}</p>
             </div>
-            <p className="text-secondary-foreground mt-4 group-hover:underline">
-              Visit →
+            <p className="text-secondary-foreground mt-4">
+              Visit{" "}
+              <span className="group-hover:animate-x-bounce inline-block">
+                →
+              </span>
             </p>
           </Link>
         ))}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next/types"
 
 import Hero from "@/components/Hero"
-import { LinkWithArrow } from "@/components/ui/link"
+import Link from "@/components/ui/link"
 
 import { getMetadata } from "@/lib/utils/metadata"
 
@@ -218,18 +218,22 @@ export default function Page() {
             <h2 className="text-h3-mobile sm:text-h3">{region}</h2>
             <div className="*:bg-card grid grid-cols-[repeat(auto-fill,minmax(15rem,1fr))] gap-4 *:p-6">
               {providers[region].map(({ name, category, href }) => (
-                <div key={name} className="bg-card space-y-2">
+                <Link
+                  key={name}
+                  href={href}
+                  className="bg-card group w-full space-y-2 transition-transform hover:scale-105 hover:transition-transform"
+                >
                   <h3 className="text-h5 tracking-[0.03rem]">{name}</h3>
                   <p className="text-muted-foreground font-medium">
                     {category}
                   </p>
-                  <LinkWithArrow
-                    href={href}
-                    className="css-secondary mt-6 block"
-                  >
-                    Visit
-                  </LinkWithArrow>
-                </div>
+                  <p className="text-secondary-foreground mt-6 mb-0">
+                    Visit{" "}
+                    <span className="group-hover:animate-x-bounce inline-block">
+                      →
+                    </span>
+                  </p>
+                </Link>
               ))}
             </div>
           </section>

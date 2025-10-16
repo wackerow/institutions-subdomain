@@ -293,8 +293,11 @@ export default function Page() {
                       {description}
                     </p>
                   </div>
-                  <p className="text-secondary-foreground mt-4 group-hover:underline">
-                    Visit →
+                  <p className="text-secondary-foreground mt-4 mb-0">
+                    Visit{" "}
+                    <span className="group-hover:animate-x-bounce inline-block">
+                      →
+                    </span>
                   </p>
                 </Link>
               )

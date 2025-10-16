@@ -302,14 +302,21 @@ export default async function Page() {
           </div>
           <div className="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
             {stablecoins.map(({ imgSrc, ticker, issuer, href }) => (
-              <Card key={ticker} className="space-y-2">
+              <Link
+                key={ticker}
+                href={href}
+                className="bg-card group w-full space-y-2 p-6 transition-transform hover:scale-105 hover:transition-transform"
+              >
                 <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
                 <h3 className="text-h5">{ticker}</h3>
                 <p className="font-medium">By {issuer}</p>
-                <LinkWithArrow href={href} className="css-secondary mt-6 block">
-                  Visit
-                </LinkWithArrow>
-              </Card>
+                <p className="text-secondary-foreground mt-6 mb-0">
+                  Visit{" "}
+                  <span className="group-hover:animate-x-bounce inline-block">
+                    →
+                  </span>
+                </p>
+              </Link>
             ))}
           </div>
         </section>
