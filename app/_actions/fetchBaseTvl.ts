@@ -35,14 +35,9 @@ export const fetchBaseTvl = async (): Promise<DataTimestamped<BaseTvlData>> => {
     })
 
     if (!response.ok)
-      return {
-        data: { baseTvl: 0 },
-        lastUpdated: Date.now(),
-        sourceInfo: SOURCE.GROWTHEPIE,
-      }
-    // throw new Error(
-    //   `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
-    // )
+      throw new Error(
+        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+      )
 
     const json: JSONData = await response.json()
 
