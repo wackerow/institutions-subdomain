@@ -26,7 +26,7 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
 
   if (!secret) throw new Error("Internal API secret not found")
 
-  const internalUrl = new URL("api/growthepie-v1-export-tvl", internalOrigin)
+  const internalUrl = new URL("/api/growthepie-v1-export-tvl", internalOrigin)
 
   internalUrl.searchParams.set("secret", secret)
 

@@ -89,7 +89,7 @@ export const fetchTokenizedPrivateCredit = async (): Promise<
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v3:protocols:timeseries"],
+        tags: ["rwa:v3:protocols:timeseries:private-credit"],
       },
     })
 

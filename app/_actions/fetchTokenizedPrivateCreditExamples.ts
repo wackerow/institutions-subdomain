@@ -4,14 +4,14 @@ import type { DataTimestamped } from "@/lib/types"
 
 import { SOURCE } from "@/lib/constants"
 
-export type TokenizedTreasuryExamplesData = {
-  BUIDL: number
-  BENJI: number
-  OUSG: number
+export type TokenizedPrivateCreditExamplesData = {
+  centrifuge: number
+  maple: number
+  truefi: number
 }
 
-export const fetchTokenizedTreasuryExamples = async (): Promise<
-  DataTimestamped<TokenizedTreasuryExamplesData>
+export const fetchTokenizedPrivateCreditExamples = async (): Promise<
+  DataTimestamped<TokenizedPrivateCreditExamplesData>
 > => {
   // Call internal trimmed endpoint and let Next cache the small response.
   const internalOrigin =
@@ -22,7 +22,7 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
   if (!secret) throw new Error("Internal API secret not found")
 
   const internalUrl = new URL(
-    "/api/rwa-v3-aggregates-timeseries-treasury-examples",
+    "/api/rwa-v3-aggregates-timeseries-private-credit-examples",
     internalOrigin
   )
 
@@ -34,7 +34,9 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60 * 24, // 1 day
-        tags: ["internal:rwa:v3:aggregates:timeseries:treasury:examples"],
+        tags: [
+          "internal:rwa:internal/protocols/timeseries:private-credit:examples",
+        ],
       },
     })
 
@@ -43,7 +45,7 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
         `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
       )
 
-    const json: DataTimestamped<TokenizedTreasuryExamplesData> =
+    const json: DataTimestamped<TokenizedPrivateCreditExamplesData> =
       await response.json()
 
     return {
@@ -52,7 +54,7 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
       sourceInfo: SOURCE.RWA,
     }
   } catch (error: unknown) {
-    console.error("fetchTokenizedTreasuryExample failed", {
+    console.error("fetchTokenizedPrivateCreditExamples failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -61,4 +63,4 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
   }
 }
 
-export default fetchTokenizedTreasuryExamples
+export default fetchTokenizedPrivateCreditExamples

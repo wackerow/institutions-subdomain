@@ -18,6 +18,7 @@ import { formatLargeCurrency } from "@/lib/utils/number"
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTokenizedPrivateCredit from "../_actions/fetchTokenizedPrivateCredit"
+import fetchTokenizedPrivateCreditExamples from "../_actions/fetchTokenizedPrivateCreditExamples"
 import fetchTokenizedTreasuries from "../_actions/fetchTokenizedTreasuries"
 import fetchTokenizedTreasuryExamples from "../_actions/fetchTokenizedTreasuryExamples"
 
@@ -37,6 +38,8 @@ export default async function Page() {
   const tokenizedPrivateCreditData = await fetchTokenizedPrivateCredit()
   const tokenizedTreasuriesData = await fetchTokenizedTreasuries()
   const tokenizedTreasuryExamplesData = await fetchTokenizedTreasuryExamples()
+  const tokenizedPrivateCreditExamplesData =
+    await fetchTokenizedPrivateCreditExamples()
 
   const metrics: MetricWithSource[] = [
     {
@@ -169,25 +172,42 @@ export default async function Page() {
   const creditPlatforms: AssetDetails[] = [
     {
       header: "Centrifuge",
-      valuation: "$1.86B", // TODO: Live data
+      valuation: formatLargeCurrency(
+        tokenizedPrivateCreditExamplesData.data.centrifuge
+      ),
       description: "Active loans on Ethereum + L2s",
       metricHref: "https://app.rwa.xyz/platforms/centrifuge",
-      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+      visitHref: "https://centrifuge.io/",
+      ...tokenizedPrivateCreditExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedPrivateCreditExamplesData.lastUpdated
+      ),
     },
     {
       header: "Maple Finance",
-      valuation: "$1.37B", // TODO: Live data
+      valuation: formatLargeCurrency(
+        tokenizedPrivateCreditExamplesData.data.maple
+      ),
       description: "Active loans on Ethereum + L2s",
-      metricHref:
-        "https://defillama.com/protocol/maple?borrowed_tvl=true&tvl=false&events=false",
-      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+      metricHref: "https://app.rwa.xyz/platforms/maple",
+      visitHref: "https://maple.finance/",
+      ...tokenizedPrivateCreditExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedPrivateCreditExamplesData.lastUpdated
+      ),
     },
     {
       header: "TrueFi",
-      valuation: "$7.7M", // TODO: Live data
+      valuation: formatLargeCurrency(
+        tokenizedPrivateCreditExamplesData.data.truefi
+      ),
       description: "Active loans on Ethereum + L2s",
       metricHref: "https://app.rwa.xyz/private-credit",
-      visitHref: "https://www.usdc.com/", // TODO: Confirm href
+      visitHref: "https://truefi.io/",
+      ...tokenizedPrivateCreditExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedPrivateCreditExamplesData.lastUpdated
+      ),
     },
   ]
 
@@ -456,6 +476,7 @@ export default async function Page() {
                 issuer,
                 metricHref,
                 visitHref,
+                ...tooltipProps
               }) => (
                 <Card
                   className="flex flex-col justify-between gap-y-6 p-8"
@@ -465,12 +486,19 @@ export default async function Page() {
                     <h4 className="text-h5 font-bold tracking-[0.03rem]">
                       {header}
                     </h4>
-                    <Link
-                      href={metricHref}
-                      className="css-secondary block font-bold tracking-[0.055rem]"
-                    >
-                      {valuation}
-                    </Link>
+                    <InlineText>
+                      <Link
+                        href={metricHref}
+                        inline
+                        className="css-secondary font-bold tracking-[0.055rem]"
+                      >
+                        {valuation}
+                      </Link>
+                      <SourceInfoTooltip
+                        {...tooltipProps}
+                        iconClassName="translate-y-0"
+                      />
+                    </InlineText>
                     <p className="text-muted-foreground font-medium">
                       {description}
                     </p>
