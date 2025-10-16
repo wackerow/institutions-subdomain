@@ -276,7 +276,7 @@ function CarouselContent({ children, className }: CarouselContentProps) {
     <div
       ref={viewportRef}
       className={cn(
-        "relative w-full min-w-0 touch-pan-x snap-x snap-mandatory overflow-x-auto overscroll-x-contain [contain:layout_inline-size]",
+        "relative w-full min-w-0 touch-pan-x touch-pan-y snap-x snap-mandatory overflow-x-auto overscroll-x-contain [contain:layout_inline-size]",
         "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       )}
     >
