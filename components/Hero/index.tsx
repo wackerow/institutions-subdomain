@@ -62,13 +62,13 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
-        <div className="relative my-4 h-[14rem] w-full sm:h-[16rem] md:h-full">
-          <HeroBg className="absolute inset-0 h-full w-full" />
+        <div className="max-md: relative -my-12 h-[20rem] w-full md:h-full">
+          <HeroBg className="size-full" />
           {shape && (
             <div
               className={cn(
                 "pointer-events-none absolute inset-0 grid place-items-center",
-                "[&_svg]:h-2/3 [&_svg]:w-auto",
+                "[&_svg]:h-1/2 [&_svg]:w-auto md:[&_svg]:h-3/5",
                 "group-has-[.css-primary-invert]/body:text-primary text-background"
               )}
             >

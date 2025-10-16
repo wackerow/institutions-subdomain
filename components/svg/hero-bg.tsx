@@ -4,6 +4,7 @@ import {
   type CSSProperties,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -33,6 +34,60 @@ type Ripple = {
   spread: number // px thickness of the wavefront ring
 }
 
+// Stable line fractions pool across mounts (prevents RNG-looking resets)
+type LineFrac = {
+  id: string
+  xFrac: number
+  lenFrac: number
+  opacity: number
+  travelFrac: number
+  duration: number
+  delay: number
+}
+
+const LINES_POOL_SEED = 1337
+let LINES_FRAC_CACHE: LineFrac[] | null = null
+const mulberry32Seeded = (seed: number) => {
+  return function () {
+    let t = (seed += 0x6d2b79f5)
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function buildLinesPool(count: number): LineFrac[] {
+  const minLenFrac = 0.66
+  const maxLenFrac = 0.9
+  const rng = mulberry32Seeded(LINES_POOL_SEED)
+  return Array.from({ length: count }).map((_, idx) => {
+    const xFrac = rng() * (1 - minLenFrac)
+    const allowedMax = Math.min(maxLenFrac, 1 - xFrac)
+    const lenFrac = minLenFrac + rng() * (allowedMax - minLenFrac)
+    const opacity = 0.2 + 0.8 * rng()
+    const direction = rng() > 0.5 ? 1 : -1
+    const travelFrac = direction * (0.2 + 0.35 * rng())
+    const duration = 14 + 22 * rng()
+    const delay = 8 * rng()
+    return {
+      id: `line-index-${idx}`,
+      xFrac,
+      lenFrac,
+      opacity,
+      travelFrac,
+      duration,
+      delay,
+    }
+  })
+}
+
+function getLinesPool(maxCount: number): LineFrac[] {
+  if (!LINES_FRAC_CACHE || LINES_FRAC_CACHE.length < maxCount) {
+    LINES_FRAC_CACHE = buildLinesPool(maxCount)
+  }
+  return LINES_FRAC_CACHE
+}
+
 type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   gap?: number
   lineCount?: number
@@ -40,6 +95,7 @@ type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   hoverSigmaY?: number
   hoverStrokeGain?: number
   pointerMargin?: number
+  autoHint?: boolean
   rippleAmplitude?: number
   rippleWavelength?: number
   rippleSpeed?: number
@@ -59,7 +115,7 @@ const HeroBg = ({
   width: widthProp = 670,
   strokeWidth = 2,
   gap = 8,
-  lineCount = 42,
+  lineCount = 50,
   // Hover emphasis
   hoverSigmaX = 80,
   hoverSigmaY = 48,
@@ -73,9 +129,10 @@ const HeroBg = ({
   rippleDecay = 1.0,
   rippleSpread = 18,
   rippleLifetimeMs = 6000,
-  rippleSampleCount = 21,
-  splineTension = 1,
-  pauseWhileRippling = true,
+  rippleSampleCount = 33,
+  splineTension = 0.9,
+  pauseWhileRippling = false,
+  autoHint = false,
   initialDrawMs = 300,
   initialDrawStaggerMs = 12,
   reducedMotionFadeMs = 250,
@@ -101,26 +158,28 @@ const HeroBg = ({
     if (!el) return
     // Initialize immediately to avoid a flash
     const rect0 = el.getBoundingClientRect()
-    if (rect0.width > 0) setMeasuredWidth(rect0.width)
-    if (rect0.height > 0) setMeasuredHeight(rect0.height)
+    if (rect0.width > 0) setMeasuredWidth(Math.round(rect0.width))
+    if (rect0.height > 0) setMeasuredHeight(Math.round(rect0.height))
     if (typeof ResizeObserver === "undefined") return
     const ro = new ResizeObserver((entries) => {
       const cr = entries[0]?.contentRect
       if (!cr) return
-      const w = cr.width
-      const h = cr.height
-      if (w > 0) {
-        if (measureRafRef.current != null)
-          cancelAnimationFrame(measureRafRef.current)
-        measureRafRef.current = requestAnimationFrame(() => setMeasuredWidth(w))
-      }
-      if (h > 0) {
-        if (measureRafRef.current != null)
-          cancelAnimationFrame(measureRafRef.current)
-        measureRafRef.current = requestAnimationFrame(() =>
-          setMeasuredHeight(h)
+      const nextW = Math.round(cr.width)
+      const nextH = Math.round(cr.height)
+      if (measureRafRef.current != null)
+        cancelAnimationFrame(measureRafRef.current)
+      measureRafRef.current = requestAnimationFrame(() => {
+        setMeasuredWidth((prev) =>
+          nextW > 0 && (prev == null || Math.abs(prev - nextW) >= 1)
+            ? nextW
+            : (prev ?? nextW)
         )
-      }
+        setMeasuredHeight((prev) =>
+          nextH > 0 && (prev == null || Math.abs(prev - nextH) >= 1)
+            ? nextH
+            : (prev ?? nextH)
+        )
+      })
     })
     ro.observe(el)
     return () => {
@@ -167,68 +226,47 @@ const HeroBg = ({
   const invCoverScale = Math.max(1 / Math.max(coverScale, 0.0001), 0.0001)
   // Convert spacing into viewBox units so CSS px spacing remains constant after scaling
   const segmentHeightView = segmentHeight * invCoverScale
-  // Alias to keep downstream references working (container px height)
-  const height = containerH
-
-  // Normalized geometry to keep layout stable across resizes
-  type LineFrac = {
-    id: string
-    xFrac: number
-    lenFrac: number
-    opacity: number
-    travelFrac: number
-    duration: number
-    delay: number
-  }
-
-  // Small deterministic PRNG for stable randomness
-  const mulberry32 = (seed: number) => {
-    return function () {
-      let t = (seed += 0x6d2b79f5)
-      t = Math.imul(t ^ (t >>> 15), t | 1)
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-    }
-  }
+  // Note: height not used under Option A fixed counts
 
   const MAX_LINES = Math.max(64, lineCount * 3)
-  const [linesFrac] = useState<LineFrac[]>(() => {
-    const minLenFrac = 0.66
-    const maxLenFrac = 0.9
-    const rng = mulberry32(1337)
-    return Array.from({ length: MAX_LINES }).map((_, idx) => {
-      const xFrac = rng() * (1 - minLenFrac)
-      const allowedMax = Math.min(maxLenFrac, 1 - xFrac)
-      const lenFrac = minLenFrac + rng() * (allowedMax - minLenFrac)
-      const opacity = 0.2 + 0.8 * rng()
-      const direction = rng() > 0.5 ? 1 : -1
-      const travelFrac = direction * (0.2 + 0.35 * rng())
-      const duration = 14 + 22 * rng()
-      const delay = 8 * rng()
-      return {
-        id: `line-index-${idx}`,
-        xFrac,
-        lenFrac,
-        opacity,
-        travelFrac,
-        duration,
-        delay,
-      }
-    })
-  })
+  // Use persistent pool so randomness never regenerates on re-renders
+  const linesFrac = getLinesPool(MAX_LINES)
 
-  // Derive viewBox-space lines from fractions and current cover scaling
-  const dynamicLineCount = Math.max(
-    12,
-    Math.min(MAX_LINES, Math.floor(height / segmentHeight))
+  // Option A: fixed counts per breakpoint; freeze spacing/centering within breakpoint
+  type BP = "sm" | "md" | "lg"
+  const bp: BP =
+    effectiveWidth < 768 ? "sm" : effectiveWidth < 1024 ? "md" : "lg"
+  const countForBp = useMemo<Record<BP, number>>(
+    () => ({ sm: 32, md: 44, lg: 58 }),
+    []
   )
-  const totalLinesHeightView = dynamicLineCount * segmentHeightView
-  const offsetYView = (VBH - totalLinesHeightView) / 2
+  const [bpState, setBpState] = useState<BP>(bp)
+  const [layoutFrozen, setLayoutFrozen] = useState<{
+    count: number
+    segH: number
+    offset: number
+  }>(() => {
+    const cnt = countForBp[bp]
+    const segH = segmentHeightView
+    const off = (VBH - cnt * segH) / 2
+    return { count: cnt, segH, offset: off }
+  })
+  useEffect(() => {
+    if (bp !== bpState) {
+      const cnt = countForBp[bp]
+      const segH = segmentHeightView
+      const off = (VBH - cnt * segH) / 2
+      setBpState(bp)
+      setLayoutFrozen({ count: cnt, segH, offset: off })
+    }
+  }, [bp, bpState, segmentHeightView, countForBp])
+  const dynamicLineCount = layoutFrozen.count
+  const offsetYView = layoutFrozen.offset
   const lines: LineData[] = linesFrac
     .slice(0, dynamicLineCount)
     .map((lf, idx) => {
       const x = lf.xFrac * VBW
-      const y = offsetYView + (idx + 0.5) * segmentHeightView
+      const y = offsetYView + (idx + 0.5) * layoutFrozen.segH
       const length = lf.lenFrac * VBW
       const travel = lf.travelFrac * VBW
       return {
@@ -452,7 +490,7 @@ const HeroBg = ({
     const delay = randBetween(8000, 16000)
     hintTimeoutRef.current = window.setTimeout(() => {
       // Only hint if no ripple is currently active
-      if (ripplesRef.current.length === 0 && !reduceMotion) {
+      if (autoHint && ripplesRef.current.length === 0 && !reduceMotion) {
         const pt = randomPointInSvg()
         createRippleAt(pt.x, pt.y)
       }
@@ -465,16 +503,18 @@ const HeroBg = ({
     randBetween,
     randomPointInSvg,
     createRippleAt,
+    autoHint,
   ])
 
   // Initial hint timer (4–8s) on mount or when reduced motion toggles off
   useEffect(() => {
-    if (!mounted || reduceMotion) return
+    if (!mounted || reduceMotion || !autoHint) return
     // If user already interacted (unlikely during initial seconds), skip immediate hint and schedule normal cadence
     const initialDelay = randBetween(4000, 8000)
     clearHintTimeout()
     hintTimeoutRef.current = window.setTimeout(() => {
       if (
+        autoHint &&
         ripplesRef.current.length === 0 &&
         lastRippleAtRef.current == null &&
         !reduceMotion
@@ -499,6 +539,7 @@ const HeroBg = ({
     VBW,
     VBH,
     createRippleAt,
+    autoHint,
   ])
 
   // Clean up on unmount
@@ -592,11 +633,11 @@ const HeroBg = ({
         if (pxOnLine >= x && pxOnLine <= x + length) positions.push(pxOnLine)
       }
 
-      // sort and dedupe
+      // sort and lightly dedupe (allow closer points to keep curvature smooth)
       positions.sort((a, b) => a - b)
       const pxs: number[] = []
       for (let i = 0; i < positions.length; i++) {
-        if (i === 0 || Math.abs(positions[i] - positions[i - 1]) > 0.5) {
+        if (i === 0 || Math.abs(positions[i] - positions[i - 1]) > 0.25) {
           pxs.push(positions[i])
         }
       }
@@ -652,11 +693,6 @@ const HeroBg = ({
     >
       {lines.map((line, idx) => {
         const d = generatePath(line)
-        const ripplesActive = ripplesRef.current.length > 0
-        const paused = ripplesActive && pauseWhileRippling
-        // Compute an exact offset for style transform when paused so JS + CSS align perfectly
-        const nowForStyle = paused && pausedAtRef.current != null ? pausedAtRef.current : performance.now()
-        const offsetXView = getLineOffsetX(line, nowForStyle)
         // Hover emphasis: adjust stroke width and opacity based on proximity to pointer
         let hoverFactor = 0
         if (pointer) {
@@ -684,18 +720,13 @@ const HeroBg = ({
           1,
           line.opacity + (1 - line.opacity) * hoverFactor
         )
-        const style: CSSProperties & { "--x-travel"?: string } = paused
-          ? {
-              transform: `translateX(${offsetXView * coverScale}px)`,
-              willChange: "transform",
-            }
-          : {
-              // animate CSS translate in px; convert viewBox travel distance to px via coverScale
-              "--x-travel": `${line.travel * coverScale}px`,
-              animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
-              animationPlayState: "running",
-              willChange: "transform",
-            }
+        const style: CSSProperties & { "--x-travel"?: string } = {
+          // animate CSS translate in px; convert viewBox travel distance to px via coverScale
+          "--x-travel": `${line.travel * coverScale}px`,
+          animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
+          animationPlayState: "running",
+          willChange: "transform",
+        }
         return (
           <path
             key={line.id}
