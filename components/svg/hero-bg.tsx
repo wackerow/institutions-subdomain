@@ -362,15 +362,16 @@ const HeroBg = ({
       const pt = svgPointFromClient(svg, e.clientX, e.clientY)
       if (!pt) return
       const pos = { x: pt.x, y: pt.y }
-      const margin = pointerMargin
       const rect = svg.getBoundingClientRect()
+      // Use a wider horizontal margin so hover fades out smoothly when leaving left/right
+      const marginX = Math.max(pointerMargin, rect.width * 0.5)
+      const marginY = Math.max(pointerMargin, rect.height * 0.25)
       // Use visible rect for margin checks but compare against svg internal coords for pointer storage
-      if (
-        e.clientX >= rect.left - margin &&
-        e.clientX <= rect.right + margin &&
-        e.clientY >= rect.top - margin &&
-        e.clientY <= rect.bottom + margin
-      ) {
+      const withinX =
+        e.clientX >= rect.left - marginX && e.clientX <= rect.right + marginX
+      const withinY =
+        e.clientY >= rect.top - marginY && e.clientY <= rect.bottom + marginY
+      if (withinX && withinY) {
         pointerRef.current = pos
         if (pointerRafRef.current == null) {
           pointerRafRef.current = requestAnimationFrame(() => {
