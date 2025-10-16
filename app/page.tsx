@@ -211,7 +211,7 @@ export default async function Home() {
       value: formatPercent(
         rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
       ),
-      label: "RWA marketshare on Ethereum + L2s",
+      label: "RWA market share on Ethereum + L2s",
       lastUpdated: formatDateMonthDayYear(
         rwaMarketshareSummaryData.lastUpdated
       ),
@@ -239,7 +239,7 @@ export default async function Home() {
       value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
       label: (
         <>
-          24-Hour DEX Volume
+          24-Hour DEX volume
           <br />
           (12-month avg)
         </>

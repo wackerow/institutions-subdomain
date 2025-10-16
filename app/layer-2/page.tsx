@@ -130,6 +130,9 @@ export default async function Page() {
       href: "https://www.zksync.io/",
       imgSrc: zksync,
     },
+  ]
+
+  const networks: CardItem[] = [
     {
       heading: "Linea",
       description:
@@ -325,7 +328,7 @@ export default async function Page() {
               <h3 className="text-h4">
                 Ethereum&apos;s L2s
                 <br />
-                The Execution & Scale Layer
+                The Execution and Scaling Layer
               </h3>
 
               <hr className="my-6" />
@@ -386,11 +389,41 @@ export default async function Page() {
             </h2>
             <p className="text-muted-foreground font-medium">
               Choose from robust, audited frameworks to launch your blockchain
-              in weeks, not years.
+              in weeks, not years
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {frameworks.map(({ heading, description, imgSrc, href }) => (
+              <Link
+                key={heading}
+                href={href}
+                className="bg-card group flex w-full flex-col justify-between p-6 transition-transform hover:scale-105 hover:transition-transform"
+                aria-label={`Visit ${heading}`}
+              >
+                <div className="space-y-2">
+                  <Image src={imgSrc} alt="" sizes="48px" className="size-12" />
+                  <h3 className="text-h5">{heading}</h3>
+                  <p className="font-medium">{description}</p>
+                </div>
+                <p className="text-secondary-foreground mt-12 font-bold lg:mt-16">
+                  Visit{" "}
+                  <span className="group-hover:animate-x-bounce inline-block">
+                    →
+                  </span>
+                </p>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-16 space-y-2">
+            <h3 className="text-h4-mobile sm:text-h4">Deploy on Proven L2s</h3>
+            <p className="text-muted-foreground font-medium">
+              Build on secure and scalable networks without the operational
+              overhead of launching and maintaining your own chain
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {networks.map(({ heading, description, imgSrc, href }) => (
               <Link
                 key={heading}
                 href={href}

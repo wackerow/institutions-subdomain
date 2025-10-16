@@ -580,7 +580,7 @@ export default async function Page() {
               <h3 className="text-h4">
                 Ethereum&apos;s L2s
                 <br />
-                The execution & scale layer
+                The Execution and Scaling Layer
               </h3>
 
               <hr className="my-6" />

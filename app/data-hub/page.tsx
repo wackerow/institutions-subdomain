@@ -243,7 +243,7 @@ export default async function Page() {
             <Card variant="flex-column">
               <CardContent>
                 <CardTitle className="text-xl">
-                  Stablecoin Marketshare
+                  Stablecoin Market Share
                 </CardTitle>
                 <CardDescription className="text-sm font-medium">
                   Stablecoin TVL distribution by blockchain
@@ -284,7 +284,7 @@ export default async function Page() {
                 <CardContent variant="flex-1-height-between">
                   <CardContent>
                     <h3 className="text-base font-medium tracking-[0.02rem]">
-                      Ethereum L1 Marketshare
+                      Ethereum L1 Market Share
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(
@@ -311,7 +311,7 @@ export default async function Page() {
                 <CardContent variant="flex-1-height-between">
                   <CardContent>
                     <h3 className="text-base font-medium tracking-[0.02rem]">
-                      Ethereum L1 + L2 Marketshare
+                      Ethereum L1 + L2 Market Share
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(

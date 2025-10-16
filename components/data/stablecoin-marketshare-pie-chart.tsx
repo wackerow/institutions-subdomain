@@ -45,7 +45,7 @@ type PieSliceProps = Partial<SectorProps> & {
 
 const chartConfig = {
   marketshare: {
-    label: "Percent marketshare",
+    label: "Percent market share",
   },
   ethereum: {
     label: "Ethereum (Mainnet)",
