@@ -29,6 +29,7 @@ import {
 
 import fetchBaseTvl from "../_actions/fetchBaseTvl"
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
+import fetchCeloMonthlyStablecoinVolume from "../_actions/fetchCeloMonthlyStablecoinVolume"
 import fetchL2MedianTxCost from "../_actions/fetchL2MedianTxCost"
 import fetchL2ScalingActivity from "../_actions/fetchL2ScalingActivity"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
@@ -60,6 +61,8 @@ export default async function Page() {
   const l2MedianTxCostData = await fetchL2MedianTxCost()
   const beaconChainData = await fetchBeaconChain()
   const baseTvlData = await fetchBaseTvl()
+  const celoMonthlyStablecoinVolumeData =
+    await fetchCeloMonthlyStablecoinVolume()
 
   const metrics: MetricWithSource[] = [
     {
@@ -206,11 +209,17 @@ export default async function Page() {
       imgSrc: celo,
       ctaLabel: (
         <>
-          $10.6B
+          {formatLargeCurrency(
+            celoMonthlyStablecoinVolumeData.data.celoMonthlyStablecoinVolume
+          )}
           <br />
           Monthly Stablecoin Volume
         </>
       ),
+      lastUpdated: formatDateMonthDayYear(
+        celoMonthlyStablecoinVolumeData.lastUpdated
+      ),
+      ...celoMonthlyStablecoinVolumeData.sourceInfo,
     },
   ]
 
