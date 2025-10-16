@@ -276,7 +276,7 @@ export default async function Home() {
       name: "eToro",
       imgSrc: etoroSvg,
       label: "Stock Tokenization Platform",
-      value: "100 Stocks Trade 24/7™",
+      value: "100 Stocks Trade 24/5™",
     },
   ]
 
