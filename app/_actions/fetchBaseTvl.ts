@@ -1,23 +1,14 @@
 "use server"
 
-import type {
-  DataSeries,
-  DataSeriesWithCurrent,
-  DataTimestamped,
-  L2TvlExportData,
-} from "@/lib/types"
-
-import { getDataSeriesWithCurrent } from "@/lib/utils/data"
+import type { DataTimestamped } from "@/lib/types"
 
 import { SOURCE } from "@/lib/constants"
 
-type JSONData = { data: L2TvlExportData }
+type JSONData = DataTimestamped<BaseTvlData> // { data: number }
 
-export type TimeseriesL2TvlData = DataSeriesWithCurrent
+export type BaseTvlData = { baseTvl: number }
 
-export const fetchTimeseriesL2Tvl = async (): Promise<
-  DataTimestamped<TimeseriesL2TvlData>
-> => {
+export const fetchBaseTvl = async (): Promise<DataTimestamped<BaseTvlData>> => {
   // Call internal trimmed endpoint and let Next cache the small response.
   const internalOrigin =
     process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000"
@@ -26,7 +17,10 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
 
   if (!secret) throw new Error("Internal API secret not found")
 
-  const internalUrl = new URL("/api/growthepie-v1-export-tvl", internalOrigin)
+  const internalUrl = new URL(
+    "/api/growthepie-v1-export-tvl-base",
+    internalOrigin
+  )
 
   internalUrl.searchParams.set("secret", secret)
 
@@ -36,7 +30,7 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
     const response = await fetch(url, {
       next: {
         revalidate: 60 * 60 * 24, // 1 day
-        tags: ["internal:growthepie:v1:export:tvl:timeseries"],
+        tags: ["internal:growthepie:v1:export:tvl:base-tvl"],
       },
     })
 
@@ -45,19 +39,15 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
         `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
       )
 
-    const json: JSONData = await response.json()
-
-    const seriesMapped: DataSeries = json.data.map(({ value, date }) => ({
-      value,
-      date: new Date(date).toUTCString(),
-    }))
+    const json: JSONData = await response.json() // TODO: CHeck if last source info needs to be omitted, or added to api/growthepie-v1-export-tvl-base
 
     return {
-      ...getDataSeriesWithCurrent(seriesMapped, true),
+      data: json.data,
+      lastUpdated: json.lastUpdated,
       sourceInfo: SOURCE.GROWTHEPIE,
     }
   } catch (error: unknown) {
-    console.error("fetchTimeseriesL2Tvl failed", {
+    console.error("fetchBaseTvl failed", {
       name: error instanceof Error ? error.name : undefined,
       message: error instanceof Error ? error.message : String(error),
       url,
@@ -66,4 +56,4 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
   }
 }
 
-export default fetchTimeseriesL2Tvl
+export default fetchBaseTvl
