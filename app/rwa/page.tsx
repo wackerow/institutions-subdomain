@@ -17,6 +17,7 @@ import { formatLargeCurrency } from "@/lib/utils/number"
 
 import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
+import fetchTokenizedPrivateCredit from "../_actions/fetchTokenizedPrivateCredit"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
@@ -31,6 +32,7 @@ import usdt from "@/public/images/tokens/usdt.svg"
 export default async function Page() {
   const stablecoinMarketshareData = await fetchStablecoinMarketshare()
   const rwaMarketshareData = await fetchRwaMarketshare()
+  const tokenizedPrivateCreditData = await fetchTokenizedPrivateCredit()
 
   const metrics: MetricWithSource[] = [
     {
@@ -398,10 +400,19 @@ export default async function Page() {
                 Private Credit & Structured Credit
               </h3>
               <p className="text-big font-bold tracking-[0.055rem]">
-                {/* // TODO: Live data */}
-                $3.84B
+                {formatLargeCurrency(
+                  tokenizedPrivateCreditData.data.totalPrivateCredit
+                )}
               </p>
-              <p className="text-muted font-medium">sector on Ethereum + L2s</p>
+              <InlineText className="text-muted font-medium">
+                sector on Ethereum + L2s
+                <SourceInfoTooltip
+                  lastUpdated={formatDateMonthDayYear(
+                    tokenizedPrivateCreditData.lastUpdated
+                  )}
+                  {...tokenizedPrivateCreditData.sourceInfo}
+                />
+              </InlineText>
             </div>
 
             {creditPlatforms.map(
