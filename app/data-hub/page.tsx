@@ -4,7 +4,6 @@ import { MetricWithSource } from "@/lib/types"
 
 import DefiTimeseriesTvlEthereumLineChart from "@/components/data/defi-timeseries-tvl-ethereum-line-chart"
 import L2TimeseriesTvlLineChart from "@/components/data/l2-timeseries-tvl-line-chart"
-import RwaTimeseriesTvlLineChart from "@/components/data/rwa-timeseries-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import StablecoinTimeseriesTvlLineChart from "@/components/data/stablecoin-timeseries-tvl-line-chart"
 import Hero from "@/components/Hero"
@@ -46,6 +45,8 @@ import fetchTimeseriesDefiTvlEthereum from "../_actions/fetchTimeseriesDefiTvlEt
 import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
 import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
+
+import RwaChartCard from "./_components/rwa-chart-card"
 
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
@@ -266,7 +267,8 @@ export default async function Page() {
                 >
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
-                      timeseriesStablecoinsValueData.data.currentValue
+                      // TODO: Toggle between if L2 hidden?
+                      timeseriesStablecoinsValueData.data.mainnet.currentValue
                     )}
                   </AnimatedNumberInView>
                 </div>
@@ -329,49 +331,7 @@ export default async function Page() {
             Real-World Assets
           </h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-[1fr_16rem]">
-            <Card variant="flex-column">
-              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
-                <CardContent className="flex-1 gap-4">
-                  <CardTitle className="text-xl">
-                    Value of Real World Assets (RWAs)
-                  </CardTitle>
-                  <CardDescription className="font-medium">
-                    {/* // TODO: Add description */}
-                    TODO: Patch API data fetch—coming soon™
-                  </CardDescription>
-                </CardContent>
-                <div
-                  title={
-                    "Last updated: " +
-                    formatDateMonthDayYear(timeseriesRwaValueData.lastUpdated)
-                  }
-                  className="text-h4 font-bold tracking-[0.04rem]"
-                >
-                  <AnimatedNumberInView>
-                    {formatLargeCurrency(
-                      timeseriesRwaValueData.data.currentValue
-                    )}
-                  </AnimatedNumberInView>
-                </div>
-              </CardHeader>
-
-              <CardContent variant="flex-1-height-between" className="gap-y-4">
-                <RwaTimeseriesTvlLineChart chartData={timeseriesRwaValueData} />
-
-                <CardSource>
-                  Source:{" "}
-                  <Link inline href="https://rwa.xyz">
-                    rwa.xyz
-                  </Link>
-                  <SourceInfoTooltip
-                    iconClassName="translate-y-0"
-                    lastUpdated={formatDateMonthDayYear(
-                      timeseriesRwaValueData.lastUpdated
-                    )}
-                  />
-                </CardSource>
-              </CardContent>
-            </Card>
+            <RwaChartCard data={timeseriesRwaValueData} />
 
             <div className="flex flex-col gap-y-4">
               <Card variant="flex-column" className="flex-1">

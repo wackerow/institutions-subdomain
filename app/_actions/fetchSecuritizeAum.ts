@@ -6,7 +6,10 @@ import type {
   DataTimestamped,
 } from "@/lib/types"
 
-import { getDataSeriesWithCurrent } from "@/lib/utils/data"
+import {
+  getDataSeriesWithCurrent,
+  getRwaApiEthereumNetworksFilter,
+} from "@/lib/utils/data"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -56,51 +59,7 @@ export const fetchSecuritizeAum = async (): Promise<
           operator: "equals",
           value: 10,
         },
-        {
-          operator: "or",
-          filters: [
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 1,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 11,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 10,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 4,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 17,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 7,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 41,
-            },
-            {
-              field: "networkID",
-              operator: "equals",
-              value: 31,
-            },
-          ],
-        },
+        getRwaApiEthereumNetworksFilter(["mainnet", "layer-2"]),
       ],
     },
   }

@@ -1,12 +1,11 @@
 "use server"
 
-import type {
-  DataSeries,
-  DataSeriesWithCurrent,
-  DataTimestamped,
-} from "@/lib/types"
+import type { DataSeriesWithCurrent, DataTimestamped } from "@/lib/types"
 
-import { getDataSeriesWithCurrent } from "@/lib/utils/data"
+import {
+  getRwaApiEthereumNetworksFilter,
+  getSeriesWithCurrent,
+} from "@/lib/utils/data"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -22,10 +21,18 @@ type MeasureID = keyof typeof MEASURE_ID
 type JSONData = {
   results: {
     points: [string, number][]
+    group: {
+      id: number
+      type: string
+      name: string
+    }
   }[]
 }
 
-export type TimeseriesAssetsValueData = DataSeriesWithCurrent<string>
+export type TimeseriesAssetsValueData = {
+  mainnet: DataSeriesWithCurrent<string>
+  layer2: DataSeriesWithCurrent<string>
+}
 
 export const fetchTimeseriesAssetsValue = async (
   series: "stablecoins" | "real-world-assets" = "real-world-assets",
@@ -65,11 +72,6 @@ export const fetchTimeseriesAssetsValue = async (
       operator: "and",
       filters: [
         {
-          field: "networkID",
-          operator: "equals",
-          value: 1, // Ethereum
-        },
-        {
           field: "measureID",
           operator: "equals",
           value: getMeasureIdValue(),
@@ -79,6 +81,7 @@ export const fetchTimeseriesAssetsValue = async (
           operator: series === "stablecoins" ? "equals" : "notEquals",
           value: 28, // Stablecoins (Else, real-world assets)
         },
+        getRwaApiEthereumNetworksFilter(["mainnet", "layer-2"]),
       ],
     },
   }
@@ -104,17 +107,39 @@ export const fetchTimeseriesAssetsValue = async (
 
     const json: JSONData = await response.json()
 
-    const ethereumAssetData = json.results[0]
+    const mainnetAssetData = json.results[0]
+    const layer2AssetDataArray = json.results.slice(1)
 
-    const seriesMapped: DataSeries<string> = ethereumAssetData?.points?.length
-      ? ethereumAssetData?.points.map(([dateString, mktCapValue]) => ({
+    const mainnetSeriesMapped = mainnetAssetData?.points?.length
+      ? mainnetAssetData?.points.map(([dateString, mktCapValue]) => ({
           date: dateString,
           value: mktCapValue,
         }))
       : []
 
+    const layer2SeriesMapped = layer2AssetDataArray.length
+      ? Object.values(
+          layer2AssetDataArray.reduce<
+            Record<string, { date: string; value: number }>
+          >((acc, assetData) => {
+            assetData.points.forEach(([dateString, mktCapValue]) => {
+              if (!acc[dateString]) {
+                acc[dateString] = { date: dateString, value: mktCapValue }
+              } else {
+                acc[dateString].value += mktCapValue
+              }
+            })
+            return acc
+          }, {})
+        )
+      : []
+
     return {
-      ...getDataSeriesWithCurrent(seriesMapped),
+      data: {
+        mainnet: getSeriesWithCurrent(mainnetSeriesMapped),
+        layer2: getSeriesWithCurrent(layer2SeriesMapped),
+      },
+      lastUpdated: Date.now(),
       sourceInfo: SOURCE.RWA,
     }
   } catch (error: unknown) {

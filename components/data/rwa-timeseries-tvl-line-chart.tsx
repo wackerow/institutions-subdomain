@@ -17,61 +17,121 @@ import { formatLargeCurrency } from "@/lib/utils/number"
 import type { TimeseriesAssetsValueData } from "@/app/_actions/fetchTimeseriesAssetsValue"
 
 const chartConfig = {
-  data: {
-    label: "Data",
-  },
-  value: {
-    label: "Real-World Assets",
+  mainnet: {
+    label: "Mainnet",
     color: "var(--chart-1)",
+  },
+  layer2: {
+    label: "Layer 2",
+    color: "var(--chart-4)",
   },
 } satisfies ChartConfig
 
 type RwaTimeseriesTvlLineChartProps = {
   chartData: DataTimestamped<TimeseriesAssetsValueData>
+  showL2?: boolean
 }
 const RwaTimeseriesTvlLineChart = ({
   chartData,
-}: RwaTimeseriesTvlLineChartProps) => (
-  <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
-    <AreaChart data={chartData.data.series}>
-      <defs>
-        <linearGradient id="fillRwaTvl" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />
-          <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
-        </linearGradient>
-      </defs>
-      <CartesianGrid vertical horizontal strokeDasharray="8 4" />
-      <YAxis
-        tickFormatter={(v) => formatLargeCurrency(v, 2).replace(/\.0+/, "")}
-        axisLine={false}
-        tickLine={false}
-        tickMargin={8}
-      />
-      <XAxis
-        dataKey="date"
-        axisLine={false}
-        tickMargin={8}
-        minTickGap={32}
-        tickFormatter={(v) => formatDateMonthYear(v)}
-      />
-      <ChartTooltip
-        content={(props) => (
-          <ChartTooltipContent
-            {...props}
-            labelFormatter={(v) => formatDateFull(v)}
-            indicator="dot"
-          />
-        )}
-      />
-      <Area
-        dataKey="value"
-        type="natural"
-        fill="url(#fillRwaTvl)"
-        stroke="var(--chart-1)"
-        stackId="a"
-      />
-    </AreaChart>
-  </ChartContainer>
-)
+  showL2,
+}: RwaTimeseriesTvlLineChartProps) => {
+  const layer2DateValueMapping = chartData.data.layer2.series.reduce(
+    (acc, item) => {
+      acc[item.date] = item.value
+      return acc
+    },
+    {} as Record<string, number>
+  )
+
+  const data = chartData.data.mainnet.series.map((item) => {
+    const mainnetItem = {
+      date: item.date,
+      mainnet: item.value,
+    }
+    if (!showL2) return mainnetItem
+    return {
+      ...mainnetItem,
+      layer2: layer2DateValueMapping[item.date] || 0,
+    }
+  })
+
+  return (
+    <ChartContainer
+      config={chartConfig}
+      className="aspect-auto h-[270px] w-full"
+    >
+      <AreaChart data={data}>
+        <defs>
+          <linearGradient id="fillRwaTvlMainnet" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />
+            <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
+          </linearGradient>
+          <linearGradient id="fillRwaTvlLayer2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="10%" stopColor="var(--chart-4)" stopOpacity={1} />
+            <stop offset="100%" stopColor="var(--chart-4)" stopOpacity={0.5} />
+          </linearGradient>
+        </defs>
+
+        {/* Watermark */}
+        <g aria-hidden="true" pointerEvents="none">
+          <text
+            x="53%"
+            y={showL2 ? "40%" : "50%"}
+            textAnchor="middle"
+            fill="var(--muted-foreground)"
+            className="text-big-//mobile sm: text-big font-bold opacity-10"
+          >
+            Mainnet
+            {showL2 && (
+              <>
+                <tspan x="53%" dy="1.2em">
+                  Layer 2
+                </tspan>
+              </>
+            )}
+          </text>
+        </g>
+
+        <CartesianGrid vertical horizontal strokeDasharray="8 4" />
+        <YAxis
+          tickFormatter={(v) => formatLargeCurrency(v, 2).replace(/\.0+/, "")}
+          axisLine={false}
+          tickLine={false}
+          tickMargin={8}
+        />
+        <XAxis
+          dataKey="date"
+          axisLine={false}
+          tickMargin={8}
+          minTickGap={32}
+          tickFormatter={(v) => formatDateMonthYear(v)}
+        />
+        <ChartTooltip
+          content={(props) => (
+            <ChartTooltipContent
+              {...props}
+              labelFormatter={(v) => formatDateFull(v)}
+              indicator="dot"
+            />
+          )}
+        />
+        <Area
+          dataKey="mainnet"
+          type="natural"
+          fill="url(#fillRwaTvlMainnet)"
+          stroke="var(--chart-1)"
+          stackId="a"
+        />
+        <Area
+          dataKey="layer2"
+          type="natural"
+          fill="url(#fillRwaTvlLayer2)"
+          stroke="var(--chart-4)"
+          stackId="a"
+        />
+      </AreaChart>
+    </ChartContainer>
+  )
+}
 
 export default RwaTimeseriesTvlLineChart

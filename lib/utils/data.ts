@@ -98,6 +98,22 @@ export const filterFirstAndFifteenth = <
   return filtered
 }
 
+export const getSeriesWithCurrent = <T extends number | string = number>(
+  seriesMapped: DataSeries<T>,
+  skipFiltering?: boolean
+) => {
+  if (seriesMapped?.length <= 0) throw new Error("Data series array empty")
+
+  const series = skipFiltering
+    ? seriesMapped
+    : filterFirstAndFifteenth(seriesMapped)
+
+  return {
+    series,
+    currentValue: seriesMapped[seriesMapped.length - 1].value,
+  }
+}
+
 /**
  * Returns a data series object containing the filtered or unfiltered series,
  * the current value, and the last updated timestamp.
@@ -111,18 +127,58 @@ export const filterFirstAndFifteenth = <
 export const getDataSeriesWithCurrent = <T extends number | string = number>(
   seriesMapped: DataSeries<T>,
   skipFiltering?: boolean
+) => ({
+  data: getSeriesWithCurrent(seriesMapped, skipFiltering),
+  lastUpdated: new Date(seriesMapped[seriesMapped.length - 1].date).getTime(),
+})
+
+/**
+ * Generates a filter object for querying RWA API by Ethereum network IDs.
+ *
+ * @param networks - An array specifying which networks to include in the filter.
+ *                   Possible values are "mainnet" and "layer-2". Defaults to both.
+ * @returns An object containing an "or" operator and an array of filter conditions
+ *          for the specified networks. If no networks are provided, returns an empty object.
+ */
+export const getRwaApiEthereumNetworksFilter = (
+  networks: ("mainnet" | "layer-2")[] = ["mainnet", "layer-2"]
 ) => {
-  if (seriesMapped?.length <= 0) throw new Error("Data series array empty")
+  if (!networks.length) return
 
-  const series = skipFiltering
-    ? seriesMapped
-    : filterFirstAndFifteenth(seriesMapped)
+  type NETWORK_ID = { id: number; name: string }
 
-  return {
-    data: {
-      series,
-      currentValue: seriesMapped[seriesMapped.length - 1].value,
-    },
-    lastUpdated: new Date(seriesMapped[seriesMapped.length - 1].date).getTime(),
+  const MAINNET_NETWORK_ID: NETWORK_ID = { id: 1, name: "Ethereum" }
+
+  const RWA_API_NETWORK_IDS: NETWORK_ID[] = [
+    { id: 35, name: "Blast" },
+    { id: 7, name: "Celo" },
+    { id: 10, name: "Base" },
+    { id: 4, name: "Optimism" },
+    { id: 11, name: "Arbitrum" },
+    { id: 33, name: "Mantle" },
+    { id: 3, name: "Polygon" },
+    { id: 31, name: "ZKsync Era" },
+  ]
+
+  const BASE_FIELD_OPERATOR = {
+    field: "networkID",
+    operator: "equals",
   }
+
+  const mainnetFilter = {
+    ...BASE_FIELD_OPERATOR,
+    value: MAINNET_NETWORK_ID.id,
+  }
+
+  const layer2Filters = RWA_API_NETWORK_IDS.map(({ id }) => ({
+    ...BASE_FIELD_OPERATOR,
+    value: id,
+  }))
+
+  const filters = []
+
+  if (networks.includes("mainnet")) filters.push(mainnetFilter)
+  if (networks.includes("layer-2")) filters.push(...layer2Filters)
+
+  return { operator: "or", filters }
 }

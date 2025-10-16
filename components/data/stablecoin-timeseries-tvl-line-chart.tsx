@@ -1,4 +1,5 @@
 "use client"
+// TODO: Mainnet + L2 ("Exclude L2s" filter)
 
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
@@ -33,7 +34,7 @@ const StablecoinTimeseriesTvlLineChart = ({
   chartData,
 }: StablecoinTimeseriesTvlLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[270px] w-full">
-    <AreaChart data={chartData.data.series}>
+    <AreaChart data={chartData.data.mainnet.series}>
       <defs>
         <linearGradient id="fillStablecoinTvl" x1="0" y1="0" x2="0" y2="1">
           <stop offset="10%" stopColor="var(--chart-1)" stopOpacity={1} />

@@ -182,7 +182,7 @@ export default async function Home() {
     },
     {
       value: formatLargeCurrency(
-        timeseriesStablecoinsValueData.data.currentValue
+        timeseriesStablecoinsValueData.data.mainnet.currentValue
       ),
       label: (
         <>
