@@ -39,7 +39,7 @@ export const fetchBaseTvl = async (): Promise<DataTimestamped<BaseTvlData>> => {
         `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
       )
 
-    const json: JSONData = await response.json() // TODO: CHeck if last source info needs to be omitted, or added to api/growthepie-v1-export-tvl-base
+    const json: JSONData = await response.json()
 
     return {
       data: json.data,
