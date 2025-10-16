@@ -181,3 +181,11 @@ export const getRwaApiEthereumNetworksFilter = (
 
   return { operator: "or", filters }
 }
+/**
+ * Returns an ISO string representing the date `n` days ago from the current date.
+ *
+ * @param n - The number of days to subtract from the current date. Defaults to 2.
+ * @returns An ISO 8601 formatted string of the calculated date.
+ */
+export const dateNDaysAgo = (n: number = 2) =>
+  new Date(Date.now() - n * 24 * 60 * 60 * 1000).toISOString()

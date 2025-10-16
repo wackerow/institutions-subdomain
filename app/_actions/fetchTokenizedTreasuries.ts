@@ -2,7 +2,7 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-import { getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
+import { dateNDaysAgo, getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -49,7 +49,7 @@ export const fetchTokenizedTreasuries = async (): Promise<
         {
           field: "date",
           operator: "onOrAfter",
-          value: "2023-01-01T05:00:00.000Z",
+          value: dateNDaysAgo(),
         },
         {
           field: "isInvestable",
@@ -84,7 +84,7 @@ export const fetchTokenizedTreasuries = async (): Promise<
       },
       next: {
         revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v3:assets:aggregatees:timeseries"],
+        tags: ["rwa:v3:assets:aggregates:timeseries"],
       },
     })
 

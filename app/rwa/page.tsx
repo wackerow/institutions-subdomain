@@ -2,7 +2,7 @@ import { Check } from "lucide-react"
 import Image, { StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
-import { MetricWithSource } from "@/lib/types"
+import { MetricLastUpdated, MetricWithSource, SourceInfo } from "@/lib/types"
 
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
@@ -19,6 +19,7 @@ import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
 import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTokenizedPrivateCredit from "../_actions/fetchTokenizedPrivateCredit"
 import fetchTokenizedTreasuries from "../_actions/fetchTokenizedTreasuries"
+import fetchTokenizedTreasuryExamples from "../_actions/fetchTokenizedTreasuryExamples"
 
 import buildings from "@/public/images/buildings.png"
 import buidlUsd from "@/public/images/tokens/buidl-usd.svg"
@@ -34,7 +35,8 @@ export default async function Page() {
   const stablecoinMarketshareData = await fetchStablecoinMarketshare()
   const rwaMarketshareData = await fetchRwaMarketshare()
   const tokenizedPrivateCreditData = await fetchTokenizedPrivateCredit()
-  const tokenizedTreasuries = await fetchTokenizedTreasuries()
+  const tokenizedTreasuriesData = await fetchTokenizedTreasuries()
+  const tokenizedTreasuryExamplesData = await fetchTokenizedTreasuryExamples()
 
   const metrics: MetricWithSource[] = [
     {
@@ -122,33 +124,45 @@ export default async function Page() {
     issuer?: string
     metricHref: string
     visitHref: string
-  }
+  } & Partial<MetricLastUpdated & SourceInfo>
 
   const cashEquivalents: AssetDetails[] = [
     {
       header: "BUIDL",
-      valuation: "$1.86B", // TODO: Live data
+      valuation: formatLargeCurrency(tokenizedTreasuryExamplesData.data.BUIDL),
       description: "BlackRock USD Institutional Digital Liquidity Fund",
       issuer: "BlackRock & Securitize",
       metricHref: "https://app.rwa.xyz/assets/BUIDL",
       visitHref: "https://securitize.io/blackrock/buidl",
+      ...tokenizedTreasuryExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedTreasuryExamplesData.lastUpdated
+      ),
     },
     {
       header: "BENJI",
-      valuation: "$193.5B", // TODO: Live data
+      valuation: formatLargeCurrency(tokenizedTreasuryExamplesData.data.BENJI),
       description: "Franklin OnChain U.S. Government Money Fund",
       issuer: "Franklin Templeton Benji Investments",
       metricHref: "https://app.rwa.xyz/assets/BENJI",
       visitHref:
         "https://www.franklintempleton.com/investments/options/money-market-funds/products/29386/SINGLCLASS/franklin-on-chain-u-s-government-money-fund/FOBXX",
+      ...tokenizedTreasuryExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedTreasuryExamplesData.lastUpdated
+      ),
     },
     {
       header: "OUSG",
-      valuation: "$193.5B", // TODO: Live data
+      valuation: formatLargeCurrency(tokenizedTreasuryExamplesData.data.OUSG),
       description: "Ondo Short-Term US Government Bond Fund",
       issuer: "Ondo",
       metricHref: "https://app.rwa.xyz/assets/OUSG",
       visitHref: "https://ondo.finance/ousg",
+      ...tokenizedTreasuryExamplesData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(
+        tokenizedTreasuryExamplesData.lastUpdated
+      ),
     },
   ]
 
@@ -349,15 +363,17 @@ export default async function Page() {
                 Tokenized Treasuries & Cash-Equivalents
               </h3>
               <p className="text-big font-bold tracking-[0.055rem]">
-                {formatLargeCurrency(tokenizedTreasuries.data.totalTreasuries)}
+                {formatLargeCurrency(
+                  tokenizedTreasuriesData.data.totalTreasuries
+                )}
               </p>
               <InlineText className="text-muted font-medium">
                 sector on Ethereum + L2s
                 <SourceInfoTooltip
                   lastUpdated={formatDateMonthDayYear(
-                    tokenizedTreasuries.lastUpdated
+                    tokenizedTreasuriesData.lastUpdated
                   )}
-                  {...tokenizedTreasuries.sourceInfo}
+                  {...tokenizedTreasuriesData.sourceInfo}
                 />
               </InlineText>
             </div>
@@ -370,6 +386,7 @@ export default async function Page() {
                 issuer,
                 metricHref,
                 visitHref,
+                ...tooltipProps
               }) => (
                 <Card
                   className="flex flex-col justify-between gap-y-6 p-8"
@@ -379,12 +396,19 @@ export default async function Page() {
                     <h4 className="text-h5 font-bold tracking-[0.03rem]">
                       {header}
                     </h4>
-                    <Link
-                      href={metricHref}
-                      className="css-secondary block font-bold tracking-[0.055rem]"
-                    >
-                      {valuation}
-                    </Link>
+                    <InlineText>
+                      <Link
+                        href={metricHref}
+                        inline
+                        className="css-secondary font-bold tracking-[0.055rem]"
+                      >
+                        {valuation}
+                      </Link>
+                      <SourceInfoTooltip
+                        {...tooltipProps}
+                        iconClassName="translate-y-0"
+                      />
+                    </InlineText>
                     <p className="text-muted-foreground font-medium">
                       {description}
                     </p>
