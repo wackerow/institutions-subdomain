@@ -538,7 +538,7 @@ export default async function Home() {
                     </h3>
                     <Image src={imgSrc} alt={`${name} logo`} className="h-10" />
                     <p className="text-muted-foreground">{label}</p>
-                    <InlineText className="text-muted-foreground inline//-flex items//-center font-bold">
+                    <InlineText className="text-muted-foreground font-bold">
                       {value}
                       <SourceInfoTooltip {...sourceInfo} />
                     </InlineText>
