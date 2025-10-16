@@ -82,7 +82,7 @@ export default async function Page() {
       ...totalValueSecuredData.sourceInfo,
     },
     {
-      label: "Validator count",
+      label: "Validator Count",
       value: formatLargeNumber(beaconChainData.data.validatorCount),
       lastUpdated: formatDateMonthDayYear(beaconChainData.lastUpdated),
       ...beaconChainData.sourceInfo,
@@ -164,7 +164,7 @@ export default async function Page() {
                 <CardContent className="flex-1 gap-4">
                   <CardTitle className="text-xl">TVL in DeFi</CardTitle>
                   <CardDescription className="font-medium">
-                    Sum of funds deposited into the applications on the chain.
+                    Sum of funds deposited into DeFi applications on Ethereum
                   </CardDescription>
                 </CardContent>
                 <div className="text-h4 font-bold tracking-[0.04rem]">
@@ -199,7 +199,7 @@ export default async function Page() {
 
             <Card variant="flex-column">
               <CardTitle className="text-h5">
-                DeFi TVL vs next largest ecosystem
+                DeFi TVL vs. Next-Largest Blockchain Ecosystem
               </CardTitle>
 
               <CardContent variant="flex-1-height-between">
@@ -210,7 +210,7 @@ export default async function Page() {
                     )}
                   </AnimatedNumberInView>
                   <CardSmallText className="text-center text-sm">
-                    Bigger
+                    Larger
                   </CardSmallText>
                 </div>
                 <div className="flex justify-between">
@@ -243,10 +243,10 @@ export default async function Page() {
             <Card variant="flex-column">
               <CardContent>
                 <CardTitle className="text-xl">
-                  Stablecoin marketshare
+                  Stablecoin Marketshare
                 </CardTitle>
                 <CardDescription className="text-sm font-medium">
-                  Total value of stablecoins on Ethereum Mainnet.
+                  Stablecoin TVL distribution by blockchain
                 </CardDescription>
               </CardContent>
 
@@ -284,7 +284,7 @@ export default async function Page() {
                 <CardContent variant="flex-1-height-between">
                   <CardContent>
                     <h3 className="text-base font-medium tracking-[0.02rem]">
-                      Ethereum L1 marketshare
+                      Ethereum L1 Marketshare
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(
@@ -311,7 +311,7 @@ export default async function Page() {
                 <CardContent variant="flex-1-height-between">
                   <CardContent>
                     <h3 className="text-base font-medium tracking-[0.02rem]">
-                      Ethereum L1 + L2 marketshare
+                      Ethereum L1 + L2 Marketshare
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(
@@ -346,7 +346,7 @@ export default async function Page() {
               <CardContent variant="flex-1-height-between">
                 <CardContent>
                   <h3 className="text-base font-medium tracking-[0.02rem]">
-                    Number of L2s
+                    Number of Live Ethereum L2 Networks
                   </h3>
                   <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                     {l2ScalingSummaryData.data.allProjectsCount}
@@ -371,9 +371,11 @@ export default async function Page() {
             <Card variant="flex-column">
               <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
                 <CardContent className="flex-1 gap-4">
-                  <CardTitle className="text-xl">TVL of L2s</CardTitle>
+                  <CardTitle className="text-xl">
+                    Daily Average L2 TVL
+                  </CardTitle>
                   <CardDescription className="font-medium">
-                    Daily Average
+                    Total value locked on Ethereum&apos;s L2 networks
                   </CardDescription>
                 </CardContent>
                 <div className="text-h4 font-bold tracking-[0.04rem]">

@@ -186,13 +186,14 @@ export default async function Home() {
       ),
       label: (
         <>
-          Stablecoin TVL{" "}
+          Stablecoin TVL
+          <br />
           {ethereumStablecoinMarketshare ? (
             <>
               <span className="font-medium">
                 {formatPercent(ethereumStablecoinMarketshare)}+
               </span>{" "}
-              of all stablecoin supply
+              of global supply
             </>
           ) : (
             ""
@@ -208,7 +209,7 @@ export default async function Home() {
       value: formatPercent(
         rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
       ),
-      label: "RWA marketshare on Ethereum and its L2s",
+      label: "RWA marketshare on Ethereum + L2s",
       lastUpdated: formatDateMonthDayYear(
         rwaMarketshareSummaryData.lastUpdated
       ),
@@ -364,9 +365,7 @@ export default async function Home() {
                     maskShape={<CircleRing className="size-full text-white" />}
                   />
                 </div>
-                <CardLabel variant="large">
-                  Decentralized Finance (DeFi)
-                </CardLabel>
+                <CardLabel variant="large">Decentralized Finance</CardLabel>
                 <CardDescription>
                   Open financial systems built on smart contracts instead of
                   banks. DeFi lets anyone lend, borrow, trade, and earn yield
@@ -522,10 +521,13 @@ export default async function Home() {
           <hr className="border-muted m-10 md:my-20" />
 
           <section id="who" className="flex gap-10 max-lg:flex-col md:gap-20">
-            <div className="flex flex-col gap-y-10 max-lg:items-center">
+            <div className="flex flex-col gap-y-2 max-lg:items-center">
               <h2 className="text-h3-mobile sm:text-h3 max-lg:mx-auto max-lg:text-center lg:w-md lg:max-w-md">
                 Market-Proven Platform
               </h2>
+              <p className="text-muted-foreground font-medium">
+                Institutions innovate on Ethereum
+              </p>
             </div>
             <div className="grid w-full grid-cols-2 gap-x-8 gap-y-8 sm:gap-y-14">
               {platforms.map(

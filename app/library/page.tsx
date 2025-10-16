@@ -21,11 +21,15 @@ export default function Page() {
         heading="Library: Institutional Insights"
         shape="book-open-text-fill"
       >
-        Reports, articles, and analyses from across the institutional landscape,
-        along with thought leadership and updates from the Ethereum
-        Foundation&apos;s Enterprise Acceleration team. Explore market trends,
-        technical developments, and strategic opportunities for institutions
-        building in the onchain economy.
+        <p>
+          Reports, articles, and analyses from across the institutional
+          landscape, along with thought leadership and updates from the Ethereum
+          Foundation&apos;s Enterprise Acceleration team.
+        </p>
+        <p>
+          Explore market trends, technical developments, and strategic
+          opportunities for institutions building in the onchain economy.
+        </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-[6.5rem]">

@@ -69,20 +69,20 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
       title: "Enhanced Performance",
       cards: [
         {
-          heading: "No Inflation Burden",
+          heading: "High-Performance Validation",
           items: [
             "By separating execution from consensus and inheriting Ethereum's finality, rollups enable high performance without sacrificing user safety or decentralization.",
           ],
         },
         {
-          heading: "No Inflation Burden",
+          heading: "Faster & Cheaper",
           items: [
             "Rollups can parallelize execution and proving. They don't need to wait for thousands of nodes to sync.",
             "One proof replaces millions of redundant re-computations across nodes, greatly reducing validation costs.",
           ],
         },
         {
-          heading: "No Inflation Burden",
+          heading: "Safer Validation",
           items: [
             "Rollups inherit Ethereum's censorship resistance and finality.",
             "Assets are held in Ethereum contracts, and updates are enforced via fraud or validity proofs.",
@@ -95,7 +95,7 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
       title: "Interoperability",
       cards: [
         {
-          heading: "No Inflation Burden",
+          heading: "Shared Standards",
           items: [
             "L2s leverage Ethereum's established EVM, token standards, and core assets like ETH.",
             "Users and developers benefit from a consistent experience, using the same wallets, tools, and code across Ethereum's L1 and L2 ecosystem.",

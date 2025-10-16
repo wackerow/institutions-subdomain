@@ -85,7 +85,7 @@ export default async function Page() {
     href: string
   }[] = [
     {
-      heading: "Monetary Authority of Singapore J.P.Morgan",
+      heading: "Monetary Authority of Singapore & J.P. Morgan",
       description:
         "Live foreign exchange transaction executed via smart contract-based liquidity pool on Polygon L2 mainnet ",
       year: "2022",

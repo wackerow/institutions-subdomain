@@ -485,7 +485,9 @@ export default async function Page() {
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <Card className="p-10">
               <h3 className="text-h4">
-                Ethereum L1: The settlement & liquidity layer
+                Ethereum L1
+                <br />
+                The settlement & liquidity layer
               </h3>
 
               <hr className="my-6" />
@@ -513,7 +515,7 @@ export default async function Page() {
               <div className="space-y-2 py-6">
                 <div className="flex items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
-                  <h4 className="text-h6">Risk gating</h4>
+                  <h4 className="text-h6">Risk Gating</h4>
                 </div>
                 <div className="text-muted-foreground font-medium">
                   Keep complex or experimental logic off L1; use it for final
@@ -524,7 +526,9 @@ export default async function Page() {
 
             <Card className="p-10">
               <h3 className="text-h4">
-                Ethereum&apos;s L2s: The execution & scale layer
+                Ethereum&apos;s L2s
+                <br />
+                The execution & scale layer
               </h3>
 
               <hr className="my-6" />

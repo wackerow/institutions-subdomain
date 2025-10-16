@@ -64,7 +64,7 @@ export default function Page() {
           confidential while settling against the deepest onchain liquidity.
         </p>
         <p>
-          Privacy isn&apos;t a sidechain or a silo, it&apos;s a set of open
+          Privacy isn&apos;t a sidechain or a silo. It&apos;s a set of open
           standards you compose on L1 or L2 to meet regulatory, risk, and audit
           needs.
         </p>
@@ -109,7 +109,7 @@ export default function Page() {
               </h3>
               <div className="text-muted-foreground font-medium">
                 Stand up pilots that settle publicly and compose with existing
-                liquidity, while kee ping specific counterparties, amounts, and
+                liquidity, while keeping specific counterparties, amounts, and
                 logic confidential.
               </div>
             </div>
