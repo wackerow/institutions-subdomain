@@ -20,7 +20,7 @@ const heroShapes = {
   "eth-glyph": <EthGlyph />,
   "chart-no-axes-combined": <ChartNoAxesCombined />,
   "layers-2": <Layers2 />,
-  lock: <Lock className="[&_rect]:fill-current" />,
+  lock: <Lock />,
   handshake: <Handshake />,
   coins: <Coins />,
   "book-open-text-fill": <BookOpenText />,
@@ -62,7 +62,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
-        <div className="relative h-[20rem] w-full max-md:mt-10 max-md:mb-0 md:h-full">
+        <div className="relative h-[16rem] w-full max-md:mt-10 max-md:mb-0 sm:h-[20rem] md:h-full">
           <HeroBg className="size-full" />
           {shape && (
             <div
