@@ -74,7 +74,6 @@ const DefiTimeseriesTvlEthereumLineChart = ({
       <Area
         dataKey="value"
         type="natural"
-        fill="url(#fillDefiTvl)"
         stroke="var(--chart-1)"
         stackId="a"
         strokeWidth={2}
