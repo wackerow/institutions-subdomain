@@ -31,10 +31,10 @@ const DigitalAssetsDropdown = ({ className }: { className?: string }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {DA_NAV_ITEM_LINKS.map((props) => (
-          <DropdownMenuItem key={props.href}>
+          <DropdownMenuItem key={props.href} asChild>
             <Link
               onClick={() => setOpen(false)}
-              className="text-base"
+              className="w-full text-base"
               {...props}
             />
           </DropdownMenuItem>

@@ -48,9 +48,9 @@ const CategoryDropdown = ({ categoryState }: CategoryDropdownProps) => {
         </DropdownMenuItem>
 
         {defiCategories.map((category) => (
-          <DropdownMenuItem key={category}>
+          <DropdownMenuItem key={category} asChild>
             <p
-              className="text-base font-medium"
+              className="w-full !cursor-pointer !text-base font-medium"
               onClick={handleClick(category)}
             >
               {defiEcosystem[category].heading}
