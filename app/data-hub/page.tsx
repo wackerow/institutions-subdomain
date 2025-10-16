@@ -68,7 +68,7 @@ export default async function Page() {
   )
   const etherMarketDetailsData = await fetchEtherMarketDetails()
 
-  const overviewCards: MetricWithSource[] = [
+  const metrics: MetricWithSource[] = [
     {
       label: "Market Cap",
       value: formatLargeCurrency(etherMarketDetailsData.data.etherMarketCap),
@@ -116,7 +116,7 @@ export default async function Page() {
             Overview
           </h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
-            {overviewCards.map(
+            {metrics.map(
               ({ label, value, source, sourceHref, lastUpdated }, idx) => (
                 <Card key={idx} variant="flex-height">
                   <CardContent>

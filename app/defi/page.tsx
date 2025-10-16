@@ -3,8 +3,16 @@ import type { Metadata } from "next/types"
 
 import { MetricWithSource } from "@/lib/types"
 
-import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
+import { AnimatedNumberInView } from "@/components/ui/animated-number"
+import {
+  Card,
+  CardContent,
+  CardLabel,
+  CardSource,
+  CardValue,
+} from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
@@ -28,13 +36,21 @@ export default async function Page() {
 
   const metrics: MetricWithSource[] = [
     {
-      label: "DeFi Total Value Locked (TVL)",
+      label: (
+        <>
+          DeFi <span title="Total Value Locked">TVL</span>
+        </>
+      ),
       value: formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl),
       lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
       ...defiTvlAllCurrentData.sourceInfo,
     },
     {
-      label: "Of All Global DeFi TVL",
+      label: (
+        <>
+          Share of Global DeFi <span title="Total Value Locked">TVL</span>
+        </>
+      ),
       value: formatPercent(defiTvlAllCurrentData.data.mainnetDefiMarketshare),
       lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
       ...defiTvlAllCurrentData.sourceInfo,
@@ -43,16 +59,19 @@ export default async function Page() {
       value: formatLargeCurrency(dexVolume.data.trailing12moAvgDexVolume),
       label: (
         <>
-          24-Hour DEX Volume
-          <br />
-          (12-month avg)
+          24h <span title="Decentralized Exchange">DEX</span> Volume (12-month
+          avg)
         </>
       ),
       lastUpdated: formatDateMonthDayYear(dexVolume.lastUpdated),
       ...dexVolume.sourceInfo,
     },
     {
-      label: "TVL vs. Next-Largest Ecosystem",
+      label: (
+        <>
+          <span title="Total Value Locked">TVL</span> vs. Next-Largest Ecosystem
+        </>
+      ),
       value: formatMultiplier(defiTvlAllCurrentData.data.runnerUpMultiplier),
       lastUpdated: formatDateMonthDayYear(defiTvlAllCurrentData.lastUpdated),
       ...defiTvlAllCurrentData.sourceInfo,
@@ -108,13 +127,48 @@ export default async function Page() {
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-20 sm:px-10 sm:py-20 md:space-y-40">
-        <section id="metrics" className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <section
+          id="metrics"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4"
+        >
           <h2 className="sr-only">DeFi Ecosystem Metrics</h2>
-          {metrics.map(({ label, ...props }, idx) => (
-            <BigNumber key={idx} {...props}>
-              {label}
-            </BigNumber>
-          ))}
+          {metrics.map(
+            ({ label, value, source, sourceHref, lastUpdated }, idx) => (
+              <Card key={idx} variant="flex-height">
+                <CardContent className="space-between flex flex-1 flex-col">
+                  <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                    {label}
+                  </CardLabel>
+                  <CardValue asChild>
+                    <AnimatedNumberInView className="mt-auto">
+                      {value}
+                    </AnimatedNumberInView>
+                  </CardValue>
+                </CardContent>
+                {source && (
+                  <CardSource>
+                    Source:{" "}
+                    {sourceHref ? (
+                      <Link
+                        href={sourceHref}
+                        className="text-muted-foreground hover:text-foreground"
+                        inline
+                      >
+                        {source}
+                      </Link>
+                    ) : (
+                      source
+                    )}
+                    {lastUpdated && (
+                      <SourceInfoTooltip
+                        lastUpdated={formatDateMonthDayYear(lastUpdated)}
+                      />
+                    )}
+                  </CardSource>
+                )}
+              </Card>
+            )
+          )}
         </section>
 
         <section

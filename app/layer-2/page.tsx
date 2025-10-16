@@ -5,10 +5,17 @@ import type { Metadata } from "next/types"
 
 import { MetricWithSource } from "@/lib/types"
 
-import BigNumber from "@/components/BigNumber"
 import Hero from "@/components/Hero"
+import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { L2BenefitsPanel } from "@/components/L2BenefitsPanel"
-import { Card } from "@/components/ui/card"
+import { AnimatedNumberInView } from "@/components/ui/animated-number"
+import {
+  Card,
+  CardContent,
+  CardLabel,
+  CardSource,
+  CardValue,
+} from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
@@ -53,13 +60,13 @@ export default async function Page() {
 
   const metrics: MetricWithSource[] = [
     {
-      label: "Total Value Locked (TVL) across L2s",
+      label: <span title="Total Value Locked">TVL Across L2s</span>,
       value: formatLargeCurrency(l2ScalingSummaryData.data.totalTvl),
       lastUpdated: formatDateMonthDayYear(l2ScalingSummaryData.lastUpdated),
       ...l2ScalingSummaryData.sourceInfo,
     },
     {
-      label: "Avg. Transaction Cost daily",
+      label: "Avg Transaction Cost Daily",
       value: formatCurrency(
         l2MedianTxCostData.data.latestWeightedMedianTxCostUsd,
         {
@@ -71,7 +78,11 @@ export default async function Page() {
       ...l2MedianTxCostData.sourceInfo,
     },
     {
-      label: "Avg. User Operations Per Seconds",
+      label: (
+        <>
+          Avg <span title="User Operations Per Second">UOPS</span>
+        </>
+      ),
       value: formatLargeNumber(l2ScalingActivityData.data.uops),
       lastUpdated: formatDateMonthDayYear(l2ScalingActivityData.lastUpdated),
       ...l2ScalingActivityData.sourceInfo,
@@ -202,7 +213,7 @@ export default async function Page() {
     <main className="row-start-2 flex flex-col items-center sm:items-start">
       <Hero heading="Ethereum L2s" shape="layers-2">
         <p>
-          Layer-2s (L2s) are networks that settle to Ethereum, making execution
+          Layer 2s (L2s) are networks that settle to Ethereum, making execution
           faster, cheaper and more scalable—while still relying on Ethereum for
           security and finality.
         </p>
@@ -214,13 +225,51 @@ export default async function Page() {
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
         <section>
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
+            {metrics.map(
+              ({ label, value, source, sourceHref, lastUpdated }, idx) => (
+                <Card key={idx} variant="flex-height">
+                  <CardContent>
+                    <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                      {label}
+                    </CardLabel>
+                    <CardValue asChild>
+                      <AnimatedNumberInView>{value}</AnimatedNumberInView>
+                    </CardValue>
+                  </CardContent>
+                  {source && (
+                    <CardSource>
+                      Source:{" "}
+                      {sourceHref ? (
+                        <Link
+                          href={sourceHref}
+                          className="text-muted-foreground hover:text-foreground"
+                          inline
+                        >
+                          {source}
+                        </Link>
+                      ) : (
+                        source
+                      )}
+                      {lastUpdated && (
+                        <SourceInfoTooltip
+                          lastUpdated={formatDateMonthDayYear(lastUpdated)}
+                        />
+                      )}
+                    </CardSource>
+                  )}
+                </Card>
+              )
+            )}
+          </div>
+
+          {/* <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {metrics.map(({ label, ...props }, idx) => (
               <BigNumber key={idx} {...props}>
                 {label}
               </BigNumber>
             ))}
-          </div>
+          </div> */}
         </section>
         <section id="role" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">The Role of L2s</h2>
