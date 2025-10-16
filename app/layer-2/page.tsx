@@ -29,6 +29,10 @@ import coinbase from "@/public/images/app-logos/coinbase.png"
 import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
 import ey from "@/public/images/app-logos/ey.png"
 import arbitrum from "@/public/images/networks/arbitrum.png"
+import aztec from "@/public/images/networks/aztec.png"
+import base from "@/public/images/networks/base.png"
+import jovay from "@/public/images/networks/jovay.png"
+import linea from "@/public/images/networks/linea.png"
 import optimism from "@/public/images/networks/optimism.png"
 import polygon from "@/public/images/networks/polygon.png"
 import zksync from "@/public/images/networks/zksync.png"
@@ -98,16 +102,44 @@ export default async function Page() {
     {
       heading: "Polygon",
       description:
-        "Polygon protocols and scaling technologies are used to build and deploy apps, or launch ZK rollups and validiums as L2s. ",
+        "Polygon protocols and scaling technologies are used to build and deploy apps, or launch ZK rollups and validiums as L2s.",
       href: "https://polygon.technology/",
       imgSrc: polygon,
     },
     {
       heading: "ZKSync",
       description:
-        "A scaling and privacy engine for Ethereum with a network of interoperable chains, secured by ZK privacy technology. ",
+        "A scaling and privacy engine for Ethereum with a network of interoperable chains, secured by ZK privacy technology.",
       href: "https://www.zksync.io/",
       imgSrc: zksync,
+    },
+    {
+      heading: "Linea",
+      description:
+        "Linea is a general purpose, EVM equivalent L2, built by Consensys. Allowing use of existing Ethereum tooling and smart contracts with minimal changes. ",
+      href: "https://linea.build/",
+      imgSrc: linea,
+    },
+    {
+      heading: "Aztec",
+      description:
+        "Aztec is a privacy-focused L2 combining composability across private and public execution and state. It enables confidential smart contracts with built-in privacy and scalability.",
+      href: "https://aztec.network/",
+      imgSrc: aztec,
+    },
+    {
+      heading: "Base",
+      description:
+        "Base is a secure, low-cost L2 built on Optimism’s OP Stack, offering seamless Ethereum compatibility. It enables fast, scalable transactions while keeping assets and apps fully on-chain.",
+      href: "https://www.base.org/",
+      imgSrc: base,
+    },
+    {
+      heading: "Jovay",
+      description:
+        "Jovay, by Ant Digital Technologies, is an Ethereum Layer 2 blockchain built for real-world assets and users.",
+      href: "https://jovay.io/",
+      imgSrc: jovay,
     },
   ]
 
