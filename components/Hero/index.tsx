@@ -49,7 +49,9 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "group-has-[.css-primary-invert]/body:before:bg-primary/95 before:bg-background/95 relative before:absolute before:inset-0 before:-z-10 before:scale-x-120 before:blur-2xl max-sm:before:rounded-b-[50%] md:before:rounded-r-[25%]"
         )}
       >
-        <h1 className="leading-tight">{heading}</h1>
+        <h1 className={cn(!children && "max-sm:text-center", "leading-tight")}>
+          {heading}
+        </h1>
         {children && <div className="space-y-6 font-medium">{children}</div>}
       </div>
       <div
