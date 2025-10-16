@@ -31,6 +31,13 @@ const DefiTimeseriesTvlEthereumLineChart = ({
 }: DefiTimeseriesTvlEthereumLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
     <AreaChart data={chartData.data.series}>
+      <defs>
+        <linearGradient id="fillDefiTvl" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="transparent" stopOpacity={0} />
+          <stop offset="100%" stopColor="transparent" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+
       {/* Watermark */}
       <g aria-hidden="true" pointerEvents="none">
         <text
@@ -74,6 +81,7 @@ const DefiTimeseriesTvlEthereumLineChart = ({
       <Area
         dataKey="value"
         type="natural"
+        fill="url(#fillDefiTvl)"
         stroke="var(--chart-1)"
         stackId="a"
         strokeWidth={2}
