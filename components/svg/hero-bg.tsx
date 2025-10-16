@@ -55,8 +55,8 @@ type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
 }
 
 const HeroBg = ({
-  // Layout
-  width = 670,
+  // Layout (container-driven; width prop used only as SSR fallback)
+  width: widthProp = 670,
   strokeWidth = 2,
   gap = 8,
   lineCount = 42,
@@ -75,7 +75,7 @@ const HeroBg = ({
   rippleLifetimeMs = 6000,
   rippleSampleCount = 21,
   splineTension = 1,
-  pauseWhileRippling = false,
+  pauseWhileRippling = true,
   initialDrawMs = 300,
   initialDrawStaggerMs = 12,
   reducedMotionFadeMs = 250,
@@ -91,42 +91,163 @@ const HeroBg = ({
     return () => cancelAnimationFrame(id)
   }, [mounted])
 
-  const minLength = 0.4 * +width // Minimum 40% box width
-  const maxLength = 0.9 * +width // Maximum 90% box width
-  const xRange = +width - minLength // Range of 60% box width
-  const segmentHeight = +strokeWidth + gap
-  const height = segmentHeight * lineCount
+  // Refs and measurement for container-driven sizing
+  const svgRef = useRef<SVGSVGElement | null>(null)
+  const measureRafRef = useRef<number | null>(null)
+  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null)
+  const [measuredHeight, setMeasuredHeight] = useState<number | null>(null)
+  useEffect(() => {
+    const el = svgRef.current
+    if (!el) return
+    // Initialize immediately to avoid a flash
+    const rect0 = el.getBoundingClientRect()
+    if (rect0.width > 0) setMeasuredWidth(rect0.width)
+    if (rect0.height > 0) setMeasuredHeight(rect0.height)
+    if (typeof ResizeObserver === "undefined") return
+    const ro = new ResizeObserver((entries) => {
+      const cr = entries[0]?.contentRect
+      if (!cr) return
+      const w = cr.width
+      const h = cr.height
+      if (w > 0) {
+        if (measureRafRef.current != null)
+          cancelAnimationFrame(measureRafRef.current)
+        measureRafRef.current = requestAnimationFrame(() => setMeasuredWidth(w))
+      }
+      if (h > 0) {
+        if (measureRafRef.current != null)
+          cancelAnimationFrame(measureRafRef.current)
+        measureRafRef.current = requestAnimationFrame(() =>
+          setMeasuredHeight(h)
+        )
+      }
+    })
+    ro.observe(el)
+    return () => {
+      ro.disconnect()
+      if (measureRafRef.current != null)
+        cancelAnimationFrame(measureRafRef.current)
+    }
+  }, [])
 
-  // Precompute lines so randomness remains stable across re-renders
-  const [lines] = useState<LineData[]>(() =>
-    Array.from({ length: lineCount }).map((_, idx) => {
-      const x = Math.random() * xRange
-      const y = (idx + 0.5) * segmentHeight
-      const maxLineLength = Math.min(maxLength, +width - x)
-      const length = minLength + Math.random() * (maxLineLength - minLength)
-      const opacity = 0.8 * Math.random() + 0.2 // Ranges from 20% to 100%
-      const direction = Math.random() > 0.5 ? 1 : -1
-      const travel = direction * (0.2 * +width + Math.random() * 0.35 * +width)
-      const duration = 14 + Math.random() * 22 // 14s – 36s
-      const delay = Math.random() * 8 // up to 8s stagger
+  // Use measured width when available; else fall back to provided width prop
+  const widthPx =
+    (typeof widthProp === "number"
+      ? widthProp
+      : parseFloat(String(widthProp))) || 670
+  const effectiveWidth = measuredWidth ?? widthPx
+  // Fixed design viewBox to enable object-cover-like behavior
+  const VBW = 1200
+  const VBH = 600
+  // Normalize strokeWidth to a number first (SVG prop allows string|number)
+  const strokeWidthNum =
+    typeof strokeWidth === "number"
+      ? strokeWidth
+      : parseFloat(String(strokeWidth)) || 0
+  // Scale stroke/gap for smaller widths to reduce visual weight and height
+  const strokeWidthPx =
+    effectiveWidth < 480
+      ? Math.min(1, strokeWidthNum)
+      : effectiveWidth < 768
+        ? Math.min(1.25, strokeWidthNum)
+        : strokeWidthNum
+  const gapPx =
+    effectiveWidth < 480
+      ? Math.min(4, gap)
+      : effectiveWidth < 768
+        ? Math.min(6, gap)
+        : gap
+  const segmentHeight = +strokeWidthPx + gapPx
+  // Compute cover scale from container to viewBox
+  const containerW = measuredWidth ?? widthPx
+  const containerH = measuredHeight ?? segmentHeight * lineCount
+  const scaleX = containerW / VBW
+  const scaleY = containerH / VBH
+  const coverScale = Math.max(scaleX, scaleY)
+  const invCoverScale = Math.max(1 / Math.max(coverScale, 0.0001), 0.0001)
+  // Convert spacing into viewBox units so CSS px spacing remains constant after scaling
+  const segmentHeightView = segmentHeight * invCoverScale
+  // Alias to keep downstream references working (container px height)
+  const height = containerH
+
+  // Normalized geometry to keep layout stable across resizes
+  type LineFrac = {
+    id: string
+    xFrac: number
+    lenFrac: number
+    opacity: number
+    travelFrac: number
+    duration: number
+    delay: number
+  }
+
+  // Small deterministic PRNG for stable randomness
+  const mulberry32 = (seed: number) => {
+    return function () {
+      let t = (seed += 0x6d2b79f5)
+      t = Math.imul(t ^ (t >>> 15), t | 1)
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+    }
+  }
+
+  const MAX_LINES = Math.max(64, lineCount * 3)
+  const [linesFrac] = useState<LineFrac[]>(() => {
+    const minLenFrac = 0.66
+    const maxLenFrac = 0.9
+    const rng = mulberry32(1337)
+    return Array.from({ length: MAX_LINES }).map((_, idx) => {
+      const xFrac = rng() * (1 - minLenFrac)
+      const allowedMax = Math.min(maxLenFrac, 1 - xFrac)
+      const lenFrac = minLenFrac + rng() * (allowedMax - minLenFrac)
+      const opacity = 0.2 + 0.8 * rng()
+      const direction = rng() > 0.5 ? 1 : -1
+      const travelFrac = direction * (0.2 + 0.35 * rng())
+      const duration = 14 + 22 * rng()
+      const delay = 8 * rng()
       return {
         id: `line-index-${idx}`,
-        x,
-        y,
-        length,
+        xFrac,
+        lenFrac,
         opacity,
-        travel,
+        travelFrac,
         duration,
         delay,
       }
     })
+  })
+
+  // Derive viewBox-space lines from fractions and current cover scaling
+  const dynamicLineCount = Math.max(
+    12,
+    Math.min(MAX_LINES, Math.floor(height / segmentHeight))
   )
+  const totalLinesHeightView = dynamicLineCount * segmentHeightView
+  const offsetYView = (VBH - totalLinesHeightView) / 2
+  const lines: LineData[] = linesFrac
+    .slice(0, dynamicLineCount)
+    .map((lf, idx) => {
+      const x = lf.xFrac * VBW
+      const y = offsetYView + (idx + 0.5) * segmentHeightView
+      const length = lf.lenFrac * VBW
+      const travel = lf.travelFrac * VBW
+      return {
+        id: lf.id,
+        x,
+        y,
+        length,
+        opacity: lf.opacity,
+        travel,
+        duration: lf.duration,
+        delay: lf.delay,
+      }
+    })
 
   // Pointer hover state (for opacity/weight emphasis only)
   const [pointer, setPointer] = useState<XYCoord | null>(null)
   // Keep a ref for the latest pointer to avoid rescheduling timers on movement
   const pointerRef = useRef<XYCoord | null>(null)
-  const svgRef = useRef<SVGSVGElement | null>(null)
+  // svgRef declared earlier
 
   // Ripple animation state
   const ripplesRef = useRef<Ripple[]>([])
@@ -152,13 +273,13 @@ const HeroBg = ({
 
   const isPointInsideSvg = useCallback(
     (p: XYCoord | null) =>
-      !!p && p.x >= 0 && p.x <= +width && p.y >= 0 && p.y <= height,
-    [width, height]
+      !!p && p.x >= 0 && p.x <= VBW && p.y >= 0 && p.y <= VBH,
+    [VBW, VBH]
   )
 
   const randomPointInSvg = useCallback((): XYCoord => {
-    return { x: Math.random() * +width, y: Math.random() * height }
-  }, [width, height])
+    return { x: Math.random() * VBW, y: Math.random() * VBH }
+  }, [VBW, VBH])
 
   // Helper: convert client coordinates to SVG internal coordinates using getScreenCTM
   const svgPointFromClient = useCallback(
@@ -174,11 +295,11 @@ const HeroBg = ({
         return { x: mapped.x, y: mapped.y }
       }
       const rect = svg.getBoundingClientRect()
-      const sx = +width / rect.width
-      const sy = height / rect.height
+      const sx = VBW / rect.width
+      const sy = VBH / rect.height
       return { x: (clientX - rect.left) * sx, y: (clientY - rect.top) * sy }
     },
-    [width, height]
+    [VBW, VBH]
   )
 
   // Prefers-reduced-motion handling
@@ -296,11 +417,12 @@ const HeroBg = ({
         x,
         y,
         start,
-        amplitude: rippleAmplitude,
-        wavelength: rippleWavelength,
-        speed: rippleSpeed,
+        // convert ripple params from CSS px to viewBox units so they remain visually consistent
+        amplitude: rippleAmplitude * invCoverScale,
+        wavelength: rippleWavelength * invCoverScale,
+        speed: rippleSpeed * invCoverScale,
         decay: rippleDecay,
-        spread: rippleSpread,
+        spread: rippleSpread * invCoverScale,
       }
       ripplesRef.current = [...ripplesRef.current, ripple]
       lastRippleAtRef.current = start
@@ -317,6 +439,7 @@ const HeroBg = ({
       rippleSpeed,
       rippleDecay,
       rippleSpread,
+      invCoverScale,
       pauseWhileRippling,
       ensureAnimating,
     ]
@@ -360,7 +483,7 @@ const HeroBg = ({
         const currentPointer = pointerRef.current
         const pt = isPointInsideSvg(currentPointer)
           ? (currentPointer as XYCoord)
-          : { x: +width / 2, y: height / 2 }
+          : { x: VBW / 2, y: VBH / 2 }
         createRippleAt(pt.x, pt.y)
       }
       scheduleNextHint()
@@ -373,8 +496,8 @@ const HeroBg = ({
     clearHintTimeout,
     scheduleNextHint,
     isPointInsideSvg,
-    width,
-    height,
+    VBW,
+    VBH,
     createRippleAt,
   ])
 
@@ -445,17 +568,30 @@ const HeroBg = ({
         return `M${x} ${y}H${x + length}`
       }
 
-      // Combine contributions from all ripples to get vertical offset
-      // Build sampling set: uniform samples plus, for each ripple, include a sample at the ripple's x if within the line bounds to anchor the wave onset exactly where clicked.
+      // Use a frozen time for slide offset while paused, but let ripples keep animating
+      const now = performance.now()
+      const ripplesActive = ripples.length > 0
+      const offsetNow =
+        pauseWhileRippling && ripplesActive && pausedAtRef.current != null
+          ? pausedAtRef.current
+          : now
+      const offsetX = getLineOffsetX(line, offsetNow)
+
+      // Build sampling set: uniform samples plus an anchor at the ripple center projected onto this line
       const uniformSamples = rippleSampleCount
       const positions: number[] = []
       for (let i = 0; i < uniformSamples; i++) {
         const t = i / (uniformSamples - 1)
         positions.push(x + t * length)
       }
+
+      // Important: when adding an anchor at the ripple's x, convert from visible x back
+      // into the line's untransformed coordinate space so the anchor lands on the path.
       for (const r of ripples) {
-        if (r.x >= x && r.x <= x + length) positions.push(r.x)
+        const pxOnLine = r.x - offsetX // undo current slide to test/anchor on the actual path
+        if (pxOnLine >= x && pxOnLine <= x + length) positions.push(pxOnLine)
       }
+
       // sort and dedupe
       positions.sort((a, b) => a - b)
       const pxs: number[] = []
@@ -466,14 +602,6 @@ const HeroBg = ({
       }
 
       const points: { x: number; y: number }[] = []
-      const now = performance.now()
-      const ripplesActive = ripples.length > 0
-      // Use a frozen time for slide offset while paused, but let ripples keep animating
-      const offsetNow =
-        pauseWhileRippling && ripplesActive && pausedAtRef.current != null
-          ? pausedAtRef.current
-          : now
-      const offsetX = getLineOffsetX(line, offsetNow)
       for (let i = 0; i < pxs.length; i++) {
         const px = pxs[i]
         // Compare distances in visible coordinates by adding current slide offset
@@ -493,21 +621,25 @@ const HeroBg = ({
       pauseWhileRippling,
     ]
   )
+  // Always render with safe fallbacks so hydration matches and ResizeObserver can attach
 
-  if (!mounted) return null
+  // Convert hover emphasis sigmas to viewBox units so spatial falloff stays consistent
+  const hoverSigmaXView = hoverSigmaX * invCoverScale
+  const hoverSigmaYView = hoverSigmaY * invCoverScale
 
   return (
     <svg
       ref={svgRef}
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      viewBox={`0 0 ${VBW} ${VBH}`}
+      preserveAspectRatio="xMidYMid slice"
       stroke="currentColor"
-      strokeWidth={strokeWidth}
+      strokeWidth={strokeWidthPx}
       xmlns="http://www.w3.org/2000/svg"
       overflow="visible"
       onPointerDown={handlePointerDown}
       style={{
+        width: "100%",
+        height: "100%",
         touchAction: "pan-y",
         display: "block",
         // keep reduced-motion fade, remove the responsive height/maxWidth changes
@@ -521,6 +653,10 @@ const HeroBg = ({
       {lines.map((line, idx) => {
         const d = generatePath(line)
         const ripplesActive = ripplesRef.current.length > 0
+        const paused = ripplesActive && pauseWhileRippling
+        // Compute an exact offset for style transform when paused so JS + CSS align perfectly
+        const nowForStyle = paused && pausedAtRef.current != null ? pausedAtRef.current : performance.now()
+        const offsetXView = getLineOffsetX(line, nowForStyle)
         // Hover emphasis: adjust stroke width and opacity based on proximity to pointer
         let hoverFactor = 0
         if (pointer) {
@@ -532,25 +668,34 @@ const HeroBg = ({
                 ? pointer.x - (x + length)
                 : 0
           const dy = Math.abs(pointer.y - y)
-          const fx = Math.exp(-(dx * dx) / (2 * hoverSigmaX * hoverSigmaX))
-          const fy = Math.exp(-(dy * dy) / (2 * hoverSigmaY * hoverSigmaY))
+          const fx = Math.exp(
+            -(dx * dx) / (2 * hoverSigmaXView * hoverSigmaXView)
+          )
+          const fy = Math.exp(
+            -(dy * dy) / (2 * hoverSigmaYView * hoverSigmaYView)
+          )
           hoverFactor = fx * fy // 0..1
         }
 
-        const baseStroke = +strokeWidth
+        const baseStroke = +strokeWidthPx
         const perPathStrokeWidth =
           baseStroke * (1 + hoverStrokeGain * hoverFactor)
         const perPathOpacity = Math.min(
           1,
           line.opacity + (1 - line.opacity) * hoverFactor
         )
-        const style: CSSProperties & { "--x-travel"?: string } = {
-          "--x-travel": `${line.travel}px`,
-          animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
-          animationPlayState:
-            ripplesActive && pauseWhileRippling ? "paused" : "running",
-          willChange: "transform",
-        }
+        const style: CSSProperties & { "--x-travel"?: string } = paused
+          ? {
+              transform: `translateX(${offsetXView * coverScale}px)`,
+              willChange: "transform",
+            }
+          : {
+              // animate CSS translate in px; convert viewBox travel distance to px via coverScale
+              "--x-travel": `${line.travel * coverScale}px`,
+              animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
+              animationPlayState: "running",
+              willChange: "transform",
+            }
         return (
           <path
             key={line.id}

@@ -42,12 +42,11 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       className
     )}
   >
-    <div className="max-w-8xl relative mx-auto grid w-screen grid-cols-1 md:h-[420px] md:grid-cols-2">
+    <div className="max-w-8xl relative mx-auto grid w-screen grid-cols-1 md:h-[520px] md:grid-cols-2">
       <div
         className={cn(
           "pointer-events-none z-10 space-y-8 place-self-center px-10",
-          "group-has-[.css-primary-invert]/body:from-primary/90 from-background/90 bg-radial from-75% to-transparent md:from-50% md:to-70%",
-          "from-background from-85% max-md:bg-gradient-to-br"
+          "group-has-[.css-primary-invert]/body:before:bg-primary/95 before:bg-background/95 relative before:absolute before:inset-0 before:-z-10 before:scale-x-120 before:blur-2xl max-sm:before:rounded-b-[50%] md:before:rounded-r-[25%]"
         )}
       >
         <h1 className="leading-tight">{heading}</h1>
@@ -55,26 +54,26 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
       </div>
       <div
         className={cn(
-          "relative end-0 z-0 place-items-center max-md:inset-y-0 max-md:grid md:absolute md:h-full",
+          // container for graphic; full height on desktop, natural flow on mobile
+          "grid place-items-center",
+          "relative z-0 max-md:inset-y-0 max-md:grid md:h-full",
           "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
-        <HeroBg
-          className={cn(
-            "w-full max-w-full place-self-center",
-            "max-[25rem]:scale-150 min-[25rem]:max-[32rem]:scale-130 min-[32rem]:max-sm:scale-120 sm:max-md:scale-110"
+        <div className="relative my-4 h-[14rem] w-full sm:h-[16rem] md:h-full">
+          <HeroBg className="absolute inset-0 h-full w-full" />
+          {shape && (
+            <div
+              className={cn(
+                "pointer-events-none absolute inset-0 grid place-items-center",
+                "[&_svg]:h-2/3 [&_svg]:w-auto",
+                "group-has-[.css-primary-invert]/body:text-primary text-background"
+              )}
+            >
+              {heroShapes[shape]}
+            </div>
           )}
-        />
-        {shape && (
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-0 place-self-center [&_svg]:size-72",
-              "group-has-[.css-primary-invert]/body:text-primary text-background"
-            )}
-          >
-            {heroShapes[shape]}
-          </div>
-        )}
+        </div>
       </div>
     </div>
     <div className="group-has-[.css-primary-invert]/body:to-primary to-background isolate z-10 w-screen bg-gradient-to-b to-25% py-6">
