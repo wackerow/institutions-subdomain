@@ -262,14 +262,6 @@ export default async function Page() {
               )
             )}
           </div>
-
-          {/* <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {metrics.map(({ label, ...props }, idx) => (
-              <BigNumber key={idx} {...props}>
-                {label}
-              </BigNumber>
-            ))}
-          </div> */}
         </section>
         <section id="role" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">The Role of L2s</h2>
