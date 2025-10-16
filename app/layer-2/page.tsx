@@ -3,7 +3,7 @@ import { Check } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import type { Metadata } from "next/types"
 
-import { MetricWithSource } from "@/lib/types"
+import { MetricLastUpdated, MetricWithSource, SourceInfo } from "@/lib/types"
 
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
@@ -16,6 +16,7 @@ import {
   CardSource,
   CardValue,
 } from "@/components/ui/card"
+import { InlineText } from "@/components/ui/inline-text"
 import Link from "@/components/ui/link"
 
 import { formatDateMonthDayYear } from "@/lib/utils/date"
@@ -26,6 +27,7 @@ import {
   formatLargeNumber,
 } from "@/lib/utils/number"
 
+import fetchBaseTvl from "../_actions/fetchBaseTvl"
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchL2MedianTxCost from "../_actions/fetchL2MedianTxCost"
 import fetchL2ScalingActivity from "../_actions/fetchL2ScalingActivity"
@@ -57,6 +59,7 @@ export default async function Page() {
   const l2ScalingActivityData = await fetchL2ScalingActivity()
   const l2MedianTxCostData = await fetchL2MedianTxCost()
   const beaconChainData = await fetchBeaconChain()
+  const baseTvlData = await fetchBaseTvl()
 
   const metrics: MetricWithSource[] = [
     {
@@ -154,7 +157,7 @@ export default async function Page() {
     },
   ]
 
-  const caseStudies: CardItem[] = [
+  const caseStudies: (CardItem & Partial<SourceInfo & MetricLastUpdated>)[] = [
     {
       heading: "Ernst & Young",
       description: "Nightfall L2 Platform",
@@ -175,11 +178,13 @@ export default async function Page() {
       imgSrc: coinbase,
       ctaLabel: (
         <>
-          $14.95B
+          {formatLargeCurrency(baseTvlData.data.baseTvl)}
           <br />
           Total Value Secured
         </>
       ),
+      lastUpdated: formatDateMonthDayYear(baseTvlData.lastUpdated),
+      ...baseTvlData.sourceInfo,
     },
     {
       heading: "Deutsche Bank",
@@ -403,7 +408,14 @@ export default async function Page() {
           <h2 className="text-h3-mobile sm:text-h3">Case Studies</h2>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {caseStudies.map(
-              ({ heading, description, imgSrc, href, ctaLabel }) => (
+              ({
+                heading,
+                description,
+                imgSrc,
+                href,
+                ctaLabel,
+                ...tooltipProps
+              }) => (
                 <Link
                   key={heading}
                   href={href}
@@ -420,9 +432,15 @@ export default async function Page() {
                     <h3 className="text-h5">{heading}</h3>
                     <p className="font-medium">{description}</p>
                   </div>
-                  <p className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
+                  <InlineText className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
                     {ctaLabel || "Visit →"}
-                  </p>
+                    {tooltipProps.source && (
+                      <SourceInfoTooltip
+                        {...tooltipProps}
+                        iconClassName="translate-y-0"
+                      />
+                    )}
+                  </InlineText>
                 </Link>
               )
             )}
