@@ -49,7 +49,7 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "group-has-[.css-primary-invert]/body:before:bg-primary/95 before:bg-background/95 relative before:absolute before:inset-0 before:-z-10 before:scale-x-120 before:blur-2xl max-sm:before:rounded-b-[50%] md:before:rounded-r-[25%]"
         )}
       >
-        <h1 className={cn(!children && "max-sm:text-center", "leading-tight")}>
+        <h1 className={cn(!children && "max-md:text-center", "leading-tight")}>
           {heading}
         </h1>
         {children && <div className="space-y-6 font-medium">{children}</div>}
@@ -62,13 +62,13 @@ const Hero = ({ heading, beneath, shape, className, children }: HeroProps) => (
           "group-has-[.css-primary-invert]/body:text-background text-secondary-foreground"
         )}
       >
-        <div className="max-md: relative -my-12 h-[20rem] w-full md:h-full">
+        <div className="relative h-[20rem] w-full max-md:mt-10 max-md:mb-0 md:h-full">
           <HeroBg className="size-full" />
           {shape && (
             <div
               className={cn(
                 "pointer-events-none absolute inset-0 grid place-items-center",
-                "[&_svg]:h-1/2 [&_svg]:w-auto md:[&_svg]:h-3/5",
+                "[&_svg]:h-2/3 [&_svg]:w-auto md:[&_svg]:h-3/5",
                 "group-has-[.css-primary-invert]/body:text-primary text-background"
               )}
             >

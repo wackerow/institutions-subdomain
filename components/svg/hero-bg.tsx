@@ -4,7 +4,6 @@ import {
   type CSSProperties,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react"
@@ -34,20 +33,18 @@ type Ripple = {
   spread: number // px thickness of the wavefront ring
 }
 
-// Stable line fractions pool across mounts (prevents RNG-looking resets)
+// Per-load seeded RNG (unique each visit; stable for component lifetime)
 type LineFrac = {
   id: string
-  xFrac: number
-  lenFrac: number
+  x: number // viewBox units
+  len: number // viewBox units
   opacity: number
-  travelFrac: number
-  duration: number
-  delay: number
+  travel: number // viewBox units (positive or negative allowed)
+  duration: number // seconds
+  delay: number // seconds
 }
 
-const LINES_POOL_SEED = 1337
-let LINES_FRAC_CACHE: LineFrac[] | null = null
-const mulberry32Seeded = (seed: number) => {
+const mulberry32 = (seed: number) => {
   return function () {
     let t = (seed += 0x6d2b79f5)
     t = Math.imul(t ^ (t >>> 15), t | 1)
@@ -56,41 +53,61 @@ const mulberry32Seeded = (seed: number) => {
   }
 }
 
-function buildLinesPool(count: number): LineFrac[] {
-  const minLenFrac = 0.66
-  const maxLenFrac = 0.9
-  const rng = mulberry32Seeded(LINES_POOL_SEED)
+function buildLinesPool(
+  count: number,
+  VBW: number,
+  mobile: boolean
+): LineFrac[] {
+  // Responsive constraints
+  const leftMargin = mobile ? 64 : 48
+  const rightMargin = mobile ? 64 : 48
+  const minLen = mobile ? VBW * 0.25 : VBW * 0.35
+  const maxLen = mobile ? VBW * 0.55 : VBW * 0.75
+  const minTravel = mobile ? VBW * 0.03 : VBW * 0.05
+  const maxTravel = mobile ? VBW * 0.06 : VBW * 0.09
+
+  // Seed unique per load
+  const fallbackSeed = Math.floor(Math.random() * 2 ** 32)
+  const perf = typeof performance !== "undefined" ? performance.now() : 0
+  const seed = (fallbackSeed ^ Math.floor(perf)) >>> 0
+  const rng = mulberry32(seed)
+
   return Array.from({ length: count }).map((_, idx) => {
-    const xFrac = rng() * (1 - minLenFrac)
-    const allowedMax = Math.min(maxLenFrac, 1 - xFrac)
-    const lenFrac = minLenFrac + rng() * (allowedMax - minLenFrac)
-    const opacity = 0.2 + 0.8 * rng()
+    // Bias lengths longer near the middle (parabolic weight)
+    const t = count > 1 ? idx / (count - 1) : 0.5
+    const m = (t - 0.5) / 0.5 // -1..1
+    const centerBias = 1 - 0.35 * m * m
+    const len = minLen + (maxLen - minLen) * (0.35 + 0.65 * rng()) * centerBias
+
+    // Travel amplitude and direction
+    const travelAmp = minTravel + (maxTravel - minTravel) * rng()
     const direction = rng() > 0.5 ? 1 : -1
-    const travelFrac = direction * (0.2 + 0.35 * rng())
-    const duration = 14 + 22 * rng()
-    const delay = 8 * rng()
+    const travel = direction * travelAmp
+
+    // Choose x so that the full motion stays inside margins with slight overshoot
+    // Visible min = x + min(0, travel), visible max = x + len + max(0, travel)
+    const minX = leftMargin - Math.min(0, travel)
+    const maxX = VBW - rightMargin - len - Math.max(0, travel)
+    const x = minX < maxX ? minX + (maxX - minX) * rng() : Math.max(minX, 0)
+
+    const opacity = 0.2 + 0.8 * rng()
+    const duration = 18 + 18 * rng() // 18–36s
+    const delay = 6 * rng() // 0–6s
     return {
       id: `line-index-${idx}`,
-      xFrac,
-      lenFrac,
+      x,
+      len,
       opacity,
-      travelFrac,
+      travel,
       duration,
       delay,
     }
   })
 }
 
-function getLinesPool(maxCount: number): LineFrac[] {
-  if (!LINES_FRAC_CACHE || LINES_FRAC_CACHE.length < maxCount) {
-    LINES_FRAC_CACHE = buildLinesPool(maxCount)
-  }
-  return LINES_FRAC_CACHE
-}
-
 type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   gap?: number
-  lineCount?: number
+  maxLines?: number
   hoverSigmaX?: number
   hoverSigmaY?: number
   hoverStrokeGain?: number
@@ -104,7 +121,6 @@ type HeroBgProps = Omit<React.SVGProps<SVGSVGElement>, "height"> & {
   rippleLifetimeMs?: number
   rippleSampleCount?: number
   splineTension?: number
-  pauseWhileRippling?: boolean
   initialDrawMs?: number
   initialDrawStaggerMs?: number
   reducedMotionFadeMs?: number
@@ -114,8 +130,8 @@ const HeroBg = ({
   // Layout (container-driven; width prop used only as SSR fallback)
   width: widthProp = 670,
   strokeWidth = 2,
-  gap = 8,
-  lineCount = 50,
+  gap = 7,
+  maxLines = 60,
   // Hover emphasis
   hoverSigmaX = 80,
   hoverSigmaY = 48,
@@ -123,16 +139,15 @@ const HeroBg = ({
   // Pointer tracking margin (keeps hover alive just outside bbox)
   pointerMargin = 120,
   // Ripple behavior
-  rippleAmplitude = 12,
-  rippleWavelength = 80,
-  rippleSpeed = 240,
-  rippleDecay = 1.0,
-  rippleSpread = 18,
-  rippleLifetimeMs = 6000,
-  rippleSampleCount = 33,
-  splineTension = 0.9,
-  pauseWhileRippling = false,
-  autoHint = false,
+  rippleAmplitude = 8,
+  rippleWavelength = 120,
+  rippleSpeed = 300,
+  rippleDecay = 1.1,
+  rippleSpread = 12,
+  rippleLifetimeMs = 5200,
+  rippleSampleCount = 21,
+  splineTension = 0.85,
+  autoHint = true,
   initialDrawMs = 300,
   initialDrawStaggerMs = 12,
   reducedMotionFadeMs = 250,
@@ -204,87 +219,52 @@ const HeroBg = ({
       ? strokeWidth
       : parseFloat(String(strokeWidth)) || 0
   // Scale stroke/gap for smaller widths to reduce visual weight and height
-  const strokeWidthPx =
-    effectiveWidth < 480
-      ? Math.min(1, strokeWidthNum)
-      : effectiveWidth < 768
-        ? Math.min(1.25, strokeWidthNum)
-        : strokeWidthNum
-  const gapPx =
-    effectiveWidth < 480
-      ? Math.min(4, gap)
-      : effectiveWidth < 768
-        ? Math.min(6, gap)
-        : gap
+  const isMobile = effectiveWidth < 768
+  const strokeWidthPx = strokeWidthNum // keep 2px always; vector-effect keeps visual
+  const gapPx = isMobile ? Math.max(1, +gap - 1) : +gap
   const segmentHeight = +strokeWidthPx + gapPx
   // Compute cover scale from container to viewBox
   const containerW = measuredWidth ?? widthPx
-  const containerH = measuredHeight ?? segmentHeight * lineCount
+  const containerH = measuredHeight ?? segmentHeight * 40
   const scaleX = containerW / VBW
   const scaleY = containerH / VBH
   const coverScale = Math.max(scaleX, scaleY)
   const invCoverScale = Math.max(1 / Math.max(coverScale, 0.0001), 0.0001)
   // Convert spacing into viewBox units so CSS px spacing remains constant after scaling
   const segmentHeightView = segmentHeight * invCoverScale
-  // Note: height not used under Option A fixed counts
-
-  const MAX_LINES = Math.max(64, lineCount * 3)
-  // Use persistent pool so randomness never regenerates on re-renders
-  const linesFrac = getLinesPool(MAX_LINES)
-
-  // Option A: fixed counts per breakpoint; freeze spacing/centering within breakpoint
-  type BP = "sm" | "md" | "lg"
-  const bp: BP =
-    effectiveWidth < 768 ? "sm" : effectiveWidth < 1024 ? "md" : "lg"
-  const countForBp = useMemo<Record<BP, number>>(
-    () => ({ sm: 32, md: 44, lg: 58 }),
-    []
+  // Derive line count from height and spacing; clamp at maxLines
+  const dynamicLineCount = Math.max(
+    1,
+    Math.min(
+      maxLines,
+      Math.floor((VBH - segmentHeightView) / segmentHeightView)
+    )
   )
-  const [bpState, setBpState] = useState<BP>(bp)
-  const [layoutFrozen, setLayoutFrozen] = useState<{
-    count: number
-    segH: number
-    offset: number
-  }>(() => {
-    const cnt = countForBp[bp]
-    const segH = segmentHeightView
-    const off = (VBH - cnt * segH) / 2
-    return { count: cnt, segH, offset: off }
-  })
-  useEffect(() => {
-    if (bp !== bpState) {
-      const cnt = countForBp[bp]
-      const segH = segmentHeightView
-      const off = (VBH - cnt * segH) / 2
-      setBpState(bp)
-      setLayoutFrozen({ count: cnt, segH, offset: off })
+
+  // Build per-load random pool with constraints for the current device scale
+  const poolRef = useRef<LineFrac[] | null>(null)
+  if (!poolRef.current || poolRef.current.length !== dynamicLineCount) {
+    poolRef.current = buildLinesPool(dynamicLineCount, VBW, isMobile)
+  }
+  const lines: LineData[] = poolRef.current.map((lf, idx) => {
+    const y = (idx + 0.5) * segmentHeightView // fill from top to bottom
+    return {
+      id: lf.id,
+      x: lf.x,
+      y,
+      length: lf.len,
+      opacity: lf.opacity,
+      travel: lf.travel,
+      duration: lf.duration,
+      delay: lf.delay,
     }
-  }, [bp, bpState, segmentHeightView, countForBp])
-  const dynamicLineCount = layoutFrozen.count
-  const offsetYView = layoutFrozen.offset
-  const lines: LineData[] = linesFrac
-    .slice(0, dynamicLineCount)
-    .map((lf, idx) => {
-      const x = lf.xFrac * VBW
-      const y = offsetYView + (idx + 0.5) * layoutFrozen.segH
-      const length = lf.lenFrac * VBW
-      const travel = lf.travelFrac * VBW
-      return {
-        id: lf.id,
-        x,
-        y,
-        length,
-        opacity: lf.opacity,
-        travel,
-        duration: lf.duration,
-        delay: lf.delay,
-      }
-    })
+  })
 
   // Pointer hover state (for opacity/weight emphasis only)
   const [pointer, setPointer] = useState<XYCoord | null>(null)
   // Keep a ref for the latest pointer to avoid rescheduling timers on movement
   const pointerRef = useRef<XYCoord | null>(null)
+  const pointerRafRef = useRef<number | null>(null)
   // svgRef declared earlier
 
   // Ripple animation state
@@ -297,6 +277,7 @@ const HeroBg = ({
   // Auto-hint ripple timers and last-trigger tracking
   const hintTimeoutRef = useRef<number | null>(null)
   const lastRippleAtRef = useRef<number | null>(null)
+  // no hard cap: allow stacking; lifetime trimming keeps perf in check
 
   const clearHintTimeout = useCallback(() => {
     if (hintTimeoutRef.current != null) {
@@ -390,11 +371,21 @@ const HeroBg = ({
         e.clientY >= rect.top - margin &&
         e.clientY <= rect.bottom + margin
       ) {
-        setPointer(pos)
         pointerRef.current = pos
+        if (pointerRafRef.current == null) {
+          pointerRafRef.current = requestAnimationFrame(() => {
+            setPointer(pointerRef.current)
+            pointerRafRef.current = null
+          })
+        }
       } else {
-        setPointer(null)
         pointerRef.current = null
+        if (pointerRafRef.current == null) {
+          pointerRafRef.current = requestAnimationFrame(() => {
+            setPointer(null)
+            pointerRafRef.current = null
+          })
+        }
       }
     }
     window.addEventListener("pointermove", onMove, { passive: true })
@@ -416,7 +407,6 @@ const HeroBg = ({
       } else {
         if (rafRef.current != null) cancelAnimationFrame(rafRef.current)
         rafRef.current = null
-        pausedAtRef.current = null // resume slide timeline reference
       }
     }
     rafRef.current = requestAnimationFrame(tick)
@@ -462,11 +452,9 @@ const HeroBg = ({
         decay: rippleDecay,
         spread: rippleSpread * invCoverScale,
       }
+      // Stack ripples; do not cap — every ripple is allowed to finish
       ripplesRef.current = [...ripplesRef.current, ripple]
       lastRippleAtRef.current = start
-      if (pauseWhileRippling && ripplesRef.current.length === 1) {
-        pausedAtRef.current = start
-      }
       ensureAnimating()
       return true
     },
@@ -478,19 +466,18 @@ const HeroBg = ({
       rippleDecay,
       rippleSpread,
       invCoverScale,
-      pauseWhileRippling,
       ensureAnimating,
     ]
   )
 
-  // Schedule the next hint ripple with random delay (8–16s), unless reduced motion
+  // Schedule the next hint ripple with random delay (7–14s), unless reduced motion
   const scheduleNextHint = useCallback(() => {
     clearHintTimeout()
     if (reduceMotion) return
-    const delay = randBetween(8000, 16000)
+    const delay = randBetween(7000, 14000)
     hintTimeoutRef.current = window.setTimeout(() => {
-      // Only hint if no ripple is currently active
-      if (autoHint && ripplesRef.current.length === 0 && !reduceMotion) {
+      if (autoHint && !reduceMotion) {
+        // After the first hint, use random positions for spontaneity
         const pt = randomPointInSvg()
         createRippleAt(pt.x, pt.y)
       }
@@ -515,7 +502,7 @@ const HeroBg = ({
     hintTimeoutRef.current = window.setTimeout(() => {
       if (
         autoHint &&
-        ripplesRef.current.length === 0 &&
+        true &&
         lastRippleAtRef.current == null &&
         !reduceMotion
       ) {
@@ -609,14 +596,8 @@ const HeroBg = ({
         return `M${x} ${y}H${x + length}`
       }
 
-      // Use a frozen time for slide offset while paused, but let ripples keep animating
       const now = performance.now()
-      const ripplesActive = ripples.length > 0
-      const offsetNow =
-        pauseWhileRippling && ripplesActive && pausedAtRef.current != null
-          ? pausedAtRef.current
-          : now
-      const offsetX = getLineOffsetX(line, offsetNow)
+      const offsetX = getLineOffsetX(line, now)
 
       // Build sampling set: uniform samples plus an anchor at the ripple center projected onto this line
       const uniformSamples = rippleSampleCount
@@ -626,8 +607,7 @@ const HeroBg = ({
         positions.push(x + t * length)
       }
 
-      // Important: when adding an anchor at the ripple's x, convert from visible x back
-      // into the line's untransformed coordinate space so the anchor lands on the path.
+      // Anchor the ripple's visible center to avoid smeared origin
       for (const r of ripples) {
         const pxOnLine = r.x - offsetX // undo current slide to test/anchor on the actual path
         if (pxOnLine >= x && pxOnLine <= x + length) positions.push(pxOnLine)
@@ -659,7 +639,6 @@ const HeroBg = ({
       rippleSampleCount,
       toBezierPath,
       getLineOffsetX,
-      pauseWhileRippling,
     ]
   )
   // Always render with safe fallbacks so hydration matches and ResizeObserver can attach
@@ -691,7 +670,9 @@ const HeroBg = ({
       }}
       {...props}
     >
-      {lines.map((line, idx) => {
+      {/* Avoid SSR hydration mismatches by rendering paths only after mount */}
+      {mounted &&
+        lines.map((line, idx) => {
         const d = generatePath(line)
         // Hover emphasis: adjust stroke width and opacity based on proximity to pointer
         let hoverFactor = 0
@@ -723,11 +704,16 @@ const HeroBg = ({
         const style: CSSProperties & { "--x-travel"?: string } = {
           // animate CSS translate in px; convert viewBox travel distance to px via coverScale
           "--x-travel": `${line.travel * coverScale}px`,
-          animation: `hero-bg-slide ${line.duration}s linear ${line.delay}s infinite alternate`,
+          animationName: "hero-bg-slide",
+          animationDuration: `${line.duration}s`,
+          animationDelay: `${line.delay}s`,
+          animationIterationCount: "infinite",
+          animationDirection: "alternate",
+          animationTimingFunction: "cubic-bezier(0.45, 0.05, 0.55, 0.95)",
           animationPlayState: "running",
           willChange: "transform",
         }
-        return (
+          return (
           <path
             key={line.id}
             id={line.id}
@@ -759,8 +745,8 @@ const HeroBg = ({
             data-hero-bg-line
             className="motion-reduce:!animate-none"
           />
-        )
-      })}
+          )
+        })}
     </svg>
   )
 }
