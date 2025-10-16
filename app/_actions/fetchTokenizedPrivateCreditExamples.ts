@@ -41,9 +41,19 @@ export const fetchTokenizedPrivateCreditExamples = async (): Promise<
     })
 
     if (!response.ok)
-      throw new Error(
-        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
-      )
+      return {
+        data: {
+          centrifuge: 0,
+          maple: 0,
+          truefi: 0,
+        },
+        lastUpdated: Date.now(),
+        sourceInfo: SOURCE.RWA,
+      }
+
+    // throw new Error(
+    //   `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+    // )
 
     const json: DataTimestamped<TokenizedPrivateCreditExamplesData> =
       await response.json()

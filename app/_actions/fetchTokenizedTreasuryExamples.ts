@@ -39,9 +39,18 @@ export const fetchTokenizedTreasuryExamples = async (): Promise<
     })
 
     if (!response.ok)
-      throw new Error(
-        `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
-      )
+      return {
+        data: {
+          BUIDL: 0,
+          BENJI: 0,
+          OUSG: 0,
+        },
+        lastUpdated: Date.now(),
+        sourceInfo: SOURCE.RWA,
+      }
+    // throw new Error(
+    //   `Fetch response not OK from ${url}: ${response.status} ${response.statusText}`
+    // )
 
     const json: DataTimestamped<TokenizedTreasuryExamplesData> =
       await response.json()
