@@ -55,6 +55,7 @@ import { formatDuration } from "@/lib/utils/time"
 
 import { MAINNET_GENESIS } from "@/lib/constants"
 
+import fetchBaseTvl from "./_actions/fetchBaseTvl"
 import fetchBeaconChain from "./_actions/fetchBeaconChain"
 import fetchDexVolume from "./_actions/fetchDexVolume"
 import fetchEtherPrice from "./_actions/fetchEtherPrice"
@@ -166,6 +167,7 @@ export default async function Home() {
       ? stablecoinMarketshareDataEthereum[0].marketshare
       : 0
   const securitizeAumData = await fetchSecuritizeAum()
+  const baseTvlData = await fetchBaseTvl()
 
   const metrics: MetricWithSource[] = [
     {
@@ -247,7 +249,6 @@ export default async function Home() {
     },
   ]
 
-  // TODO: Live data and info tooltips
   const platforms: ({
     name: string
     imgSrc: StaticImageData
@@ -265,19 +266,27 @@ export default async function Home() {
       name: "Coinbase",
       imgSrc: coinbaseSvg,
       label: "Base Layer 2 Ecosystem",
-      value: "$4.77B+ TVL™",
+      value: `${formatLargeCurrency(baseTvlData.data.baseTvl)} TVL`,
+      lastUpdated: formatDateMonthDayYear(baseTvlData.lastUpdated),
+      ...baseTvlData.sourceInfo,
     },
     {
       name: "Visa",
       imgSrc: visaSvg,
       label: "Stablecoin Payment Settlement",
-      value: "$2.67T Volume 2025™",
+      value: "$2.67T Volume 2025",
+      lastUpdated: formatDateMonthDayYear("2025-10-17T00:00:00Z"),
+      source: "Visa",
+      sourceHref: "https://www.visaonchainanalytics.com/transactions",
     },
     {
       name: "eToro",
       imgSrc: etoroSvg,
       label: "Stock Tokenization Platform",
-      value: "100 Stocks Trade 24/5™",
+      value: "100 Stocks Trade 24/5",
+      lastUpdated: formatDateMonthDayYear("2025-10-17T00:00:00Z"),
+      source: "eToro",
+      sourceHref: "https://go.etoro.com/en/unlocked/withoutboundaries",
     },
   ]
 
@@ -540,7 +549,10 @@ export default async function Home() {
                     <p className="text-muted-foreground">{label}</p>
                     <InlineText className="text-muted-foreground font-bold">
                       {value}
-                      <SourceInfoTooltip {...sourceInfo} />
+                      <SourceInfoTooltip
+                        {...sourceInfo}
+                        iconClassName="translate-y-0"
+                      />
                     </InlineText>
                   </div>
                 )
