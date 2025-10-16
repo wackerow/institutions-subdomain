@@ -5,7 +5,6 @@ import { MetricWithSource } from "@/lib/types"
 import DefiTimeseriesTvlEthereumLineChart from "@/components/data/defi-timeseries-tvl-ethereum-line-chart"
 import L2TimeseriesTvlLineChart from "@/components/data/l2-timeseries-tvl-line-chart"
 import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
-import StablecoinTimeseriesTvlLineChart from "@/components/data/stablecoin-timeseries-tvl-line-chart"
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
@@ -47,6 +46,7 @@ import fetchTotalValueSecured from "../_actions/fetchTotalValueSecured"
 import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
 
 import RwaChartCard from "./_components/rwa-chart-card"
+import StablecoinChartCard from "./_components/stablecoin-chart-card"
 
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
@@ -246,53 +246,7 @@ export default async function Page() {
           </h2>
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <Card variant="flex-column">
-              <CardHeader className="flex gap-2 !px-0 max-sm:flex-col sm:items-center">
-                <CardContent className="flex-1 gap-4">
-                  <CardTitle className="text-xl">
-                    Stablecoin TVL (Mainnet)
-                  </CardTitle>
-                  <CardDescription className="font-medium">
-                    Total value of stablecoins on Ethereum Mainnet.
-                  </CardDescription>
-                </CardContent>
-                <div
-                  title={
-                    "Last updated: " +
-                    formatDateMonthDayYear(
-                      timeseriesStablecoinsValueData.lastUpdated
-                    )
-                  }
-                  className="text-h4 font-bold tracking-[0.04rem]"
-                >
-                  <AnimatedNumberInView>
-                    {formatLargeCurrency(
-                      // TODO: Toggle between if L2 hidden?
-                      timeseriesStablecoinsValueData.data.mainnet.currentValue
-                    )}
-                  </AnimatedNumberInView>
-                </div>
-              </CardHeader>
-
-              <CardContent variant="flex-1-height-between">
-                <StablecoinTimeseriesTvlLineChart
-                  chartData={timeseriesStablecoinsValueData}
-                />
-
-                <CardSource>
-                  Source:{" "}
-                  <Link inline href="https://rwa.xyz">
-                    rwa.xyz
-                  </Link>
-                  <SourceInfoTooltip
-                    iconClassName="translate-y-0"
-                    lastUpdated={formatDateMonthDayYear(
-                      timeseriesStablecoinsValueData.lastUpdated
-                    )}
-                  />
-                </CardSource>
-              </CardContent>
-            </Card>
+            <StablecoinChartCard data={timeseriesStablecoinsValueData} />
 
             <Card variant="flex-column">
               <CardContent>

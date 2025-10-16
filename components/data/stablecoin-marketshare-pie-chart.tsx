@@ -53,19 +53,19 @@ const chartConfig = {
   },
   "ethereum-l2s": {
     label: "Ethereum (L2s)",
-    color: "var(--chart-5)",
+    color: "var(--chart-2)",
   },
   "alt-2nd": {
     label: "2nd largest ecosystem",
-    color: "var(--chart-4)",
+    color: "var(--chart-3)",
   },
   "alt-3rd": {
     label: "3rd largest ecosystem",
-    color: "var(--chart-2)",
+    color: "var(--chart-4)",
   },
   "alt-rest": {
     label: "Remainder of market",
-    color: "var(--chart-3)",
+    color: "var(--chart-5)",
   },
 } satisfies ChartConfig
 

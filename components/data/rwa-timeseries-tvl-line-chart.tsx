@@ -23,7 +23,7 @@ const chartConfig = {
   },
   layer2: {
     label: "Layer 2",
-    color: "var(--chart-4)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
@@ -67,8 +67,8 @@ const RwaTimeseriesTvlLineChart = ({
             <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.5} />
           </linearGradient>
           <linearGradient id="fillRwaTvlLayer2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="10%" stopColor="var(--chart-4)" stopOpacity={1} />
-            <stop offset="100%" stopColor="var(--chart-4)" stopOpacity={0.5} />
+            <stop offset="10%" stopColor="var(--chart-2)" stopOpacity={1} />
+            <stop offset="100%" stopColor="var(--chart-2)" stopOpacity={0.5} />
           </linearGradient>
         </defs>
 
@@ -79,7 +79,7 @@ const RwaTimeseriesTvlLineChart = ({
             y={showL2 ? "40%" : "50%"}
             textAnchor="middle"
             fill="var(--muted-foreground)"
-            className="text-big-//mobile sm: text-big font-bold opacity-10"
+            className="text-big font-bold opacity-10"
           >
             Mainnet
             {showL2 && (
@@ -126,7 +126,7 @@ const RwaTimeseriesTvlLineChart = ({
           dataKey="layer2"
           type="natural"
           fill="url(#fillRwaTvlLayer2)"
-          stroke="var(--chart-4)"
+          stroke="var(--chart-2)"
           stackId="a"
         />
       </AreaChart>
