@@ -167,15 +167,7 @@ export default async function Page() {
                     Sum of funds deposited into the applications on the chain.
                   </CardDescription>
                 </CardContent>
-                <div
-                  title={
-                    "Last updated: " +
-                    formatDateMonthDayYear(
-                      timeseriesDefiTvlEthereumData.lastUpdated
-                    )
-                  }
-                  className="text-h4 font-bold tracking-[0.04rem]"
-                >
+                <div className="text-h4 font-bold tracking-[0.04rem]">
                   <AnimatedNumberInView>
                     {formatLargeCurrency(
                       timeseriesDefiTvlEthereumData.data.currentValue
@@ -384,15 +376,7 @@ export default async function Page() {
                     Daily Average
                   </CardDescription>
                 </CardContent>
-                <div
-                  title={
-                    "Last updated: " +
-                    formatDateMonthDayYear(
-                      timeseriesStablecoinsValueData.lastUpdated
-                    )
-                  }
-                  className="text-h4 font-bold tracking-[0.04rem]"
-                >
+                <div className="text-h4 font-bold tracking-[0.04rem]">
                   <AnimatedNumberInView>
                     {formatLargeCurrency(timeseriesL2TvlData.data.currentValue)}
                   </AnimatedNumberInView>

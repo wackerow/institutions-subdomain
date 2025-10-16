@@ -47,10 +47,7 @@ const StablecoinChartCard = ({
             </Button>
           </CardDescription>
         </CardContent>
-        <div
-          title={"Last updated: " + formatDateMonthDayYear(data.lastUpdated)}
-          className="text-h4 font-bold tracking-[0.04rem]"
-        >
+        <div className="text-h4 font-bold tracking-[0.04rem]">
           <AnimatedNumberInView>
             {formatLargeCurrency(
               showL2

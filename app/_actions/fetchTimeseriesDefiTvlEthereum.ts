@@ -36,7 +36,7 @@ export const fetchTimeseriesDefiTvlEthereum = async (): Promise<
 
     const seriesMapped: DataSeries = json.map(({ tvl, date }) => ({
       value: tvl,
-      date: date * 1e3,
+      date: new Date(date * 1e3).toUTCString(),
     }))
 
     return {

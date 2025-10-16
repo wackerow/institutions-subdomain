@@ -30,8 +30,8 @@ type JSONData = {
 }
 
 export type TimeseriesAssetsValueData = {
-  mainnet: DataSeriesWithCurrent<string>
-  layer2: DataSeriesWithCurrent<string>
+  mainnet: DataSeriesWithCurrent
+  layer2: DataSeriesWithCurrent
 }
 
 export const fetchTimeseriesAssetsValue = async (

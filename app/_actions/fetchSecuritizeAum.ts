@@ -19,7 +19,7 @@ type JSONData = {
   }[]
 }
 
-export type SecuritizeAumData = DataSeriesWithCurrent<string>
+export type SecuritizeAumData = DataSeriesWithCurrent
 
 export const fetchSecuritizeAum = async (): Promise<
   DataTimestamped<SecuritizeAumData>
@@ -87,8 +87,7 @@ export const fetchSecuritizeAum = async (): Promise<
 
     const ethereumStablecoinData = json.results[0]
 
-    const seriesMapped: DataSeries<string> = ethereumStablecoinData?.points
-      ?.length
+    const seriesMapped: DataSeries = ethereumStablecoinData?.points?.length
       ? ethereumStablecoinData?.points.map(([dateString, mktCapValue]) => ({
           date: dateString,
           value: mktCapValue,

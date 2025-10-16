@@ -98,8 +98,8 @@ export const filterFirstAndFifteenth = <
   return filtered
 }
 
-export const getSeriesWithCurrent = <T extends number | string = number>(
-  seriesMapped: DataSeries<T>,
+export const getSeriesWithCurrent = (
+  seriesMapped: DataSeries,
   skipFiltering?: boolean
 ) => {
   if (seriesMapped?.length <= 0) throw new Error("Data series array empty")
@@ -118,14 +118,13 @@ export const getSeriesWithCurrent = <T extends number | string = number>(
  * Returns a data series object containing the filtered or unfiltered series,
  * the current value, and the last updated timestamp.
  *
- * @template T - The type of the data series values (number or string).
  * @param seriesMapped - The array of data series objects to process.
  * @param skipFiltering - If true, skips filtering and returns the original series.
  * @returns An object with the processed data series, current value, and last updated timestamp.
  * @throws If the input data series array is empty.
  */
-export const getDataSeriesWithCurrent = <T extends number | string = number>(
-  seriesMapped: DataSeries<T>,
+export const getDataSeriesWithCurrent = (
+  seriesMapped: DataSeries,
   skipFiltering?: boolean
 ) => ({
   data: getSeriesWithCurrent(seriesMapped, skipFiltering),

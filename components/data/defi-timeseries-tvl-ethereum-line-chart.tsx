@@ -11,15 +11,12 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 
-import { formatDateMonthYear } from "@/lib/utils/date"
+import { formatDateFull, formatDateMonthYear } from "@/lib/utils/date"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
 import type { TimeseriesDefiTvlEthereumData } from "@/app/_actions/fetchTimeseriesDefiTvlEthereum"
 
 const chartConfig = {
-  data: {
-    label: "Data",
-  },
   value: {
     label: "DeFi TVL",
     color: "var(--chart-1)",
@@ -34,6 +31,22 @@ const DefiTimeseriesTvlEthereumLineChart = ({
 }: DefiTimeseriesTvlEthereumLineChartProps) => (
   <ChartContainer config={chartConfig} className="aspect-auto h-[250px] w-full">
     <AreaChart data={chartData.data.series}>
+      {/* Watermark */}
+      <g aria-hidden="true" pointerEvents="none">
+        <text
+          x="53%"
+          y="40%"
+          textAnchor="middle"
+          fill="var(--muted-foreground)"
+          className="text-big font-bold opacity-10"
+        >
+          Ethereum
+          <tspan x="53%" dy="1.2em">
+            Mainnet
+          </tspan>
+        </text>
+      </g>
+
       <CartesianGrid vertical horizontal strokeDasharray="8 4" />
       <YAxis
         tickFormatter={(v) => formatLargeCurrency(v, 3).replace(/\.0+/, "")}
@@ -50,10 +63,13 @@ const DefiTimeseriesTvlEthereumLineChart = ({
       />
       {/* // TODO: Debug ChartTooltip error */}
       <ChartTooltip
-        // labelFormatter={(v) =>
-        //   formatDateFull(typeof v === "number" ? v : Number(v))
-        // }
-        content={(props) => <ChartTooltipContent {...props} indicator="dot" />}
+        content={(props) => (
+          <ChartTooltipContent
+            {...props}
+            labelFormatter={(v) => formatDateFull(v)}
+            indicator="dot"
+          />
+        )}
       />
       <Area
         dataKey="value"

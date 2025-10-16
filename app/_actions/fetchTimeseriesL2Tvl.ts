@@ -45,7 +45,10 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
 
     const json: JSONData = await response.json()
 
-    const seriesMapped: DataSeries = json.data
+    const seriesMapped: DataSeries = json.data.map(({ value, date }) => ({
+      value,
+      date: new Date(date).toUTCString(),
+    }))
 
     return {
       ...getDataSeriesWithCurrent(seriesMapped, true),

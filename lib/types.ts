@@ -30,13 +30,13 @@ export type DataTimestamped<T> = {
   sourceInfo: SourceInfo
 }
 
-export type DataSeries<T extends number | string = number> = {
-  date: T
+export type DataSeries = {
+  date: string
   value: number
 }[]
 
-export type DataSeriesWithCurrent<T extends number | string = number> = {
-  series: DataSeries<T>
+export type DataSeriesWithCurrent = {
+  series: DataSeries
   currentValue: number
 }
 
