@@ -544,34 +544,34 @@ export default async function Page() {
 
               <hr className="my-6" />
 
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Finality & Credible Neutrality</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   High-value settlement, state roots for rollups, and durable
-                  records institutions can audit and attest against.
+                  records institutions can audit and attest against
                 </div>
               </div>
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Security</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   Assets can be stored in an environment that is built to
-                  withstand major catastrophes and geopolitical tensions.
+                  withstand major catastrophes and geopolitical tensions
                 </div>
               </div>
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Risk Gating</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   Keep complex or experimental logic off L1; use it for final
-                  settlement, collateral custody, and proofs.
+                  settlement, collateral custody, and proofs
                 </div>
               </div>
             </Card>
@@ -585,37 +585,37 @@ export default async function Page() {
 
               <hr className="my-6" />
 
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Throughput & UX</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   Rollups process transactions off-chain, inherit L1 security,
                   and deliver low fees suitable for payments, market-making, and
-                  high-frequency flows.
+                  high-frequency flows
                 </div>
               </div>
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Configurable</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   L2s can add compliance features, like allowlisting or
                   KYC&apos;d pools, while remaining non-custodial and settling
-                  to L1.
+                  to L1
                 </div>
               </div>
-              <div className="space-y-2 py-6">
-                <div className="flex items-center gap-x-3">
+              <div className="grid gap-x-3 gap-y-2 py-6">
+                <div className="col-span-2 grid grid-cols-subgrid items-center gap-x-3">
                   <Check className="text-secondary-foreground" />
                   <h4 className="text-h6">Specialization</h4>
                 </div>
-                <div className="text-muted-foreground font-medium">
+                <div className="text-muted-foreground col-start-2 font-medium">
                   Multiple L2s let institutions segregate workloads, such as
                   retail payments vs. treasury ops, without fragmenting trust,
-                  because settlement reconciles on L1.
+                  because settlement reconciles on L1
                 </div>
               </div>
             </Card>
