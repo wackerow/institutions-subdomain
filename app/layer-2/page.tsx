@@ -38,6 +38,7 @@ import celo from "@/public/images/app-logos/celo.png"
 import coinbase from "@/public/images/app-logos/coinbase.png"
 import deutscheBank from "@/public/images/app-logos/deutsche-bank.png"
 import ey from "@/public/images/app-logos/ey.png"
+import blackGlyphBanner from "@/public/images/black-glyph-banner.png"
 import arbitrum from "@/public/images/networks/arbitrum.png"
 import aztec from "@/public/images/networks/aztec.png"
 import base from "@/public/images/networks/base.png"
@@ -380,6 +381,85 @@ export default async function Page() {
               2
             )}
           />
+        </section>
+
+        <section id="trust" className="flex gap-x-32 gap-y-14 max-lg:flex-col">
+          <div className="flex-1 space-y-8">
+            <h2 className="text-h3-mobile sm:text-h3 tracking-[0.055rem]">
+              Ethereum as the Trust Layer
+            </h2>
+            <p className="text-muted-foreground max-w-xl text-xl font-medium tracking-[0.025rem]">
+              In a rollup, transactions are executed off-chain but the data is
+              published to Ethereum L1.
+            </p>
+            <ul className="max-w-prose space-y-4 font-medium">
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
+                Transparency
+                <p className="text-muted-foreground mt-1 text-base font-medium tracking-[0.02rem]">
+                  Every user can see the rollup state on the L1
+                </p>
+              </li>
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
+                Data availability
+                <p className="text-muted-foreground mt-1 text-base font-medium tracking-[0.02rem]">
+                  Even if the L2 sequencer disappears or censors users, the
+                  entire history of transactions is accessible and immutable on
+                  Ethereum
+                </p>
+              </li>
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
+                Exit window
+                <p className="text-muted-foreground mt-1 text-base font-medium tracking-[0.02rem]">
+                  Anyone can directly withdraw their assets from the L2 to the
+                  L1 by interacting with the L1 smart contract
+                </p>
+              </li>
+              <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
+                Recoverability
+                <p className="text-muted-foreground mt-1 text-base font-medium tracking-[0.02rem]">
+                  Data availability on the L1 makes user funds recoverable even
+                  if the L2 fails, referred to as the “escape hatch”. This is
+                  what keeps rollups trust minimized rather than reliant on the
+                  L2 operator.
+                </p>
+              </li>
+            </ul>
+
+            <div className="space-y-4">
+              <h3 className="text-h5 tracking-[0.03rem]">
+                Issuance on L1 (Bridging to L2)
+              </h3>
+              <p className="text-muted-foreground text-xl font-medium">
+                Assets should be issued on the L1 and bridged to the L2
+              </p>
+              <ul className="space-y-2 font-medium">
+                <li className="flex gap-4">
+                  <Check className="text-secondary-foreground" />
+                  Anchors assets to Ethereum&apos;s most secure, neutral and
+                  resilient layer
+                </li>
+                <li className="flex gap-4">
+                  <Check className="text-secondary-foreground" />
+                  Guarantees asset redeemability (escape hatch)
+                </li>
+                <li className="flex gap-4">
+                  <Check className="text-secondary-foreground" />
+                  Maximises interoperability and composability across Ethereum
+                  ecosystem
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="relative min-h-80 flex-1">
+            <Image
+              src={blackGlyphBanner}
+              alt=""
+              fill
+              placeholder="blur"
+              className="object-cover object-center grayscale"
+              sizes="(max-width: 1024px) 100vw, 536px"
+            />
+          </div>
         </section>
 
         <section id="frameworks" className="space-y-8">
