@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { CSSProperties, useEffect, useState } from "react"
 import { animate, motion, useMotionValue } from "motion/react"
 import useMeasure from "react-use-measure"
 
@@ -26,17 +26,20 @@ export function InfiniteSlider({
   className,
 }: InfiniteSliderProps) {
   const [currentSpeed, setCurrentSpeed] = useState(speed)
-  const [ref, { width, height }] = useMeasure()
+  // Measure a single "window" (one set of children)
+  const [groupRef, { width: groupWidth, height: groupHeight }] = useMeasure()
   const translation = useMotionValue(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [key, setKey] = useState(0)
 
   useEffect(() => {
     let controls
-    const size = direction === "horizontal" ? width : height
+    const size = direction === "horizontal" ? groupWidth : groupHeight
+    if (!size) return
+    // Travel exactly one window size plus the gap between the two groups
     const contentSize = size + gap
-    const from = reverse ? -contentSize / 2 : 0
-    const to = reverse ? 0 : -contentSize / 2
+    const from = reverse ? -contentSize : 0
+    const to = reverse ? 0 : -contentSize
 
     const distanceToTravel = Math.abs(to - from)
     const duration = distanceToTravel / currentSpeed
@@ -71,8 +74,8 @@ export function InfiniteSlider({
     key,
     translation,
     currentSpeed,
-    width,
-    height,
+    groupWidth,
+    groupHeight,
     gap,
     isTransitioning,
     direction,
@@ -92,22 +95,32 @@ export function InfiniteSlider({
       }
     : {}
 
+  const styles: CSSProperties = {
+    gap: `${gap}px`,
+    flexDirection: direction === "horizontal" ? "row" : "column",
+  }
   return (
     <div className={cn("max-w-screen overflow-hidden", className)}>
       <motion.div
-        className="flex w-max"
+        className="flex w-max will-change-transform"
         style={{
           ...(direction === "horizontal"
             ? { x: translation }
             : { y: translation }),
-          gap: `${gap}px`,
-          flexDirection: direction === "horizontal" ? "row" : "column",
+          ...styles,
         }}
-        ref={ref}
         {...hoverProps}
       >
-        {children}
-        {children}
+        {/* First group (measured window) */}
+        <div ref={groupRef} className="flex shrink-0" style={styles}>
+          {children}
+        </div>
+        {/* Clone groups */}
+        {Array.from({ length: 2 }).map((_, cloneIndex) => (
+          <div key={cloneIndex} className="flex shrink-0" style={styles}>
+            {children}
+          </div>
+        ))}
       </motion.div>
     </div>
   )
