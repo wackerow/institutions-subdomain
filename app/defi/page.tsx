@@ -290,9 +290,9 @@ export default async function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "The Home of Decentralized Finance",
+    title: "Decentralized Finance for Institutions | Ethereum DeFi",
     description:
-      "Ethereum introduced the world to decentralized finance (DeFi): open financial systems built on smart contracts.",
+      "Explore Ethereum's DeFi ecosystem, home to  the deepest liquidity onchain. Learn how open standards power enterprise innovation in lending, borrowing & trading.",
     image: "/images/og/defi.png",
   })
 }

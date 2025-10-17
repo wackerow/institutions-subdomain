@@ -675,9 +675,9 @@ export default async function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Ethereum L2s",
+    title: "Ethereum's Layer 2 Ecosystem | Scalable Enterprise Solutions",
     description:
-      "Layer-2s (L2s) are protocols that settle to Ethereum, making execution faster, cheaper and more scalable—while still relying on Ethereum for security and finality.",
+      "Layer 2s offer faster, cheaper execution, ideal for payments, appchains, and tokenization. Learn how L2s help institutions scale without sacrificing security.",
     image: "/images/og/layer-2.png",
   })
 }

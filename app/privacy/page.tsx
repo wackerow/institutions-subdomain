@@ -311,8 +311,9 @@ export default function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Privacy on Ethereum",
-    description: "Compliant Privacy on Ethereum for Institutions",
+    title: "Blockchain Privacy & Compliance for Institutions | Ethereum",
+    description:
+      "Settle onchain while protecting sensitive business data. Explore Ethereum's privacy features and tooling for institutional regulatory, risk, and audit needs.",
     image: "/images/og/privacy.png",
   })
 }

@@ -411,9 +411,9 @@ export default async function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Data Hub: Real-Time Intelligence",
+    title: "Live Ethereum Network Data | Institutional Onchain Data Hub",
     description:
-      "Track live, real-time data for mainnet activity, Layer 2 scaling, tokenized assets, and DeFi markets",
+      "Get live intelligence for the onchain economy. Explore curated metrics for mainnet activity, L2 scaling, DeFi markets, tokenized assets, and more.",
     image: "/images/og/data-hub.png",
   })
 }

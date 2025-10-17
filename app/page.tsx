@@ -714,8 +714,8 @@ export default async function Home() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Ethereum for Institutions",
-    description: "Ethereum: The Institutional Liquidity Layer",
+    title: "Ethereum for Institutions | The Institutional Liquidity Layer",
+    description: "Discover why leading institutions build on Ethereum. Unmatched resilience, deep liquidity, and proven security for the onchain economy. Explore use cases.",
     image: "/images/og/home.png",
   })
 }

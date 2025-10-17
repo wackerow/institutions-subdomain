@@ -628,9 +628,9 @@ export default async function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Stablecoins & Real-World Assets on Ethereum",
+    title: "Stablecoins & Asset Tokenization | RWAs on Ethereum",
     description:
-      "Ethereum is the dominant network for asset tokenization, home to majority of all tokenized real-world assets (RWAs) and global stablecoin supply.",
+      "Ethereum is the dominant choice for tokenizing assets and issuing stablecoins. Explore the network for 24/7 settlement, programmable cash, and onchain yield.",
     image: "/images/og/rwa.png",
   })
 }

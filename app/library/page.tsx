@@ -60,9 +60,9 @@ export default function Page() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
-    title: "Library: Institutional Insights",
+    title: "Research & Insights | Ethereum Institutional Resources",
     description:
-      "Library of external references related to enterprise Ethereum",
+      "Explore a curated library for businesses adopting Ethereum, with reports, analysis, market trends, and the latest institutional insights.",
     image: "/images/og/library.png",
   })
 }
