@@ -7,6 +7,7 @@ import type {
 } from "@/lib/types"
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
+import { every } from "@/lib/utils/time"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -22,7 +23,7 @@ export const fetchTimeseriesDefiTvlEthereum = async (): Promise<
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("day"),
         tags: ["llama:v2:historicalChainTvl:ethereum"],
       },
     })

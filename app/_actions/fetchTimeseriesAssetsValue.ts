@@ -6,8 +6,9 @@ import {
   getRwaApiEthereumNetworksFilter,
   getSeriesWithCurrent,
 } from "@/lib/utils/data"
+import { every } from "@/lib/utils/time"
 
-import { SOURCE } from "@/lib/constants"
+import { RWA_API_STABLECOINS_GROUP_ID, SOURCE } from "@/lib/constants"
 
 const MEASURE_ID = {
   "Total Asset Value (Dollar)": 2,
@@ -79,7 +80,7 @@ export const fetchTimeseriesAssetsValue = async (
         {
           field: "assetClassID",
           operator: series === "stablecoins" ? "equals" : "notEquals",
-          value: 28, // Stablecoins (Else, real-world assets)
+          value: RWA_API_STABLECOINS_GROUP_ID, // Stablecoins (Else, real-world assets)
         },
         getRwaApiEthereumNetworksFilter(["mainnet", "layer-2"]),
       ],
@@ -95,7 +96,7 @@ export const fetchTimeseriesAssetsValue = async (
         Accept: "application/json",
       },
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("day"),
         tags: [`rwa:v3:assets:aggregates:timeseries:${series}`],
       },
     })

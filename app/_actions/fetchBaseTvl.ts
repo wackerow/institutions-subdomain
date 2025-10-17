@@ -2,25 +2,21 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-import { SOURCE } from "@/lib/constants"
+import { every } from "@/lib/utils/time"
 
-type JSONData = DataTimestamped<BaseTvlData> // { data: number }
+import { SITE_ORIGIN, SOURCE } from "@/lib/constants"
+
+type JSONData = DataTimestamped<BaseTvlData>
 
 export type BaseTvlData = { baseTvl: number }
 
 export const fetchBaseTvl = async (): Promise<DataTimestamped<BaseTvlData>> => {
   // Call internal trimmed endpoint and let Next cache the small response.
-  const internalOrigin =
-    process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000"
-
   const secret = process.env.INTERNAL_API_SECRET || ""
 
   if (!secret) throw new Error("Internal API secret not found")
 
-  const internalUrl = new URL(
-    "/api/growthepie-v1-export-tvl-base",
-    internalOrigin
-  )
+  const internalUrl = new URL("/api/growthepie-v1-export-tvl-base", SITE_ORIGIN)
 
   internalUrl.searchParams.set("secret", secret)
 
@@ -29,8 +25,8 @@ export const fetchBaseTvl = async (): Promise<DataTimestamped<BaseTvlData>> => {
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60 * 24, // 1 day
-        tags: ["internal:growthepie:v1:export:tvl:base-tvl"],
+        revalidate: every("day"),
+        tags: ["internal:growthepie:v1:export:tvl:base-current"],
       },
     })
 

@@ -3,6 +3,7 @@
 import type { DataTimestamped } from "@/lib/types"
 
 import { dateNDaysAgo, getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
+import { every } from "@/lib/utils/time"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -83,7 +84,7 @@ export const fetchTokenizedTreasuries = async (): Promise<
         Accept: "application/json",
       },
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("day"),
         tags: ["rwa:v3:assets:aggregates:timeseries"],
       },
     })

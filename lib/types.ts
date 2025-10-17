@@ -1,6 +1,8 @@
 import { ReactNode } from "react"
 import { StaticImageData } from "next/image"
 
+import { RWA_API_LAYER_2S, RWA_API_MAINNET } from "./constants"
+
 export type LibraryItem = {
   title: string
   imgSrc: StaticImageData
@@ -59,8 +61,23 @@ export type RwaMarketshareSummaryData = {
 }
 
 /**
- * RWA.xyz https://api.rwa.xyz/v4/networks response types
+ * RWA.xyz API types https://api.rwa.xyz/v4/networks response types
  */
+
+export type NetworkNameId = { id: number; name: string }
+
+export type RwaApiNetworkName =
+  | (typeof RWA_API_LAYER_2S)[number]["name"]
+  | (typeof RWA_API_MAINNET)["name"]
+
+export type RwaApiNetworkId =
+  | (typeof RWA_API_LAYER_2S)[number]["id"]
+  | (typeof RWA_API_MAINNET)["id"]
+
+export type RwaApiNetwork = {
+  id: RwaApiNetworkId
+  name: RwaApiNetworkName
+}
 
 type AssetClassSlug =
   | "corporate-bonds"

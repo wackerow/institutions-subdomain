@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { every } from "@/lib/utils/time"
+
 import { SOURCE } from "@/lib/constants"
 
 type JSONData = { sum: number; securityRatio: number }
@@ -16,7 +18,7 @@ export const fetchTotalValueSecured = async (): Promise<
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("minute", 5),
         tags: ["ultrasound:fees:total-value-secured"],
       },
     })

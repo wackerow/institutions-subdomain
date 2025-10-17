@@ -3,6 +3,7 @@
 import type { DataTimestamped } from "@/lib/types"
 
 import { getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
+import { every } from "@/lib/utils/time"
 
 import { SOURCE } from "@/lib/constants"
 
@@ -88,7 +89,7 @@ export const fetchTokenizedPrivateCredit = async (): Promise<
         Accept: "application/json",
       },
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("day"),
         tags: ["rwa:v3:protocols:timeseries:private-credit"],
       },
     })

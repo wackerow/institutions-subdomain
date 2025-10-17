@@ -8,8 +8,9 @@ import type {
 } from "@/lib/types"
 
 import { getDataSeriesWithCurrent } from "@/lib/utils/data"
+import { every } from "@/lib/utils/time"
 
-import { SOURCE } from "@/lib/constants"
+import { SITE_ORIGIN, SOURCE } from "@/lib/constants"
 
 type JSONData = { data: L2TvlExportData }
 
@@ -19,14 +20,11 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
   DataTimestamped<TimeseriesL2TvlData>
 > => {
   // Call internal trimmed endpoint and let Next cache the small response.
-  const internalOrigin =
-    process.env.NEXT_PUBLIC_SITE_ORIGIN ?? "http://localhost:3000"
-
   const secret = process.env.INTERNAL_API_SECRET || ""
 
   if (!secret) throw new Error("Internal API secret not found")
 
-  const internalUrl = new URL("/api/growthepie-v1-export-tvl", internalOrigin)
+  const internalUrl = new URL("/api/growthepie-v1-export-tvl", SITE_ORIGIN)
 
   internalUrl.searchParams.set("secret", secret)
 
@@ -35,7 +33,7 @@ export const fetchTimeseriesL2Tvl = async (): Promise<
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60 * 24, // 1 day
+        revalidate: every("day"),
         tags: ["internal:growthepie:v1:export:tvl:timeseries"],
       },
     })

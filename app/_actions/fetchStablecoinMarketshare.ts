@@ -3,8 +3,9 @@
 import type { DataTimestamped, RwaApiNetworkResult } from "@/lib/types"
 
 import { isValidDate } from "@/lib/utils/date"
+import { every } from "@/lib/utils/time"
 
-import { RWA_XYZ_ETHEREUM_NETWORK_ID, SOURCE } from "@/lib/constants"
+import { RWA_API_MAINNET, SOURCE } from "@/lib/constants"
 
 type JSONData = {
   results: RwaApiNetworkResult[]
@@ -46,7 +47,7 @@ export const fetchStablecoinMarketshare = async (): Promise<
       Accept: "application/json",
     },
     next: {
-      revalidate: 60 * 60, // 1 hour
+      revalidate: every("day"),
       tags: [`rwa:v4:networks:stablecoins:page-${page}`],
     },
   })
@@ -80,13 +81,13 @@ export const fetchStablecoinMarketshare = async (): Promise<
 
     // Network separation
     const ethereumL1 = json.results.filter(
-      (result) => result.network_id === RWA_XYZ_ETHEREUM_NETWORK_ID
+      (result) => result.network_id === RWA_API_MAINNET.id
     )[0]
     const ethereumL2s = json.results.filter((r) => r.layer_description === "L2")
     const altNetworks = json.results.filter(
       (result) =>
         result.layer_description === "L1" &&
-        result.network_id !== RWA_XYZ_ETHEREUM_NETWORK_ID
+        result.network_id !== RWA_API_MAINNET.id
     )
 
     // Stablecoins only

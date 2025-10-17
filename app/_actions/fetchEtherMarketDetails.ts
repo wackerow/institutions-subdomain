@@ -2,6 +2,8 @@
 
 import type { AssetValueMetrics, DataTimestamped } from "@/lib/types"
 
+import { every } from "@/lib/utils/time"
+
 import { SOURCE } from "@/lib/constants"
 
 type JSONData = {
@@ -64,8 +66,8 @@ export const fetchEtherMarketDetails = async (): Promise<
         Accept: "application/json",
       },
       next: {
-        revalidate: 60 * 60, // 1 hour
-        tags: ["rwa:v3:assets:aggregates:timeseries:securitize"],
+        revalidate: every("minute"),
+        tags: ["rwa:v4:assets:ether-market"],
       },
     })
 

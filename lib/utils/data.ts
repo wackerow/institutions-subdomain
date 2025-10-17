@@ -1,3 +1,4 @@
+import { RWA_API_LAYER_2S, RWA_API_MAINNET } from "../constants"
 import type {
   DataSeries,
   DataTimestamped,
@@ -144,21 +145,6 @@ export const getRwaApiEthereumNetworksFilter = (
 ) => {
   if (!networks.length) return
 
-  type NETWORK_ID = { id: number; name: string }
-
-  const MAINNET_NETWORK_ID: NETWORK_ID = { id: 1, name: "Ethereum" }
-
-  const RWA_API_NETWORK_IDS: NETWORK_ID[] = [
-    { id: 35, name: "Blast" },
-    { id: 7, name: "Celo" },
-    { id: 10, name: "Base" },
-    { id: 4, name: "Optimism" },
-    { id: 11, name: "Arbitrum" },
-    { id: 33, name: "Mantle" },
-    { id: 3, name: "Polygon" },
-    { id: 31, name: "ZKsync Era" },
-  ]
-
   const BASE_FIELD_OPERATOR = {
     field: "networkID",
     operator: "equals",
@@ -166,10 +152,10 @@ export const getRwaApiEthereumNetworksFilter = (
 
   const mainnetFilter = {
     ...BASE_FIELD_OPERATOR,
-    value: MAINNET_NETWORK_ID.id,
+    value: RWA_API_MAINNET.id,
   }
 
-  const layer2Filters = RWA_API_NETWORK_IDS.map(({ id }) => ({
+  const layer2Filters = RWA_API_LAYER_2S.map(({ id }) => ({
     ...BASE_FIELD_OPERATOR,
     value: id,
   }))

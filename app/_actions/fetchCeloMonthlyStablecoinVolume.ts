@@ -2,7 +2,13 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
-import { SOURCE } from "@/lib/constants"
+import { every } from "@/lib/utils/time"
+
+import {
+  RWA_API_LAYER_2S,
+  RWA_API_STABLECOINS_GROUP_ID,
+  SOURCE,
+} from "@/lib/constants"
 
 type JSONData = {
   results: {
@@ -24,6 +30,8 @@ export const fetchCeloMonthlyStablecoinVolume = async (): Promise<
   if (!apiKey) {
     throw new Error(`No API key available for ${url.toString()}`)
   }
+
+  const celoNetworkId = RWA_API_LAYER_2S.find(({ name }) => name === "Celo")!.id // Force unwrapped due to type safety
 
   const myQuery = {
     aggregate: {
@@ -49,12 +57,12 @@ export const fetchCeloMonthlyStablecoinVolume = async (): Promise<
         {
           field: "assetClassID",
           operator: "equals",
-          value: 28, // Stablecoins
+          value: RWA_API_STABLECOINS_GROUP_ID,
         },
         {
           field: "networkID",
           operator: "equals",
-          value: 7, // Celo
+          value: celoNetworkId,
         },
       ],
     },
@@ -69,7 +77,7 @@ export const fetchCeloMonthlyStablecoinVolume = async (): Promise<
         Accept: "application/json",
       },
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("week"),
         tags: ["rwa:v3:assets:aggregates:timeseries:celo"],
       },
     })

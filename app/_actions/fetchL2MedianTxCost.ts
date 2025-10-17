@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { every } from "@/lib/utils/time"
+
 import { SOURCE } from "@/lib/constants"
 
 type JSONData = {
@@ -23,7 +25,7 @@ export const fetchL2MedianTxCost = async (): Promise<
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("day"),
         tags: ["growthepie:fundamentals_7d"],
       },
     })

@@ -2,6 +2,8 @@
 
 import type { DataTimestamped } from "@/lib/types"
 
+import { every } from "@/lib/utils/time"
+
 import { SOURCE } from "@/lib/constants"
 
 import fetchL2ScalingSummary from "./fetchL2ScalingSummary"
@@ -23,7 +25,7 @@ export const fetchDefiTvlAllCurrent = async (): Promise<
   try {
     const response = await fetch(url, {
       next: {
-        revalidate: 60 * 60, // 1 hour
+        revalidate: every("hour"),
         tags: ["llama:v2:chains"],
       },
     })
