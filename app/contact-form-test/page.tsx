@@ -16,9 +16,21 @@ export default async function Page() {
       >
         Coming soon™
       </Hero>
-      <div className="mx-auto">
-        <EnterpriseContactForm />
-      </div>
+      <footer className="row-start-3">
+        <div className="bg-primary text-primary-foreground w-screen px-4 py-20 sm:px-10">
+          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-10 md:grid-cols-2">
+            <div className="space-y-4">
+              <h3 className="text-h4">Get In Touch</h3>
+              <p>
+                We will answer your questions, help identify potential paths
+                forward, provide technical support and connect you with relevant
+                industry leaders
+              </p>
+            </div>
+            <EnterpriseContactForm />
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }
