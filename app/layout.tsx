@@ -82,5 +82,5 @@ export default function RootLayout({
 
 export const metadata: Metadata = {
   title: "Ethereum for Institutions",
-  description: "Ethereum: The Institutional Liquidity Layer",
+  description: "Coming soon™",
 }
