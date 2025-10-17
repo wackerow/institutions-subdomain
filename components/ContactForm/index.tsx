@@ -242,10 +242,10 @@ const EnterpriseContactForm = () => {
 
   if (submissionState === "success")
     return (
-      <div className="border-accent-a/20 bg-background flex w-full max-w-prose flex-col items-center gap-y-6 rounded-2xl border p-6 text-center">
+      <div className="border-border/50 bg-primary flex w-full max-w-prose flex-col items-center gap-y-6 rounded border p-6 text-center">
         <div className="mb-2 flex items-center gap-4">
-          <HeartHandshake className="text-primary size-8" />
-          <h4 className="text-2xl font-semibold">Thanks for reaching out!</h4>
+          <HeartHandshake className="text-primary-foreground size-8" />
+          <h4 className="text-xl font-semibold">Thanks for reaching out!</h4>
         </div>
         <p className="text-body-medium">
           We&apos;ve received your message and someone from our enterprise team
