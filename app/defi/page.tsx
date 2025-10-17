@@ -190,8 +190,9 @@ export default async function Page() {
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
                 Open standards
                 <p className="text-muted-foreground mt-1 text-base font-medium">
-                  Ethereum’s shared EVM, token, and smart contract standards
-                  provide interoperability across the entire DeFi ecosystem
+                  Ethereum&apos;s shared EVM, token, and smart contract
+                  standards provide interoperability across the entire DeFi
+                  ecosystem
                 </p>
               </li>
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">
@@ -244,8 +245,8 @@ export default async function Page() {
               DeFi Powers Enterprise Innovation
             </h2>
             <p className="text-muted-foreground font-medium">
-              Institutions build on Ethereum’s open DeFi primitives to advance
-              transparent, efficient, and accessible tools for a global
+              Institutions build on Ethereum&apos;s open DeFi primitives to
+              advance transparent, efficient, and accessible tools for a global
               financial system
             </p>
           </div>

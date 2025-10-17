@@ -38,7 +38,8 @@ import wisdomTree from "@/public/images/defi-protocols/wisdom-tree.png"
 export const defiEcosystem = {
   dex: {
     heading: "Decentralized Exchanges (DEXs)",
-    subtext: "Explore onchain platforms where users can trade tokens anytime, 24/7",
+    subtext:
+      "Explore onchain platforms where users can trade tokens anytime, 24/7",
     platforms: [
       {
         name: "1inch",
@@ -218,7 +219,7 @@ export const defiEcosystem = {
       {
         name: "Tether",
         description:
-          "Issuer of the the USDT stablecoin, a stablecoin pegged to the U.S. dollar that’s focused on using fiat currencies onchain.",
+          "Issuer of the the USDT stablecoin, a stablecoin pegged to the U.S. dollar that's focused on using fiat currencies onchain.",
         imgSrc: tether,
         href: "https://tether.to/en/",
       },
@@ -267,7 +268,7 @@ export const defiEcosystem = {
       {
         name: "Liquid Collective",
         description:
-          "A liquid staking network built to provide a secure, decentralized way to stake ETH across operators and platforms, with staked assets represented by LsETH, a liquid staking token that can be used in DeFi while accruing staking rewards that’s designed to meet institutional security and compliance requirements.",
+          "A liquid staking network built to provide a secure, decentralized way to stake ETH across operators and platforms, with staked assets represented by LsETH, a liquid staking token that can be used in DeFi while accruing staking rewards that's designed to meet institutional security and compliance requirements.",
         imgSrc: liquidCollective,
         href: "https://liquidcollective.io/",
       },

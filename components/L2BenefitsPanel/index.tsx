@@ -145,9 +145,7 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
                   <h3 className="text-h6/snug font-bold">{heading}</h3>
                   <ul className="text-muted-foreground ms-6 list-disc font-medium">
                     {items.map((item, idx) => (
-                      <li key={idx} className="">
-                        {item}
-                      </li>
+                      <li key={idx}>{item}</li>
                     ))}
                   </ul>
                 </div>

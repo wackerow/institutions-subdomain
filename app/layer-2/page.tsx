@@ -151,7 +151,7 @@ export default async function Page() {
     {
       heading: "Base",
       description:
-        "Base is a secure, low-cost L2 built on Optimism’s OP Stack, offering seamless Ethereum compatibility. It enables fast, scalable transactions while keeping assets and apps fully on-chain.",
+        "Base is a secure, low-cost L2 built on Optimism's OP Stack, offering seamless Ethereum compatibility. It enables fast, scalable transactions while keeping assets and apps fully on-chain.",
       href: "https://www.base.org/",
       imgSrc: base,
     },
@@ -236,9 +236,9 @@ export default async function Page() {
           security and finality.
         </p>
         <p>
-          Ideal for tokenization, payments, and compliant appchains, L2s bring
-          custom environments and optimized rails to Ethereum&apos;s resilient,
-          global network.
+          Ideal for payments and compliant appchains, L2s let L1-issued assets
+          scale efficiently while keeping Ethereum&apos;s native security and
+          recovery guarantees.
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
@@ -495,7 +495,7 @@ export default async function Page() {
             ))}
           </div>
 
-          <div className="mt-16 space-y-2">
+          <div className="space-y-2">
             <h3 className="text-h4-mobile sm:text-h4">Deploy on Proven L2s</h3>
             <p className="text-muted-foreground font-medium">
               Build on secure and scalable networks without the operational

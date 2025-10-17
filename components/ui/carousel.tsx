@@ -265,7 +265,7 @@ function CarouselContent({ children, className }: CarouselContentProps) {
     const slide = track.children[index] as HTMLElement | undefined
     if (!slide) return
 
-    // Use the slide’s actual offset instead of width * index for reliability on iOS
+    // Use the slide's actual offset instead of width * index for reliability on iOS
     viewport.scrollTo({
       left: slide.offsetLeft,
       behavior: "smooth",

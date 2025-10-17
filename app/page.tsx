@@ -341,7 +341,7 @@ export default async function Home() {
             <h2>Institutional Use Cases</h2>
             <p className="text-muted-foreground text-xl tracking-[0.025rem]">
               Explore Ethereum&apos;s digital asset landscape, from tokens to
-              technologies.
+              technologies
             </p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
