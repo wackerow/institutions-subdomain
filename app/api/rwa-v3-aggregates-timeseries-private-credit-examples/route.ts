@@ -104,8 +104,6 @@ export async function GET(req: NextRequest) {
     }
   })
 
-  console.log({ data, lastUpdated })
-
   return new Response(JSON.stringify({ data, lastUpdated }), {
     headers: { "content-type": "application/json" },
   })
