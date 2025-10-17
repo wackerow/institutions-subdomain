@@ -9,19 +9,20 @@ import fidelity1 from "@/public/images/library/fidelity-1.jpg"
 import fidelity2 from "@/public/images/library/fidelity-2.png"
 import galaxy from "@/public/images/library/galaxy-1.png"
 import goldmanSachs from "@/public/images/library/glodman-sachs-1.png"
+import nextFinSummit from "@/public/images/library/nextfin-summit-1.png"
 
 export const libraryItems: LibraryItem[] = [
   {
     title: "Citi - Stablecoins 2030 Web3 to Wall Street",
-    imgSrc: citi,
-    date: "September 25, 2025",
     href: "https://www.citigroup.com/rcs/citigpa/storage/public/GPS_Report_Stablecoins_2030.pdf",
+    date: "September 25, 2025",
+    imgSrc: citi,
   },
   {
     title: "ETHTokyo - Ethereum: From tech to real",
-    imgSrc: ethtokyo,
-    date: "September 16, 2025",
     href: "https://www.youtube.com/watch?v=4iWXnYFjbIM",
+    date: "September 16, 2025",
+    imgSrc: ethtokyo,
   },
   {
     title:
@@ -65,5 +66,11 @@ export const libraryItems: LibraryItem[] = [
     href: "https://www.ey.com/content/dam/ey-unified-site/ey-com/en-us/insights/financial-services/documents/ey-growing-enthusiasm-propels-digital-assets-into-the-mainstream.pdf",
     date: "March 18, 2025",
     imgSrc: ey,
+  },
+  {
+    title: "NextFin Summit - Low-risk DeFi on Ethereum",
+    href: "https://drive.google.com/file/d/13YdvzcC7G-CFmYHBjvd-Js6xicgTS8V5/view",
+    date: "October 1, 2025",
+    imgSrc: nextFinSummit,
   },
 ]
