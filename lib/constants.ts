@@ -65,5 +65,5 @@ export const DA_NAV_ITEM_LINKS: LinkProps[] = [
 export const NAV_ITEM_LINKS: LinkProps[] = [
   { children: "Live Data", href: "/data-hub" },
   { children: "Library", href: "/library" },
-  { children: "Solution Providers", href: "/providers" },
+  // { children: "Solution Providers", href: "/providers" },
 ]
