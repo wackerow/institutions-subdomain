@@ -444,7 +444,7 @@ export default async function Page() {
                 </li>
                 <li className="flex gap-4">
                   <Check className="text-secondary-foreground" />
-                  Maximises interoperability and composability across Ethereum
+                  Maximizes interoperability and composability across Ethereum
                   ecosystem
                 </li>
               </ul>

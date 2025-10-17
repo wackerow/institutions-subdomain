@@ -28,7 +28,7 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
           heading: "No Bootstrapping",
           items: [
             "Skip the costly process of building and paying a new validator set",
-            "New chains must build decentralization from scratch, a slow, capital-intensive process that can lead to fragile and centralised chains",
+            "New chains must build decentralization from scratch, a slow, capital-intensive process that can lead to fragile and centralized chains",
             "L2s inherit Ethereum's unmatched decentralization, saving resources and accessing deep economic security",
           ],
         },

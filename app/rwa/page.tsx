@@ -218,7 +218,7 @@ export default async function Page() {
         shape="badge-dollar-sign"
       >
         Ethereum is the dominant network for asset tokenization, home to over
-        90% of all tokenized real-world assets (RWAs) and over 60% of global
+        75% of all tokenized real-world assets (RWAs) and over 60% of global
         stablecoin supply
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
