@@ -23,8 +23,8 @@ import {
   formatPercent,
 } from "@/lib/utils/number"
 
-import fetchDexVolume from "../_actions/fetchDexVolume"
-import fetchDefiTvlAllCurrent from "../_actions/fetchTvlDefiAllCurrent"
+import fetchDexVolume from "../../_actions/fetchDexVolume"
+import fetchDefiTvlAllCurrent from "../../_actions/fetchTvlDefiAllCurrent"
 
 import AppGrid from "./_components/AppGrid"
 

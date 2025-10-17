@@ -27,12 +27,12 @@ import {
   formatLargeNumber,
 } from "@/lib/utils/number"
 
-import fetchBaseTvl from "../_actions/fetchBaseTvl"
-import fetchBeaconChain from "../_actions/fetchBeaconChain"
-import fetchCeloMonthlyStablecoinVolume from "../_actions/fetchCeloMonthlyStablecoinVolume"
-import fetchL2MedianTxCost from "../_actions/fetchL2MedianTxCost"
-import fetchL2ScalingActivity from "../_actions/fetchL2ScalingActivity"
-import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
+import fetchBaseTvl from "../../_actions/fetchBaseTvl"
+import fetchBeaconChain from "../../_actions/fetchBeaconChain"
+import fetchCeloMonthlyStablecoinVolume from "../../_actions/fetchCeloMonthlyStablecoinVolume"
+import fetchL2MedianTxCost from "../../_actions/fetchL2MedianTxCost"
+import fetchL2ScalingActivity from "../../_actions/fetchL2ScalingActivity"
+import fetchL2ScalingSummary from "../../_actions/fetchL2ScalingSummary"
 
 import celo from "@/public/images/app-logos/celo.png"
 import coinbase from "@/public/images/app-logos/coinbase.png"
