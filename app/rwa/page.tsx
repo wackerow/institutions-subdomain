@@ -226,7 +226,7 @@ export default async function Page() {
           <p className="flex-1 font-medium">
             Institutions tokenize stocks, offer 24/7 settlement, deploy
             programmable cash, launch payment rails, and more, on the liquid,
-            open, and resilient ecosystem of Ethereum and its L2s.
+            open, and resilient ecosystem of Ethereum and its L2s
           </p>
           <div className="flex w-full flex-1 gap-4 max-sm:flex-col">
             {metrics.map(({ label, value, ...sourceInfo }, idx) => {
@@ -269,7 +269,7 @@ export default async function Page() {
             <p className="text-muted-foreground font-medium">
               Ethereum hosts the largest, most connected stablecoin ecosystem
               for payments, treasury, and settlement: plugging straight into
-              wallets, exchanges, and DeFi.
+              wallets, exchanges, and DeFi
             </p>
             <ul className="max-w-prose space-y-4 font-medium">
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">

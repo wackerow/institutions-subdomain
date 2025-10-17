@@ -151,7 +151,7 @@ export default async function Page() {
     {
       heading: "Base",
       description:
-        "Base is a secure, low-cost L2 built on Optimism's OP Stack, offering seamless Ethereum compatibility. It enables fast, scalable transactions while keeping assets and apps fully on-chain.",
+        "Base is a secure, low-cost L2 built on Optimism's OP Stack, offering seamless Ethereum compatibility. It enables fast, scalable transactions while keeping assets and apps fully onchain.",
       href: "https://www.base.org/",
       imgSrc: base,
     },
@@ -390,7 +390,7 @@ export default async function Page() {
             </h2>
             <p className="text-muted-foreground max-w-xl text-xl font-medium tracking-[0.025rem]">
               In a rollup, transactions are executed off-chain but the data is
-              published to Ethereum L1.
+              published to Ethereum L1
             </p>
             <ul className="max-w-prose space-y-4 font-medium">
               <li className="ms-6 list-disc text-xl font-bold tracking-[0.025rem]">

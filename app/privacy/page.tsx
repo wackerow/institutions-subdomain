@@ -36,7 +36,7 @@ export default function Page() {
     {
       heading: "Railgun",
       description:
-        "On-chain ZK privacy system for private balances and private DeFi interactions on Ethereum and major L2s.",
+        "Onchain ZK privacy system for private balances and private DeFi interactions on Ethereum and major L2s.",
       href: "https://www.railgun.org/",
       imgSrc: railgun,
     },
@@ -79,7 +79,7 @@ export default function Page() {
               The Ethereum Foundation pairs its cryptographic research team
               (PSE) of 50+ leading privacy researchers with its Institutional
               Privacy Task Force (IPTF) to deliver institutional-grade privacy
-              on public rails.
+              on public rails
             </p>
           </div>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2">

@@ -194,7 +194,7 @@ export default function RootLayout({
                 <p>
                   We will answer your questions, help identify potential paths
                   forward, provide technical support and connect you with
-                  relevant industry leaders.
+                  relevant industry leaders
                 </p>
               </div>
               <EnterpriseContactForm />

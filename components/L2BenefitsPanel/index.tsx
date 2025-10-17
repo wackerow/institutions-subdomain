@@ -27,9 +27,9 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
         {
           heading: "No Bootstrapping",
           items: [
-            "Skip the costly process of building and paying a new validator set.",
-            "New chains must build decentralization from scratch, a slow, capital-intensive process that can lead to fragile and centralised chains.",
-            "L2s inherit Ethereum's unmatched decentralization, saving resources and accessing deep economic security.",
+            "Skip the costly process of building and paying a new validator set",
+            "New chains must build decentralization from scratch, a slow, capital-intensive process that can lead to fragile and centralised chains",
+            "L2s inherit Ethereum's unmatched decentralization, saving resources and accessing deep economic security",
           ],
         },
         {
@@ -46,7 +46,7 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
               </Link>
               , paying only usage-based fees.
             </>,
-            "L2s all settle on Ethereum, creating a shared, decentralized security and data availability layer.",
+            "L2s all settle on Ethereum, creating a shared, decentralized security and data availability layer",
           ],
         },
       ],
@@ -57,9 +57,9 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
         {
           heading: "No Inflation Burden",
           items: [
-            "Alternative L1s pay for security and usage via high native token inflation rates.",
-            "L2s pay usage-based fees in ETH, removing the need for a native-L2 token to facilitate economic security.",
-            "Because L2s don't need to use a native token to pay for security, they can choose to use a native token for other strategic functions, like governance, incentives, or fees.",
+            "Alternative L1s pay for security and usage via high native token inflation rates",
+            "L2s pay usage-based fees in ETH, removing the need for a native-L2 token to facilitate economic security",
+            "Because L2s don't need to use a native token to pay for security, they can choose to use a native token for other strategic functions, like governance, incentives, or fees",
             "High levels of profitability e.g. 95% margins on Base",
           ],
         },
@@ -71,22 +71,22 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
         {
           heading: "High-Performance Validation",
           items: [
-            "By separating execution from consensus and inheriting Ethereum's finality, rollups enable high performance without sacrificing user safety or decentralization.",
+            "By separating execution from consensus and inheriting Ethereum's finality, rollups enable high performance without sacrificing user safety or decentralization",
           ],
         },
         {
           heading: "Faster & Cheaper",
           items: [
-            "Rollups can parallelize execution and proving. They don't need to wait for thousands of nodes to sync.",
-            "One proof replaces millions of redundant re-computations across nodes, greatly reducing validation costs.",
+            "Rollups can parallelize execution and proving—they don't need to wait for thousands of nodes to sync",
+            "One proof replaces millions of redundant re-computations across nodes, greatly reducing validation costs",
           ],
         },
         {
           heading: "Safer Validation",
           items: [
-            "Rollups inherit Ethereum's censorship resistance and finality.",
-            "Assets are held in Ethereum contracts, and updates are enforced via fraud or validity proofs.",
-            "Even if the L2 sequencer misbehaves, users can force transaction inclusion and securely exit via Ethereum L1.",
+            "Rollups inherit Ethereum's censorship resistance and finality",
+            "Assets are held in Ethereum contracts, and updates are enforced via fraud or validity proofs",
+            "Even if the L2 sequencer misbehaves, users can force transaction inclusion and securely exit via Ethereum L1",
           ],
         },
       ],
@@ -97,9 +97,9 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
         {
           heading: "Shared Standards",
           items: [
-            "L2s leverage Ethereum's established EVM, token standards, and core assets like ETH.",
-            "Users and developers benefit from a consistent experience, using the same wallets, tools, and code across Ethereum's L1 and L2 ecosystem.",
-            "Tokens and NFTs maintain a canonical L1 source-of-truth, making them fungible across different rollups.",
+            "L2s leverage Ethereum's established EVM, token standards, and core assets like ETH",
+            "Users and developers benefit from a consistent experience, using the same wallets, tools, and code across Ethereum's L1 and L2 ecosystem",
+            "Tokens and NFTs maintain a canonical L1 source-of-truth, making them fungible across different rollups",
           ],
         },
       ],

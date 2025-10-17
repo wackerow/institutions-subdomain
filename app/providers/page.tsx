@@ -209,7 +209,7 @@ export default function Page() {
       <Hero heading="Solution Providers" shape="handshake">
         <p>
           Discover providers offering expertise, tools, and support for your
-          business.
+          business
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-10 px-4 py-10 sm:px-10 sm:py-20 md:space-y-20">
