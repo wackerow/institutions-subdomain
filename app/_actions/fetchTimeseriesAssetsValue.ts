@@ -1,6 +1,10 @@
 "use server"
 
-import type { DataSeriesWithCurrent, DataTimestamped } from "@/lib/types"
+import type {
+  ASSET_CATEGORY,
+  DataSeriesWithCurrent,
+  DataTimestamped,
+} from "@/lib/types"
 
 import {
   getRwaApiEthereumNetworksFilter,
@@ -8,16 +12,11 @@ import {
 } from "@/lib/utils/data"
 import { every } from "@/lib/utils/time"
 
-import { RWA_API_STABLECOINS_GROUP_ID, SOURCE } from "@/lib/constants"
-
-const MEASURE_ID = {
-  "Total Asset Value (Dollar)": 2,
-  "Market Value (Dollar)": 40,
-  "Bridged Token Market Cap (Dollar)": 70, // Used for Stablecoin series
-  "Bridged Token Value (Dollar)": 71, // Used for RWA series
-} as const
-
-type MeasureID = keyof typeof MEASURE_ID
+import {
+  RWA_API_MEASURE_ID_BY_CATEGORY,
+  RWA_API_STABLECOINS_GROUP_ID,
+  SOURCE,
+} from "@/lib/constants"
 
 type JSONData = {
   results: {
@@ -36,8 +35,7 @@ export type TimeseriesAssetsValueData = {
 }
 
 export const fetchTimeseriesAssetsValue = async (
-  series: "stablecoins" | "real-world-assets" = "real-world-assets",
-  measureId?: MeasureID
+  category: ASSET_CATEGORY
 ): Promise<DataTimestamped<TimeseriesAssetsValueData>> => {
   const url = new URL("https://api.rwa.xyz/v3/assets/aggregates/timeseries")
 
@@ -45,14 +43,6 @@ export const fetchTimeseriesAssetsValue = async (
 
   if (!apiKey) {
     throw new Error(`No API key available for ${url.toString()}`)
-  }
-
-  const getMeasureIdValue = () => {
-    if (measureId) return MEASURE_ID[measureId]
-    if (series === "stablecoins")
-      return MEASURE_ID["Bridged Token Market Cap (Dollar)"]
-    if (series === "real-world-assets")
-      return MEASURE_ID["Bridged Token Value (Dollar)"]
   }
 
   const myQuery = {
@@ -75,11 +65,11 @@ export const fetchTimeseriesAssetsValue = async (
         {
           field: "measureID",
           operator: "equals",
-          value: getMeasureIdValue(),
+          value: RWA_API_MEASURE_ID_BY_CATEGORY[category],
         },
         {
           field: "assetClassID",
-          operator: series === "stablecoins" ? "equals" : "notEquals",
+          operator: category === "STABLECOINS" ? "equals" : "notEquals",
           value: RWA_API_STABLECOINS_GROUP_ID, // Stablecoins (Else, real-world assets)
         },
         getRwaApiEthereumNetworksFilter(["mainnet", "layer-2"]),
@@ -97,7 +87,7 @@ export const fetchTimeseriesAssetsValue = async (
       },
       next: {
         revalidate: every("day"),
-        tags: [`rwa:v3:assets:aggregates:timeseries:${series}`],
+        tags: [`rwa:v3:assets:aggregates:timeseries:${category}`],
       },
     })
 

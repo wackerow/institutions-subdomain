@@ -12,7 +12,7 @@ import {
 } from "@/lib/utils/data"
 import { every } from "@/lib/utils/time"
 
-import { SOURCE } from "@/lib/constants"
+import { RWA_API_MEASURE_ID_BY_CATEGORY, SOURCE } from "@/lib/constants"
 
 type JSONData = {
   results: {
@@ -53,7 +53,7 @@ export const fetchSecuritizeAum = async (): Promise<
         {
           field: "measureID",
           operator: "equals",
-          value: 71,
+          value: RWA_API_MEASURE_ID_BY_CATEGORY.RWAS,
         },
         {
           field: "protcolID",

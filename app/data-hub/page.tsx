@@ -4,7 +4,7 @@ import { MetricWithSource } from "@/lib/types"
 
 import DefiTimeseriesTvlEthereumLineChart from "@/components/data/defi-timeseries-tvl-ethereum-line-chart"
 import L2TimeseriesTvlLineChart from "@/components/data/l2-timeseries-tvl-line-chart"
-import StablecoinMarketsharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
+import StablecoinMarketSharePieChart from "@/components/data/stablecoin-marketshare-pie-chart"
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
@@ -21,10 +21,7 @@ import {
 } from "@/components/ui/card"
 import Link from "@/components/ui/link"
 
-import {
-  rwaMarketshareToSummaryData,
-  stablecoinMarketshareToPieChartData,
-} from "@/lib/utils/data"
+import { stablecoinMarketShareToPieChartData } from "@/lib/utils/data"
 import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import {
@@ -34,11 +31,10 @@ import {
   formatPercent,
 } from "@/lib/utils/number"
 
+import fetchAssetMarketShare from "../_actions/fetchAssetMarketShare"
 import fetchBeaconChain from "../_actions/fetchBeaconChain"
 import fetchEtherMarketDetails from "../_actions/fetchEtherMarketDetails"
 import fetchL2ScalingSummary from "../_actions/fetchL2ScalingSummary"
-import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
-import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
 import fetchTimeseriesAssetsValue from "../_actions/fetchTimeseriesAssetsValue"
 import fetchTimeseriesDefiTvlEthereum from "../_actions/fetchTimeseriesDefiTvlEthereum"
 import fetchTimeseriesL2Tvl from "../_actions/fetchTimeseriesL2Tvl"
@@ -51,21 +47,20 @@ import StablecoinChartCard from "./_components/stablecoin-chart-card"
 export default async function Page() {
   const timeseriesDefiTvlEthereumData = await fetchTimeseriesDefiTvlEthereum()
   const timeseriesStablecoinsValueData =
-    await fetchTimeseriesAssetsValue("stablecoins")
-  const timeseriesRwaValueData =
-    await fetchTimeseriesAssetsValue("real-world-assets")
+    await fetchTimeseriesAssetsValue("STABLECOINS")
+  const timeseriesRwaValueData = await fetchTimeseriesAssetsValue("RWAS")
   const timeseriesL2TvlData = await fetchTimeseriesL2Tvl()
 
   const beaconChainData = await fetchBeaconChain()
   const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
   const totalValueSecuredData = await fetchTotalValueSecured()
-  const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
-    await fetchStablecoinMarketshare()
+  const stablecoinAssetMarketShareData =
+    await fetchAssetMarketShare("STABLECOINS")
+  const stablecoinMarketShareData = stablecoinMarketShareToPieChartData(
+    stablecoinAssetMarketShareData
   )
   const l2ScalingSummaryData = await fetchL2ScalingSummary()
-  const rwaMarketshareData = rwaMarketshareToSummaryData(
-    await fetchRwaMarketshare()
-  )
+  const rwaAssetMarketShareData = await fetchAssetMarketShare("RWAS")
   const etherMarketDetailsData = await fetchEtherMarketDetails()
 
   const metrics: MetricWithSource[] = [
@@ -251,8 +246,8 @@ export default async function Page() {
               </CardContent>
 
               <CardContent variant="flex-1-height-between">
-                <StablecoinMarketsharePieChart
-                  chartData={stablecoinMarketshareData}
+                <StablecoinMarketSharePieChart
+                  chartData={stablecoinMarketShareData}
                 />
 
                 <CardSource>
@@ -263,7 +258,7 @@ export default async function Page() {
                   <SourceInfoTooltip
                     iconClassName="translate-y-0"
                     lastUpdated={formatDateMonthDayYear(
-                      stablecoinMarketshareData.lastUpdated
+                      stablecoinMarketShareData.lastUpdated
                     )}
                   />
                 </CardSource>
@@ -288,7 +283,7 @@ export default async function Page() {
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(
-                        rwaMarketshareData.data.ethereumL1RwaMarketshare
+                        rwaAssetMarketShareData.data.marketShare.mainnet
                       )}
                     </AnimatedNumberInView>
                   </CardContent>
@@ -300,7 +295,7 @@ export default async function Page() {
                     <SourceInfoTooltip
                       iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
-                        rwaMarketshareData.lastUpdated
+                        rwaAssetMarketShareData.lastUpdated
                       )}
                     />
                   </CardSource>
@@ -315,7 +310,8 @@ export default async function Page() {
                     </h3>
                     <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                       {formatPercent(
-                        rwaMarketshareData.data.ethereumL1L2RwaMarketshare
+                        rwaAssetMarketShareData.data.marketShare.mainnet +
+                          rwaAssetMarketShareData.data.marketShare.layer2
                       )}
                     </AnimatedNumberInView>
                   </CardContent>
@@ -327,7 +323,7 @@ export default async function Page() {
                     <SourceInfoTooltip
                       iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
-                        rwaMarketshareData.lastUpdated
+                        rwaAssetMarketShareData.lastUpdated
                       )}
                     />
                   </CardSource>

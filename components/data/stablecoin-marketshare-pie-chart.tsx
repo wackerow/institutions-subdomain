@@ -44,7 +44,7 @@ type PieSliceProps = Partial<SectorProps> & {
 }
 
 const chartConfig = {
-  marketshare: {
+  marketShare: {
     label: "Percent market share",
   },
   ethereum: {
@@ -221,7 +221,7 @@ type StablecoinMarketsharePieChartProps = {
   chartData: DataTimestamped<NetworkPieChartData>
 }
 
-const StablecoinMarketsharePieChart = ({
+const StablecoinMarketSharePieChart = ({
   chartData,
 }: StablecoinMarketsharePieChartProps) => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
@@ -277,7 +277,7 @@ const StablecoinMarketsharePieChart = ({
         />
         <Pie
           data={chartData.data}
-          dataKey="marketshare"
+          dataKey="marketShare"
           // label function hides the label for the hovered slice immediately
           label={(props: PieLabelRenderProps) => {
             const payload = props.payload as PieSlicePayload | undefined
@@ -327,4 +327,4 @@ const StablecoinMarketsharePieChart = ({
   )
 }
 
-export default StablecoinMarketsharePieChart
+export default StablecoinMarketSharePieChart

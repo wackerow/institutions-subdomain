@@ -1,63 +1,40 @@
 import { RWA_API_LAYER_2S, RWA_API_MAINNET } from "../constants"
-import type {
-  DataSeries,
-  DataTimestamped,
-  NetworkPieChartData,
-  RwaMarketshareSummaryData,
-} from "../types"
+import type { DataSeries, DataTimestamped, NetworkPieChartData } from "../types"
 
-import { RwaMarketshareData } from "@/app/_actions/fetchRwaMarketshare"
-import type { StablecoinMarketshareData } from "@/app/_actions/fetchStablecoinMarketshare"
+import { AssetMarketShareData } from "@/app/_actions/fetchAssetMarketShare"
 
-export const stablecoinMarketshareToPieChartData = (
-  apiData: DataTimestamped<StablecoinMarketshareData>
+export const stablecoinMarketShareToPieChartData = (
+  apiData: DataTimestamped<AssetMarketShareData>
 ): DataTimestamped<NetworkPieChartData> => {
-  const totalUSD = Object.values(apiData.data).reduce((sum, v) => sum + v, 0)
-
   return {
     ...apiData,
     data: [
       {
         network: "ethereum",
-        marketshare: apiData.data.ethereumL1StablecoinUSD / totalUSD,
+        marketShare: apiData.data.marketShare.mainnet,
         fill: "var(--color-ethereum)",
       },
       {
         network: "ethereum-l2s",
-        marketshare: apiData.data.ethereumL2StablecoinUSD / totalUSD,
+        marketShare: apiData.data.marketShare.layer2,
         fill: "var(--color-ethereum-l2s)",
       },
       {
         network: "alt-2nd",
-        marketshare: apiData.data.altNetwork2ndStablecoinUSD / totalUSD,
+        marketShare: apiData.data.marketShare.altNetwork2nd,
         fill: "var(--color-alt-2nd)",
       },
       {
         network: "alt-3rd",
-        marketshare: apiData.data.altNetwork3rdStablecoinUSD / totalUSD,
+        marketShare: apiData.data.marketShare.altNetwork3rd,
         fill: "var(--color-alt-3rd)",
       },
       {
         network: "alt-rest",
-        marketshare: apiData.data.altNetworksRestStablecoinUSD / totalUSD,
+        marketShare: apiData.data.marketShare.altNetworksRest,
         fill: "var(--color-alt-rest)",
       },
     ],
-  }
-}
-
-export const rwaMarketshareToSummaryData = (
-  apiData: DataTimestamped<RwaMarketshareData>
-): DataTimestamped<RwaMarketshareSummaryData> => {
-  const totalUSD = Object.values(apiData.data).reduce((sum, v) => sum + v, 0)
-  return {
-    ...apiData,
-    data: {
-      ethereumL1RwaMarketshare: apiData.data.ethereumL1RwaUSD / totalUSD,
-      ethereumL1L2RwaMarketshare:
-        (apiData.data.ethereumL1RwaUSD + apiData.data.ethereumL2RwaUSD) /
-        totalUSD,
-    },
   }
 }
 
@@ -74,13 +51,17 @@ export const modFilter = <T>(array: T[], mod: number = 28): T[] =>
   array.filter((_, idx) => idx % mod === (array.length - 1) % mod)
 
 /**
- * Filters an array of objects, returning only those whose `date` property falls on the specified days of the month,
- * and always includes the last element in the array if not already included.
+ * Filters an array of objects, returning only those whose `date` property falls on the specified days of the month (UTC),
+ * and always includes the most recent element in the array (based on UTC time) if not already included.
+ *
+ * Notes:
+ * - The input array is not mutated.
+ * - All date checks use UTC (getUTCDate / getTime) to ensure timezone-independent behavior.
  *
  * @template T - The type of objects in the array, which must include a `date` property.
  * @param array - The array of objects to filter.
  * @param dateMatches - An array of day numbers (1-31) to match against the day of the month in each object's `date` property. Defaults to `[1, 15]`.
- * @returns A new array containing only the objects whose `date` property matches one of the specified days, plus the last element if not already included.
+ * @returns A new array containing only the objects whose `date` property matches one of the specified days (UTC), plus the last element if not already included. Results are returned in ascending chronological order (UTC).
  */
 export const filterFirstAndFifteenth = <
   T extends { date: string | number | Date } & Record<string, unknown>,
@@ -88,15 +69,31 @@ export const filterFirstAndFifteenth = <
   array: T[],
   dateMatches = [1, 15]
 ): T[] => {
-  const filtered = array.filter((item) =>
-    dateMatches.includes(new Date(item.date).getUTCDate())
+  if (!array || array.length < 2) return array
+
+  // Normalize and validate the dateMatches into a Set of integers 1..31
+  const matches = new Set<number>(
+    dateMatches
+      .map((d) => Number(d))
+      .filter((n) => Number.isInteger(n) && n >= 1 && n <= 31)
   )
-  const last = array[array.length - 1]
-  // Check if last is already included (by reference)
-  if (last && !filtered.includes(last)) {
-    filtered.push(last)
-  }
-  return filtered
+
+  // Sort a copy of the array by UTC timestamp to avoid mutating the original
+  const sorted = [...array].sort(
+    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+  )
+
+  // Filter by UTC day-of-month
+  const filtered = sorted.filter((item) =>
+    matches.has(new Date(item.date).getUTCDate())
+  )
+
+  if (filtered.length < 2) return sorted
+
+  if (filtered[filtered.length - 1].date === sorted[sorted.length - 1].date)
+    return filtered
+
+  return [...filtered, sorted[sorted.length - 1]]
 }
 
 export const getSeriesWithCurrent = (

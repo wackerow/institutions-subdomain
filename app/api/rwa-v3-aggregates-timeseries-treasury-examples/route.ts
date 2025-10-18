@@ -2,6 +2,8 @@ import { type NextRequest, NextResponse } from "next/server"
 
 import { dateNDaysAgo, getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
 
+import { RWA_API_MEASURE_ID_BY_CATEGORY } from "@/lib/constants"
+
 export const RWA_XYZ_TREASURIES_ASSET_IDS = {
   BUIDL: 2331,
   BENJI: 63,
@@ -57,7 +59,7 @@ export async function GET(req: NextRequest) {
         {
           field: "measureID",
           operator: "equals",
-          value: 71,
+          value: RWA_API_MEASURE_ID_BY_CATEGORY.RWAS,
         },
         {
           operator: "or",

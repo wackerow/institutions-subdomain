@@ -18,7 +18,7 @@ import type { TimeseriesDefiTvlEthereumData } from "@/app/_actions/fetchTimeseri
 
 const chartConfig = {
   value: {
-    label: "DeFi TVL",
+    label: "Mainnet",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig

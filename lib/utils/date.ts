@@ -25,6 +25,7 @@ export const formatDateMonthYear = (
     month: "short",
     year: "numeric",
     ...options,
+    timeZone: "UTC",
   }).format(new Date(date))
 
 /**

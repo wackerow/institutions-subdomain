@@ -40,10 +40,6 @@ import {
 import { LinkWithArrow } from "@/components/ui/link"
 
 import { cn } from "@/lib/utils"
-import {
-  rwaMarketshareToSummaryData,
-  stablecoinMarketshareToPieChartData,
-} from "@/lib/utils/data"
 import { formatDateMonthDayYear, isValidDate } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import {
@@ -55,14 +51,12 @@ import { formatDuration } from "@/lib/utils/time"
 
 import { MAINNET_GENESIS } from "@/lib/constants"
 
+import fetchAssetMarketShare from "./_actions/fetchAssetMarketShare"
 import fetchBaseTvl from "./_actions/fetchBaseTvl"
 import fetchBeaconChain from "./_actions/fetchBeaconChain"
 import fetchDexVolume from "./_actions/fetchDexVolume"
 import fetchEtherPrice from "./_actions/fetchEtherPrice"
-import { fetchRwaMarketshare } from "./_actions/fetchRwaMarketshare"
 import fetchSecuritizeAum from "./_actions/fetchSecuritizeAum"
-import fetchStablecoinMarketshare from "./_actions/fetchStablecoinMarketshare"
-import fetchTimeseriesAssetsValue from "./_actions/fetchTimeseriesAssetsValue"
 import fetchDefiTvlAllCurrent from "./_actions/fetchTvlDefiAllCurrent"
 import { getTimeSinceGenesis } from "./_actions/getTimeSinceGenesis"
 
@@ -145,27 +139,13 @@ const testimonials: {
 
 export default async function Home() {
   const uptime = getTimeSinceGenesis()
-  const timeseriesStablecoinsValueData =
-    await fetchTimeseriesAssetsValue("stablecoins")
   const beaconChainData = await fetchBeaconChain()
   const ethPrice = await fetchEtherPrice()
   const defiTvlAllCurrentData = await fetchDefiTvlAllCurrent()
   const dexVolume = await fetchDexVolume()
-  const rwaMarketshareSummaryData = rwaMarketshareToSummaryData(
-    await fetchRwaMarketshare()
-  )
-  const stablecoinMarketshareUsdData = await fetchStablecoinMarketshare()
-  const stablecoinMarketshareData = stablecoinMarketshareToPieChartData(
-    stablecoinMarketshareUsdData
-  )
-  const stablecoinMarketshareDataEthereum =
-    stablecoinMarketshareData.data.filter(
-      ({ network }) => network === "ethereum"
-    )
-  const ethereumStablecoinMarketshare =
-    stablecoinMarketshareDataEthereum.length > 0
-      ? stablecoinMarketshareDataEthereum[0].marketshare
-      : 0
+  const rwaAssetMarketShareData = await fetchAssetMarketShare("RWAS")
+  const stablecoinAssetMarketShareData =
+    await fetchAssetMarketShare("STABLECOINS")
   const securitizeAumData = await fetchSecuritizeAum()
   const baseTvlData = await fetchBaseTvl()
 
@@ -184,38 +164,34 @@ export default async function Home() {
     },
     {
       value: formatLargeCurrency(
-        timeseriesStablecoinsValueData.data.mainnet.currentValue
+        stablecoinAssetMarketShareData.data.assetValue.mainnet
       ),
       label: (
         <>
           Stablecoin TVL
           <br />
-          {ethereumStablecoinMarketshare ? (
-            <>
-              <span className="font-medium">
-                {formatPercent(ethereumStablecoinMarketshare)}+
-              </span>{" "}
-              of global supply
-            </>
-          ) : (
-            ""
-          )}
+          <span className="font-medium">
+            {formatPercent(
+              stablecoinAssetMarketShareData.data.marketShare.mainnet
+            )}
+            +
+          </span>{" "}
+          of global supply
         </>
       ),
       lastUpdated: formatDateMonthDayYear(
-        timeseriesStablecoinsValueData.lastUpdated
+        stablecoinAssetMarketShareData.lastUpdated
       ),
-      ...timeseriesStablecoinsValueData.sourceInfo,
+      ...stablecoinAssetMarketShareData.sourceInfo,
     },
     {
       value: formatPercent(
-        rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
+        rwaAssetMarketShareData.data.marketShare.mainnet +
+          rwaAssetMarketShareData.data.marketShare.layer2
       ),
       label: "RWA market share on Ethereum + L2s",
-      lastUpdated: formatDateMonthDayYear(
-        rwaMarketshareSummaryData.lastUpdated
-      ),
-      ...rwaMarketshareSummaryData.sourceInfo,
+      lastUpdated: formatDateMonthDayYear(rwaAssetMarketShareData.lastUpdated),
+      ...rwaAssetMarketShareData.sourceInfo,
     },
     {
       value: formatLargeCurrency(defiTvlAllCurrentData.data.mainnetDefiTvl),
@@ -512,14 +488,15 @@ export default async function Home() {
                   The leading platform for asset tokenization, with{" "}
                   <strong>
                     {formatPercent(
-                      rwaMarketshareSummaryData.data.ethereumL1L2RwaMarketshare
+                      rwaAssetMarketShareData.data.marketShare.mainnet +
+                        rwaAssetMarketShareData.data.marketShare.layer2
                     )}{" "}
                     of all onchain RWAs deployed on Ethereum
                   </strong>{" "}
                   and its L2s, and{" "}
                   {formatLargeCurrency(
-                    stablecoinMarketshareUsdData.data.ethereumL1StablecoinUSD +
-                      stablecoinMarketshareUsdData.data.ethereumL2StablecoinUSD
+                    stablecoinAssetMarketShareData.data.assetValue.mainnet +
+                      stablecoinAssetMarketShareData.data.assetValue.layer2
                   )}{" "}
                   in stablecoin TVL.
                 </div>
@@ -715,7 +692,8 @@ export default async function Home() {
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
     title: "Ethereum for Institutions | The Institutional Liquidity Layer",
-    description: "Discover why leading institutions build on Ethereum. Unmatched resilience, deep liquidity, and proven security for the onchain economy. Explore use cases.",
+    description:
+      "Discover why leading institutions build on Ethereum. Unmatched resilience, deep liquidity, and proven security for the onchain economy. Explore use cases.",
     image: "/images/og/home.png",
   })
 }

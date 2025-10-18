@@ -1,7 +1,11 @@
 import { ReactNode } from "react"
 import { StaticImageData } from "next/image"
 
-import { RWA_API_LAYER_2S, RWA_API_MAINNET } from "./constants"
+import {
+  RWA_API_LAYER_2S,
+  RWA_API_MAINNET,
+  RWA_API_MEASURE_ID_BY_CATEGORY,
+} from "./constants"
 
 export type LibraryItem = {
   title: string
@@ -51,14 +55,9 @@ export type NumberParts = {
 
 export type NetworkPieChartData = {
   network: string
-  marketshare: number
+  marketShare: number
   fill: string
 }[]
-
-export type RwaMarketshareSummaryData = {
-  ethereumL1RwaMarketshare: number
-  ethereumL1L2RwaMarketshare: number
-}
 
 /**
  * RWA.xyz API types https://api.rwa.xyz/v4/networks response types
@@ -78,6 +77,8 @@ export type RwaApiNetwork = {
   id: RwaApiNetworkId
   name: RwaApiNetworkName
 }
+
+export type ASSET_CATEGORY = keyof typeof RWA_API_MEASURE_ID_BY_CATEGORY
 
 type AssetClassSlug =
   | "corporate-bonds"
@@ -156,6 +157,24 @@ export type RwaApiNetworkResult = {
   bridged_token_market_cap_dollar: Record<string, unknown>
   holding_addresses_count: Record<string, unknown>
   trailing_30_day_transfer_volume: Record<string, unknown>
+}
+
+export type RWA_API_TIMESERIES_RESPONSE = {
+  results: {
+    measure: {
+      id: number
+      slug: string
+      name: string
+      unit: string
+    }
+    group: {
+      id: number
+      type: string
+      name: string
+      color: string
+    }
+    points: [string, number][]
+  }[]
 }
 
 /**

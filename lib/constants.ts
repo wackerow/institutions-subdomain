@@ -14,23 +14,36 @@ export const MAINNET_GENESIS = "2015-07-30T15:26:13Z"
 
 export const RWA_API_STABLECOINS_GROUP_ID = 28
 
+export const RWA_API_MEASURE_ID_BY_CATEGORY = {
+  RWAS: 71, // Bridged Token Value (Dollar)
+  STABLECOINS: 70, // Bridged Token Market Cap (Dollar)
+} as const satisfies Record<string, number>
+
 export const RWA_API_MAINNET = {
   id: 1,
   name: "Ethereum",
 } as const satisfies NetworkNameId
 
+/**
+ * Hard-coded list of included Ethereum L2s
+ * RWA.xyz API does not distinguish between Ethereum L2s vs L2s of other networks
+ */
 export const RWA_API_LAYER_2S = [
-  { id: 35, name: "Blast" },
+  { id: 3, name: "Polygon" },
+  { id: 4, name: "Optimism" },
   { id: 7, name: "Celo" },
   { id: 10, name: "Base" },
-  { id: 4, name: "Optimism" },
   { id: 11, name: "Arbitrum" },
-  { id: 33, name: "Mantle" },
-  { id: 3, name: "Polygon" },
   { id: 31, name: "ZKsync Era" },
+  { id: 33, name: "Mantle" },
+  { id: 35, name: "Blast" },
+  { id: 36, name: "Manta Pacific" },
+  { id: 41, name: "Linea" },
 ] as const satisfies NetworkNameId[]
 
-export const RWA_API_ETHEREUM_NETWORKS = [RWA_API_MAINNET, ...RWA_API_LAYER_2S]
+export const RWA_API_LAYER_2S_IDS = RWA_API_LAYER_2S.map(
+  ({ id }) => id as number
+)
 
 export const SOURCE = {
   RWA: {

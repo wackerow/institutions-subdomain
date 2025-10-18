@@ -15,8 +15,7 @@ import { formatDateMonthDayYear } from "@/lib/utils/date"
 import { getMetadata } from "@/lib/utils/metadata"
 import { formatLargeCurrency } from "@/lib/utils/number"
 
-import { fetchRwaMarketshare } from "../_actions/fetchRwaMarketshare"
-import fetchStablecoinMarketshare from "../_actions/fetchStablecoinMarketshare"
+import fetchAssetMarketShare from "../_actions/fetchAssetMarketShare"
 import fetchTokenizedPrivateCredit from "../_actions/fetchTokenizedPrivateCredit"
 import fetchTokenizedPrivateCreditExamples from "../_actions/fetchTokenizedPrivateCreditExamples"
 import fetchTokenizedTreasuries from "../_actions/fetchTokenizedTreasuries"
@@ -33,8 +32,9 @@ import usds from "@/public/images/tokens/usds.svg"
 import usdt from "@/public/images/tokens/usdt.svg"
 
 export default async function Page() {
-  const stablecoinMarketshareData = await fetchStablecoinMarketshare()
-  const rwaMarketshareData = await fetchRwaMarketshare()
+  const stablecoinAssetMarketShareData =
+    await fetchAssetMarketShare("STABLECOINS")
+  const rwaAssetMarketShareData = await fetchAssetMarketShare("RWAS")
   const tokenizedPrivateCreditData = await fetchTokenizedPrivateCredit()
   const tokenizedTreasuriesData = await fetchTokenizedTreasuries()
   const tokenizedTreasuryExamplesData = await fetchTokenizedTreasuryExamples()
@@ -45,22 +45,22 @@ export default async function Page() {
     {
       label: "Stablecoins on Ethereum L1",
       value: formatLargeCurrency(
-        stablecoinMarketshareData.data.ethereumL1StablecoinUSD
+        stablecoinAssetMarketShareData.data.assetValue.mainnet
       ),
       lastUpdated: formatDateMonthDayYear(
-        stablecoinMarketshareData.lastUpdated
+        stablecoinAssetMarketShareData.lastUpdated
       ),
-      ...stablecoinMarketshareData.sourceInfo,
+      ...stablecoinAssetMarketShareData.sourceInfo,
     },
     {
       label: "Stablecoins on Ethereum L2",
       value: formatLargeCurrency(
-        stablecoinMarketshareData.data.ethereumL2StablecoinUSD
+        stablecoinAssetMarketShareData.data.assetValue.layer2
       ),
       lastUpdated: formatDateMonthDayYear(
-        stablecoinMarketshareData.lastUpdated
+        stablecoinAssetMarketShareData.lastUpdated
       ),
-      ...stablecoinMarketshareData.sourceInfo,
+      ...stablecoinAssetMarketShareData.sourceInfo,
     },
   ]
 
@@ -326,14 +326,14 @@ export default async function Page() {
               Total stablecoin market cap on Ethereum L1:{" "}
               <InlineText className="text-foreground font-bold">
                 {formatLargeCurrency(
-                  stablecoinMarketshareData.data.ethereumL1StablecoinUSD
+                  stablecoinAssetMarketShareData.data.assetValue.mainnet
                 )}
                 <SourceInfoTooltip
                   iconClassName="translate-y-0"
                   lastUpdated={formatDateMonthDayYear(
-                    stablecoinMarketshareData.lastUpdated
+                    stablecoinAssetMarketShareData.lastUpdated
                   )}
-                  {...stablecoinMarketshareData.sourceInfo}
+                  {...stablecoinAssetMarketShareData.sourceInfo}
                 />
               </InlineText>
             </p>
@@ -365,13 +365,15 @@ export default async function Page() {
             <p className="text-muted-foreground font-medium">
               Total RWA sector on Ethereum L1:{" "}
               <InlineText className="text-foreground font-bold">
-                {formatLargeCurrency(rwaMarketshareData.data.ethereumL1RwaUSD)}
+                {formatLargeCurrency(
+                  rwaAssetMarketShareData.data.assetValue.mainnet
+                )}
                 <SourceInfoTooltip
                   iconClassName="translate-y-0"
                   lastUpdated={formatDateMonthDayYear(
-                    rwaMarketshareData.lastUpdated
+                    rwaAssetMarketShareData.lastUpdated
                   )}
-                  {...rwaMarketshareData.sourceInfo}
+                  {...rwaAssetMarketShareData.sourceInfo}
                 />
               </InlineText>
             </p>

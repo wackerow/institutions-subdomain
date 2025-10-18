@@ -5,7 +5,7 @@ import type { DataTimestamped } from "@/lib/types"
 import { dateNDaysAgo, getRwaApiEthereumNetworksFilter } from "@/lib/utils/data"
 import { every } from "@/lib/utils/time"
 
-import { SOURCE } from "@/lib/constants"
+import { RWA_API_MEASURE_ID_BY_CATEGORY, SOURCE } from "@/lib/constants"
 
 type JSONData = {
   results: {
@@ -60,7 +60,7 @@ export const fetchTokenizedTreasuries = async (): Promise<
         {
           field: "measureID",
           operator: "equals",
-          value: 71,
+          value: RWA_API_MEASURE_ID_BY_CATEGORY.RWAS,
         },
         getRwaApiEthereumNetworksFilter(["mainnet", "layer-2"]),
       ],
