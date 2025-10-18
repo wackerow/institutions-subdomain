@@ -259,6 +259,7 @@ const EnterpriseContactForm = () => {
       <div className="space-y-2">
         <Input
           name="name"
+          autoComplete="name"
           type="text"
           className="w-full"
           placeholder="Your name"
@@ -275,6 +276,7 @@ const EnterpriseContactForm = () => {
         )}
         <Input
           name="email"
+          autoComplete="email"
           type="email"
           className="w-full"
           placeholder="Your e-mail"

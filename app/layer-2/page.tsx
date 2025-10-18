@@ -242,44 +242,43 @@ export default async function Page() {
         </p>
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
-        <section>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
-            {metrics.map(
-              ({ label, value, source, sourceHref, lastUpdated }, idx) => (
-                <Card key={idx} variant="flex-height">
-                  <CardContent>
-                    <CardLabel className="text-base font-medium tracking-[0.02rem]">
-                      {label}
-                    </CardLabel>
-                    <CardValue asChild>
-                      <AnimatedNumberInView>{value}</AnimatedNumberInView>
-                    </CardValue>
-                  </CardContent>
-                  {source && (
-                    <CardSource>
-                      Source:{" "}
-                      {sourceHref ? (
-                        <Link
-                          href={sourceHref}
-                          className="text-muted-foreground hover:text-foreground"
-                          inline
-                        >
-                          {source}
-                        </Link>
-                      ) : (
-                        source
-                      )}
-                      {lastUpdated && (
-                        <SourceInfoTooltip
-                          lastUpdated={formatDateMonthDayYear(lastUpdated)}
-                        />
-                      )}
-                    </CardSource>
-                  )}
-                </Card>
-              )
-            )}
-          </div>
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4">
+          <h2 className="sr-only">Layer 2 Ecosystem Overview</h2>
+          {metrics.map(
+            ({ label, value, source, sourceHref, lastUpdated }, idx) => (
+              <Card key={idx} variant="flex-height">
+                <CardContent>
+                  <CardLabel className="text-base font-medium tracking-[0.02rem]">
+                    {label}
+                  </CardLabel>
+                  <CardValue asChild>
+                    <AnimatedNumberInView>{value}</AnimatedNumberInView>
+                  </CardValue>
+                </CardContent>
+                {source && (
+                  <CardSource>
+                    Source:{" "}
+                    {sourceHref ? (
+                      <Link
+                        href={sourceHref}
+                        className="text-muted-foreground hover:text-foreground"
+                        inline
+                      >
+                        {source}
+                      </Link>
+                    ) : (
+                      source
+                    )}
+                    {lastUpdated && (
+                      <SourceInfoTooltip
+                        lastUpdated={formatDateMonthDayYear(lastUpdated)}
+                      />
+                    )}
+                  </CardSource>
+                )}
+              </Card>
+            )
+          )}
         </section>
         <section id="role" className="space-y-8">
           <h2 className="text-h3-mobile sm:text-h3">The Role of L2s</h2>
@@ -557,10 +556,7 @@ export default async function Page() {
                   <InlineText className="text-secondary-foreground mt-12 font-bold group-hover:underline lg:mt-16">
                     {ctaLabel || "Visit →"}
                     {tooltipProps.source && (
-                      <SourceInfoTooltip
-                        {...tooltipProps}
-                        iconClassName="translate-y-0"
-                      />
+                      <SourceInfoTooltip {...tooltipProps} />
                     )}
                   </InlineText>
                 </Link>

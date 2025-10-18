@@ -131,7 +131,7 @@ export default async function Page() {
           id="metrics"
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-12 xl:grid-cols-4"
         >
-          <h2 className="sr-only">DeFi Ecosystem Metrics</h2>
+          <h2 className="sr-only">DeFi Ecosystem Overview</h2>
           {metrics.map(
             ({ label, value, source, sourceHref, lastUpdated }, idx) => (
               <Card key={idx} variant="flex-height">

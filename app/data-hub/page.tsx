@@ -182,7 +182,6 @@ export default async function Page() {
                       defillama.com
                     </Link>
                     <SourceInfoTooltip
-                      iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
                         timeseriesDefiTvlEthereumData.lastUpdated
                       )}
@@ -215,7 +214,6 @@ export default async function Page() {
                       defillama.com
                     </Link>
                     <SourceInfoTooltip
-                      iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
                         defiTvlAllCurrentData.lastUpdated
                       )}
@@ -256,7 +254,6 @@ export default async function Page() {
                     rwa.xyz
                   </Link>
                   <SourceInfoTooltip
-                    iconClassName="translate-y-0"
                     lastUpdated={formatDateMonthDayYear(
                       stablecoinMarketShareData.lastUpdated
                     )}
@@ -293,7 +290,6 @@ export default async function Page() {
                       rwa.xyz
                     </Link>
                     <SourceInfoTooltip
-                      iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
                         rwaAssetMarketShareData.lastUpdated
                       )}
@@ -321,7 +317,6 @@ export default async function Page() {
                       rwa.xyz
                     </Link>
                     <SourceInfoTooltip
-                      iconClassName="translate-y-0"
                       lastUpdated={formatDateMonthDayYear(
                         rwaAssetMarketShareData.lastUpdated
                       )}
@@ -355,7 +350,6 @@ export default async function Page() {
                     l2beat.com
                   </Link>
                   <SourceInfoTooltip
-                    iconClassName="translate-y-0"
                     lastUpdated={formatDateMonthDayYear(
                       l2ScalingSummaryData.lastUpdated
                     )}
@@ -390,7 +384,6 @@ export default async function Page() {
                     growthepie.com
                   </Link>
                   <SourceInfoTooltip
-                    iconClassName="translate-y-0"
                     lastUpdated={formatDateMonthDayYear(
                       timeseriesL2TvlData.lastUpdated
                     )}

@@ -7,7 +7,7 @@ import { MetricLastUpdated, MetricWithSource, SourceInfo } from "@/lib/types"
 import Hero from "@/components/Hero"
 import { SourceInfoTooltip } from "@/components/InfoTooltip"
 import { AnimatedNumberInView } from "@/components/ui/animated-number"
-import { Card, CardSource } from "@/components/ui/card"
+import { Card, CardLabel, CardSource } from "@/components/ui/card"
 import { InlineText } from "@/components/ui/inline-text"
 import Link, { LinkWithArrow } from "@/components/ui/link"
 
@@ -222,7 +222,11 @@ export default async function Page() {
         stablecoin supply
       </Hero>
       <article className="max-w-8xl mx-auto w-full space-y-20 px-4 py-10 sm:px-10 sm:py-20 md:space-y-40">
-        <div className="flex items-center gap-8 border p-8 max-lg:flex-col">
+        <section
+          id="overview"
+          className="flex items-center gap-8 border p-8 max-lg:flex-col"
+        >
+          <h2 className="sr-only">Real-World Asset and Stablecoin Overview</h2>
           <p className="flex-1 font-medium">
             Institutions tokenize stocks, offer 24/7 settlement, deploy
             programmable cash, launch payment rails, and more, on the liquid,
@@ -233,7 +237,9 @@ export default async function Page() {
               const { source, sourceHref } = sourceInfo
               return (
                 <Card key={idx} className="flex-1 space-y-2 py-8">
-                  <p className="font-medium">{label}</p>
+                  <CardLabel className="text-base font-medium tracking-normal">
+                    {label}
+                  </CardLabel>
                   <AnimatedNumberInView className="text-big font-bold tracking-[0.055rem]">
                     {value}
                   </AnimatedNumberInView>
@@ -256,7 +262,7 @@ export default async function Page() {
               )
             })}
           </div>
-        </div>
+        </section>
 
         <section
           id="infrastructure"
@@ -329,7 +335,6 @@ export default async function Page() {
                   stablecoinAssetMarketShareData.data.assetValue.mainnet
                 )}
                 <SourceInfoTooltip
-                  iconClassName="translate-y-0"
                   lastUpdated={formatDateMonthDayYear(
                     stablecoinAssetMarketShareData.lastUpdated
                   )}
@@ -369,7 +374,6 @@ export default async function Page() {
                   rwaAssetMarketShareData.data.assetValue.mainnet
                 )}
                 <SourceInfoTooltip
-                  iconClassName="translate-y-0"
                   lastUpdated={formatDateMonthDayYear(
                     rwaAssetMarketShareData.lastUpdated
                   )}
@@ -426,10 +430,7 @@ export default async function Page() {
                       >
                         {valuation}
                       </Link>
-                      <SourceInfoTooltip
-                        {...tooltipProps}
-                        iconClassName="translate-y-0"
-                      />
+                      <SourceInfoTooltip {...tooltipProps} />
                     </InlineText>
                     <p className="text-muted-foreground font-medium">
                       {description}
@@ -496,10 +497,7 @@ export default async function Page() {
                       >
                         {valuation}
                       </Link>
-                      <SourceInfoTooltip
-                        {...tooltipProps}
-                        iconClassName="translate-y-0"
-                      />
+                      <SourceInfoTooltip {...tooltipProps} />
                     </InlineText>
                     <p className="text-muted-foreground font-medium">
                       {description}

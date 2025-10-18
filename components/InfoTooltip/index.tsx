@@ -12,16 +12,15 @@ import Link from "../ui/link"
 type InfoTooltipProps = {
   children: ReactNode
   className?: string
-  iconClassName?: string
+  ariaLabel?: string
 }
 
-const InfoTooltip = ({
-  children,
-  iconClassName,
-  className,
-}: InfoTooltipProps) => (
+const InfoTooltip = ({ children, className, ariaLabel }: InfoTooltipProps) => (
   <TooltipPopover content={<div className={className}>{children}</div>}>
-    <Info className={cn("size-[0.875em] translate-y-0.5", iconClassName)} />
+    <Info
+      aria-label={ariaLabel || "More information"}
+      className="size-[0.875em] translate-y-[0.06125em]"
+    />
   </TooltipPopover>
 )
 
@@ -30,12 +29,12 @@ const SourceInfoTooltip = ({
   sourceHref,
   lastUpdated,
   children,
-  iconClassName,
+  className,
 }: SourceInfo &
   MetricLastUpdated &
   Omit<InfoTooltipProps, "children"> & { children?: string }) => (
-  <InlineTextIcon>
-    <InfoTooltip iconClassName={iconClassName}>
+  <InlineTextIcon className={className}>
+    <InfoTooltip ariaLabel="Source information">
       {children}
       {source && (
         <p className={cn("text-nowrap", children && "mt-2")}>

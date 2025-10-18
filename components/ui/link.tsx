@@ -40,7 +40,7 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 
   if (isExternal) {
     return (
-      <a target="_blank" rel="noopener noreferrer" {...commonProps}>
+      <a target="_blank" rel="noopener" {...commonProps}>
         {isMailto ? (
           <span className="text-nowrap">
             {showDecorator && (

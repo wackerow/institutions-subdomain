@@ -192,7 +192,7 @@ function CarouselIndicator({
 
   return (
     <div className={cn("mt-14 w-fit", className)}>
-      <div className="flex space-x-1.5">
+      <div className="flex space-x-2.5">
         {Array.from({ length: itemsCount }, (_, i) => (
           <button
             key={i}
@@ -200,7 +200,7 @@ function CarouselIndicator({
             aria-label={`Go to slide ${i + 1}`}
             onClick={() => setIndex(i)}
             className={cn(
-              "size-[9px] shrink-0 rounded-full transition-opacity duration-300",
+              "size-3.5 shrink-0 rounded-full transition-opacity duration-300",
               index === i ? "bg-secondary-foreground" : "bg-muted",
               classNameButton
             )}

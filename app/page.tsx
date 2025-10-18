@@ -526,10 +526,7 @@ export default async function Home() {
                     <p className="text-muted-foreground">{label}</p>
                     <InlineText className="text-muted-foreground font-bold">
                       {value}
-                      <SourceInfoTooltip
-                        {...sourceInfo}
-                        iconClassName="translate-y-0"
-                      />
+                      <SourceInfoTooltip {...sourceInfo} />
                     </InlineText>
                   </div>
                 )

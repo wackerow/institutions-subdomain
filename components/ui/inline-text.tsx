@@ -27,7 +27,7 @@ export function InlineTextIcon({
   return (
     <span
       className={cn(
-        "absolute ms-[0.25em] inline-flex h-[1lh] flex-none items-center",
+        "absolute ms-[0.375em] inline-flex h-[1lh] flex-none items-center",
         className
       )}
       data-slot="inline-text-icon"

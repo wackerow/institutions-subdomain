@@ -71,7 +71,6 @@ const RwaChartCard = ({
             )}
             {data.lastUpdated && (
               <SourceInfoTooltip
-                iconClassName="translate-y-px"
                 lastUpdated={formatDateMonthDayYear(data.lastUpdated)}
               />
             )}

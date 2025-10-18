@@ -40,7 +40,7 @@ export function L2BenefitsPanel({ validatorsCount }: L2BenefitsPanelProps) {
               <Link
                 href="https://explorer.rated.network/network?network=mainnet&timeWindow=1d&rewardsMetric=average&geoDistType=all&hostDistType=all&soloProDist=stake"
                 inline
-                className="css-secondary"
+                className="css-secondary font-bold"
               >
                 {validatorsCount}+ validators
               </Link>
